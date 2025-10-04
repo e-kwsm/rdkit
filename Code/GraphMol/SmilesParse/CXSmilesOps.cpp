@@ -308,7 +308,7 @@ void finalizePolymerSGroup(RWMol &mol, SubstanceGroup &sgroup) {
 
 Bond *get_bond_with_smiles_idx(const ROMol &mol, unsigned idx) {
   for (auto bnd : mol.bonds()) {
-    unsigned int smilesIdx;
+    unsigned int smilesIdx = 0;
     if (bnd->getPropIfPresent("_cxsmilesBondIdx", smilesIdx) &&
         smilesIdx == idx) {
       return bnd;
@@ -360,7 +360,7 @@ bool parse_atom_props(Iterator &first, Iterator last, RDKit::RWMol &mol,
     return false;
   }
   while (first <= last && *first != '|' && *first != ',') {
-    unsigned int atIdx;
+    unsigned int atIdx = 0;
     if (read_int(first, last, atIdx)) {
       if (first >= last || *first != '.') {
         return false;
@@ -482,8 +482,8 @@ bool parse_coordinate_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
   }
   ++first;
   while (first <= last && *first >= '0' && *first <= '9') {
-    unsigned int aidx;
-    unsigned int bidx;
+    unsigned int aidx = 0;
+    unsigned int bidx = 0;
     if (read_int_pair(first, last, aidx, bidx)) {
       if (VALID_ATIDX(aidx) && VALID_BNDIDX(bidx)) {
         auto bnd = get_bond_with_smiles_idx(mol, bidx - startBondIdx);
@@ -524,7 +524,7 @@ bool parse_zero_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
   ++first;
 
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int bondIdx;
+    unsigned int bondIdx = 0;
     if (!read_int(first, last, bondIdx)) {
       return false;
     }
@@ -558,7 +558,7 @@ bool parse_unsaturation(Iterator &first, Iterator last, RDKit::RWMol &mol,
   }
   ++first;
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int idx;
+    unsigned int idx = 0;
     if (!read_int(first, last, idx)) {
       return false;
     }
@@ -585,7 +585,7 @@ bool parse_ring_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
   }
   first += 3;
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int n1;
+    unsigned int n1 = 0;
     if (!read_int(first, last, n1)) {
       return false;
     }
@@ -594,7 +594,7 @@ bool parse_ring_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     ++first;
-    unsigned int n2;
+    unsigned int n2 = 0;
     bool gt = false;
     if (*first == '*') {
       ++first;
@@ -664,7 +664,7 @@ bool parse_linknodes(Iterator &first, Iterator last, RDKit::RWMol &mol,
   first += 3;
   std::string accum = "";
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int atidx;
+    unsigned int atidx = 0;
     if (!read_int(first, last, atidx)) {
       return false;
     }
@@ -673,7 +673,7 @@ bool parse_linknodes(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     ++first;
-    unsigned int startReps;
+    unsigned int startReps = 0;
     if (!read_int(first, last, startReps)) {
       return false;
     }
@@ -681,12 +681,12 @@ bool parse_linknodes(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     ++first;
-    unsigned int endReps;
+    unsigned int endReps = 0;
     if (!read_int(first, last, endReps)) {
       return false;
     }
-    unsigned int idx1;
-    unsigned int idx2;
+    unsigned int idx1 = 0;
+    unsigned int idx2 = 0;
     if (first < last && *first == '.') {
       ++first;
       if (!read_int(first, last, idx1)) {
@@ -810,7 +810,7 @@ namespace {
 std::vector<RDKit::SubstanceGroup>::iterator find_matching_sgroup(
     std::vector<RDKit::SubstanceGroup> &sgs, unsigned int targetId) {
   return std::find_if(sgs.begin(), sgs.end(), [targetId](const auto &sg) {
-    unsigned int pval;
+    unsigned int pval = 0;
     if (sg.getPropIfPresent(cxsmilesindex, pval)) {
       if (pval == targetId) {
         return true;
@@ -832,7 +832,7 @@ bool parse_sgroup_hierarchy(Iterator &first, Iterator last, RDKit::RWMol &mol) {
   first += 4;
   auto &sgs = getSubstanceGroups(mol);
   while (1) {
-    unsigned int parentId;
+    unsigned int parentId = 0;
     if (!read_int(first, last, parentId)) {
       return false;
     }
@@ -858,7 +858,7 @@ bool parse_sgroup_hierarchy(Iterator &first, Iterator last, RDKit::RWMol &mol) {
           }
           auto csg = find_matching_sgroup(sgs, childId);
           if (csg != sgs.end()) {
-            unsigned int cid;
+            unsigned int cid = 0;
             csg->getProp("index", cid);
             csg->setProp("PARENT", parentId);
           }
@@ -1003,7 +1003,7 @@ bool parse_variable_attachments(Iterator &first, Iterator last,
   first += 2;
 
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int at1idx;
+    unsigned int at1idx = 0;
     if (!read_int(first, last, at1idx)) {
       return false;
     }
@@ -1023,7 +1023,7 @@ bool parse_variable_attachments(Iterator &first, Iterator last,
     }
     std::vector<std::string> others;
     while (first < last && *first >= '0' && *first <= '9') {
-      unsigned int aidx;
+      unsigned int aidx = 0;
       if (!read_int(first, last, aidx)) {
         return false;
       }
@@ -1094,7 +1094,7 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
   }
   ++first;
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int atomIdx;
+    unsigned int atomIdx = 0;
     if (!read_int(first, last, atomIdx)) {
       return false;
     }
@@ -1104,7 +1104,7 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       BOOST_LOG(rdWarningLog) << "improperly formatted w block" << std::endl;
       return false;
     }
-    unsigned int bondIdx;
+    unsigned int bondIdx = 0;
     if (!read_int(first, last, bondIdx)) {
       return false;
     }
@@ -1176,7 +1176,7 @@ bool parse_doublebond_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
   ++first;
 
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int bondIdx;
+    unsigned int bondIdx = 0;
     if (!read_int(first, last, bondIdx)) {
       return false;
     }
@@ -1209,7 +1209,7 @@ bool parse_substitution(Iterator &first, Iterator last, RDKit::RWMol &mol,
   }
   first += 2;
   while (first < last && *first >= '0' && *first <= '9') {
-    unsigned int n1;
+    unsigned int n1 = 0;
     if (!read_int(first, last, n1)) {
       return false;
     }
@@ -1218,7 +1218,7 @@ bool parse_substitution(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     ++first;
-    unsigned int n2;
+    unsigned int n2 = 0;
     if (*first == '*') {
       ++first;
       n2 = 0xDEADBEEF;
@@ -1257,7 +1257,7 @@ bool processRadicalSection(Iterator &first, Iterator last, RDKit::RWMol &mol,
     return false;
   }
   ++first;
-  unsigned int atIdx;
+  unsigned int atIdx = 0;
   if (!read_int(first, last, atIdx)) {
     return false;
   }
@@ -1351,7 +1351,7 @@ bool parse_enhanced_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
   std::vector<Bond *> bonds;
 
   while (first <= last && *first >= '0' && *first <= '9') {
-    unsigned int aidx;
+    unsigned int aidx = 0;
     if (read_int(first, last, aidx)) {
       if (VALID_ATIDX(aidx)) {
         Atom *atom = mol.getAtomWithIdx(aidx - startAtomIdx);
@@ -1699,7 +1699,7 @@ std::string get_sgroup_hierarchy_block(const ROMol &mol) {
     // now loop over them and add the information
     std::map<unsigned int, std::vector<unsigned int>> accum;
     for (const auto &sg : sgs) {
-      unsigned pidx;
+      unsigned pidx = 0;
       if (sg.getPropIfPresent("PARENT", pidx) &&
           sgroupOrder.find(pidx) != sgroupOrder.end()) {
         unsigned int sgidx = sg.getIndexInMol();
@@ -1911,7 +1911,7 @@ std::string get_atomlabel_block(const ROMol &mol,
       res += ";";
     }
     std::string lbl;
-    int val;
+    int val = 0;
     const auto atom = mol.getAtomWithIdx(idx);
     if (atom->getPropIfPresent(common_properties::_QueryAtomGenericLabel,
                                lbl)) {
@@ -2196,8 +2196,8 @@ std::string get_bond_config_block(
       }
 
       if (bd == Bond::BondDir::NONE && coordsIncluded) {
-        int dirCode;
-        bool reverse;
+        int dirCode = 0;
+        bool reverse = false;
         Chirality::GetMolFileBondStereoInfo(
             bond, wedgeBonds, &mol.getConformer(), dirCode, reverse);
         switch (dirCode) {
