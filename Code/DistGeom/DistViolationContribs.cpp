@@ -11,6 +11,7 @@
 #include "DistViolationContribs.h"
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
+#include <math.h>
 
 namespace DistGeom {
 
@@ -67,7 +68,7 @@ void DistViolationContribs::getGrad(double *pos, double *grad) const {
 
   auto contrib = [&](const auto &c) {
     double d2 = distance2(c.idx1, c.idx2, pos, dp_forceField->dimension());
-    double d;
+    double d = NAN;
     double preFactor = 0.0;
     if (d2 > c.ub2) {
       d = sqrt(d2);
@@ -83,7 +84,7 @@ void DistViolationContribs::getGrad(double *pos, double *grad) const {
     for (unsigned int i = 0; i < dim; i++) {
       const auto p1 = dim * c.idx1 + i;
       const auto p2 = dim * c.idx2 + i;
-      double dGrad;
+      double dGrad = NAN;
       if (d > 0.0) {
         dGrad = c.weight * preFactor * (pos[p1] - pos[p2]) / d;
       } else {
