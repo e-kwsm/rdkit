@@ -102,7 +102,7 @@ inline std::unique_ptr<FileParsers::MolSupplier> getSupplier(
   //! get the file and compression format form the path
   determineFormat(path, fileFormat, compressionFormat);
 
-  std::istream *strm;
+  std::istream *strm = nullptr;
   if (compressionFormat.empty()) {
     strm = new std::ifstream(path.c_str(), std::ios::in | std::ios::binary);
   } else {

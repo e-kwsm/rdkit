@@ -46,7 +46,7 @@ void LinkNodeOp::initFromMol() {
 
   d_atomMap.clear();
   for (auto atom : dp_mol->atoms()) {
-    unsigned int oidx;
+    unsigned int oidx = 0;
     if (atom->getPropIfPresent(detail::idxPropName, oidx)) {
       d_atomMap[oidx] = atom;
     }

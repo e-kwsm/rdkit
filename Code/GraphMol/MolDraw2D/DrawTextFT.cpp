@@ -158,7 +158,8 @@ void DrawTextFT::getStringRects(const std::string &text,
       continue;
     }
     draw_chars.push_back(text[i]);
-    FT_Pos this_x_min, this_y_min, this_x_max, this_y_max, advance;
+    FT_Pos this_x_min = 0, this_y_min = 0, this_x_max = 0, this_y_max = 0,
+           advance = 0;
     calcGlyphBBox(text[i], this_x_min, this_y_min, this_x_max, this_y_max,
                   advance);
     double oscale = selectScaleFactor(text[i], draw_mode);
