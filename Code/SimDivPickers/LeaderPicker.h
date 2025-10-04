@@ -168,8 +168,8 @@ struct LeaderPickerState {
     }
 
     // InitializeBlocks
-    unsigned int bcount;
-    unsigned int bsize;
+    unsigned int bcount = 0;
+    unsigned int bsize = 0;
     if (nt > 1) {
       bsize = 4096;
       bcount = (count + (bsize - 1)) / bsize;
@@ -332,8 +332,8 @@ struct LeaderPickerState {
 // This is the loop the worker threads run
 template <typename T>
 void *LeaderPickerWork(void *arg) {
-  typename LeaderPickerState<T>::LeaderPickerThread *thread;
-  thread = (typename LeaderPickerState<T>::LeaderPickerThread *)arg;
+  typename LeaderPickerState<T>::LeaderPickerThread *thread =
+      (typename LeaderPickerState<T>::LeaderPickerThread *)arg;
   LeaderPickerState<T> *stat = thread->stat;
 
   for (;;) {

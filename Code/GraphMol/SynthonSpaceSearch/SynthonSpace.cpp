@@ -486,14 +486,14 @@ void SynthonSpace::readDBFile(const std::string &inFilename,
   if (!is.is_open() || is.bad()) {
     throw std::runtime_error("Couldn't open file " + d_fileName);
   }
-  int32_t endianTest;
+  int32_t endianTest = 0;
   streamRead(is, endianTest);
   if (endianTest != endianId) {
     throw std::runtime_error("Endianness mismatch in SynthonSpace file " +
                              d_fileName);
   }
   streamRead(is, d_fileMajorVersion);
-  int32_t minorVersion;
+  int32_t minorVersion = 0;
   streamRead(is, minorVersion);
   if (d_fileMajorVersion > versionMajor ||
       (d_fileMajorVersion == versionMajor && minorVersion > versionMinor)) {
@@ -514,13 +514,13 @@ void SynthonSpace::readDBFile(const std::string &inFilename,
         "  Please re-build with a recent version of the RDKit.");
   }
 
-  bool hasFPs;
+  bool hasFPs = false;
   streamRead(is, hasFPs);
   if (hasFPs) {
     streamRead(is, d_fpType, 0);
   }
-  std::uint64_t numSynthons;
-  std::uint64_t numReactions;
+  std::uint64_t numSynthons = 0;
+  std::uint64_t numReactions = 0;
   streamRead(is, numSynthons);
   streamRead(is, numReactions);
   streamRead(is, d_numProducts);

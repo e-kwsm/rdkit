@@ -38,6 +38,7 @@
 #include <GraphMol/MolAlign/AlignMolecules.h>
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/RDThreads.h>
+#include <cmath>
 #include <cstddef>
 #include <stdexcept>
 #include <vector>
@@ -407,7 +408,7 @@ bool generateInitialCoords(RDGeom::PointPtrVect *positions,
                                                embedParams.randNegEig,
                                                embedParams.numZeroFail);
   } else {
-    double boxSize;
+    double boxSize = NAN;
     if (embedParams.boxSizeMult > 0) {
       boxSize = 5. * embedParams.boxSizeMult;
     } else {

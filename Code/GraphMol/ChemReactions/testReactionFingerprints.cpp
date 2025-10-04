@@ -48,14 +48,13 @@ void testStructuralFingerprintsReaction() {
   BOOST_LOG(rdErrorLog) << "    Test Reaction StructuralFingerprint"
                         << std::endl;
   {
-    std::string reaction, reactionq;
-    ChemicalReaction *rxn, *rxnq;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCNCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCNCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     ReactionFingerprintParams params;
@@ -88,14 +87,13 @@ void testStructuralFingerprintsReaction() {
     delete rxnqFP;
   }
   {
-    std::string reaction, reactionq;
-    ChemicalReaction *rxn, *rxnq;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
 
@@ -130,16 +128,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnqFP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = ">>C1CCNCC1";
+    std::string reactionq2 = ">>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = ">>C1CCNCC1";
-    reactionq2 = ">>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -182,16 +180,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>";
+    std::string reactionq2 = "C1CCOCC1>>";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>";
-    reactionq2 = "C1CCOCC1>>";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -232,16 +230,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "CCC>>CNC";
+    std::string reactionq2 = "CCCCC>>CCCCN";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "CCC>>CNC";
-    reactionq2 = "CCCCC>>CCCCN";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -291,15 +289,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "CCC>>CNC";
-    reactionq2 = "CCCCC>>CCCCN";
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "CCC>>CNC";
+    std::string reactionq2 = "CCCCC>>CCCCN";
 
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -327,16 +326,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -361,16 +360,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -394,16 +393,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -428,16 +427,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -462,16 +461,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCOCC1";
 
-    reaction = "C1CCCCC1>>C1CCNCC1";
-    reactionq = "C1CCCCC1>>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCOCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -496,16 +495,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCNCC1";
 
-    reaction = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
-    reactionq = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCNCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -528,16 +527,16 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction = "C1CCCCC1>[Na]>C1CCNCC1";
+    std::string reactionq = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
+    std::string reactionq2 = "C1CCCCC1>>C1CCNCC1";
 
-    reaction = "C1CCCCC1>[Na]>C1CCNCC1";
-    reactionq = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
-    reactionq2 = "C1CCCCC1>>C1CCNCC1";
-
-    rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
-    rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
+    ChemicalReaction *rxn =
+        RxnSmartsToChemicalReaction(reaction, nullptr, true);
+    ChemicalReaction *rxnq =
+        RxnSmartsToChemicalReaction(reactionq, nullptr, true);
+    ChemicalReaction *rxnq2 =
+        RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxnq);
     TEST_ASSERT(rxnq2);
@@ -566,14 +565,13 @@ void testDifferenceFingerprintsReaction() {
   BOOST_LOG(rdErrorLog) << "    Test Reaction DifferenceFingerprint"
                         << std::endl;
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1 = "C1CCCCC1>>C1CCCCC1";
+    std::string reaction2 = "C1CCCCC1>>C1CCNCC1";
 
-    reaction1 = "C1CCCCC1>>C1CCCCC1";
-    reaction2 = "C1CCCCC1>>C1CCNCC1";
-
-    rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
-    rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
+    ChemicalReaction *rxn1 =
+        RxnSmartsToChemicalReaction(reaction1, nullptr, true);
+    ChemicalReaction *rxn2 =
+        RxnSmartsToChemicalReaction(reaction2, nullptr, true);
     TEST_ASSERT(rxn1);
     TEST_ASSERT(rxn2);
 
@@ -591,14 +589,13 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1 = "C1CCCCC1>>C1CCOCC1";
+    std::string reaction2 = "C1CCCCC1>>C1CCNCC1";
 
-    reaction1 = "C1CCCCC1>>C1CCOCC1";
-    reaction2 = "C1CCCCC1>>C1CCNCC1";
-
-    rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
-    rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
+    ChemicalReaction *rxn1 =
+        RxnSmartsToChemicalReaction(reaction1, nullptr, true);
+    ChemicalReaction *rxn2 =
+        RxnSmartsToChemicalReaction(reaction2, nullptr, true);
     TEST_ASSERT(rxn1);
     TEST_ASSERT(rxn2);
 
@@ -616,13 +613,12 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
-
-    reaction1 = "c1ccccc1>>c1ccncn1";
-    reaction2 = "c1ccccc1>>c1ccncc1";
-    rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
-    rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
+    std::string reaction1 = "c1ccccc1>>c1ccncn1";
+    std::string reaction2 = "c1ccccc1>>c1ccncc1";
+    ChemicalReaction *rxn1 =
+        RxnSmartsToChemicalReaction(reaction1, nullptr, true);
+    ChemicalReaction *rxn2 =
+        RxnSmartsToChemicalReaction(reaction2, nullptr, true);
     TEST_ASSERT(rxn1);
     TEST_ASSERT(rxn2);
 
@@ -640,13 +636,12 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
-
-    reaction1 = "c1ccccc1>>c1ccncn1";
-    reaction2 = "c1ccccc1>>c1ccncc1";
-    rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
-    rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
+    std::string reaction1 = "c1ccccc1>>c1ccncn1";
+    std::string reaction2 = "c1ccccc1>>c1ccncc1";
+    ChemicalReaction *rxn1 =
+        RxnSmartsToChemicalReaction(reaction1, nullptr, true);
+    ChemicalReaction *rxn2 =
+        RxnSmartsToChemicalReaction(reaction2, nullptr, true);
     TEST_ASSERT(rxn1);
     TEST_ASSERT(rxn2);
 
@@ -667,13 +662,12 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
-
-    reaction1 = "c1ccccc1>>c1ccncn1";
-    reaction2 = "c1ccccc1>>c1ccncc1";
-    rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
-    rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
+    std::string reaction1 = "c1ccccc1>>c1ccncn1";
+    std::string reaction2 = "c1ccccc1>>c1ccncc1";
+    ChemicalReaction *rxn1 =
+        RxnSmartsToChemicalReaction(reaction1, nullptr, true);
+    ChemicalReaction *rxn2 =
+        RxnSmartsToChemicalReaction(reaction2, nullptr, true);
     TEST_ASSERT(rxn1);
     TEST_ASSERT(rxn2);
 

@@ -143,7 +143,7 @@ template <typename T1>
 bool AllProbeBitsMatch(const T1 &probe, const std::string &pkl) {
   const char *text = pkl.c_str();
   int format = 0;
-  int nOn = 0, size, version = 0;
+  int nOn = 0, size = 0, version = 0;
   size = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)text);
   text += sizeof(size);
   if (size < 0) {
@@ -258,8 +258,8 @@ unsigned int CalcBitmapNumBitsInCommon(const unsigned char *afp,
 
 int NumOnBitsInCommon(const ExplicitBitVect &bv1, const ExplicitBitVect &bv2) {
   // Don't try this at home, we (hope we) know what we're doing
-  const unsigned char *afp, *bfp;
-  unsigned int nBytes;
+  const unsigned char *afp = nullptr, *bfp = nullptr;
+  unsigned int nBytes = 0;
   if (EBVToBitmap(bv1, afp, nBytes) && EBVToBitmap(bv2, bfp, nBytes)) {
     unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
     return (int)result;

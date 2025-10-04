@@ -501,7 +501,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
   // compute them in a copy of the mol, so as not to change the mol passed in
 
   RWMol molCopy(mol);
-  unsigned int operationThatFailed;
+  unsigned int operationThatFailed = 0;
   unsigned int santitizeOps =
       MolOps::SANITIZE_SETCONJUGATION | MolOps::SANITIZE_SETHYBRIDIZATION;
   MolOps::sanitizeMol(molCopy, operationThatFailed, santitizeOps);
@@ -683,8 +683,7 @@ std::vector<std::unique_ptr<MolSanitizeException>> detectChemistryProblems(
   // clear out any cached properties
   mol.clearComputedProps();
 
-  int operation;
-  operation = SANITIZE_CLEANUP;
+  int operation = SANITIZE_CLEANUP;
   if (sanitizeOps & operation) {
     // clean up things like nitro groups
     cleanUp(mol);

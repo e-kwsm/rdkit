@@ -114,7 +114,7 @@ RDKit::INT_VECT HierarchicalClusterPicker::pick(const double *distMat,
   // remaining clusters
   RDKit::INT_VECT picks;
   for (unsigned int i = 0; i < pickSize; i++) {
-    int pick;
+    int pick = 0;
     double minSumD2 = RDKit::MAX_DOUBLE;
     for (auto cxi1 = clusters[i].begin(); cxi1 != clusters[i].end(); ++cxi1) {
       int curPick = (*cxi1);
