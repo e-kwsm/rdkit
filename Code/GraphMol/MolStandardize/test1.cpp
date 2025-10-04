@@ -113,7 +113,7 @@ void testMetalDisconnector() {
                         << std::endl;
 
   MolStandardize::MetalDisconnector md;
-  unsigned int failedOp;
+  unsigned int failedOp = 0;
   {
     RWMOL_SPTR m(SmilesToMol("[O-]C(=O)C.[Mg+2][O-]C(=O)C", 0, false));
     MolOps::sanitizeMol(*m, failedOp, MolOps::SANITIZE_CLEANUP);
@@ -1434,7 +1434,7 @@ Positively charged tetravalent B	[B;v4;+1:1]>>[*;-1:1])DATA";
   MolStandardize::LargestFragmentChooser largestFragmentChooser;
   MolStandardize::Uncharger uncharger;
 
-  unsigned int failedOp;
+  unsigned int failedOp = 0;
   for (const auto &pair : ligandExpoSmiles) {
     RWMOL_SPTR rwmol(SmilesToMol(pair.first, 0, false));
     MolOps::sanitizeMol(

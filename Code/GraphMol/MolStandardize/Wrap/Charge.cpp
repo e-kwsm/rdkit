@@ -33,7 +33,7 @@ MolStandardize::Reionizer *reionizerFromData(const std::string &data,
   std::istringstream sstr(data);
   auto corrections =
       pythonObjectToVect<MolStandardize::ChargeCorrection>(chargeCorrections);
-  MolStandardize::Reionizer *res;
+  MolStandardize::Reionizer *res = nullptr;
   if (corrections) {
     res = new MolStandardize::Reionizer(sstr, *corrections);
   } else {

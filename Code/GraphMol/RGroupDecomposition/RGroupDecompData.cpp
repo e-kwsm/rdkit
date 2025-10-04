@@ -230,8 +230,8 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
 
   for (auto &position : results) {
     for (auto atom : position.matchedCore->atoms()) {
-      if (int atomLabel; atom->getAtomicNum() == 0 &&
-                         atom->getPropIfPresent(RLABEL, atomLabel)) {
+      if (int atomLabel = 0; atom->getAtomicNum() == 0 &&
+                             atom->getPropIfPresent(RLABEL, atomLabel)) {
         if (atomLabel > 0 && !params.removeAllHydrogenRGroupsAndLabels) {
           continue;
         }
@@ -379,7 +379,7 @@ void RGroupDecompData::relabelCore(
 
     Atom *atom = atm->second;
 
-    int rlabel;
+    int rlabel = 0;
     auto mapping = mappings.find(newLabel);
     if (mapping == mappings.end()) {
       rlabel = used_labels.next();

@@ -14,6 +14,7 @@
 #include <Geometry/Transform3D.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <Geometry/GridUtils.h>
+#include <cmath>
 
 namespace RDKit {
 namespace MolShapes {
@@ -21,7 +22,7 @@ namespace MolShapes {
 void computeConfBox(const Conformer &conf, RDGeom::Point3D &leftBottom,
                     RDGeom::Point3D &rightTop, const RDGeom::Transform3D *trans,
                     double padding) {
-  double xmin, xmax, ymin, ymax, zmin, zmax;
+  double xmin = NAN, xmax = NAN, ymin = NAN, ymax = NAN, zmin = NAN, zmax = NAN;
   xmin = ymin = zmin = 1.e8;
   xmax = ymax = zmax = -1.e8;
   unsigned int nAtms = conf.getNumAtoms();
@@ -195,7 +196,7 @@ double protrudeDistance(const Conformer &conf1, const Conformer &conf2,
       createShapeGrids(conf1, conf2, gridSpacing, bitsPerPoint, vdwScale,
                        stepSize, maxLayers, ignoreHs);
 
-  double res;
+  double res = NAN;
   if (allowReordering && (grd2.getOccupancyVect()->getTotalVal() <
                           grd1.getOccupancyVect()->getTotalVal())) {
     res = RDGeom::protrudeDistance(grd2, grd1);

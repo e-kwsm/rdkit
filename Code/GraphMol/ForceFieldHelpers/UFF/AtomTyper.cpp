@@ -537,7 +537,7 @@ bool getUFFBondStretchParams(const ROMol &mol, unsigned int idx1,
   auto params = ParamCollection::getParams();
   unsigned int idx[2] = {idx1, idx2};
   AtomicParamVect paramVect(2);
-  unsigned int i;
+  unsigned int i = 0;
   const Bond *bond = mol.getBondBetweenAtoms(idx1, idx2);
   bool res = bond != nullptr;
   for (i = 0; res && (i < 2); ++i) {
@@ -562,7 +562,7 @@ bool getUFFAngleBendParams(const ROMol &mol, unsigned int idx1,
   auto params = ParamCollection::getParams();
   unsigned int idx[3] = {idx1, idx2, idx3};
   AtomicParamVect paramVect(3);
-  unsigned int i;
+  unsigned int i = 0;
   const Bond *bond[2];
   bool res = true;
   for (i = 0; res && (i < 3); ++i) {
@@ -594,7 +594,7 @@ bool getUFFTorsionParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
   auto params = ParamCollection::getParams();
   unsigned int idx[4] = {idx1, idx2, idx3, idx4};
   AtomicParamVect paramVect(2);
-  unsigned int i;
+  unsigned int i = 0;
   const Bond *bond = mol.getBondBetweenAtoms(idx2, idx3);
   int atNum[2];
   Atom::HybridizationType hyb[2];
@@ -671,7 +671,7 @@ bool getUFFInversionParams(const ROMol &mol, unsigned int idx1,
   bool res = (mol.getBondBetweenAtoms(idx1, idx2) &&
               mol.getBondBetweenAtoms(idx2, idx3) &&
               mol.getBondBetweenAtoms(idx2, idx4));
-  unsigned int i;
+  unsigned int i = 0;
   // bool isAtom2C = false;
   bool isBoundToSP2O = false;
   unsigned int at2AtomicNum = 0;
@@ -716,7 +716,7 @@ bool getUFFVdWParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
   auto params = ParamCollection::getParams();
   unsigned int idx[2] = {idx1, idx2};
   AtomicParamVect paramVect(2);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; res && (i < 2); ++i) {
     const Atom *atom = mol.getAtomWithIdx(idx[i]);
     std::string atomKey = Tools::getAtomLabel(atom);

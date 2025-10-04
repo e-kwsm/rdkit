@@ -100,7 +100,7 @@ PyObject *GetSubstructMatches(T1 &mol, T2 &query, bool uniquify = true,
                               bool useQueryQueryMatches = false,
                               unsigned int maxMatches = 1000) {
   std::vector<MatchVectType> matches;
-  int matched;
+  int matched = 0;
   {
     NOGIL gil;
     matched = SubstructMatch(mol, query, matches, uniquify, true, useChirality,
