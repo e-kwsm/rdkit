@@ -87,7 +87,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     // get the dimensions of the array
     int nrows = PyArray_DIM((PyArrayObject *)descMatObj, 0);
     int ncols = PyArray_DIM((PyArrayObject *)descMatObj, 1);
-    int i;
+    int i = 0;
     CHECK_INVARIANT((nrows > 0) && (ncols > 0), "");
 
     npy_intp dMatLen = nrows * (nrows - 1) / 2;

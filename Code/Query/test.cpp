@@ -136,7 +136,7 @@ TEST_CASE("testFloatEquality") {
   REQUIRE(q.getTypeLabel().empty());
   q.setTypeLabel("FloatEquality");
 
-  Query<double> *newQ;
+  Query<double> *newQ = nullptr;
   newQ = q.copy();
   REQUIRE(!newQ->Match(0.0));
   REQUIRE(newQ->Match(1.0));
@@ -158,7 +158,7 @@ TEST_CASE("testSetQuery") {
   REQUIRE(q.Match(3));
   REQUIRE(!q.Match(-3));
 
-  Query<int> *newQ;
+  Query<int> *newQ = nullptr;
   newQ = q.copy();
   REQUIRE(!newQ->Match(0));
   REQUIRE(newQ->Match(1));
@@ -182,7 +182,7 @@ TEST_CASE("testAndQuery") {
   REQUIRE(q->Match(3));
   REQUIRE(!q->Match(-3));
 
-  Query<int> *newQ;
+  Query<int> *newQ = nullptr;
   newQ = q->copy();
   REQUIRE(!newQ->Match(0));
   REQUIRE(newQ->Match(1));
@@ -208,7 +208,7 @@ TEST_CASE("testOrQuery") {
   REQUIRE(q->Match(3));
   REQUIRE(q->Match(-3));
 
-  Query<int> *newQ;
+  Query<int> *newQ = nullptr;
   newQ = q->copy();
   REQUIRE(newQ->Match(0));
   REQUIRE(newQ->Match(1));
@@ -235,7 +235,7 @@ TEST_CASE("testXOrQuery") {
   REQUIRE(!q->Match(3));
   REQUIRE(q->Match(-3));
 
-  Query<int> *newQ;
+  Query<int> *newQ = nullptr;
   newQ = q->copy();
   REQUIRE(newQ->Match(-1));
   REQUIRE(newQ->Match(0));
@@ -255,7 +255,7 @@ TEST_CASE("testPointerAndCopyFoo") {
   REQUIRE(q.Match(6.1));
   REQUIRE(!q.Match(5.0));
 
-  Query<int, double, true> *newQ;
+  Query<int, double, true> *newQ = nullptr;
   newQ = q.copy();
   REQUIRE(newQ->Match(6.0));
   REQUIRE(newQ->Match(6.1));
@@ -266,7 +266,7 @@ TEST_CASE("testPointerAndCopyFoo") {
   REQUIRE(newQ2->Match(6.1));
   REQUIRE(!newQ2->Match(5.0));
 
-  Query<int, double, true> *newQ3;
+  Query<int, double, true> *newQ3 = nullptr;
   newQ3 = newQ2->copy();
   REQUIRE(newQ3->Match(6.0));
   REQUIRE(newQ3->Match(6.1));
@@ -290,7 +290,7 @@ TEST_CASE("testSetQueryWithDataFunc") {
   REQUIRE(q.Match("3"));
   REQUIRE(!q.Match("-3"));
 
-  Query<int, const char *, true> *newQ;
+  Query<int, const char *, true> *newQ = nullptr;
   newQ = q.copy();
   REQUIRE(!newQ->Match("0"));
   REQUIRE(newQ->Match("1"));

@@ -20,7 +20,7 @@ int main() {
   int n = 10;
   int m = 3;
   int dlen = n * (n - 1) / 2;
-  int i, j;
+  int i = 0, j = 0;
   auto *desc = new double[n * m];
   auto **desc2D = new double *[n];
 
