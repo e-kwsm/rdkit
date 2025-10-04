@@ -12,6 +12,8 @@
 #include "FileParserUtils.h"
 #include "MolSGroupParsing.h"
 
+#include <math.h>
+
 namespace RDKit {
 namespace SGroupParsing {
 
@@ -20,7 +22,7 @@ namespace SGroupParsing {
 unsigned int ParseSGroupIntField(const std::string &text, unsigned int line,
                                  unsigned int &pos, bool isFieldCounter) {
   ++pos;  // Account for separation space
-  unsigned int fieldValue;
+  unsigned int fieldValue = 0;
   size_t len = 3 - isFieldCounter;  // field counters are smaller
   try {
     fieldValue = FileParserUtils::toInt(text.substr(pos, len));
@@ -59,7 +61,7 @@ unsigned int ParseSGroupIntField(bool &ok, bool strictParsing,
 double ParseSGroupDoubleField(const std::string &text, unsigned int line,
                               unsigned int &pos) {
   size_t len = 10;
-  double fieldValue;
+  double fieldValue = NAN;
   try {
     fieldValue = FileParserUtils::toDouble(text.substr(pos, len));
   } catch (boost::bad_lexical_cast &) {
@@ -112,7 +114,7 @@ void ParseSGroupV2000STYLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  STY", "bad STY line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -171,7 +173,7 @@ void ParseSGroupV2000VectorDataLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   }
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -217,7 +219,7 @@ void ParseSGroupV2000SDILine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SDI", "bad SDI line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -273,7 +275,7 @@ void ParseSGroupV2000SSTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SST", "bad SST line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -321,7 +323,7 @@ void ParseSGroupV2000SMTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SMT", "bad SMT line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -358,7 +360,7 @@ void ParseSGroupV2000SLBLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SLB", "bad SLB line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -407,7 +409,7 @@ void ParseSGroupV2000SCNLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SCN", "bad SCN line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -456,7 +458,7 @@ void ParseSGroupV2000SDSLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 10) == "M  SDS EXP", "bad SDS line");
 
   unsigned int pos = 10;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -491,7 +493,7 @@ void ParseSGroupV2000SBVLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SBV", "bad SBV line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -540,7 +542,7 @@ void ParseSGroupV2000SDTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SDT", "bad SDT line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -601,7 +603,7 @@ void ParseSGroupV2000SDDLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SDD", "bad SDD line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -630,7 +632,7 @@ void ParseSGroupV2000SCDSEDLine(IDX_TO_SGROUP_MAP &sGroupMap,
   std::string type = text.substr(pos, 3);
   pos += 3;
 
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -695,7 +697,7 @@ void ParseSGroupV2000SPLLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SPL", "bad SPL line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -732,7 +734,7 @@ void ParseSGroupV2000SNCLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SNC", "bad SNC line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -782,7 +784,7 @@ void ParseSGroupV2000SAPLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SAP", "bad SAP line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -858,7 +860,7 @@ void ParseSGroupV2000SCLLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SCL", "bad SCL line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int sgIdx = ParseSGroupIntField(ok, strictParsing, text, line, pos);
   if (!ok) {
     return;
@@ -886,7 +888,7 @@ void ParseSGroupV2000SBTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
   PRECONDITION(text.substr(0, 6) == "M  SBT", "bad SBT line");
 
   unsigned int pos = 6;
-  bool ok;
+  bool ok = false;
   unsigned int nent =
       ParseSGroupIntField(ok, strictParsing, text, line, pos, true);
   if (!ok) {
@@ -974,8 +976,8 @@ void ParseV3000CStateLabel(RWMol *mol, SubstanceGroup &sgroup,
                            bool strictParsing) {
   stream.get();  // discard parentheses
 
-  unsigned int count;
-  unsigned int bondMark;
+  unsigned int count = 0;
+  unsigned int bondMark = 0;
   stream >> count >> bondMark;
 
   std::string type = sgroup.getProp<std::string>("TYPE");
@@ -1055,7 +1057,7 @@ std::string ParseV3000StringPropLabel(std::stringstream &stream) {
     // but the way that's done is by doubling it. So
     // FIELDINFO=""""
     // should assign the value \" to FIELDINFO
-    char chr;
+    char chr = 0;
     while (stream.get(chr)) {
       if (chr == '"') {
         nextChar = stream.peek();
@@ -1131,7 +1133,7 @@ void ParseV3000ParseLabel(const std::string &label,
       ParseV3000SAPLabel(mol, sgroup, lineStream, strictParsing);
     } else if (label == "PARENT") {
       // Store relationship until all SGroups have been read
-      unsigned int parentIdx;
+      unsigned int parentIdx = 0;
       if (lineStream.eof()) {
         std::ostringstream errout;
         errout << "PARENT label not found on line " << line;
@@ -1145,7 +1147,7 @@ void ParseV3000ParseLabel(const std::string &label,
       }
       sgroup.setProp<unsigned int>("PARENT", parentIdx);
     } else if (label == "COMPNO") {
-      unsigned int compno;
+      unsigned int compno = 0;
       lineStream >> compno;
       if (compno > 256u) {
         std::ostringstream errout;
@@ -1221,8 +1223,8 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
   }
 
   for (unsigned int si = 0; si < nSgroups; ++si) {
-    unsigned int sequenceId;
-    unsigned int externalId;
+    unsigned int sequenceId = 0;
+    unsigned int externalId = 0;
     std::string type;
 
     std::stringstream lineStream(tempStr);
@@ -1266,7 +1268,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
     }
 
     while (sgroup.getIsValid() && !lineStream.eof() && !lineStream.fail()) {
-      char spacer;
+      char spacer = 0;
       std::string label;
 
       lineStream.get(spacer);
@@ -1295,7 +1297,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
     lineStream.clear();
     lineStream.str(defaultString);
     while (sgroup.getIsValid() && !lineStream.eof() && !lineStream.fail()) {
-      char spacer;
+      char spacer = 0;
       std::string label;
 
       lineStream.get(spacer);
