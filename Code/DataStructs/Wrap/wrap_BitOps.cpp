@@ -49,7 +49,7 @@ python::list NeighborWrapper(python::object queries, python::object bvs,
   for (unsigned int i = 0; i < nqs; ++i) {
     const T *bv1 = python::extract<const T *>(queries[i])();
     double closest = -1;
-    unsigned nbr;
+    unsigned nbr = 0;
     for (unsigned int j = 0; j < nbvs; ++j) {
       const T *bv2 = python::extract<const T *>(bvs[j])();
       auto sim = metric(*bv1, *bv2);

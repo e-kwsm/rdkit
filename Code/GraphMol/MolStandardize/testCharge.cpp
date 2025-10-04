@@ -269,7 +269,7 @@ void testUnchargerProtonationOnly() {
   {
     // Uncharger options
     bool canonicalOrdering{false};
-    bool force;
+    bool force = false;
     bool protonationOnly{true};
     // simple test verifying that for protic compounds the behavior
     // doesn't change if the protonationOnly option is set
@@ -327,7 +327,7 @@ void testUnchargerProtonationOnly() {
   {
     // Uncharger options
     bool canonicalOrdering{false};
-    bool force;
+    bool force = false;
     bool protonationOnly{true};
 
     // Test the neutralization of a zwitterion, where the positive charge is a

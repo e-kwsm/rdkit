@@ -32,6 +32,7 @@
 // Guillaume GODIN access the AutoCorrelation 3D descriptors names in Dragon TDB
 
 #include <GraphMol/RDKitBase.h>
+#include <math.h>
 
 #include "AUTOCORR3D.h"
 #include "MolData3Ddescriptors.h"
@@ -106,7 +107,7 @@ void get3DautocorrelationDesc(double *dist3D, double *topologicaldistance,
   VectorXd Wr = getEigenVect(wr);
 
   double TDBmat[8][10];
-  double dtmp;
+  double dtmp = NAN;
 
   for (int i = 0; i < 10; i++) {
     double *Bimat = GetGeodesicMatrix(topologicaldistance, i + 1, numAtoms);
@@ -192,7 +193,7 @@ void get3DautocorrelationDescCustom(double *dist3D, double *topologicaldistance,
   VectorXd Wc = getEigenVect(customAtomArray);
 
   double TDBmat[10];
-  double dtmp;
+  double dtmp = NAN;
 
   for (int i = 0; i < 10; i++) {
     double *Bimat = GetGeodesicMatrix(topologicaldistance, i + 1, numAtoms);

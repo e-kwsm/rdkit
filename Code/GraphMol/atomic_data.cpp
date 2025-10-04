@@ -299,7 +299,7 @@ atomicData::atomicData(const std::string &dataLine) {
   while (token != tokens.end()) {
     istr.clear();
     istr.str(*token);
-    int tval;
+    int tval = 0;
     istr >> tval;
     valence.push_back(tval);
     ++token;

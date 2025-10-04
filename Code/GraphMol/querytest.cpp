@@ -53,7 +53,7 @@ void test1() {
   delete qA;
   qM.addAtom(new QueryAtom(8), true, true);
 
-  QueryBond *qB;
+  QueryBond *qB = nullptr;
   qB = new QueryBond(Bond::UNSPECIFIED);
   qB->setOwningMol(qM);
   qB->setBeginAtomIdx(0);
@@ -105,7 +105,7 @@ void test2() {
   m.addBond(2, 3, Bond::DOUBLE);
   MolOps::sanitizeMol(m);
 
-  QueryBond *qB;
+  QueryBond *qB = nullptr;
   qB = new QueryBond(Bond::SINGLE);
 
   CHECK_INVARIANT(!qB->Match(m.getBondWithIdx(0)), "");
@@ -297,7 +297,7 @@ void test5() {
   m.addBond(5, 6, Bond::SINGLE);
   MolOps::sanitizeMol(m);
 
-  unsigned int valenceProd;
+  unsigned int valenceProd = 0;
   valenceProd = queryAtomBondProduct(m.getAtomWithIdx(0));
   TEST_ASSERT(valenceProd == 1681);  // aromatic*aromatic = 41 * 41 = 1681
   valenceProd = queryAtomBondProduct(m.getAtomWithIdx(1));
@@ -517,7 +517,7 @@ void testIssue2892580() {
 
   auto *a = new Atom(6);
 
-  int massVal;
+  int massVal = 0;
   massVal = queryAtomMass(a);
   TEST_ASSERT(massVal == static_cast<int>(
                              std::round(12.011 * massIntegerConversionFactor)));

@@ -29,7 +29,7 @@ namespace python = boost::python;
 void ForceFieldAddDistanceConstraint(PyForceField *self, unsigned int idx1,
                                      unsigned int idx2, double minLen,
                                      double maxLen, double forceConstant) {
-  UFF::DistanceConstraintContrib *constraint;
+  UFF::DistanceConstraintContrib *constraint = nullptr;
   constraint = new UFF::DistanceConstraintContrib(
       self->field.get(), idx1, idx2, minLen, maxLen, forceConstant);
   self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
@@ -148,7 +148,7 @@ PyObject *PyForceField::positions() {
   PyObject *coordTuple = PyTuple_New(s);
   const RDGeom::PointPtrVect &p = this->field->positions();
   size_t i = 0;
-  PyObject *coordItem;
+  PyObject *coordItem = nullptr;
   for (const auto pptr : p) {
     for (size_t j = 0; j < 3; ++j) {
       coordItem = PyFloat_FromDouble((*pptr)[j]);
@@ -206,7 +206,7 @@ PyObject *PyMMFFMolProperties::getMMFFBondStretchParams(
     const RDKit::ROMol &mol, const unsigned int idx1,
     const unsigned int idx2) const {
   PyObject *res = nullptr;
-  unsigned int bondType;
+  unsigned int bondType = 0;
   ForceFields::MMFF::MMFFBond mmffBondStretchParams;
   if (mmffMolProperties->getMMFFBondStretchParams(mol, idx1, idx2, bondType,
                                                   mmffBondStretchParams)) {
@@ -222,7 +222,7 @@ PyObject *PyMMFFMolProperties::getMMFFAngleBendParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
     const unsigned int idx3) const {
   PyObject *res = nullptr;
-  unsigned int angleType;
+  unsigned int angleType = 0;
   ForceFields::MMFF::MMFFAngle mmffAngleBendParams;
   if (mmffMolProperties->getMMFFAngleBendParams(
           mol, idx1, idx2, idx3, angleType, mmffAngleBendParams)) {
@@ -238,7 +238,7 @@ PyObject *PyMMFFMolProperties::getMMFFStretchBendParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
     const unsigned int idx3) const {
   PyObject *res = nullptr;
-  unsigned int stretchBendType;
+  unsigned int stretchBendType = 0;
   ForceFields::MMFF::MMFFStbn mmffStretchBendParams;
   ForceFields::MMFF::MMFFBond mmffBondStretchParams[2];
   ForceFields::MMFF::MMFFAngle mmffAngleBendParams;
@@ -257,7 +257,7 @@ PyObject *PyMMFFMolProperties::getMMFFTorsionParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
     const unsigned int idx3, const unsigned int idx4) const {
   PyObject *res = nullptr;
-  unsigned int torType;
+  unsigned int torType = 0;
   ForceFields::MMFF::MMFFTor mmffTorsionParams;
   if (mmffMolProperties->getMMFFTorsionParams(mol, idx1, idx2, idx3, idx4,
                                               torType, mmffTorsionParams)) {

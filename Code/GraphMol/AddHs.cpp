@@ -119,7 +119,7 @@ std::map<unsigned int, std::vector<unsigned int>> getIsoMap(const ROMol &mol) {
     auto ba = bond->getBeginAtom();
     auto ea = bond->getEndAtom();
     int ha = -1;
-    unsigned int iso;
+    unsigned int iso = 0;
     if (ba->getAtomicNum() == 1 && ba->getIsotope() &&
         ea->getAtomicNum() != 1) {
       ha = ea->getIdx();
@@ -199,7 +199,7 @@ void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
   RDGeom::Point3D otherPos, atomPos;
 
   const Atom *nbr1 = nullptr, *nbr2 = nullptr, *nbr3 = nullptr;
-  const Bond *nbrBond;
+  const Bond *nbrBond = nullptr;
   ROMol::ADJ_ITER nbrIdx, endNbrs;
 
   switch (otherAtom->getDegree()) {
@@ -587,7 +587,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
       newAt->clearProp(common_properties::_isotopicHs);
     }
     std::vector<unsigned int>::const_iterator isoH = isoHs.begin();
-    unsigned int newIdx;
+    unsigned int newIdx = 0;
     newAt->clearComputedProps();
     // always convert explicit Hs
     unsigned int onumexpl = numExplicitHs[aidx];

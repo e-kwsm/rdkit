@@ -11,6 +11,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/PartialCharges/GasteigerCharges.h>
+#include <cmath>
 #include <vector>
 #include <algorithm>
 #include <boost/format.hpp>
@@ -28,7 +29,7 @@ double getLabuteAtomContribs(const ROMol &mol, std::vector<double> &Vi,
   if (!force && mol.hasProp(common_properties::_labuteAtomContribs)) {
     mol.getProp(common_properties::_labuteAtomContribs, Vi);
     mol.getProp(common_properties::_labuteAtomHContrib, hContrib);
-    double res;
+    double res = NAN;
     mol.getProp(common_properties::_labuteASA, res);
     return res;
   }
@@ -87,14 +88,14 @@ double getLabuteAtomContribs(const ROMol &mol, std::vector<double> &Vi,
 }
 double calcLabuteASA(const ROMol &mol, bool includeHs, bool force) {
   if (!force && mol.hasProp(common_properties::_labuteASA)) {
-    double res;
+    double res = NAN;
     mol.getProp(common_properties::_labuteASA, res);
     return res;
   }
   std::vector<double> contribs;
   contribs.resize(mol.getNumAtoms());
-  double hContrib;
-  double res;
+  double hContrib = NAN;
+  double res = NAN;
   res = getLabuteAtomContribs(mol, contribs, hContrib, includeHs, force);
   return res;
 }
@@ -345,13 +346,13 @@ double calcTPSA(const ROMol &mol, bool force, bool includeSandP) {
   std::string pname =
       (boost::format("%s-%s") % common_properties::_tpsa % includeSandP).str();
   if (!force && mol.hasProp(pname)) {
-    double res;
+    double res = NAN;
     mol.getProp(pname, res);
     return res;
   }
   std::vector<double> contribs;
   contribs.resize(mol.getNumAtoms());
-  double res;
+  double res = NAN;
   res = getTPSAAtomContribs(mol, contribs, force, includeSandP);
   return res;
 }
@@ -389,7 +390,7 @@ std::vector<double> calcSlogP_VSA(const ROMol &mol, std::vector<double> *bins,
   std::vector<double> res(lbins.size() + 1, 0);
 
   std::vector<double> vsaContribs(mol.getNumAtoms());
-  double tmp;
+  double tmp = NAN;
   getLabuteAtomContribs(mol, vsaContribs, tmp, true, force);
   std::vector<double> logpContribs(mol.getNumAtoms());
   std::vector<double> mrContribs(mol.getNumAtoms());
@@ -414,7 +415,7 @@ std::vector<double> calcSMR_VSA(const ROMol &mol, std::vector<double> *bins,
   std::vector<double> res(lbins.size() + 1, 0);
 
   std::vector<double> vsaContribs(mol.getNumAtoms());
-  double tmp;
+  double tmp = NAN;
   getLabuteAtomContribs(mol, vsaContribs, tmp, true, force);
   std::vector<double> logpContribs(mol.getNumAtoms());
   std::vector<double> mrContribs(mol.getNumAtoms());
@@ -440,7 +441,7 @@ std::vector<double> calcPEOE_VSA(const ROMol &mol, std::vector<double> *bins,
   std::vector<double> res(lbins.size() + 1, 0);
 
   std::vector<double> vsaContribs(mol.getNumAtoms());
-  double tmp;
+  double tmp = NAN;
   getLabuteAtomContribs(mol, vsaContribs, tmp, true, force);
 
   std::vector<double> chgs(mol.getNumAtoms(), 0.0);
@@ -457,7 +458,7 @@ std::vector<double> calcCustomProp_VSA(const ROMol &mol,
   std::vector<double> res(bins.size() + 1, 0);
 
   std::vector<double> vsaContribs(mol.getNumAtoms());
-  double tmp;
+  double tmp = NAN;
   getLabuteAtomContribs(mol, vsaContribs, tmp, true, force);
 
   std::vector<double> prop(mol.getNumAtoms(), 0.0);

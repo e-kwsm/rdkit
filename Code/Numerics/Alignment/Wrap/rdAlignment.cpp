@@ -43,19 +43,17 @@ class PointVectManager {
 void GetPointsFromPythonSequence(python::object &points,
                                  RDGeom::Point3DConstPtrVect &pts) {
   PyObject *pyObj = points.ptr();
-  unsigned int nrows, ncols;
-  double *data;
   if (PyArray_Check(pyObj)) {
     // get the dimensions of the array
     auto *ptsMat = reinterpret_cast<PyArrayObject *>(pyObj);
-    nrows = PyArray_DIM(ptsMat, 0);
-    ncols = PyArray_DIM(ptsMat, 1);
+    unsigned int nrows = PyArray_DIM(ptsMat, 0);
+    unsigned int ncols = PyArray_DIM(ptsMat, 1);
 
     if (ncols != 3) {
       throw_value_error("Wrong dimension for the points array");
     }
 
-    data = reinterpret_cast<double *>(PyArray_DATA(ptsMat));
+    double *data = reinterpret_cast<double *>(PyArray_DATA(ptsMat));
 
     for (unsigned int i = 0; i < nrows; i++) {
       auto *rpt =
@@ -63,7 +61,7 @@ void GetPointsFromPythonSequence(python::object &points,
       pts.push_back(rpt);
     }
   } else if (PySequence_Check(pyObj)) {
-    nrows = PySequence_Size(pyObj);
+    unsigned int nrows = PySequence_Size(pyObj);
     if (nrows <= 0) {
       throw_value_error("Empty sequence passed in");
     }
@@ -118,7 +116,6 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
 
   PyObject *weightsObj = weights.ptr();
   std::unique_ptr<RDNumeric::DoubleVector> wtsVec;
-  double *data;
   if (PyArray_Check(weightsObj)) {
     auto *wtsMat = reinterpret_cast<PyArrayObject *>(weightsObj);
     unsigned int nwts = PyArray_DIM(wtsMat, 0);
@@ -127,7 +124,7 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
           "Number of weights supplied do not match the number of points");
     }
     wtsVec.reset(new RDNumeric::DoubleVector(nwts));
-    data = reinterpret_cast<double *>(PyArray_DATA(wtsMat));
+    double *data = reinterpret_cast<double *>(PyArray_DATA(wtsMat));
     for (unsigned int i = 0; i < nwts; i++) {
       wtsVec->setVal(i, data[i]);
     }

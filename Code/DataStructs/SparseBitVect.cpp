@@ -295,7 +295,7 @@ std::string SparseBitVect::toString() const {
   RDKit::streamWrite(ss, tInt);
 
   int prev = -1;
-  unsigned int zeroes;
+  unsigned int zeroes = 0;
   for (int dp_bit : *dp_bits) {
     zeroes = dp_bit - prev - 1;
     RDKit::appendPackedIntToStream(ss, zeroes);
