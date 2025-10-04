@@ -8,7 +8,7 @@
 #define INFOGAINFUNC_H
 
 #include <RDGeneral/types.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDInfoTheory {
 

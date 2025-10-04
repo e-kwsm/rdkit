@@ -10,7 +10,7 @@
 //
 #include "PeriodicTable.h"
 
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <boost/tokenizer.hpp>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
