@@ -394,7 +394,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
                      boost::dynamic_bitset<> activeBonds) {
   // this is brutal - we have no degree 2 nodes - find the first possible degree
   // 3 node
-  int nsmall;
+  int nsmall = 0;
 
   // We've got a degree three node. The goal of what follows is to find the
   // three rings in which it's involved, push those onto our results, and
@@ -551,9 +551,9 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
 }
 
 int greatestComFac(long curfac, long nfac) {
-  long small;
-  long large;
-  long rem;
+  long small = 0;
+  long large = 0;
+  long rem = 0;
 
   // Determine which of the numbers is the larger, and which is the smaller
   large = (curfac > nfac) ? curfac : nfac;
