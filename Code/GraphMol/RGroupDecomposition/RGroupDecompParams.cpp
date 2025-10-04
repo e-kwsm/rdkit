@@ -224,7 +224,7 @@ bool RGroupDecompositionParameters::prepareCore(RWMol &core,
 
     if (atom->getAtomicNum() == 0) {
       if (!found && (autoLabels & MDLRGroupLabels)) {
-        unsigned int rgroup;
+        unsigned int rgroup = 0;
         if (atom->getPropIfPresent<unsigned int>(
                 common_properties::_MolFileRLabel, rgroup)) {
           if (setLabel(atom, rdcast<int>(rgroup), foundLabels, maxLabel,
@@ -278,7 +278,7 @@ bool RGroupDecompositionParameters::prepareCore(RWMol &core,
 
     clearInputLabels(atom);
 
-    int rlabel;
+    int rlabel = 0;
     if (atom->getPropIfPresent(RLABEL, rlabel)) {
       atomToLabel[atom->getIdx()] = rlabel;
     }
@@ -329,7 +329,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
   for (const auto atom : unlabeledCoreAtoms) {
     atom->calcImplicitValence(false);
     const auto atomIndex = atom->getIdx();
-    int dummiesToAdd;
+    int dummiesToAdd = 0;
     int maxNumDummies = 4 - static_cast<int>(atom->getDegree());
 
     // figure out the number of dummies to add
