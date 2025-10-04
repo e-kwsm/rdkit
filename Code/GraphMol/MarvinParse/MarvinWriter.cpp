@@ -42,6 +42,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <math.h>
 
 using namespace RDKit::SGroupWriting;
 
@@ -81,7 +82,7 @@ class MarvinCMLWriter {
     if (atom->hasProp(common_properties::_MolFileRLabel)) {
       marvinAtom->elementType = "R";
 
-      unsigned int rgroupRef;
+      unsigned int rgroupRef = 0;
       atom->getProp(common_properties::_MolFileRLabel, rgroupRef);
       marvinAtom->rgroupRef = (int)rgroupRef;
 
@@ -954,7 +955,7 @@ class MarvinCMLWriter {
         }
 
         double x = (rect2->upperLeft.x + rect1->lowerRight.x) / 2.0;
-        double y;
+        double y = NAN;
 
         // see if there is room between for the +
         if (rect2->lowerRight.x - rect1->upperLeft.x >= PLUS_SPACE) {
