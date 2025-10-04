@@ -65,18 +65,16 @@ double grad2(double *v, double *grad) {
 
 TEST_CASE("testLinearSearch") {
   int dim = 2;
-  double oLoc[2], oVal;
+  double oLoc[2];
   double grad[2], dir[2];
-  double nLoc[2], nVal;
-  int resCode;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
+  double nLoc[2], nVal = NAN;
+  int resCode = 0;
 
-  func = circ_0_0;
-  gradFunc = circ_0_0_grad;
+  double (*func)(double *) = circ_0_0;
+  double (*gradFunc)(double *, double *) = circ_0_0_grad;
   oLoc[0] = 0;
   oLoc[1] = 1.0;
-  oVal = func(oLoc);
+  double oVal = func(oLoc);
   REQUIRE_THAT(oVal, Catch::Matchers::WithinAbs(1.0, 1e-4));
   gradFunc(oLoc, grad);
   dir[0] = 0;
@@ -123,17 +121,15 @@ TEST_CASE("testLinearSearch") {
 
 TEST_CASE("testBFGSOptimization") {
   unsigned int dim = 2;
-  double oLoc[2], oVal;
-  double nVal;
-  unsigned int nIters;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
+  double oLoc[2];
+  double nVal = NAN;
+  unsigned int nIters = 0;
 
-  func = circ_0_0;
-  gradFunc = circ_0_0_grad;
+  double (*func)(double *) = circ_0_0;
+  double (*gradFunc)(double *, double *) = circ_0_0_grad;
   oLoc[0] = 0;
   oLoc[1] = 1.0;
-  oVal = func(oLoc);
+  double oVal = func(oLoc);
   REQUIRE_THAT(oVal, Catch::Matchers::WithinAbs(1.0, 1e-4));
 
   BFGSOpt::minimize(dim, oLoc, 1e-4, nIters, nVal, func, gradFunc);
