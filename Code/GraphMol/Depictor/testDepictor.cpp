@@ -28,6 +28,7 @@
 #include <Geometry/point.h>
 #include <Geometry/Transform3D.h>
 #include <RDGeneral/utils.h>
+#include <math.h>
 #include <cstdlib>
 #include <cmath>
 
@@ -211,7 +212,7 @@ void test2() {
   std::string ofile =
       rdbase + "/Code/GraphMol/Depictor/test_data/first_200.out.sdf";
   SDWriter writer(ofile);
-  ROMol *mol;
+  ROMol *mol = nullptr;
   while (1) {
     try {
       mol = smiSup.next();
@@ -235,7 +236,7 @@ void test3() {
   std::string ofile =
       rdbase + "/Code/GraphMol/Depictor/test_data/cis_trans_cpp.out.sdf";
   SDWriter writer(ofile);
-  ROMol *mol;
+  ROMol *mol = nullptr;
   while (1) {
     try {
       mol = smiSup.next();
@@ -334,12 +335,12 @@ void test4() {
 }
 
 void tempTest() {
-  int i;
+  int i = 0;
   RDGeom::Point3D pt1, pt2, pt3;
-  double cosT, sinT;
+  double cosT = NAN, sinT = NAN;
   RDGeom::Transform3D trans;
   RDGeom::Point3D rotnAxis;
-  double dt;
+  double dt = NAN;
   for (i = 0; i < 100; i++) {
     pt1.x = (double)(rand() % 1000);
     pt1.y = (double)(rand() % 1000);
@@ -388,7 +389,7 @@ void testIssue248() {
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
     int natms = m->getNumAtoms();
-    int i, j;
+    int i = 0, j = 0;
     for (i = 0; i < natms; i++) {
       const Conformer &conf = m->getConformer(confId);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -420,7 +421,7 @@ void testQueries() {
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
     int natms = m->getNumAtoms();
-    int i, j;
+    int i = 0, j = 0;
     for (i = 0; i < natms; i++) {
       const Conformer &conf = m->getConformer(confId);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -1096,8 +1097,8 @@ void testGenerate2DDepictionRefPatternMatchVect() {
   7  5  1  0
 M  END)RES"_ctab;
   auto cycloheptylPyrazole = "c1cc(C2CCCCCC2)[nH]n1"_smiles;
-  double msd;
-  bool raised;
+  double msd = NAN;
+  bool raised = false;
 
   // test using refPattern
   auto refPatt = "a1aan[nH]1"_smarts;
