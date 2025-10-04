@@ -48,7 +48,7 @@ std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
   std::stringstream ss;
 
   std::string symb = atom->getSymbol();
-  char at1, at2;
+  char at1 = 0, at2 = 0;
   switch (symb.length()) {
     case 0:
       at1 = ' ';
@@ -283,7 +283,7 @@ std::string MolToPDBBlock(const ROMol &imol, int confId, unsigned int flavor) {
   unsigned int ter_count = 0;
   unsigned int conect_count = 0;
 
-  const Conformer *conf;
+  const Conformer *conf = nullptr;
   if (confId < 0 && rwmol.getNumConformers() > 1) {
     int count = rwmol.getNumConformers();
     for (confId = 0; confId < count; confId++) {
