@@ -143,7 +143,7 @@ RGroupGa::RGroupGa(const RGroupDecompData &rGroupData,
 
   setPopsize(popsize);
 
-  uint32_t rngSeed;
+  uint32_t rngSeed = 0;
 
   if (params.gaRandomSeed >= 0) {
     rngSeed = params.gaRandomSeed;
