@@ -207,7 +207,7 @@ void ProbeTest(T &arg) {
 
 TEST_CASE("test1DiscreteVect") {
   DiscreteValueVect vect1(DiscreteValueVect::ONEBITVALUE, 30);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 15; ++i) {
     vect1.setVal(2 * i, 1);
   }
@@ -271,7 +271,7 @@ TEST_CASE("test1DiscreteVect") {
 TEST_CASE("test2DiscreteVectDists") {
   DiscreteValueVect v1(DiscreteValueVect::ONEBITVALUE, 30);
   DiscreteValueVect v2(DiscreteValueVect::ONEBITVALUE, 30);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 15; ++i) {
     v1.setVal(2 * i, 1);
     v2.setVal(2 * i, 1);
@@ -360,7 +360,7 @@ TEST_CASE("test2DiscreteVectDists") {
 
 TEST_CASE("test3DiscreteVectPickles") {
   DiscreteValueVect v1(DiscreteValueVect::ONEBITVALUE, 30);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 15; ++i) {
     v1.setVal(2 * i, 1);
   }
@@ -910,7 +910,7 @@ TEST_CASE("test8BitVectPickles") {
     std::string pklName = dirName + "test1.bin";
     std::ifstream inS;
     inS.open(pklName.c_str(), std::ios_base::binary);
-    unsigned int length;
+    unsigned int length = 0;
     inS >> length;
     auto *buff = new char[length];
     length = inS.readsome(buff, length);
@@ -1415,7 +1415,7 @@ TEST_CASE("test17Github3994") {
 
 TEST_CASE("test14RealVect") {
   RealValueVect vect1(30);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 15; ++i) {
     vect1.setVal(2 * i, 1.0);
   }
@@ -1453,7 +1453,7 @@ TEST_CASE("test14RealVect") {
 TEST_CASE("test15RealVectDists") {
   RealValueVect v1(30);
   RealValueVect v2(30);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 15; ++i) {
     v1.setVal(2 * i, 1.0);
     v2.setVal(2 * i, 1.0);
@@ -1485,7 +1485,7 @@ TEST_CASE("test15RealVectDists") {
 
 TEST_CASE("test16RealVectPickles") {
   RealValueVect v1(30);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 15; ++i) {
     v1.setVal(2 * i, 1.1);
   }
@@ -1535,7 +1535,7 @@ TEST_CASE("old main") {
   }
 
   stringstream ss(ios_base::binary | ios_base::out | ios_base::in);
-  int v1 = 4, v2 = 5, v3, v4;
+  int v1 = 4, v2 = 5, v3 = 0, v4 = 0;
 
   ss.write((const char *)&v1, sizeof(v1));
   ss.write((const char *)&v2, sizeof(v2));
