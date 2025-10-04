@@ -11,6 +11,7 @@
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/StringRect.h>
 #include <GraphMol/Chirality.h>
+#include <math.h>
 
 #include <cmath>
 #ifndef M_PI
@@ -285,7 +286,7 @@ bool doLinesIntersect(const Point2D &l1s, const Point2D &l1f,
     // parallel lines.
     return false;
   }
-  double s, t;
+  double s = NAN, t = NAN;
   s = (-s1_y * (l1s.x - l2s.x) + s1_x * (l1s.y - l2s.y)) / d;
   t = (s2_x * (l1s.y - l2s.y) - s2_y * (l1s.x - l2s.x)) / d;
 
@@ -404,7 +405,7 @@ void adjustLineEndForEllipse(const Point2D &centre, double xradius,
     double disc_rt = sqrt(disc);
     double t1 = (-B + disc_rt) / (2.0 * A);
     double t2 = (-B - disc_rt) / (2.0 * A);
-    double t;
+    double t = NAN;
     // prefer the t between 0 and 1, as that must be between the original
     // points.  If both are, prefer the lower, as that will be nearest p1,
     // so on the bit of the ellipse the line comes to first.
