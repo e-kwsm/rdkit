@@ -70,7 +70,7 @@ ROMol *MolFromSmiles(python::object ismiles, bool sanitize,
     replacements[python::extract<std::string>(item[0])] =
         python::extract<std::string>(item[1]);
   }
-  RWMol *newM;
+  RWMol *newM = nullptr;
   std::string smiles = pyObjectToString(ismiles);
   try {
     newM = SmilesToMol(smiles, 0, sanitize, &replacements);
@@ -91,7 +91,7 @@ ROMol *MolFromSmarts(python::object ismarts, bool mergeHs,
   }
   std::string smarts = pyObjectToString(ismarts);
 
-  RWMol *newM;
+  RWMol *newM = nullptr;
   try {
     newM = SmartsToMol(smarts, 0, mergeHs, &replacements);
   } catch (...) {
@@ -101,7 +101,7 @@ ROMol *MolFromSmarts(python::object ismarts, bool mergeHs,
 }
 ROMol *MolFromTPLFile(const std::string &filename, bool sanitize = true,
                       bool skipFirstConf = false) {
-  RWMol *newM;
+  RWMol *newM = nullptr;
   try {
     newM = TPLFileToMol(filename, sanitize, skipFirstConf);
   } catch (RDKit::BadFileException &e) {
@@ -117,7 +117,7 @@ ROMol *MolFromTPLBlock(python::object itplBlock, bool sanitize = true,
                        bool skipFirstConf = false) {
   std::istringstream inStream(pyObjectToString(itplBlock));
   unsigned int line = 0;
-  RWMol *newM;
+  RWMol *newM = nullptr;
   try {
     newM = TPLDataStreamToMol(&inStream, line, sanitize, skipFirstConf);
   } catch (...) {
@@ -282,7 +282,7 @@ ROMol *MolFromSVG(python::object imolBlock, bool sanitize, bool removeHs) {
 
 ROMol *MolFromMol2File(const std::string &molFilename, bool sanitize = true,
                        bool removeHs = true, bool cleanupSubstructures = true) {
-  RWMol *newM;
+  RWMol *newM = nullptr;
   try {
     newM = Mol2FileToMol(molFilename, sanitize, removeHs, Mol2Type::CORINA,
                          cleanupSubstructures);
@@ -299,7 +299,7 @@ ROMol *MolFromMol2Block(std::string mol2Block, bool sanitize = true,
                         bool removeHs = true,
                         bool cleanupSubstructures = true) {
   std::istringstream inStream(mol2Block);
-  RWMol *newM;
+  RWMol *newM = nullptr;
   try {
     newM = Mol2DataStreamToMol(inStream, sanitize, removeHs, Mol2Type::CORINA,
                                cleanupSubstructures);

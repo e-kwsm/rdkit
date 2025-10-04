@@ -34,6 +34,7 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/LocaleSwitcher.h>
+#include <cmath>
 #include <typeinfo>
 #include <exception>
 #include <charconv>
@@ -241,7 +242,7 @@ std::string parseEnhancedStereo(std::istream *inStream, unsigned int &line,
       const unsigned int count = FileParserUtils::toUnsigned(match[3], true);
       std::vector<Atom *> atoms;
       std::stringstream ss(match[4]);
-      unsigned int index;
+      unsigned int index = 0;
       for (size_t i = 0; i < count; ++i) {
         ss >> index;
         // atoms are 1 indexed in molfiles
@@ -291,7 +292,7 @@ std::string parseEnhancedStereo(std::istream *inStream, unsigned int &line,
 void ParseOldAtomList(RWMol *mol, const std::string_view &text,
                       unsigned int line) {
   PRECONDITION(mol, "bad mol");
-  unsigned int idx;
+  unsigned int idx = 0;
   try {
     idx = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(0, 3)) -
           1;
@@ -323,7 +324,7 @@ void ParseOldAtomList(RWMol *mol, const std::string_view &text,
       throw FileParseException(errout.str());
   }
 
-  int nQueries;
+  int nQueries = 0;
   try {
     nQueries = FileParserUtils::toInt(text.substr(9, 1));
   } catch (const std::out_of_range &) {
@@ -343,7 +344,7 @@ void ParseOldAtomList(RWMol *mol, const std::string_view &text,
   RANGE_CHECK(0, nQueries, 5);
   for (int i = 0; i < nQueries; i++) {
     int pos = 11 + i * 4;
-    int atNum;
+    int atNum = 0;
     try {
       atNum = FileParserUtils::toInt(text.substr(pos, 3));
     } catch (const std::out_of_range &) {
@@ -386,7 +387,7 @@ void ParseChargeLine(RWMol *mol, const std::string &text, bool firstCall,
     }
   }
 
-  int ie, nent;
+  int ie = 0, nent = 0;
   try {
     nent = FileParserUtils::toInt(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -397,7 +398,7 @@ void ParseChargeLine(RWMol *mol, const std::string &text, bool firstCall,
   }
   int spos = 9;
   for (ie = 0; ie < nent; ie++) {
-    int aid, chg;
+    int aid = 0, chg = 0;
     try {
       aid = FileParserUtils::toInt(text.substr(spos, 4));
       spos += 4;
@@ -426,7 +427,7 @@ void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
     }
   }
 
-  int ie, nent;
+  int ie = 0, nent = 0;
   try {
     nent = FileParserUtils::toInt(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -437,7 +438,7 @@ void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
   }
   int spos = 9;
   for (ie = 0; ie < nent; ie++) {
-    int aid, rad;
+    int aid = 0, rad = 0;
     std::ostringstream errout;
 
     try {
@@ -496,7 +497,7 @@ void ParseIsotopeLine(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  ISO"), "bad isotope line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -507,7 +508,7 @@ void ParseIsotopeLine(RWMol *mol, const std::string &text, unsigned int line) {
   }
   unsigned int spos = 9;
   for (unsigned int ie = 0; ie < nent; ie++) {
-    unsigned int aid;
+    unsigned int aid = 0;
     try {
       aid = FileParserUtils::stripSpacesAndCast<unsigned int>(
           text.substr(spos, 4));
@@ -538,7 +539,7 @@ void ParseSubstitutionCountLine(RWMol *mol, const std::string &text,
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  SUB"), "bad SUB line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -549,7 +550,7 @@ void ParseSubstitutionCountLine(RWMol *mol, const std::string &text,
   }
   unsigned int spos = 9;
   for (unsigned int ie = 0; ie < nent; ie++) {
-    unsigned int aid;
+    unsigned int aid = 0;
     int count = 0;
     try {
       aid = FileParserUtils::stripSpacesAndCast<unsigned int>(
@@ -609,7 +610,7 @@ void ParseUnsaturationLine(RWMol *mol, const std::string &text,
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  UNS"), "bad UNS line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -620,7 +621,7 @@ void ParseUnsaturationLine(RWMol *mol, const std::string &text,
   }
   unsigned int spos = 9;
   for (unsigned int ie = 0; ie < nent; ie++) {
-    unsigned int aid;
+    unsigned int aid = 0;
     int count = 0;
     try {
       aid = FileParserUtils::stripSpacesAndCast<unsigned int>(
@@ -662,7 +663,7 @@ void ParseRingBondCountLine(RWMol *mol, const std::string &text,
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  RBC"), "bad RBC line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -673,7 +674,7 @@ void ParseRingBondCountLine(RWMol *mol, const std::string &text,
   }
   unsigned int spos = 9;
   for (unsigned int ie = 0; ie < nent; ie++) {
-    unsigned int aid;
+    unsigned int aid = 0;
     int count = 0;
     try {
       aid = FileParserUtils::stripSpacesAndCast<unsigned int>(
@@ -734,7 +735,7 @@ void ParseZCHLine(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  ZCH"), "bad ZCH line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -785,7 +786,7 @@ void ParseHYDLine(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  HYD"), "bad HYD line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -839,7 +840,7 @@ void ParseZBOLine(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  ZBO"), "bad ZBO line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -900,7 +901,7 @@ void ParseMarvinSmartsLine(RWMol *mol, const std::string &text,
     return;
   }
 
-  unsigned int idx;
+  unsigned int idx = 0;
   std::string idxTxt = text.substr(atomNumStart, smartsStart - atomNumStart);
   try {
     idx = FileParserUtils::stripSpacesAndCast<unsigned int>(idxTxt) - 1;
@@ -947,7 +948,7 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  APO"), "bad APO line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -1020,7 +1021,7 @@ void ParseLinkNodeLine(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 6) == std::string("M  LIN"), "bad LIN line");
 
-  unsigned int nent;
+  unsigned int nent = 0;
   try {
     nent = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -1136,7 +1137,7 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(text.substr(0, 6) == std::string("M  ALS"),
                "bad atom list line");
 
-  unsigned int idx;
+  unsigned int idx = 0;
   try {
     idx = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(7, 3)) -
           1;
@@ -1148,7 +1149,7 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
   }
   URANGE_CHECK(idx, mol->getNumAtoms());
 
-  int nQueries;
+  int nQueries = 0;
   try {
     nQueries = FileParserUtils::toInt(text.substr(10, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -1258,7 +1259,7 @@ void ParseV3000RGroups(RWMol *mol, Atom *&atom, std::string_view text,
            << ". Missing values.";
     throw FileParseException(errout.str());
   }
-  unsigned int nRs;
+  unsigned int nRs = 0;
   try {
     nRs = FileParserUtils::stripSpacesAndCast<unsigned int>(splitToken[0]);
   } catch (boost::bad_lexical_cast &) {
@@ -1273,7 +1274,7 @@ void ParseV3000RGroups(RWMol *mol, Atom *&atom, std::string_view text,
     throw FileParseException(errout.str());
   }
   for (unsigned int i = 0; i < nRs; ++i) {
-    unsigned int rLabel;
+    unsigned int rLabel = 0;
     try {
       rLabel =
           FileParserUtils::stripSpacesAndCast<unsigned int>(splitToken[i + 1]);
@@ -1297,7 +1298,7 @@ void ParseRGroupLabels(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(text.substr(0, 6) == std::string("M  RGP"),
                "bad R group label line");
 
-  int nLabels;
+  int nLabels = 0;
   try {
     nLabels = FileParserUtils::toInt(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -1309,7 +1310,7 @@ void ParseRGroupLabels(RWMol *mol, const std::string &text, unsigned int line) {
 
   for (int i = 0; i < nLabels; i++) {
     int pos = 10 + i * 8;
-    unsigned int atIdx;
+    unsigned int atIdx = 0;
     try {
       atIdx = FileParserUtils::stripSpacesAndCast<unsigned int>(
           text.substr(pos, 3));
@@ -1319,7 +1320,7 @@ void ParseRGroupLabels(RWMol *mol, const std::string &text, unsigned int line) {
              << line;
       throw FileParseException(errout.str());
     }
-    unsigned int rLabel;
+    unsigned int rLabel = 0;
     try {
       rLabel = FileParserUtils::stripSpacesAndCast<unsigned int>(
           text.substr(pos + 4, 3));
@@ -1361,7 +1362,7 @@ void ParseAtomAlias(RWMol *mol, std::string text, const std::string &nextLine,
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 2) == std::string("A "), "bad atom alias line");
 
-  unsigned int idx;
+  unsigned int idx = 0;
   try {
     idx = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(3, 3)) -
           1;
@@ -1380,7 +1381,7 @@ void ParseAtomValue(RWMol *mol, std::string text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 2) == std::string("V "), "bad atom value line");
 
-  unsigned int idx;
+  unsigned int idx = 0;
   try {
     idx = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(3, 3)) -
           1;
@@ -1428,7 +1429,7 @@ void lookupAtomicNumber(Atom *res, const std::string &symb,
 Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
                            unsigned int line, bool strictParsing) {
   std::string symb;
-  int massDiff, chg, hCount;
+  int massDiff = 0, chg = 0, hCount = 0;
 
   if ((strictParsing && text.size() < 34) || text.size() < 32) {
     std::ostringstream errout;
@@ -1507,7 +1508,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
       if (symb.length() > 1 && symb >= "R0" && symb <= "R99") {
         std::string rlabel = "";
         rlabel = symb.substr(1, symb.length() - 1);
-        int rnumber;
+        int rnumber = 0;
         try {
           rnumber = boost::lexical_cast<int>(rlabel);
         } catch (boost::bad_lexical_cast &) {
@@ -1687,7 +1688,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
 }
 
 Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
-  unsigned int idx1, idx2, bType, stereo;
+  unsigned int idx1 = 0, idx2 = 0, bType = 0, stereo = 0;
   int spos = 0;
 
   if (text.size() < 9) {
@@ -1748,7 +1749,7 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
       // it's a query bond of some type
       res = new QueryBond;
       if (bType == 8) {
-        BOND_NULL_QUERY *q;
+        BOND_NULL_QUERY *q = nullptr;
         q = makeBondNullQuery();
         res->setQuery(q);
       } else if (bType == 5) {
@@ -1761,7 +1762,7 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
         res->setQuery(makeDoubleOrAromaticBondQuery());
         res->setProp(common_properties::_MolFileBondQuery, 1);
       } else {
-        BOND_NULL_QUERY *q;
+        BOND_NULL_QUERY *q = nullptr;
         q = makeBondNullQuery();
         res->setQuery(q);
         BOOST_LOG(rdWarningLog)
@@ -2179,7 +2180,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
       }
       if (token[0] == 'R' && token >= "R0" && token <= "R99") {
         auto rlabel = token.substr(1, token.length() - 1);
-        int rnumber;
+        int rnumber = 0;
         try {
           rnumber = boost::lexical_cast<int>(rlabel);
         } catch (boost::bad_lexical_cast &) {
@@ -2279,8 +2280,8 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
       // "absolute atomic weight" (whatever that means).
       // Online examples seem to have integer (isotope) values and Marvin
       // won't even read something that has a float. We'll go with the int
-      int v;
-      double dv;
+      int v = 0;
+      double dv = NAN;
       try {
         v = FileParserUtils::toInt(val);
       } catch (boost::bad_lexical_cast &) {
@@ -2702,7 +2703,7 @@ void ParseV3000BondBlock(std::istream *inStream, unsigned int &line,
       errout << "bond line " << line << " is too short";
       throw FileParseException(errout.str());
     }
-    Bond *bond;
+    Bond *bond = nullptr;
     unsigned int bondIdx = 0;
     std::from_chars(splitLine[0].data(),
                     splitLine[0].data() + splitLine[0].size(), bondIdx);
@@ -2746,7 +2747,7 @@ void ParseV3000BondBlock(std::istream *inStream, unsigned int &line,
         // it's a query bond of some type
         bond = new QueryBond;
         if (bType == 8) {
-          BOND_NULL_QUERY *q;
+          BOND_NULL_QUERY *q = nullptr;
           q = makeBondNullQuery();
           bond->setQuery(q);
         } else if (bType == 5) {
@@ -2759,7 +2760,7 @@ void ParseV3000BondBlock(std::istream *inStream, unsigned int &line,
           bond->setQuery(makeDoubleOrAromaticBondQuery());
           bond->setProp(common_properties::_MolFileBondQuery, 1);
         } else {
-          BOND_NULL_QUERY *q;
+          BOND_NULL_QUERY *q = nullptr;
           q = makeBondNullQuery();
           bond->setQuery(q);
           BOOST_LOG(rdWarningLog)

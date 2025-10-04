@@ -186,7 +186,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
     RDKit::streamWrite(ss, versionPatch);
 
     // information about the catalog itself:
-    int tmpUInt;
+    int tmpUInt = 0;
     tmpUInt = this->getFPLength();
     RDKit::streamWrite(ss, tmpUInt);
     tmpUInt = this->getNumEntries();
@@ -232,18 +232,18 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   //------------------------------------
   //! fills the contents of this object from a stream containing a \c pickle
   void initFromStream(std::istream &ss) {
-    int tmpInt;
+    int tmpInt = 0;
     // FIX: at the moment we ignore the header info:
     RDKit::streamRead(ss, tmpInt);
     RDKit::streamRead(ss, tmpInt);
     RDKit::streamRead(ss, tmpInt);
     RDKit::streamRead(ss, tmpInt);
 
-    unsigned int tmpUInt;
+    unsigned int tmpUInt = 0;
     RDKit::streamRead(ss, tmpUInt);  // fp length
     this->setFPLength(tmpUInt);
 
-    unsigned int numEntries;
+    unsigned int numEntries = 0;
     RDKit::streamRead(ss, numEntries);
     // std::cout << "<<<-------------------------------" << std::endl;
     // std::cout << "\tlength: " << getFPLength() << " " << numEntries <<
@@ -269,7 +269,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
     // and, finally, the adjacency list:
     for (unsigned int i = 0; i < numEntries; i++) {
-      unsigned int nNeighbors;
+      unsigned int nNeighbors = 0;
       RDKit::streamRead(ss, nNeighbors);
       for (unsigned int j = 0; j < nNeighbors; j++) {
         RDKit::streamRead(ss, tmpInt);
@@ -344,7 +344,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
     // But for reasons unknown setS results in compile
     // errors while using adjacent_vertices.
     typename CAT_GRAPH_TRAITS::edge_descriptor edge;
-    bool found;
+    bool found = false;
     boost::tie(edge, found) = boost::edge(boost::vertex(id1, d_graph),
                                           boost::vertex(id2, d_graph), d_graph);
     if (!found) {

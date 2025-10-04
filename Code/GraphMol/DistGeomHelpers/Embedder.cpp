@@ -408,7 +408,7 @@ bool generateInitialCoords(RDGeom::PointPtrVect *positions,
                                                embedParams.randNegEig,
                                                embedParams.numZeroFail);
   } else {
-    double boxSize;
+    double boxSize = NAN;
     if (embedParams.boxSizeMult > 0) {
       boxSize = 5. * embedParams.boxSizeMult;
     } else {

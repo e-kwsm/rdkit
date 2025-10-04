@@ -1746,15 +1746,12 @@ M  END
     auto useLegacy = GENERATE(true, false);
     CAPTURE(useLegacy);
     UseLegacyStereoPerceptionFixture fx(useLegacy);
-    const char *molblock;
     MolStandardize::PipelineResult result;
     std::unique_ptr<RWMol> parentMol;
     std::string parentSmiles;
-    const Bond *wavy;
-    const Bond *doubleBond;
 
     // simplest case: wavy bond adjacent a double bond
-    molblock = R"(
+    const char *molblock = R"(
   Mrv2311 04172413232D          
 
   0  0  0     0  0            999 V3000
@@ -1801,7 +1798,7 @@ M  END
     Chirality::reapplyMolBlockWedging(*parentMol);
 
     // no wavy bond is expected to be found
-    wavy = nullptr;
+    const Bond *wavy = nullptr;
     for (auto bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
@@ -1812,7 +1809,7 @@ M  END
     REQUIRE(wavy == nullptr);
 
     // the double bond should have stereo type STEREOANY
-    doubleBond = nullptr;
+    const Bond *doubleBond = nullptr;
     for (auto bond : parentMol->bonds()) {
       auto bondType = bond->getBondType();
       if (bondType == Bond::DOUBLE) {

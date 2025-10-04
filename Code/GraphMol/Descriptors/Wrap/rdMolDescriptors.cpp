@@ -36,6 +36,7 @@
 #include <GraphMol/Descriptors/MolDescriptors3D.h>
 #endif
 
+#include <cmath>
 #include <vector>
 
 namespace python = boost::python;
@@ -115,7 +116,7 @@ python::list computeCrippenContribs(
 python::tuple calcCrippenDescriptors(const RDKit::ROMol &mol,
                                      bool includeHs = true,
                                      bool force = false) {
-  double logp, mr;
+  double logp = NAN, mr = NAN;
   RDKit::Descriptors::calcCrippenDescriptors(mol, logp, mr, includeHs, force);
   return python::make_tuple(logp, mr);
 }
@@ -222,10 +223,10 @@ RDKit::SparseIntVect<std::int32_t> *GetAtomPairFingerprint(
   std::unique_ptr<std::vector<std::uint32_t>> invvect = pythonObjectToVect(
       atomInvariants,
       static_cast<unsigned int>(1 << RDKit::AtomPairs::codeSize));
-  RDKit::SparseIntVect<std::int32_t> *res;
-  res = RDKit::AtomPairs::getAtomPairFingerprint(
-      mol, minLength, maxLength, fvect.get(), ivect.get(), invvect.get(),
-      includeChirality, use2D, confId);
+  RDKit::SparseIntVect<std::int32_t> *res =
+      RDKit::AtomPairs::getAtomPairFingerprint(
+          mol, minLength, maxLength, fvect.get(), ivect.get(), invvect.get(),
+          includeChirality, use2D, confId);
   return res;
 }
 RDKit::SparseIntVect<std::int32_t> *GetHashedAtomPairFingerprint(
@@ -240,10 +241,10 @@ RDKit::SparseIntVect<std::int32_t> *GetHashedAtomPairFingerprint(
   std::unique_ptr<std::vector<std::uint32_t>> invvect = pythonObjectToVect(
       atomInvariants,
       static_cast<unsigned int>(1 << RDKit::AtomPairs::codeSize));
-  RDKit::SparseIntVect<std::int32_t> *res;
-  res = RDKit::AtomPairs::getHashedAtomPairFingerprint(
-      mol, nBits, minLength, maxLength, fvect.get(), ivect.get(), invvect.get(),
-      includeChirality, use2D, confId);
+  RDKit::SparseIntVect<std::int32_t> *res =
+      RDKit::AtomPairs::getHashedAtomPairFingerprint(
+          mol, nBits, minLength, maxLength, fvect.get(), ivect.get(),
+          invvect.get(), includeChirality, use2D, confId);
   return res;
 }
 
@@ -265,10 +266,10 @@ RDKit::SparseIntVect<boost::int64_t> *GetTopologicalTorsionFingerprint(
     throw_value_error(errout.str());
   }
 
-  RDKit::SparseIntVect<boost::int64_t> *res;
-  res = RDKit::AtomPairs::getTopologicalTorsionFingerprint(
-      mol, targetSize, fvect.get(), ivect.get(), invvect.get(),
-      includeChirality);
+  RDKit::SparseIntVect<boost::int64_t> *res =
+      RDKit::AtomPairs::getTopologicalTorsionFingerprint(
+          mol, targetSize, fvect.get(), ivect.get(), invvect.get(),
+          includeChirality);
   return res;
 }
 
@@ -283,10 +284,10 @@ RDKit::SparseIntVect<boost::int64_t> *GetHashedTopologicalTorsionFingerprint(
   std::unique_ptr<std::vector<std::uint32_t>> invvect = pythonObjectToVect(
       atomInvariants,
       static_cast<unsigned int>(1 << RDKit::AtomPairs::codeSize));
-  RDKit::SparseIntVect<boost::int64_t> *res;
-  res = RDKit::AtomPairs::getHashedTopologicalTorsionFingerprint(
-      mol, nBits, targetSize, fvect.get(), ivect.get(), invvect.get(),
-      includeChirality);
+  RDKit::SparseIntVect<boost::int64_t> *res =
+      RDKit::AtomPairs::getHashedTopologicalTorsionFingerprint(
+          mol, nBits, targetSize, fvect.get(), ivect.get(), invvect.get(),
+          includeChirality);
   return res;
 }
 
@@ -302,10 +303,10 @@ ExplicitBitVect *GetHashedTopologicalTorsionFingerprintAsBitVect(
   std::unique_ptr<std::vector<std::uint32_t>> invvect = pythonObjectToVect(
       atomInvariants,
       static_cast<unsigned int>(1 << RDKit::AtomPairs::codeSize));
-  ExplicitBitVect *res;
-  res = RDKit::AtomPairs::getHashedTopologicalTorsionFingerprintAsBitVect(
-      mol, nBits, targetSize, fvect.get(), ivect.get(), invvect.get(),
-      nBitsPerEntry, includeChirality);
+  ExplicitBitVect *res =
+      RDKit::AtomPairs::getHashedTopologicalTorsionFingerprintAsBitVect(
+          mol, nBits, targetSize, fvect.get(), ivect.get(), invvect.get(),
+          nBitsPerEntry, includeChirality);
   return res;
 }
 
@@ -321,10 +322,10 @@ ExplicitBitVect *GetHashedAtomPairFingerprintAsBitVect(
   std::unique_ptr<std::vector<std::uint32_t>> invvect = pythonObjectToVect(
       atomInvariants,
       static_cast<unsigned int>(1 << RDKit::AtomPairs::codeSize));
-  ExplicitBitVect *res;
-  res = RDKit::AtomPairs::getHashedAtomPairFingerprintAsBitVect(
-      mol, nBits, minLength, maxLength, fvect.get(), ivect.get(), invvect.get(),
-      nBitsPerEntry, includeChirality, use2D, confId);
+  ExplicitBitVect *res =
+      RDKit::AtomPairs::getHashedAtomPairFingerprintAsBitVect(
+          mol, nBits, minLength, maxLength, fvect.get(), ivect.get(),
+          invvect.get(), nBitsPerEntry, includeChirality, use2D, confId);
   return res;
 }
 
@@ -396,7 +397,7 @@ MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius, int nBits,
     python::dict typecheck = python::extract<python::dict>(bitInfo);
     bitInfoMap = new RDKit::MorganFingerprints::BitInfoMap();
   }
-  RDKit::SparseIntVect<std::uint32_t> *res;
+  RDKit::SparseIntVect<std::uint32_t> *res = nullptr;
   if (nBits < 0) {
     res = RDKit::MorganFingerprints::getFingerprint(
         mol, static_cast<unsigned int>(radius), invars, froms, useChirality,
@@ -530,8 +531,7 @@ GetMorganFingerprintBV(const RDKit::ROMol &mol, unsigned int radius,
     python::dict typecheck = python::extract<python::dict>(bitInfo);
     bitInfoMap = new RDKit::MorganFingerprints::BitInfoMap();
   }
-  ExplicitBitVect *res;
-  res = RDKit::MorganFingerprints::getFingerprintAsBitVect(
+  ExplicitBitVect *res = RDKit::MorganFingerprints::getFingerprintAsBitVect(
       mol, radius, nBits, invars, froms.get(), useChirality, useBondTypes,
       false, bitInfoMap, includeRedundantEnvironments);
   if (bitInfoMap) {

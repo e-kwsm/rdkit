@@ -134,7 +134,7 @@ void Normalizer::normalizeInPlace(RWMol &mol) {
         constexpr unsigned int sanitizeOps = MolOps::SANITIZE_ALL ^
                                              MolOps::SANITIZE_CLEANUP ^
                                              MolOps::SANITIZE_PROPERTIES;
-        unsigned int failed;
+        unsigned int failed = 0;
         try {
           MolOps::sanitizeMol(mol, failed, sanitizeOps);
         } catch (MolSanitizeException &) {
@@ -240,7 +240,7 @@ SmilesMolPair Normalizer::applyTransform(const ROMOL_SPTR &mol,
       // shared_ptr<ROMol> p0( new RWMol(*pdt[0]) );
       //				std::cout << MolToSmiles(*p0) <<
       // std::endl;
-      unsigned int failed;
+      unsigned int failed = 0;
       try {
         auto *tmol = static_cast<RWMol *>(pdt.front().get());
         // we'll allow atoms with a valence that's too high to make it

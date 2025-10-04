@@ -109,7 +109,7 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
     if (tempStr.substr(0, 4) != "$MOL") {
       throw ChemicalReactionParserException("$MOL header not found");
     }
-    ROMol *react;
+    ROMol *react = nullptr;
     try {
       react = MolFromMolDataStream(inStream, line, params).release();
     } catch (FileParseException &e) {
@@ -132,7 +132,7 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
     if (tempStr.substr(0, 4) != "$MOL") {
       throw ChemicalReactionParserException("$MOL header not found");
     }
-    ROMol *prod;
+    ROMol *prod = nullptr;
     try {
       prod = MolFromMolDataStream(inStream, line, params).release();
     } catch (FileParseException &e) {
@@ -161,7 +161,7 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
     agentParams.sanitize = false;
     agentParams.removeHs = false;
     agentParams.strictParsing = params.strictParsing;
-    ROMol *agent;
+    ROMol *agent = nullptr;
     try {
       agent = MolFromMolDataStream(inStream, line, agentParams).release();
     } catch (FileParseException &e) {
@@ -212,8 +212,8 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
   rxn.reset(new ChemicalReaction());
   const bool expectMEND = false;
   for (unsigned int i = 0; i < nReacts; ++i) {
-    RWMol *react;
-    unsigned int natoms, nbonds;
+    RWMol *react = nullptr;
+    unsigned int natoms = 0, nbonds = 0;
     bool chiralityPossible = false;
     Conformer *conf = nullptr;
     react = new RWMol();
@@ -245,8 +245,8 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
     throw FileParseException("BEGIN PRODUCT line not found");
   }
   for (unsigned int i = 0; i < nProds; ++i) {
-    RWMol *prod;
-    unsigned int natoms, nbonds;
+    RWMol *prod = nullptr;
+    unsigned int natoms = 0, nbonds = 0;
     bool chiralityPossible = false;
     Conformer *conf = nullptr;
     prod = new RWMol();
@@ -281,8 +281,8 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
     }
   }
   for (unsigned int i = 0; i < nAgents; ++i) {
-    RWMol *agent;
-    unsigned int natoms, nbonds;
+    RWMol *agent = nullptr;
+    unsigned int natoms = 0, nbonds = 0;
     bool chiralityPossible = false;
     Conformer *conf = nullptr;
     agent = new RWMol();

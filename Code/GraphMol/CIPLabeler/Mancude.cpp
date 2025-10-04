@@ -134,7 +134,7 @@ void RelaxTypes(std::vector<Type> &types, const CIPMol &mol) {
 // Mark mol atoms in the same resonant part of the mol.
 void VisitPart(std::vector<int> &parts, const std::vector<Type> &types,
                int part, Atom *atom, const CIPMol &mol) {
-  Atom *next;
+  Atom *next = nullptr;
   do {
     next = nullptr;
     for (auto &bond : mol.getBonds(atom)) {

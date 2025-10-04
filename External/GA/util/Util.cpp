@@ -22,8 +22,8 @@ namespace GarethUtil {
 using namespace std;
 
 string currentTime() {
-  time_t rawtime;
-  struct tm *timeinfo;
+  time_t rawtime = 0;
+  struct tm *timeinfo = nullptr;
   char buffer[80];
 
   time(&rawtime);

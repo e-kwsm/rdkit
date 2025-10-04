@@ -50,7 +50,7 @@ static Atom *CreateAAAtom(RWMol *mol, const char *name,
 }
 
 static void CreateAABond(RWMol *mol, Atom *beg, Atom *end, unsigned int order) {
-  Bond *bond;
+  Bond *bond = nullptr;
   if (order == 2) {
     bond = new Bond(Bond::DOUBLE);
   } else {
@@ -1077,7 +1077,7 @@ RWMol *SequenceToMol(const char *seq, bool sanitize, int flavor) {
   if (!seq) {
     return (RWMol *)nullptr;
   }
-  RWMol *mol;
+  RWMol *mol = nullptr;
 
   switch (flavor) {
     /* Protein */
@@ -1677,7 +1677,7 @@ static const char *ParseHELMNucleic(RWMol *mol, const char *ptr,
 
 static bool ParseHELM(RWMol *mol, const char *ptr) {
   std::map<std::string, std::vector<HELMMonomer>> seqs;
-  const char *orig;
+  const char *orig = nullptr;
   char chain[2];
   chain[0] = 'A';
   chain[1] = '\0';
@@ -1774,10 +1774,10 @@ static bool ParseHELM(RWMol *mol, const char *ptr) {
     std::string id2(orig, ptr - orig);
     ptr++;
 
-    unsigned int res1;
-    unsigned int res2;
-    unsigned int res1r;
-    unsigned int res2r;
+    unsigned int res1 = 0;
+    unsigned int res2 = 0;
+    unsigned int res1r = 0;
+    unsigned int res2r = 0;
 
     if (*ptr >= '1' && *ptr <= '9') {
       res1 = (*ptr++) - '0';

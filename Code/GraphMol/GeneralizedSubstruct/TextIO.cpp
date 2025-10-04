@@ -92,19 +92,19 @@ void ExtendedQueryMol::initFromBinary(const std::string &pickle) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
                        std::ios_base::out);
   ss.write(pickle.c_str(), pickle.length());
-  std::uint16_t recog;
+  std::uint16_t recog = 0;
   streamRead(ss, recog);
 
   if (recog != detail::recognition) {
     throw ValueErrorException("bad pickle format: bad endian ID");
   }
-  std::uint16_t vers;
+  std::uint16_t vers = 0;
   streamRead(ss, vers);
   if (vers > detail::version) {
     throw ValueErrorException(
         "attempt to depickle from more recent pickle version");
   }
-  unsigned char readType;
+  unsigned char readType = 0;
   streamRead(ss, readType);
   std::string pkl;
   switch (readType) {
@@ -227,7 +227,7 @@ void to_pt(bpt::ptree &pt,
 RWMol *pt_to_mol(bpt::ptree &pt) {
   auto b64pkl = pt.get<std::string>("pkl", "");
   if (!b64pkl.empty()) {
-    unsigned int len;
+    unsigned int len = 0;
     std::unique_ptr<char[]> cpkl(Base64Decode(b64pkl.c_str(), &len));
     std::string pkl(cpkl.get(), len);
     return new RWMol(pkl);

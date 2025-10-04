@@ -20,6 +20,7 @@
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <RDGeneral/RDThreads.h>
 #include <algorithm>
+#include <cmath>
 #include <boost/format.hpp>
 
 namespace RDKit {
@@ -126,8 +127,8 @@ double calcMSDInternal(const Conformer &prbCnf, const Conformer &refCnf,
     refPoints.push_back(&refCnf.getAtomPos(mi.second));
   }
   double ssr = 0.;
-  const RDGeom::Point3D *rpt;
-  const RDGeom::Point3D *ppt;
+  const RDGeom::Point3D *rpt = nullptr;
+  const RDGeom::Point3D *ppt = nullptr;
   for (unsigned int i = 0; i < npt; ++i) {
     rpt = refPoints[i];
     ppt = prbPoints[i];
@@ -401,7 +402,7 @@ void _fillAtomPositions(RDGeom::Point3DConstPtrVect &pts, const Conformer &conf,
   unsigned int na = conf.getNumAtoms();
   pts.clear();
   if (atomIds == nullptr) {
-    unsigned int ai;
+    unsigned int ai = 0;
     pts.reserve(na);
     for (ai = 0; ai < na; ++ai) {
       pts.push_back(&conf.getAtomPos(ai));
@@ -434,7 +435,7 @@ void alignMolConformers(ROMol &mol, const std::vector<unsigned int> *atomIds,
 
   // now loop throught the remaininf conformations and transform them
   RDGeom::Transform3D trans;
-  double ssd;
+  double ssd = NAN;
   if (confIds == nullptr) {
     unsigned int i = 0;
     ROMol::ConformerIterator cnfi;

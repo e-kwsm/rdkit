@@ -68,7 +68,7 @@ void MultithreadedMolSupplier::close() {
 
 void MultithreadedMolSupplier::reader() {
   std::string record;
-  unsigned int lineNum, index;
+  unsigned int lineNum = 0, index = 0;
   while (!df_forceStop && extractNextRecord(record, lineNum, index)) {
     if (readCallback) {
       try {

@@ -393,7 +393,7 @@ bool SynthonSpaceSubstructureSearcher::extraSearchSetup(
     // done for every copy of the fragment. We also need to fix any
     // query atoms.
     for (const auto &frag : frags) {
-      unsigned int otf;
+      unsigned int otf = 0;
       sanitizeMol(*static_cast<RWMol *>(frag), otf, MolOps::SANITIZE_SYMMRINGS);
 
       // Query atoms may define the environment of the fragment (via recursive

@@ -194,7 +194,7 @@ void testIssue219() {
   ROMol *m1 = SmilesToMol(smi);
   TEST_ASSERT(m1);
   std::string pickle;
-  ROMol *m2;
+  ROMol *m2 = nullptr;
   MolPickler::pickleMol(*m1, pickle);
   m2 = new ROMol();
   MolPickler::molFromPickle(pickle, *m2);
@@ -226,7 +226,7 @@ void testIssue220() {
   TEST_ASSERT(m1);
   TEST_ASSERT(m1->getBondWithIdx(1)->getStereo() != Bond::STEREONONE);
   std::string pickle;
-  ROMol *m2;
+  ROMol *m2 = nullptr;
   MolPickler::pickleMol(*m1, pickle);
   m2 = new ROMol();
   MolPickler::molFromPickle(pickle, *m2);
@@ -249,8 +249,8 @@ void testQueries() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "Testing query serialization." << std::endl;
   std::string smi, pickle, smi2;
-  int tmpInt;
-  ROMol *m1, *m2;
+  int tmpInt = 0;
+  ROMol *m1 = nullptr, *m2 = nullptr;
   MatchVectType matchV;
 
   // start simple : atom map numbers
@@ -613,7 +613,7 @@ void testRadicals() {
   TEST_ASSERT(m1);
   TEST_ASSERT(m1->getAtomWithIdx(1)->getNumRadicalElectrons() == 1);
   std::string pickle;
-  ROMol *m2;
+  ROMol *m2 = nullptr;
   MolPickler::pickleMol(*m1, pickle);
   m2 = new ROMol();
   MolPickler::molFromPickle(pickle, *m2);
@@ -833,7 +833,7 @@ void testIssue280() {
         m2->getAtomWithIdx(0)->hasProp(common_properties::molAtomMapNumber));
     TEST_ASSERT(
         m2->getAtomWithIdx(1)->hasProp(common_properties::molAtomMapNumber));
-    int iv;
+    int iv = 0;
     m2->getAtomWithIdx(0)->getProp(common_properties::molAtomMapNumber, iv);
     TEST_ASSERT(iv == 1);
     m2->getAtomWithIdx(1)->getProp(common_properties::molAtomMapNumber, iv);
@@ -1405,7 +1405,7 @@ void testGithubIssue2510() {
   ROMol *m1 = SmilesToMol(smi);
   TEST_ASSERT(m1);
   std::string pickle;
-  ROMol *m2, *m3;
+  ROMol *m2 = nullptr, *m3 = nullptr;
   MolPickler::pickleMol(*m1, pickle);
   m2 = new ROMol();
   MolPickler::molFromPickle(pickle, *m2);
@@ -1540,7 +1540,7 @@ void testPropertyOptions() {
     tms.push_back(m2);
     tms.emplace_back(pickle);
     for (const auto &tm : tms) {
-      int ival;
+      int ival = 0;
       TEST_ASSERT(m1.getNumAtoms() == tm.getNumAtoms());
       TEST_ASSERT(tm.getNumConformers() == m1.getNumConformers());
       TEST_ASSERT(tm.getPropIfPresent("intp", ival));
@@ -1562,7 +1562,7 @@ void testPropertyOptions() {
   }
 
   {  // reading when properties are present but we ignore them
-    int ival;
+    int ival = 0;
     ROMol m3;
     MolPickler::molFromPickle(pickle, m3, PicklerOps::NoProps);
     for (const auto &tm :
@@ -1583,7 +1583,7 @@ void testPropertyOptions() {
     }
   }
   {  // reading when properties are present but we ignore some of them
-    int ival;
+    int ival = 0;
     ROMol m3;
     MolPickler::molFromPickle(pickle, m3, PicklerOps::MolProps);
     for (const auto &tm :
@@ -1604,7 +1604,7 @@ void testPropertyOptions() {
     }
   }
   {  // reading when properties are present but we ignore some of them
-    int ival;
+    int ival = 0;
     ROMol m3;
     MolPickler::molFromPickle(pickle, m3, PicklerOps::AtomProps);
     for (const auto &tm :
@@ -1625,7 +1625,7 @@ void testPropertyOptions() {
     }
   }
   {  // reading when properties are present but we ignore some of them
-    int ival;
+    int ival = 0;
     ROMol m3;
     MolPickler::molFromPickle(pickle, m3, PicklerOps::BondProps);
     for (const auto &tm :

@@ -1331,9 +1331,9 @@ bool MaximumCommonSubgraph::matchIncrementalFast(Seed &seed,
     unsigned int newBondQueryIdx = newBond->getIdx();
 
     // seed's index of atom from which new bond was added
-    unsigned int newBondSourceAtomSeedIdx;
+    unsigned int newBondSourceAtomSeedIdx = 0;
     // seed's index of atom on other end of the bond
-    unsigned int newBondOtherAtomSeedIdx;
+    unsigned int newBondOtherAtomSeedIdx = 0;
     unsigned int i =
         seed.MoleculeFragment.SeedAtomIdxMap.at(newBond->getBeginAtomIdx());
     unsigned int j =

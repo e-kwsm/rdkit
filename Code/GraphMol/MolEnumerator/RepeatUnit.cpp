@@ -286,12 +286,12 @@ void connectRepeatAtomsAndRemoveExtras(unsigned int origAtomCount, RWMol &mol) {
   mol.beginBatchEdit();
   for (auto aidx1 = 0u; aidx1 < origAtomCount; ++aidx1) {
     auto at1 = mol.getAtomWithIdx(aidx1);
-    unsigned tailIdx;
+    unsigned tailIdx = 0;
     if (at1->getPropIfPresent(tailmarker, tailIdx)) {
       bool connected = false;
       for (auto aidx2 = origAtomCount; aidx2 < mol.getNumAtoms(); ++aidx2) {
         auto at2 = mol.getAtomWithIdx(aidx2);
-        unsigned int headIdx;
+        unsigned int headIdx = 0;
         if (at2->getPropIfPresent(headmarker, headIdx) && tailIdx == headIdx) {
           connected = true;
           at2->clearProp(headmarker);
@@ -333,7 +333,7 @@ void connectRepeatToFrame(unsigned int nOrigAtoms, RWMol &mol,
                           std::map<unsigned, Atom *> &tailMap) {
   for (auto aidx = nOrigAtoms; aidx < mol.getNumAtoms(); ++aidx) {
     auto sruAtom = mol.getAtomWithIdx(aidx);
-    unsigned int val;
+    unsigned int val = 0;
     if (sruAtom->getPropIfPresent(headmarker, val)) {
       if (tailMap.find(val) != tailMap.end()) {
         // there's an atom in the frame to connect to:

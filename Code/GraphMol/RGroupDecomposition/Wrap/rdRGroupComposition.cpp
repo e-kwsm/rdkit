@@ -82,7 +82,7 @@ class RGroupDecompositionHelper {
   }
   int GetMatchingCoreIdx(const ROMol &mol, python::object &matches) {
     std::vector<MatchVectType> matchVect;
-    int coreIdx;
+    int coreIdx = 0;
     {
       NOGIL gil;
       coreIdx = decomp->getMatchingCoreIdx(mol, &matchVect);

@@ -75,7 +75,7 @@ bool HasSubstructMatchStr(std::string pkl, const ROMol &query,
                           bool useChirality = false,
                           bool useQueryQueryMatches = false) {
   NOGIL gil;
-  ROMol *mol;
+  ROMol *mol = nullptr;
   try {
     mol = new ROMol(pkl);
   } catch (...) {

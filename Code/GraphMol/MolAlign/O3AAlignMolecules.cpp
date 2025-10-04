@@ -623,11 +623,11 @@ void LAP::computeCostMatrix(const ROMol &prbMol, const MolHistogram &prbHist,
                             int (*costFunc)(const unsigned int,
                                             const unsigned int, double, void *),
                             void *data, const unsigned int n_bins) {
-  unsigned int i;
-  unsigned int j;
-  unsigned int k;
-  unsigned int x;
-  unsigned int y;
+  unsigned int i = 0;
+  unsigned int j = 0;
+  unsigned int k = 0;
+  unsigned int x = 0;
+  unsigned int y = 0;
   unsigned int largestNHeavyAtoms =
       std::max(refMol.getNumHeavyAtoms(), prbMol.getNumHeavyAtoms());
   unsigned int mapIdx = 0;
@@ -689,31 +689,31 @@ void LAP::computeMinCostPath(const int dim) {
   // colsol - row assigned to column in solution
   // v      - dual variables, column reduction numbers
 
-  int loopCnt;
-  int unassignedFound;
+  int loopCnt = 0;
+  int unassignedFound = 0;
   // row vars
-  int i;
-  int imin;
+  int i = 0;
+  int imin = 0;
   int numFree = 0;
-  int prvNumFree;
-  int f;
-  int i0;
-  int k;
-  int freeRow;
+  int prvNumFree = 0;
+  int f = 0;
+  int i0 = 0;
+  int k = 0;
+  int freeRow = 0;
   // col vars
-  int j;
-  int j1;
+  int j = 0;
+  int j1 = 0;
   int j2 = 0;
-  int endOfPath;
+  int endOfPath = 0;
   int last = 0;
-  int low;
-  int up;
+  int low = 0;
+  int up = 0;
   // cost vars
   int min = 0;
-  int h;
-  int uMin;
-  int uSubMin;
-  int v2;
+  int h = 0;
+  int uMin = 0;
+  int uSubMin = 0;
+  int v2 = 0;
 
   // init how many times a row will be assigned in the column reduction
   for (int n = 0; n < dim; ++n) {
@@ -923,12 +923,12 @@ void LAP::computeMinCostPath(const int dim) {
 }
 
 void SDM::fillFromLAP(LAP &lap) {
-  unsigned int i;
-  unsigned int j;
-  unsigned int k;
-  unsigned int n;
-  unsigned int n_atoms;
-  unsigned int n_equiv;
+  unsigned int i = 0;
+  unsigned int j = 0;
+  unsigned int k = 0;
+  unsigned int n = 0;
+  unsigned int n_atoms = 0;
+  unsigned int n_equiv = 0;
   const RDGeom::POINT3D_VECT &refPos = d_refConf->getPositions();
   const RDGeom::POINT3D_VECT &prbPos = d_prbConf->getPositions();
   const ROMol *mol[2] = {&(d_refConf->getOwningMol()),
@@ -1245,7 +1245,7 @@ O3A::O3A(int (*costFunc)(const unsigned int, const unsigned int, double,
   unsigned int refNHeavyAtoms = refMol.getNumHeavyAtoms();
   unsigned int prbNHeavyAtoms = prbMol.getNumHeavyAtoms();
   unsigned int largestNHeavyAtoms = std::max(refNHeavyAtoms, prbNHeavyAtoms);
-  unsigned int i;
+  unsigned int i = 0;
   std::vector<unsigned int> pairs(4, 0);
   std::vector<double> score(3, 0.0);
   std::vector<double> pairsRMSD(2, 0.0);
@@ -1282,7 +1282,7 @@ O3A::O3A(int (*costFunc)(const unsigned int, const unsigned int, double,
                                      data);
     alignMol(*workPrbMol, refMol, prbCid, refCid, &startMatchVect,
              &startWeights, reflect, maxIters);
-    unsigned int sdmThresholdIt;
+    unsigned int sdmThresholdIt = 0;
     for (sdmThresholdIt = ((accuracy < 1) ? 0 : O3_MAX_SDM_THRESHOLD_ITER - 1),
         pairs[1] = 0, score[1] = 0.0;
          sdmThresholdIt < O3_MAX_SDM_THRESHOLD_ITER; ++sdmThresholdIt) {
@@ -1458,8 +1458,8 @@ O3A::O3A(ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
                             : O3_DEFAULT_CONSTRAINT_WEIGHT);
     }
   }
-  int c;
-  int l;
+  int c = 0;
+  int l = 0;
   std::vector<double> score(2, 0.0);
   O3A *bestO3A = nullptr;
   MolHistogram *refHist = nullptr;
@@ -1545,8 +1545,8 @@ double _rmsdMatchVect(ROMol *d_prbMol, const ROMol *d_refMol,
   } else {
     RDGeom::Point3D refCtd;
     RDGeom::Point3D prbCtd;
-    unsigned int i;
-    unsigned int nHeavy;
+    unsigned int i = 0;
+    unsigned int nHeavy = 0;
     for (i = 0, nHeavy = 0; i < refPos.size(); ++i) {
       if (d_refMol->getAtomWithIdx(i)->getAtomicNum() == 1) {
         continue;

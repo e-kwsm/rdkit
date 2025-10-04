@@ -105,7 +105,7 @@ ForceFields::PyForceField *UFFGetMoleculeForceField(
 
 bool UFFHasAllMoleculeParams(const ROMol &mol) {
   UFF::AtomicParamVect types;
-  bool foundAll;
+  bool foundAll = false;
   boost::tie(types, foundAll) = UFF::getAtomTypes(mol);
   return foundAll;
 }

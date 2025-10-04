@@ -51,7 +51,7 @@ namespace {
 void bookmarkAtomID(RWMol *mp, Atom *atom) {
   PRECONDITION(mp, "bad molecule");
   PRECONDITION(atom, "bad atom");
-  unsigned int label;
+  unsigned int label = 0;
   if (atom->getPropIfPresent(common_properties::_AtomID, label)) {
     if (mp->hasAtomBookmark(label)) {
       std::stringstream err;

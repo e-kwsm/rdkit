@@ -37,6 +37,7 @@
 #include <GraphMol/MolEnumerator/LinkNode.h>
 
 #include <Geometry/Transform3D.h>
+#include <math.h>
 
 #include <algorithm>
 #include <cstdlib>
@@ -287,7 +288,7 @@ void MolDraw2D::drawReaction(
 
   // Copy the reaction because processing for drawing alters it.
   ChemicalReaction nrxn(rxn);
-  int plusWidth;
+  int plusWidth = 0;
   getReactionDrawMols(nrxn, highlightByReactant, highlightColorsReactants,
                       confIds, reagents, products, agents, plusWidth);
 
@@ -650,7 +651,8 @@ void MolDraw2D::setScale(int width, int height, const Point2D &minv,
   PRECONDITION(width > 0, "bad width");
   PRECONDITION(height > 0, "bad height");
 
-  double x_min, x_max, x_range, y_min, y_max, y_range;
+  double x_min = NAN, x_max = NAN, x_range = NAN, y_min = NAN, y_max = NAN,
+         y_range = NAN;
   bool setFontScale = false;
   if (mol) {
     setupTextDrawer();
@@ -742,7 +744,7 @@ void MolDraw2D::getLabelSize(const string &label,
     label_width = 0.0;
     vector<string> sym_bits =
         MolDraw2D_detail::atomLabelToPieces(label, orient);
-    double height, width;
+    double height = NAN, width = NAN;
     for (auto bit : sym_bits) {
       getStringSize(bit, width, height);
       if (width > label_width) {
@@ -828,7 +830,7 @@ void MolDraw2D::getReactionDrawMols(
   ChemicalReaction nrxn(rxn);
 
   const double agentFrac = 0.4;
-  double minScale = std::numeric_limits<double>::max(), minFontScale;
+  double minScale = std::numeric_limits<double>::max(), minFontScale = NAN;
 
   std::map<int, DrawColour> atomColours;
   findReactionHighlights(rxn, highlightByReactant, highlightColorsReactants,

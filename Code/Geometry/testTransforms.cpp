@@ -44,7 +44,7 @@ double randNum(double x = 5) {
 TEST_CASE("testPointND") {
   PointND pt(5);
   REQUIRE(pt.dimension() == 5);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 5; ++i) {
     pt[i] = i + 1.0;
   }
