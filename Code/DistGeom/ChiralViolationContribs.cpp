@@ -11,6 +11,7 @@
 #include "ChiralViolationContribs.h"
 #include "ChiralSet.h"
 #include <ForceField/ForceField.h>
+#include <math.h>
 
 namespace DistGeom {
 double calcChiralVolume(const unsigned int idx1, const unsigned int idx2,
@@ -118,7 +119,7 @@ void ChiralViolationContribs::getGrad(double *pos, double *grad) const {
     RDGeom::Point3D v2xv3 = v2.crossProduct(v3);
 
     double vol = v1.dotProduct(v2xv3);
-    double preFactor;
+    double preFactor = NAN;
 
     if (vol < c.volLower) {
       preFactor = c.weight * (vol - c.volLower);
