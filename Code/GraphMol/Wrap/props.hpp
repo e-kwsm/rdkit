@@ -35,6 +35,7 @@
 #include <RDBoost/pyint_api.h>
 #include <RDBoost/Wrap.h>
 #include <RDGeneral/Dict.h>
+#include <math.h>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 
@@ -116,12 +117,12 @@ boost::python::dict GetPropsAsDict(const T &obj, bool includePrivate,
 	  boost::trim(value);
           if (autoConvertStrings) {
             // Auto convert strings to ints and double if possible
-            int ivalue;
+            int ivalue = 0;
             if (boost::conversion::try_lexical_convert(value, ivalue)) {
               dict[rdvalue.key] = ivalue;
               break;
             }
-            double dvalue;
+            double dvalue = NAN;
             if (boost::conversion::try_lexical_convert(value, dvalue)) {
               dict[rdvalue.key] = dvalue;
               break;
@@ -210,8 +211,8 @@ PyObject* GetProp(const RDOb *ob, const std::string &key) {
 
 template <class RDOb>
 python::object autoConvertString(const RDOb *ob, const std::string &key) {
-  int ivalue;
-  double dvalue;
+  int ivalue = 0;
+  double dvalue = NAN;
   std::string svalue;
 
   if (ob->getPropIfPresent(key, ivalue))
