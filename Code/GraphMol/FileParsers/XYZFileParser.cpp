@@ -97,7 +97,7 @@ Atom *ParseXYZFileAtomLine(const std::string &atomLine, RDGeom::Point3D &pos,
     symb[1] = static_cast<char>(tolower(symb[1]));
   }
 
-  Atom *atom;
+  Atom *atom = nullptr;
   try {
     atom = new Atom(PeriodicTable::getTable()->getAtomicNumber(symb));
   } catch (const Invar::Invariant &e) {
