@@ -34,7 +34,7 @@ RDKit::INT_VECT HierarchicalPicks(HierarchicalClusterPicker *picker,
     throw ValueErrorException("distance mat argument must be a numpy matrix");
   }
 
-  PyArrayObject *copy;
+  PyArrayObject *copy = nullptr;
   // it's painful to have to copy the input matrix, but the
   // picker itself will step on the distance matrix, so use
   // CopyFromObject here instead of ContiguousFromObject
@@ -55,7 +55,7 @@ RDKit::VECT_INT_VECT HierarchicalClusters(HierarchicalClusterPicker *picker,
   }
 
   // REVIEW: check pickSize < poolSize, otherwise throw_value_error()
-  PyArrayObject *copy;
+  PyArrayObject *copy = nullptr;
   // it's painful to have to copy the input matrix, but the
   // picker itself will step on the distance matrix, so use
   // CopyFromObject here instead of ContiguousFromObject
