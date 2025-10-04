@@ -33,6 +33,7 @@
 #ifdef _WIN32
 #include <RDGeneral/test.h>
 #else
+#include <math.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>
@@ -162,9 +163,9 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
     std::cout << "Loading reference test results ... \n";
     while (fgets(str, sizeof(str), f)) {
       if ('#' != str[0]) {
-        char c;
-        int frag;
-        float t;
+        char c = 0;
+        int frag = 0;
+        float t = NAN;
         char mcs[1024];
         MCSResult res;
         sscanf(str, "%u %c %d %d %d %f %s", &n, &c, &frag, &res.NumAtoms,
@@ -204,7 +205,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
       if ('#' != str[0]) {
         // str= "1 CHEMBL526291 CHEMBL498211 ..."
         char name[256];
-        unsigned int nn, len;
+        unsigned int nn = 0, len = 0;
         n++;
         testCase.emplace_back();
         sscanf(str, "%u%n", &nn, &len);
