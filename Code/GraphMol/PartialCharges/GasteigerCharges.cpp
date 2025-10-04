@@ -13,6 +13,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/MolOps.h>
+#include <math.h>
 #include "GasteigerParams.h"
 
 namespace Gasteiger {
@@ -31,13 +32,13 @@ using namespace RDKit;
  * with equal charges of 0.5
  */
 void splitChargeConjugated(const ROMol &mol, DOUBLE_VECT &charges) {
-  int aix;
+  int aix = 0;
   int natms = mol.getNumAtoms();
   INT_VECT marker;
   INT_VECT_CI mci;
-  int aax, yax;
-  double formal;
-  const Atom *at, *aat, *yat;
+  int aax = 0, yax = 0;
+  double formal = NAN;
+  const Atom *at = nullptr, *aat = nullptr, *yat = nullptr;
   for (aix = 0; aix < natms; aix++) {
     at = mol.getAtomWithIdx(aix);
     formal = at->getFormalCharge();
@@ -190,8 +191,8 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
   }
 
   // do the iteration here
-  int itx, aix, sgn, niHs;
-  double enr, dq, dx, qHs, dqH;
+  int itx = 0, aix = 0, sgn = 0, niHs = 0;
+  double enr = NAN, dq = NAN, dx = NAN, qHs = NAN, dqH = NAN;
   // parameters for hydrogen atoms (for case where the hydrogen are not in the
   // graph (implicit hydrogens)
   DOUBLE_VECT hParams;
