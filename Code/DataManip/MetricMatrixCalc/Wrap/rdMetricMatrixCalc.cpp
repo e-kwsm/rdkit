@@ -87,7 +87,6 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     // get the dimensions of the array
     int nrows = PyArray_DIM((PyArrayObject *)descMatObj, 0);
     int ncols = PyArray_DIM((PyArrayObject *)descMatObj, 1);
-    int i;
     CHECK_INVARIANT((nrows > 0) && (ncols > 0), "");
 
     npy_intp dMatLen = nrows * (nrows - 1) / 2;
@@ -116,7 +115,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
       // here is the 2D array trick this so that when the distance calaculator
       // asks for desc2D[i] we basically get the ith row as double*
       std::unique_ptr<double *[]> desc2D(new double *[nrows]);
-      for (i = 0; i < nrows; i++) {
+      for (int i = 0; i < nrows; i++) {
         desc2D[i] = desc;
         desc += ncols;
       }
@@ -133,7 +132,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
              NPY_FLOAT) {
       auto *desc = (float *)PyArray_DATA(copy.get());
       std::unique_ptr<float *[]> desc2D(new float *[nrows]);
-      for (i = 0; i < nrows; i++) {
+      for (int i = 0; i < nrows; i++) {
         desc2D[i] = desc;
         desc += ncols;
       }
@@ -147,7 +146,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     else if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_INT) {
       int *desc = (int *)PyArray_DATA(copy.get());
       std::unique_ptr<int *[]> desc2D(new int *[nrows]);
-      for (i = 0; i < nrows; i++) {
+      for (int i = 0; i < nrows; i++) {
         desc2D[i] = desc;
         desc += ncols;
       }
