@@ -458,7 +458,7 @@ ROMol *fragmentOnBonds(
     unsigned int eidx = bond->getEndAtomIdx();
     Bond::BondType bT = bond->getBondType();
     Bond::BondDir bD = bond->getBondDir();
-    unsigned int bondidx;
+    unsigned int bondidx = 0;
     auto nbr_bond_stereo = getNbrBondStereo(*res, bond);
     // Grab a copy of any query on the outgoing bond if it will be needed later.
     auto outBond = res->getBondBetweenAtoms(bidx, eidx);
@@ -472,9 +472,8 @@ ROMol *fragmentOnBonds(
       (*nCutsPerAtom)[eidx] += 1;
     }
     if (addDummies) {
-      Atom *at1, *at2;
-      at1 = new Atom(0);
-      at2 = new Atom(0);
+      auto *at1 = new Atom(0);
+      auto *at2 = new Atom(0);
       if (dummyLabels) {
         at1->setIsotope((*dummyLabels)[i].first);
         at2->setIsotope((*dummyLabels)[i].second);

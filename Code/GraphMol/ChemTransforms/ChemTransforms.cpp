@@ -987,7 +987,7 @@ void parseQueryDefFile(std::istream *inStream,
       continue;
     }
     boost::tokenizer<boost::char_separator<char>> tokens(tempStr, sep);
-    unsigned int tpos;
+    unsigned int tpos = 0;
     boost::tokenizer<boost::char_separator<char>>::iterator token;
     std::string qname = "";
     std::string qval = "";
