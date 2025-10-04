@@ -14,8 +14,8 @@
 
 namespace RDKit {
 void _fillDistMat(unsigned int dmat[], unsigned int nBits) {
-  unsigned int i, j, a, b, ta, tb, dist;
-  int temp;
+  unsigned int i = 0, j = 0, a = 0, b = 0, ta = 0, tb = 0, dist = 0;
+  int temp = 0;
   unsigned int mask = ((1 << nBits) - 1);
   for (i = 0; i < 256; ++i) {
     for (j = 0; j < 256; ++j) {
@@ -56,7 +56,7 @@ unsigned int DiscreteDistMat::getDist(
     unsigned char v1, unsigned char v2,
     DiscreteValueVect::DiscreteValueType type) {
   unsigned int res = 0;
-  int temp;
+  int temp = 0;
   unsigned int id =
       static_cast<unsigned int>(v1) * 256 + static_cast<unsigned int>(v2);
   switch (type) {

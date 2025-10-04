@@ -79,7 +79,7 @@ void DiscreteValueVect::setVal(unsigned int i, unsigned int val) {
 }
 
 unsigned int DiscreteValueVect::getTotalVal() const {
-  unsigned int i, j, res = 0;
+  unsigned int i = 0, j = 0, res = 0;
 
   for (i = 0; i < d_numInts; ++i) {
     for (j = 0; j < d_valsPerInt; ++j) {
@@ -153,7 +153,7 @@ std::string DiscreteValueVect::toString() const {
 
   std::int32_t tVers = ci_DISCRETEVALUEVECTPICKLE_VERSION * -1;
   streamWrite(ss, tVers);
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   tInt = d_type;
   streamWrite(ss, tInt);
   tInt = d_bitsPerVal;
@@ -183,14 +183,14 @@ void DiscreteValueVect::initFromText(const char *pkl, const unsigned int len) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
                        std::ios_base::out);
   ss.write(pkl, len);
-  std::int32_t tVers;
+  std::int32_t tVers = 0;
   streamRead(ss, tVers);
   tVers *= -1;
   if (tVers == 0x1) {
   } else {
     throw ValueErrorException("bad version in DiscreteValueVect pickle");
   }
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   streamRead(ss, tInt);
   d_type = static_cast<DiscreteValueType>(tInt);
 
