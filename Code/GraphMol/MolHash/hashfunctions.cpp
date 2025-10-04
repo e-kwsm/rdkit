@@ -65,7 +65,7 @@ RDKit::Bond *NMRDKitMolNewBond(RDKit::RWMol *mol, RDKit::Atom *src,
   PRECONDITION(mol, "bad molecule");
   PRECONDITION(src, "bad src atom");
   PRECONDITION(dst, "bad dest atom");
-  RDKit::Bond *result;
+  RDKit::Bond *result = nullptr;
   result = mol->getBondBetweenAtoms(src->getIdx(), dst->getIdx());
   if (result) {
     if (order == 1) {
@@ -256,7 +256,7 @@ std::string NMMolecularFormula(RWMol *mol, bool sep = false) {
 
 void NormalizeHCount(Atom *aptr) {
   PRECONDITION(aptr, "bad atom pointer");
-  unsigned int hcount;
+  unsigned int hcount = 0;
 
   switch (aptr->getAtomicNum()) {
     case 9:   // Fluorine
