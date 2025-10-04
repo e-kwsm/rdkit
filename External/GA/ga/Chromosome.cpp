@@ -14,7 +14,7 @@ namespace GapeGa {
 
 int Chromosome::idCounter = 0;
 
-Chromosome::Chromosome() : chromosomeId(idCounter++), fitness(0) {}
+Chromosome::Chromosome() : chromosomeId(idCounter++) {}
 
 Chromosome::~Chromosome() {}
 
