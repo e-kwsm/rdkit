@@ -13,6 +13,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
+#include <math.h>
 
 namespace ForceFields {
 namespace MMFF {
@@ -153,7 +154,7 @@ void VdWContrib::getGrad(double *pos, double *grad) const {
                    (-vdw2t7 * q6 / (q7pvdw2m1 * q7pvdw2m1) +
                     ((-vdw2t7 / q7pvdw2m1 + 14.0) / (q + vdw1m1)));
     for (unsigned int i = 0; i < 3; ++i) {
-      double dGrad;
+      double dGrad = NAN;
       dGrad = ((dist > 0.0) ? (dE_dr * (at1Coords[i] - at2Coords[i]) / dist)
                             : d_R_ij_star * 0.01);
       g1[i] += dGrad;
@@ -220,7 +221,7 @@ void EleContrib::getGrad(double *pos, double *grad) const {
     double dE_dr = -332.0716 * (double)(d_dielModel)*d_chargeTerm / corr_dist *
                    (d_is1_4 ? 0.75 : 1.0);
     for (unsigned int i = 0; i < 3; ++i) {
-      double dGrad;
+      double dGrad = NAN;
       dGrad = ((dist > 0.0) ? (dE_dr * (at1Coords[i] - at2Coords[i]) / dist)
                             : 0.02);
       g1[i] += dGrad;
