@@ -537,8 +537,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
       : molholder(std::move(molecules)),
         fpholder(),
         keyholder(),
-        mols(molholder.get()),
-        fps(nullptr) {}
+        mols(molholder.get()) {}
 
   SubstructLibrary(boost::shared_ptr<MolHolderBase> molecules,
                    boost::shared_ptr<FPHolderBase> fingerprints)
@@ -558,8 +557,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
       : molholder(std::move(molecules)),
         fpholder(),
         keyholder(std::move(keys)),
-        mols(molholder.get()),
-        fps(nullptr) {
+        mols(molholder.get()) {
     if (fpholder.get() &&
         dynamic_cast<TautomerPatternHolder *>(fpholder.get()) != nullptr) {
       is_tautomerquery = true;
@@ -581,10 +579,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
 
   SubstructLibrary(const std::string &pickle)
-      : molholder(new MolHolder),
-        fpholder(),
-        mols(molholder.get()),
-        fps(nullptr) {
+      : molholder(new MolHolder), fpholder(), mols(molholder.get()) {
     initFromString(pickle);
     if (fpholder.get() &&
         dynamic_cast<TautomerPatternHolder *>(fpholder.get()) != nullptr) {

@@ -34,7 +34,7 @@ class RDKIT_TRAJECTORY_EXPORT Snapshot {
       \param energy is the energy associated with this set of coordinates
    */
   Snapshot(boost::shared_array<double> pos, double energy = 0.0)
-      : d_trajectory(nullptr), d_energy(energy), d_pos(std::move(pos)) {}
+      : d_energy(energy), d_pos(std::move(pos)) {}
   /*! \return a const pointer to the parent Trajectory
    */
   const Trajectory *trajectory() const { return d_trajectory; }
@@ -58,7 +58,7 @@ class RDKIT_TRAJECTORY_EXPORT Snapshot {
 
  private:
   // Pointer to the parent Trajectory object
-  const Trajectory *d_trajectory;
+  const Trajectory *d_trajectory{nullptr};
   // Energy for this set of coordinates
   double d_energy;
   // shared array to Snapshot coordinates
