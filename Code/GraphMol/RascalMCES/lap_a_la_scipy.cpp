@@ -48,6 +48,8 @@ pseudocode described in pages 1685-1686 of:
 Author: PM Larsen
 */
 
+#include <math.h>
+
 #include <algorithm>
 #include <limits>
 #include <numeric>
@@ -173,7 +175,7 @@ int lapMaximize(const std::vector<std::vector<int>> &costsMat,
 
   // iteratively build the solution
   for (size_t curRow = 0; curRow < nr; curRow++) {
-    double minVal;
+    double minVal = NAN;
     int sink = augmentingPath(nc, cost, u, v, path, row4col, shortestPathCosts,
                               curRow, SR, SC, remaining, &minVal);
     if (sink < 0) {
