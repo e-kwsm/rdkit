@@ -38,7 +38,7 @@ void streamWrite(std::ostream &ss, ReactionPickler::Tags tag, const T &what) {
 };
 
 void streamRead(std::istream &ss, ReactionPickler::Tags &tag) {
-  int32_t tmp;
+  int32_t tmp = 0;
   streamRead(ss, tmp);
   tag = static_cast<ReactionPickler::Tags>(tmp);
 }
@@ -80,7 +80,7 @@ void ReactionPickler::reactionFromPickle(std::istream &ss,
                                          ChemicalReaction *rxn) {
   PRECONDITION(rxn, "empty reaction");
   Tags tag;
-  int32_t tmpInt;
+  int32_t tmpInt = 0;
 
   streamRead(ss, tmpInt);
   if (tmpInt != endianId) {
@@ -92,7 +92,7 @@ void ReactionPickler::reactionFromPickle(std::istream &ss,
   if (tag != VERSION) {
     throw ReactionPicklerException("Bad pickle format: no version tag");
   }
-  int32_t majorVersion, minorVersion, patchVersion;
+  int32_t majorVersion = 0, minorVersion = 0, patchVersion = 0;
   streamRead(ss, majorVersion);
   streamRead(ss, minorVersion);
   streamRead(ss, patchVersion);
@@ -120,7 +120,7 @@ void ReactionPickler::reactionFromPickle(const std::string &pickle,
 void ReactionPickler::_pickle(const ChemicalReaction *rxn, std::ostream &ss,
                               unsigned int propertyFlags) {
   PRECONDITION(rxn, "empty reaction");
-  uint32_t tmpInt;
+  uint32_t tmpInt = 0;
 
   tmpInt = static_cast<int32_t>(rxn->getNumReactantTemplates());
   streamWrite(ss, tmpInt);
@@ -216,7 +216,7 @@ void ReactionPickler::_depickle(std::istream &ss, ChemicalReaction *rxn,
   PRECONDITION(rxn, "empty reaction");
 
   Tags tag;
-  uint32_t numReactants, numProducts, numAgents = 0;
+  uint32_t numReactants = 0, numProducts = 0, numAgents = 0;
 
   streamRead(ss, numReactants);
   streamRead(ss, numProducts);
