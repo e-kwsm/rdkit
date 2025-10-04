@@ -418,7 +418,7 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
           }
 #endif
 
-          unsigned int failedOp;
+          unsigned int failedOp = 0;
           try {
             MolOps::sanitizeMol(*product, failedOp,
                                 MolOps::SANITIZE_KEKULIZE |
