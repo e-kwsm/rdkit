@@ -36,7 +36,7 @@ void test1() {
   std::string inLine;
   std::map<std::string, std::string> atomTypeDefs;
   atomTypeDefs.clear();
-  bool ok;
+  bool ok = false;
 
   inLine = "AtomType donor [N,O]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
@@ -124,8 +124,8 @@ void test2() {
 
   std::string inText, inLine;
   std::istringstream ss;
-  MolChemicalFeatureDef *featDef;
-  bool ok;
+  MolChemicalFeatureDef *featDef = nullptr;
+  bool ok = false;
 
   std::map<std::string, std::string> atomTypeDefs;
   atomTypeDefs["{donor}"] = "$([O,N])";
@@ -224,7 +224,7 @@ void test3() {
   // "/Code/GraphMol/MolChemicalFeatures/test_data/smallsample.feats";
   std::string inText, inLine;
   std::istringstream ss;
-  int res;
+  int res = 0;
   MolChemicalFeatureDef::CollectionType featureDefs;
 
   inText =
@@ -246,10 +246,10 @@ void test4() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "FeatureDef functionality testing." << std::endl;
 
-  ROMol *testMol;
+  ROMol *testMol = nullptr;
   MatchVectType mv;
   std::string inText;
-  int res;
+  int res = 0;
   MolChemicalFeatureDef::CollectionType featureDefs;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
   MolChemicalFeatureDef::CollectionType::value_type featDef;
@@ -300,13 +300,13 @@ void test5() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "FeatureFactory testing." << std::endl;
 
-  ROMol *testMol;
+  ROMol *testMol = nullptr;
   MatchVectType mv;
   std::string inText;
   FeatSPtrList featSPtrs;
   boost::shared_ptr<MolChemicalFeature> featSPtr;
 
-  MolChemicalFeatureFactory *factory;
+  MolChemicalFeatureFactory *factory = nullptr;
 
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
@@ -385,13 +385,13 @@ void test6() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "Feature Location testing." << std::endl;
 
-  ROMol *testMol;
-  Conformer *conf;
+  ROMol *testMol = nullptr;
+  Conformer *conf = nullptr;
   std::string inText;
   FeatSPtrList featSPtrs;
   boost::shared_ptr<MolChemicalFeature> featSPtr;
 
-  MolChemicalFeatureFactory *factory;
+  MolChemicalFeatureFactory *factory = nullptr;
 
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
@@ -448,7 +448,7 @@ void test7() {
   std::string fName =
       rdbase + "/Code/GraphMol/MolChemicalFeatures/test_data/featDef.txt";
 
-  MolChemicalFeatureFactory *factory;
+  MolChemicalFeatureFactory *factory = nullptr;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
@@ -482,7 +482,7 @@ void testIssue224() {
 
   std::string inText, inLine;
   std::istringstream ss;
-  MolChemicalFeatureDef *featDef;
+  MolChemicalFeatureDef *featDef = nullptr;
 
   std::map<std::string, std::string> atomTypeDefs;
   atomTypeDefs["{donor}"] = "$([O,N])";
@@ -588,7 +588,7 @@ void testIssue225() {
 
   MatchVectType mv;
   std::string inText;
-  int res;
+  int res = 0;
   MolChemicalFeatureDef::CollectionType featureDefs;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
   MolChemicalFeatureDef::CollectionType::value_type featDef;
@@ -630,7 +630,7 @@ void testIssue346() {
   std::string fName =
       rdbase + "/Code/GraphMol/MolChemicalFeatures/test_data/featDef2.txt";
 
-  MolChemicalFeatureFactory *factory;
+  MolChemicalFeatureFactory *factory = nullptr;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
@@ -662,8 +662,8 @@ void testIssue347() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "Test Issue347" << std::endl;
 
-  ROMol *testMol;
-  MolChemicalFeatureFactory *factory;
+  ROMol *testMol = nullptr;
+  MolChemicalFeatureFactory *factory = nullptr;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
   MolChemicalFeatureDef::CollectionType::value_type featDef;
   FeatSPtrList featSPtrs;
@@ -753,7 +753,7 @@ void testIssue348() {
 
   MatchVectType mv;
   std::string inText;
-  int res;
+  int res = 0;
   (void)res;  // unused in any test
   MolChemicalFeatureDef::CollectionType featureDefs;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
@@ -770,7 +770,7 @@ void testIssue348() {
       "  Weights 1.0,1.0\n"
       "EndFeature\n";
 
-  bool ok;
+  bool ok = false;
   try {
     res = parseFeatureData(inText, featureDefs);
     ok = false;
@@ -787,7 +787,7 @@ void testNestedAtomTypes() {
 
   MatchVectType mv;
   std::string inText;
-  int res;
+  int res = 0;
   MolChemicalFeatureDef::CollectionType featureDefs;
   MolChemicalFeatureDef::CollectionType::const_iterator featDefIt;
   MolChemicalFeatureDef::CollectionType::value_type featDef;
@@ -815,8 +815,8 @@ void testGithub252() {
   BOOST_LOG(rdErrorLog) << "     expect a precondition failure message below"
                         << std::endl;
 
-  ROMol *testMol;
-  MolChemicalFeatureFactory *factory;
+  ROMol *testMol = nullptr;
+  MolChemicalFeatureFactory *factory = nullptr;
   FeatSPtrList featSPtrs;
   boost::shared_ptr<MolChemicalFeature> featSPtr;
 
@@ -858,13 +858,13 @@ void testGithub2077() {
                            "MolChemicalFeatureFactor::getFeaturesForMol()"
                         << std::endl;
 
-  ROMol *testMol;
-  Conformer *conf;
+  ROMol *testMol = nullptr;
+  Conformer *conf = nullptr;
   std::string inText;
   FeatSPtrList featSPtrs;
   boost::shared_ptr<MolChemicalFeature> featSPtr;
 
-  MolChemicalFeatureFactory *factory;
+  MolChemicalFeatureFactory *factory = nullptr;
 
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
