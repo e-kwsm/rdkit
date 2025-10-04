@@ -158,9 +158,8 @@ ForceField::~ForceField() {
 
 ForceField::ForceField(const ForceField &other)
     : d_dimension(other.d_dimension),
-      df_init(false),
-      d_numPoints(other.d_numPoints),
-      dp_distMat(nullptr) {
+
+      d_numPoints(other.d_numPoints) {
   d_contribs.clear();
   for (const auto &contrib : other.d_contribs) {
     ForceFieldContrib *ncontrib = contrib->copy();
