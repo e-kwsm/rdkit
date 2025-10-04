@@ -17,6 +17,7 @@
 #include <GraphMol/RWMol.h>
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawMolMCHLasso.h>
+#include <math.h>
 
 namespace RDKit {
 namespace MolDraw2D_detail {
@@ -160,7 +161,7 @@ void DrawMolMCHLasso::drawLasso(size_t lassoNum, const RDKit::DrawColour &col,
 namespace {
 double getLassoWidth(const DrawMolMCH *dm, int atNum, int lassoNum) {
   PRECONDITION(dm, "Needs valid DrawMolMCH")
-  double xrad, yrad;
+  double xrad = NAN, yrad = NAN;
   dm->getAtomRadius(atNum, xrad, yrad);
   // Double the area of the circles for successive lassos.
   const static double rats[] = {1.0, 1.414, 2, 2.828, 4};
@@ -355,7 +356,7 @@ void calcIntersectingArcAngles(const Point2D &at1Cds, double rad1,
                                double &ang2, double &bang) {
   Point2D isect1, isect2;
   intersectingCirclePoints(at1Cds, rad1, at2Cds, rad2, isect1, isect2);
-  bool swapped;
+  bool swapped = false;
   calcSubtendedAngles(isect1, isect2, at1Cds, at2Cds, ang1, ang2, bang,
                       swapped);
 }
@@ -440,7 +441,7 @@ void DrawMolMCHLasso::makeIntersectingArcs(
       // the first entry is the atom itself, that's how it's set up
       for (size_t j = 1; j < intersects[i].size(); ++j) {
         auto radJ = getLassoWidth(this, intersects[i][j], lassoNum);
-        double ang1, ang2, bang;
+        double ang1 = NAN, ang2 = NAN, bang = NAN;
         calcIntersectingArcAngles(atCds_[i], radI, atCds_[intersects[i][j]],
                                   radJ, ang1, ang2, bang);
         arcAngs.push_back(ang1);
@@ -685,8 +686,8 @@ void DrawMolMCHLasso::orderAtomLines(
           (atCds_[i] - atomLines[i][j].line1->points_[1]).lengthSq()) {
         pt = 1;
       }
-      double bang;
-      bool swapped;
+      double bang = NAN;
+      bool swapped = false;
       calcSubtendedAngles(atomLines[i][j].line1->points_[pt],
                           atomLines[i][j].line2->points_[pt], atCds_[i],
                           atCds_[oatom], atomLines[i][j].angle1,
