@@ -17,6 +17,7 @@
 #include <stack>
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/Exceptions.h>
+#include <math.h>
 
 #ifndef RDK_HAS_EIGEN3
 constexpr double EIGEN_TOLERANCE = 5.0e-2;
@@ -187,7 +188,8 @@ bool getEigenValEigenVectFromCovMat(const RDKit::Conformer &conf,
   // std::cerr << "getEigenValEigenVectFromCovMat ignoreHs " << ignoreHs << "
   // normalizeCovar " << normalizeCovar << " weights " << weights << " origin "
   // << origin.x << "," << origin.y << ","  << origin.z << std::endl;
-  double sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ;
+  double sumXX = NAN, sumXY = NAN, sumXZ = NAN, sumYY = NAN, sumYZ = NAN,
+         sumZZ = NAN;
   computeCovarianceTerms(conf, origin, sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ,
                          normalizeCovar, ignoreHs, weights);
 
@@ -215,7 +217,8 @@ bool computePrincipalAxesAndMoments(const RDKit::Conformer &conf,
   }
   auto origin = computeCentroid(conf, ignoreHs, weights);
 
-  double sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ;
+  double sumXX = NAN, sumXY = NAN, sumXZ = NAN, sumYY = NAN, sumYZ = NAN,
+         sumZZ = NAN;
   computeInertiaTerms(conf, origin, sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ,
                       ignoreHs, weights);
 
@@ -460,17 +463,17 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
   stack.push(jAtomId);
   visitedIdx[iAtomId] = 1;
   visitedIdx[jAtomId] = 1;
-  unsigned int tIdx;
-  unsigned int wIdx;
+  unsigned int tIdx = 0;
+  unsigned int wIdx = 0;
   ROMol::ADJ_ITER nbrIdx;
   ROMol::ADJ_ITER endNbrs;
-  bool doMainLoop;
+  bool doMainLoop = false;
   while (stack.size()) {
     doMainLoop = false;
     tIdx = stack.top();
     const Atom *tAtom = mol.getAtomWithIdx(tIdx);
     boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(tAtom);
-    unsigned int eIdx;
+    unsigned int eIdx = 0;
     for (eIdx = 0; nbrIdx != endNbrs; ++nbrIdx, ++eIdx) {
       wIdx = (mol[*nbrIdx])->getIdx();
       if (!visitedIdx[wIdx]) {
