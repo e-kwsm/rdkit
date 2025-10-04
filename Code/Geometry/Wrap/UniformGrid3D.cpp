@@ -18,6 +18,7 @@
 #include <Geometry/point.h>
 #include <Geometry/UniformGrid3D.h>
 #include <Geometry/GridUtils.h>
+#include <math.h>
 namespace python = boost::python;
 
 using namespace RDKit;
@@ -59,12 +60,12 @@ void setValPoint(UniformGrid3D &grid, const Point3D &pt, unsigned int val) {
 
 python::tuple computeGridCentroidWrap(const UniformGrid3D &grid,
                                       const Point3D &pt, double windowRadius) {
-  double weightSum;
+  double weightSum = NAN;
   Point3D centroid = computeGridCentroid(grid, pt, windowRadius, weightSum);
   return python::make_tuple(weightSum, centroid);
 }
 python::tuple getGridIndicesWrap(const UniformGrid3D &grid, unsigned int idx) {
-  unsigned int xi, yi, zi;
+  unsigned int xi = 0, yi = 0, zi = 0;
   grid.getGridIndices(idx, xi, yi, zi);
   python::list pyRes;
   pyRes.append(xi);
