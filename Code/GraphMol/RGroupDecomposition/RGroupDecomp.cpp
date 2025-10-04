@@ -98,7 +98,7 @@ void RGroupDecomposition::setTargetAtomBondIndices(
   int largestAtomIdx = -1;
   bool isHydrogen = RGroupData::isMolHydrogen(mol);
   for (const auto atom : mol.atoms()) {
-    int targetAtomIdx;
+    int targetAtomIdx = 0;
     if (atom->getPropIfPresent(TARGET_ATOM_IDX, targetAtomIdx)) {
       atom->clearProp(TARGET_ATOM_IDX);
       if ((atom->getAtomicNum() == 1 && data->params.removeHydrogensPostMatch &&
@@ -114,7 +114,7 @@ void RGroupDecomposition::setTargetAtomBondIndices(
   atomIndices.resize(largestAtomIdx + 1);
   int largestBondIdx = -1;
   for (const auto bond : mol.bonds()) {
-    int targetBondIdx;
+    int targetBondIdx = 0;
     if (bond->getPropIfPresent(TARGET_BOND_IDX, targetBondIdx)) {
       bond->clearProp(TARGET_BOND_IDX);
       if ((bond->getBeginAtom()->getAtomicNum() == 1 ||
@@ -153,7 +153,7 @@ int RGroupDecomposition::getMatchingCoreIdx(
     const ROMol &mol, std::vector<MatchVectType> *matches) {
   RWMol rwmol(mol);
   std::vector<MatchVectType> matchesTmp;
-  const RCore *rcore;
+  const RCore *rcore = nullptr;
   auto coreIdx = getMatchingCoreInternal(rwmol, rcore, matchesTmp);
   if (matches) {
     std::set<MatchVectType> uniqueMatches;
@@ -348,7 +348,7 @@ int RGroupDecomposition::getMatchingCoreInternal(
 
 int RGroupDecomposition::add(const ROMol &inmol) {
   RWMOL_SPTR mol(new RWMol(inmol));
-  const RCore *rcore;
+  const RCore *rcore = nullptr;
   std::vector<MatchVectType> tmatches;
   // Add Hs for better symmetrization
   auto core_idx = getMatchingCoreInternal(*mol, rcore, tmatches);
@@ -441,7 +441,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
             unsigned int coreAtomIndex = sideChainAtom->getIsotope();
             auto coreAtom = rcore->core->getAtomWithIdx(coreAtomIndex);
             coreAtomAnyMatched.insert(coreAtomIndex);
-            int rlabel;
+            int rlabel = 0;
             if (coreAtom->getPropIfPresent(RLABEL, rlabel)) {
               std::vector<int> rlabelsOnSideChainAtom;
               sideChainAtom->getPropIfPresent(SIDECHAIN_RLABELS,
@@ -495,7 +495,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
             for (const auto &mvpair : tmatche) {
               const Atom *coreAtm = rcore->core->getAtomWithIdx(mvpair.first);
               Atom *newCoreAtm = newCore.getAtomWithIdx(mvpair.second);
-              int rlabel;
+              int rlabel = 0;
               if (coreAtm->getPropIfPresent(RLABEL, rlabel)) {
                 newCoreAtm->setProp<int>(RLABEL, rlabel);
               }
