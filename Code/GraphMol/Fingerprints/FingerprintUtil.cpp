@@ -45,7 +45,7 @@ namespace AtomPairs {
 std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
                           bool includeChirality) {
   PRECONDITION(atom, "no atom");
-  std::uint32_t code;
+  std::uint32_t code = 0;
 
   unsigned int numBranches = 0;
   if (atom->getDegree() > branchSubtract) {
