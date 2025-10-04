@@ -13,6 +13,7 @@
 #include <cmath>
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
+#include <math.h>
 
 namespace ForceFields {
 namespace UFF {
@@ -230,7 +231,7 @@ void TorsionAngleContrib::getGrad(double *pos, double *grad) const {
   RDGeom::Point3D r[4];
   RDGeom::Point3D t[2];
   double d[2];
-  double cosPhi;
+  double cosPhi = NAN;
   RDKit::ForceFieldsHelper::computeDihedral(
       pos, d_at1Idx, d_at2Idx, d_at3Idx, d_at4Idx, nullptr, &cosPhi, r, t, d);
   double sinPhiSq = 1.0 - cosPhi * cosPhi;
