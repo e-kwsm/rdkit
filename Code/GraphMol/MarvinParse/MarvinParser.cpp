@@ -42,6 +42,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <math.h>
 
 namespace RDKit {
 
@@ -496,7 +497,7 @@ class MarvinCMLReader {
 
         if (atomPtr->mrvStereoGroup != "") {
           RDKit::StereoGroupType groupType;
-          int groupNumber;
+          int groupNumber = 0;
 
           // get the group parts
           std::string temp =
@@ -522,7 +523,7 @@ class MarvinCMLReader {
 
           // see if the group already exists
 
-          MarvinStereoGroup *marvinStereoGroup;
+          MarvinStereoGroup *marvinStereoGroup = nullptr;
           auto groupIter =
               find_if(stereoGroups.begin(), stereoGroups.end(),
                       [groupType, groupNumber](const MarvinStereoGroup *arg) {
@@ -830,8 +831,8 @@ class MarvinCMLReader {
           int pointCount = 0;
           for (auto &v2 : v.second) {
             if (v2.first == "MPoint") {
-              double x;
-              double y;
+              double x = NAN;
+              double y = NAN;
               if (!getCleanNumber(v2.second.get<std::string>("<xmlattr>.x", ""),
                                   x) ||
                   !getCleanNumber(v2.second.get<std::string>("<xmlattr>.y", ""),
@@ -893,7 +894,7 @@ class MarvinCMLReader {
               v.second.get<std::string>("<xmlattr>.halign", "");
           marvinCondition->valign =
               v.second.get<std::string>("<xmlattr>.valign", "");
-          double fontScale;
+          double fontScale = NAN;
           std::string fontScaleStr =
               v.second.get<std::string>("<xmlattr>.fontScale", "");
           if (fontScaleStr != "") {
@@ -911,7 +912,7 @@ class MarvinCMLReader {
           int pointCount = 0;
           for (auto &v2 : v.second) {
             if (v2.first == "MPoint") {
-              double x, y;
+              double x = NAN, y = NAN;
               std::string xStr = v2.second.get<std::string>("<xmlattr>.x", "");
               std::string yStr = v2.second.get<std::string>("<xmlattr>.y", "");
               if (!getCleanNumber(xStr, x) || !getCleanNumber(yStr, y)) {
