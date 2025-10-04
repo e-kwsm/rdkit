@@ -26,12 +26,7 @@ namespace MolDraw2D_detail {
 // ****************************************************************************
 DrawTextFT::DrawTextFT(double max_fnt_sz, double min_fnt_sz,
                        const std::string &font_file)
-    : DrawText(max_fnt_sz, min_fnt_sz),
-      library_(nullptr),
-      face_(nullptr),
-      x_trans_(0),
-      y_trans_(0),
-      string_y_max_(0) {
+    : DrawText(max_fnt_sz, min_fnt_sz) {
   int err_code = FT_Init_FreeType(&library_);
   if (err_code != FT_Err_Ok) {
     throw std::runtime_error(std::string("Couldn't initialise Freetype."));

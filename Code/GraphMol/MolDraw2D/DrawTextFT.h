@@ -63,12 +63,12 @@ class RDKIT_MOLDRAW2D_EXPORT DrawTextFT : public DrawText {
   // adds x_trans_ and y_trans_ to coords returns x advance distance
   virtual double extractOutline();
 
-  FT_Library library_;
-  FT_Face face_;
+  FT_Library library_{nullptr};
+  FT_Face face_{nullptr};
   std::string font_file_;  // over-rides default if not empty.
-  double x_trans_, y_trans_;
-  mutable FT_Pos
-      string_y_max_;  // maximum y value of string drawn, for inverting y
+  double x_trans_{0}, y_trans_{0};
+  mutable FT_Pos string_y_max_{
+      0};  // maximum y value of string drawn, for inverting y
   double em_scale_;
 
   // return a vector of StringRects, one for each char in text, with
