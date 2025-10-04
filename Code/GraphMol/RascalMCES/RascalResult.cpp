@@ -49,7 +49,7 @@ RascalResult::RascalResult(const RDKit::ROMol &mol1, const RDKit::ROMol &mol2,
       d_exactConnectionsMatch(exactConnectionsMatch),
       d_equivalentAtoms(equivalentAtoms),
       d_ignoreBondOrders(ignoreBondOrders) {
-  const std::vector<std::vector<int>> *mol1AdjMatrix;
+  const std::vector<std::vector<int>> *mol1AdjMatrix = nullptr;
   if (swapped) {
     d_mol1.reset(new RDKit::ROMol(mol2));
     d_mol2.reset(new RDKit::ROMol(mol1));
