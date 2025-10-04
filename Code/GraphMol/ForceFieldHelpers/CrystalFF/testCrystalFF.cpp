@@ -117,7 +117,7 @@ void testTorsionAngleContribs() {
 }
 
 void testTorsionPrefs() {
-  ROMol *mol;
+  ROMol *mol = nullptr;
   mol = SmilesToMol("CCCC");
   TEST_ASSERT(mol);
 
@@ -157,7 +157,7 @@ void testTorsionPrefs() {
 }
 
 void testTorsionPrefsSmallRings() {
-  ROMol *mol;
+  ROMol *mol = nullptr;
   ForceFields::CrystalFF::CrystalFFDetails details;
   mol = SmilesToMol("C1COCC1");
   TEST_ASSERT(mol);
@@ -178,7 +178,7 @@ void testTorsionPrefsSmallRings() {
 
 void testTorsionPrefsBridgedSmallRings() {
   // test bridged system does not trigger any small ring torsion
-  ROMol *mol;
+  ROMol *mol = nullptr;
   ForceFields::CrystalFF::CrystalFFDetails details;
 
   mol = SmilesToMol("O[C@H]1C[C@H]2CC[C@]1(C)C2(C)C");
@@ -193,7 +193,7 @@ void testTorsionPrefsBridgedSmallRings() {
 }
 
 void testTorsionPrefsMacrocycles() {
-  ROMol *mol;
+  ROMol *mol = nullptr;
   ForceFields::CrystalFF::CrystalFFDetails details;
   mol = SmilesToMol("C1COCCCCCCC1");
   TEST_ASSERT(mol);
