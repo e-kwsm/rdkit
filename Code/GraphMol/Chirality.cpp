@@ -19,6 +19,7 @@
 #include <RDGeneral/RDLog.h>
 #include <RDGeneral/types.h>
 #include <RDGeneral/utils.h>
+#include <math.h>
 
 #include <boost/dynamic_bitset.hpp>
 #include <boost/algorithm/string.hpp>
@@ -147,7 +148,7 @@ void controllingBondFromAtom(const ROMol &mol,
     } else if (tBond->getBondType() == Bond::DOUBLE) {
       doubleBondSeen = true;
     }
-    int explicit_unknown_stereo;
+    int explicit_unknown_stereo = 0;
     if ((tBond->getBondType() == Bond::SINGLE ||
          tBond->getBondType() == Bond::AROMATIC) &&
         (tBond->getBondDir() == Bond::UNKNOWN ||
@@ -563,7 +564,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
   //
   //----------------------------------------------------------
   if (allSingle || atom->getAtomicNum() == 15 || atom->getAtomicNum() == 16) {
-    double vol;
+    double vol = NAN;
     unsigned int order[4] = {0, 1, 2, 3};
     double prefactor = 1;
     if (refIdx != 0) {
@@ -1210,7 +1211,7 @@ void iterateCIPRanks(const ROMol &mol, const DOUBLE_VECT &invars,
   for (unsigned int i = 0; i < numAtoms; i++) {
     cipEntries[i].push_back(static_cast<int>(invars[i]));
   }
-  unsigned int numRanks;
+  unsigned int numRanks = 0;
   std::sort(sortableEntries.begin(), sortableEntries.end());
   std::vector<std::pair<int, int>> needsSorting;
   findSegmentsToResort(sortableEntries, needsSorting, numRanks);
@@ -1358,7 +1359,7 @@ void findAtomNeighborDirHelper(const ROMol &mol, const Atom *atom,
   for (const auto bond : mol.atomBonds(atom)) {
     // check whether this bond is explicitly set to have unknown stereo
     if (!hasExplicitUnknownStereo) {
-      int explicit_unknown_stereo;
+      int explicit_unknown_stereo = 0;
       if (bond->getBondDir() == Bond::UNKNOWN  // there's a squiggle bond
           || (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
                                           explicit_unknown_stereo) &&
@@ -1873,7 +1874,7 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
             // directionality.  Find the highest-ranked directionality
             // on each side:
 
-            int begDir, endDir, endNbrAid, begNbrAid;
+            int begDir = 0, endDir = 0, endNbrAid = 0, begNbrAid = 0;
             if (begAtomNeighbors.size() == 1 ||
                 ranks[begAtomNeighbors[0].first] >
                     ranks[begAtomNeighbors[1].first]) {
@@ -2345,7 +2346,7 @@ void legacyStereoPerception(ROMol &mol, bool cleanIt,
   }
   UINT_VECT atomRanks;
   bool keepGoing = hasStereoAtoms | hasStereoBonds;
-  bool changedStereoAtoms, changedStereoBonds;
+  bool changedStereoAtoms = false, changedStereoBonds = false;
   while (keepGoing) {
     if (hasStereoAtoms) {
       std::tie(hasStereoAtoms, changedStereoAtoms) =
@@ -2610,7 +2611,7 @@ bool canBeStereoBond(const Bond *bond) {
 
         // if two neighbors havr the same CIP ranking, this is not stereo
         const auto otherAtom = nbrBond->getOtherAtom(atom);
-        int rank;
+        int rank = 0;
         if (RDKit::Chirality::getUseLegacyStereoPerception()) {
           if (!otherAtom->getPropIfPresent(common_properties::_CIPRank, rank)) {
             rank = -1;
@@ -3009,7 +3010,7 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
 
 // removes chirality markers from sp and sp2 hybridized centers:
 void cleanupChirality(RWMol &mol) {
-  unsigned int degree, perm;
+  unsigned int degree = 0, perm = 0;
   for (auto atom : mol.atoms()) {
     switch (atom->getChiralTag()) {
       case Atom::CHI_TETRAHEDRAL_CW:
@@ -3209,7 +3210,7 @@ static bool assignNontetrahedralChiralTypeFrom3D(ROMol &mol,
   }
 
   Atom::ChiralType tag;
-  unsigned int perm;
+  unsigned int perm = 0;
   bool res = false;
   switch (pairs) {
     case 0:
