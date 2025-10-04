@@ -22,11 +22,9 @@ struct CartesianProduct {
   std::vector<size_t> sizes;
   std::deque<size_t> bases;
   size_t maxPermutations;
-  size_t permutationCount;
+  size_t permutationCount{0};
   CartesianProduct(const std::vector<size_t> &inputSizes)
-      : permutation(inputSizes.size(), 0),
-        sizes(inputSizes),
-        permutationCount(0) {
+      : permutation(inputSizes.size(), 0), sizes(inputSizes) {
     maxPermutations = 1;
     for (unsigned long size : sizes) {
       bases.push_front(maxPermutations);

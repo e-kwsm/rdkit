@@ -506,18 +506,18 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
       const std::vector<DrawColour> *highlightColorsReactants,
       std::map<int, DrawColour> &atomColours) const;
 
-  int width_, height_, panel_width_, panel_height_, legend_height_;
+  int width_, height_, panel_width_, panel_height_, legend_height_{0};
   // if the user calls setScale() to explicitly force a scale on the
   // DrawMols, this is set to true.
   bool forceScale_ = false;
   bool flexiMode_ = false;
-  double scale_, fontScale_;
-  int x_offset_, y_offset_;  // translation in screen coordinates
-  bool fill_polys_;
-  int activeMolIdx_;
-  int activeAtmIdx1_;
-  int activeAtmIdx2_;
-  int activeBndIdx_;
+  double scale_{1.0}, fontScale_{1.0};
+  int x_offset_{0}, y_offset_{0};  // translation in screen coordinates
+  bool fill_polys_{true};
+  int activeMolIdx_{-1};
+  int activeAtmIdx1_{-1};
+  int activeAtmIdx2_{-1};
+  int activeBndIdx_{-1};
   // these are shared_ptr rather than unique_ptr because the reactions
   // keep their own copy.
   std::vector<std::shared_ptr<MolDraw2D_detail::DrawMol>> drawMols_;

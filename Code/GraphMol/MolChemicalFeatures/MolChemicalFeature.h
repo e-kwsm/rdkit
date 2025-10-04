@@ -34,11 +34,7 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeature
   //! Constructor
   MolChemicalFeature(const ROMol *mol, const MolChemicalFeatureFactory *factory,
                      const MolChemicalFeatureDef *fdef, int id = -1)
-      : dp_mol(mol),
-        dp_factory(factory),
-        dp_def(fdef),
-        d_id(id),
-        d_activeConf(-1) {}
+      : dp_mol(mol), dp_factory(factory), dp_def(fdef), d_id(id) {}
 
   ~MolChemicalFeature() override = default;
 
@@ -89,7 +85,7 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeature
   const MolChemicalFeatureFactory *dp_factory;
   const MolChemicalFeatureDef *dp_def;
   int d_id;
-  int d_activeConf;
+  int d_activeConf{-1};
   AtomPtrContainer d_atoms;
   mutable PointCacheType d_locs;
 };

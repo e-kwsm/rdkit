@@ -13,11 +13,11 @@ namespace RDKit {
 namespace FMCS {
 typedef unsigned long long BitSet;
 class Composition2N {  // generator of 2^N-1 possible bit combinations
-  BitSet Bits, InverseBits;
+  BitSet Bits{0}, InverseBits{0};
   BitSet MaxValue, ValueMask;  // need for inverse bitset must be 2^N-1
  public:
   Composition2N(BitSet maxValue, BitSet valueMask)
-      : Bits(0), InverseBits(0), MaxValue(maxValue), ValueMask(valueMask) {}
+      : MaxValue(maxValue), ValueMask(valueMask) {}
 
   static void compute2N(unsigned int power, BitSet &value) {
     value = 1uLL << power;
