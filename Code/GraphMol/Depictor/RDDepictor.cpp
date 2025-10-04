@@ -282,7 +282,7 @@ void embedFusedSystems(const RDKit::ROMol &mol,
     EmbeddedFrag efrag(&mol, frings, allowRingTemplates);
     efrag.setupNewNeighs();
     efrags.push_back(efrag);
-    size_t rix;
+    size_t rix = 0;
     for (rix = 0; rix < cnrs; ++rix) {
       if (!fusDone[rix]) {
         curr = rix;

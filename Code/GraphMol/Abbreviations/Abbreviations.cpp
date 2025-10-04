@@ -170,7 +170,7 @@ std::vector<AbbreviationMatch> findApplicableAbbreviationMatches(
   for (const auto &abbrev : abbrevs) {
     CHECK_INVARIANT(abbrev.mol, "molecule is null");
     if (maxCoverage > 0) {
-      unsigned int nDummies;
+      unsigned int nDummies = 0;
       abbrev.mol->getProp(common_properties::numDummies, nDummies);
       if (double(abbrev.mol->getNumAtoms() - nDummies) / nAtoms >=
           maxCoverage) {
@@ -264,9 +264,9 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
         bool firstAttachFound = false;
         for (unsigned int i = 0; i < bnds.size(); ++i) {
           auto bnd = mol.getBondWithIdx(bnds[i]);
-          unsigned int mAt;  // sgroup atom in the match
-          unsigned int oAt;  // add the first attachment point to the beginning
-                             // of the atom list
+          unsigned int mAt = 0;  // sgroup atom in the match
+          unsigned int oAt = 0;  // add the first attachment point to the
+                                 // beginning of the atom list
           if (std::find(ats.begin(), ats.end(), bnd->getBeginAtomIdx()) !=
               ats.end()) {
             oAt = bnd->getEndAtomIdx();

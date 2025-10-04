@@ -135,8 +135,7 @@ TEST_CASE("testFloatEquality") {
   REQUIRE(q.getTypeLabel().empty());
   q.setTypeLabel("FloatEquality");
 
-  Query<double> *newQ;
-  newQ = q.copy();
+  Query<double> *newQ = q.copy();
   REQUIRE(!newQ->Match(0.0));
   REQUIRE(newQ->Match(1.0));
   REQUIRE(newQ->Match(1.001));
@@ -157,8 +156,7 @@ TEST_CASE("testSetQuery") {
   REQUIRE(q.Match(3));
   REQUIRE(!q.Match(-3));
 
-  Query<int> *newQ;
-  newQ = q.copy();
+  Query<int> *newQ = q.copy();
   REQUIRE(!newQ->Match(0));
   REQUIRE(newQ->Match(1));
   REQUIRE(newQ->Match(3));
@@ -181,8 +179,7 @@ TEST_CASE("testAndQuery") {
   REQUIRE(q->Match(3));
   REQUIRE(!q->Match(-3));
 
-  Query<int> *newQ;
-  newQ = q->copy();
+  Query<int> *newQ = q->copy();
   REQUIRE(!newQ->Match(0));
   REQUIRE(newQ->Match(1));
   REQUIRE(newQ->Match(3));
@@ -207,8 +204,7 @@ TEST_CASE("testOrQuery") {
   REQUIRE(q->Match(3));
   REQUIRE(q->Match(-3));
 
-  Query<int> *newQ;
-  newQ = q->copy();
+  Query<int> *newQ = q->copy();
   REQUIRE(newQ->Match(0));
   REQUIRE(newQ->Match(1));
   REQUIRE(newQ->Match(3));
@@ -234,8 +230,7 @@ TEST_CASE("testXOrQuery") {
   REQUIRE(!q->Match(3));
   REQUIRE(q->Match(-3));
 
-  Query<int> *newQ;
-  newQ = q->copy();
+  Query<int> *newQ = q->copy();
   REQUIRE(newQ->Match(-1));
   REQUIRE(newQ->Match(0));
   REQUIRE(!newQ->Match(1));
@@ -254,8 +249,7 @@ TEST_CASE("testPointerAndCopyFoo") {
   REQUIRE(q.Match(6.1));
   REQUIRE(!q.Match(5.0));
 
-  Query<int, double, true> *newQ;
-  newQ = q.copy();
+  Query<int, double, true> *newQ = q.copy();
   REQUIRE(newQ->Match(6.0));
   REQUIRE(newQ->Match(6.1));
   REQUIRE(!newQ->Match(5.0));
@@ -265,8 +259,7 @@ TEST_CASE("testPointerAndCopyFoo") {
   REQUIRE(newQ2->Match(6.1));
   REQUIRE(!newQ2->Match(5.0));
 
-  Query<int, double, true> *newQ3;
-  newQ3 = newQ2->copy();
+  Query<int, double, true> *newQ3 = newQ2->copy();
   REQUIRE(newQ3->Match(6.0));
   REQUIRE(newQ3->Match(6.1));
   REQUIRE(!newQ3->Match(5.0));
@@ -289,8 +282,7 @@ TEST_CASE("testSetQueryWithDataFunc") {
   REQUIRE(q.Match("3"));
   REQUIRE(!q.Match("-3"));
 
-  Query<int, const char *, true> *newQ;
-  newQ = q.copy();
+  Query<int, const char *, true> *newQ = q.copy();
   REQUIRE(!newQ->Match("0"));
   REQUIRE(newQ->Match("1"));
   REQUIRE(newQ->Match("3"));

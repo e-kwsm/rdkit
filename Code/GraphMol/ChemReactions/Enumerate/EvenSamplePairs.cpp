@@ -230,7 +230,7 @@ std::string EvenSamplePairsStrategy::stats() const {
 
   boost::uint64_t npos = m_permutationSizes.size();
   const RGROUPS &nvars = m_permutationSizes;
-  boost::uint64_t i, l, j, ii, jj, ioffset, joffset;
+  boost::uint64_t i = 0, l = 0, j = 0, ii = 0, jj = 0, ioffset = 0, joffset = 0;
   ss << "#BEGIN# BBSTAT\n";
   for (i = 0; i < npos; i++) {
     boost::uint64_t maxcount = 0;
