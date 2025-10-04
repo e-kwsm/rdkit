@@ -17,6 +17,7 @@
 #include <sstream>
 #include <RDGeneral/Exceptions.h>
 #include <RDGeneral/StreamOps.h>
+#include <math.h>
 #include <cstdint>
 #include <limits>
 
@@ -336,7 +337,7 @@ class SparseIntVect {
   std::string toString() const {
     std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                          std::ios_base::in);
-    std::uint32_t tInt;
+    std::uint32_t tInt = 0;
     tInt = ci_SPARSEINTVECT_VERSION;
     streamWrite(ss, tInt);
     tInt = sizeof(IndexType);
@@ -369,10 +370,10 @@ class SparseIntVect {
                          std::ios_base::in);
     ss.write(pkl, len);
 
-    std::uint32_t vers;
+    std::uint32_t vers = 0;
     streamRead(ss, vers);
     if (vers == 0x0001) {
-      std::uint32_t tInt;
+      std::uint32_t tInt = 0;
       streamRead(ss, tInt);
       if (tInt > sizeof(IndexType)) {
         throw ValueErrorException(
@@ -405,7 +406,7 @@ class SparseIntVect {
     streamRead(ss, nEntries);
     for (T i = 0; i < nEntries; ++i) {
       streamRead(ss, tVal);
-      std::int32_t val;
+      std::int32_t val = 0;
       streamRead(ss, val);
       d_data[tVal] = val;
     }
@@ -525,7 +526,7 @@ double DiceSimilarity(const SparseIntVect<IndexType> &v1,
   calcVectParams(v1, v2, v1Sum, v2Sum, numer);
 
   double denom = v1Sum + v2Sum;
-  double sim;
+  double sim = NAN;
   if (fabs(denom) < 1e-6) {
     sim = 0.0;
   } else {
@@ -553,7 +554,7 @@ double TverskySimilarity(const SparseIntVect<IndexType> &v1,
   calcVectParams(v1, v2, v1Sum, v2Sum, andSum);
 
   double denom = a * v1Sum + b * v2Sum + (1 - a - b) * andSum;
-  double sim;
+  double sim = NAN;
 
   if (fabs(denom) < 1e-6) {
     sim = 0.0;

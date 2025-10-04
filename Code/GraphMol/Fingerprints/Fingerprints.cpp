@@ -388,7 +388,7 @@ ExplicitBitVect *LayeredFingerprintMol(
 
         if (layerFlags & 0x1) {
           // layer 1: straight topology
-          unsigned int a1Deg, a2Deg;
+          unsigned int a1Deg = 0, a2Deg = 0;
           a1Deg = atomDegrees[bi->getBeginAtomIdx()];
           a2Deg = atomDegrees[bi->getEndAtomIdx()];
           if (a1Deg < a2Deg) {
@@ -401,7 +401,7 @@ ExplicitBitVect *LayeredFingerprintMol(
         }
         if (layerFlags & 0x2 && !(pathQueries & 0x1)) {
           // layer 2: include bond orders:
-          unsigned int bondHash;
+          unsigned int bondHash = 0;
           // makes sure aromatic bonds and single bonds  always hash the same:
           if (!bi->getIsAromatic() && bi->getBondType() != Bond::SINGLE &&
               bi->getBondType() != Bond::AROMATIC) {
@@ -409,7 +409,7 @@ ExplicitBitVect *LayeredFingerprintMol(
           } else {
             bondHash = Bond::SINGLE;
           }
-          unsigned int a1Deg, a2Deg;
+          unsigned int a1Deg = 0, a2Deg = 0;
           a1Deg = atomDegrees[bi->getBeginAtomIdx()];
           a2Deg = atomDegrees[bi->getEndAtomIdx()];
           if (a1Deg < a2Deg) {
@@ -426,10 +426,10 @@ ExplicitBitVect *LayeredFingerprintMol(
           // std::cerr<<" consider: "<<bi->getBeginAtomIdx()<<" - "
           // <<bi->getEndAtomIdx()<<std::endl;
           // layer 3: include atom types:
-          unsigned int a1Hash, a2Hash;
+          unsigned int a1Hash = 0, a2Hash = 0;
           a1Hash = (anums[bi->getBeginAtomIdx()] % 128);
           a2Hash = (anums[bi->getEndAtomIdx()] % 128);
-          unsigned int a1Deg, a2Deg;
+          unsigned int a1Deg = 0, a2Deg = 0;
           a1Deg = atomDegrees[bi->getBeginAtomIdx()];
           a2Deg = atomDegrees[bi->getEndAtomIdx()];
           if (a1Hash < a2Hash) {
