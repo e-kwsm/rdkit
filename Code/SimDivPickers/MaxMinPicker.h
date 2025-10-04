@@ -213,8 +213,8 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
   }
   *prev = 0;
 
-  unsigned int poolIdx;
-  unsigned int pickIdx;
+  unsigned int poolIdx = 0;
+  unsigned int pickIdx = 0;
 
   // First pass initialize dist_bound
   prev = &pool_list;

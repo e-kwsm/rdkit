@@ -50,7 +50,7 @@ unsigned int Compute2DCoords(RDKit::ROMol &mol, bool canonOrient,
   if (bondLength > 0) {
     RDDepict::BOND_LEN = bondLength;
   }
-  unsigned int res;
+  unsigned int res = 0;
   res = RDDepict::compute2DCoords(
       mol, &cMap, canonOrient, clearConfs, nFlipsPerSample, nSamples,
       sampleSeed, permuteDeg4Nodes, forceRDKit, useRingTemplates);
@@ -89,7 +89,7 @@ unsigned int Compute2DCoordsMimicDistmat(
   if (bondLength > 0) {
     RDDepict::BOND_LEN = bondLength;
   }
-  unsigned int res;
+  unsigned int res = 0;
   res = RDDepict::compute2DCoordsMimicDistMat(
       mol, &dmat, canonOrient, clearConfs, weightDistMat, nFlipsPerSample,
       nSamples, sampleSeed, permuteDeg4Nodes, forceRDKit);

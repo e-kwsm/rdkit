@@ -12,7 +12,7 @@ using namespace RDKit;
 
 TEST_CASE("testPushAndPop") {
   ConcurrentQueue<int> *q = new ConcurrentQueue<int>(4);
-  int e1, e2, e3;
+  int e1 = 0, e2 = 0, e3 = 0;
   REQUIRE(q->isEmpty());
 
   q->push(1);
@@ -41,7 +41,7 @@ void produce(ConcurrentQueue<int> &q, const int numToProduce) {
 }
 
 void consume(ConcurrentQueue<int> &q, std::vector<int> &result) {
-  int element;
+  int element = 0;
   while (q.pop(element)) {
     result.push_back(element);
   }

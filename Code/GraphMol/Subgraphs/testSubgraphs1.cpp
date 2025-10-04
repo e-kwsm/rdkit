@@ -59,9 +59,8 @@ TEST_CASE("testSubgraphs", "[subgraphs]") {
   // same answer
   INT_PATH_LIST_MAP tmpm;
   tmpm = findAllSubgraphsOfLengthsMtoN(mol, 1, 6);
-  int newTot, idx;
-  newTot = 0;
-  for (idx = 1; idx <= 6; idx++) {
+  int newTot = 0;
+  for (int idx = 1; idx <= 6; idx++) {
     newTot += tmpm[idx].size();
   }
   CHECK(totPs == newTot);
@@ -110,8 +109,7 @@ TEST_CASE("testSubgraphs2", "[subgraphs]") {
 
   int nAll = 0;
   int nUnique = 0;
-  int i;
-  for (i = 1; i < 13; i++) {
+  for (int i = 1; i < 13; i++) {
     PATH_LIST tmp;
     tmp = findAllSubgraphsOfLengthN(*mol, i);
     nAll += tmp.size();
@@ -127,7 +125,7 @@ TEST_CASE("testSubgraphs2", "[subgraphs]") {
 
   nAll = 0;
   nUnique = 0;
-  for (i = 1; i < 18; i++) {
+  for (int i = 1; i < 18; i++) {
     PATH_LIST tmp;
     tmp = findAllSubgraphsOfLengthN(*mol, i);
     nAll += tmp.size();

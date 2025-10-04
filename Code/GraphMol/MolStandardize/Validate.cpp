@@ -707,7 +707,7 @@ void check3CoordinatedStereo(const ROMol &mol, const Atom *atom,
 
   if (numStereoBonds == 1) {
     // identify the stereo bond
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < 3; ++i) {
       Bond::BondDir bondDir = neighborsInfo.bonds[i].bondDir;
       if (bondDir == Bond::BondDir::BEGINDASH ||

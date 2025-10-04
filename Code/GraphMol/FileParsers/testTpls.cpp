@@ -23,7 +23,7 @@ void test1() {
 
   std::string rdbase = getenv("RDBASE");
   std::string fName = rdbase + "/Code/GraphMol/FileParsers/test_data/cmpd2.tpl";
-  RWMol *m;
+  RWMol *m = nullptr;
   Conformer conf;
   std::string propVal;
 
@@ -69,7 +69,7 @@ void test2() {
 
   std::string rdbase = getenv("RDBASE");
   std::string fName = rdbase + "/Code/GraphMol/FileParsers/test_data/cmpd1.tpl";
-  RWMol *m, *m2;
+  RWMol *m = nullptr, *m2 = nullptr;
   Conformer conf;
   std::string propVal;
 
@@ -88,7 +88,7 @@ void test2() {
   std::stringstream strm;
   strm << MolToTPLText(*m, "TPLCharge");
 
-  unsigned int line;
+  unsigned int line = 0;
   m2 = TPLDataStreamToMol(&strm, line);
   TEST_ASSERT(m2);
   TEST_ASSERT(m2->getNumAtoms() == 18);

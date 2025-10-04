@@ -7,6 +7,7 @@
 #define INFOGAINFUNC_H
 
 #include <RDGeneral/types.h>
+#include <cmath>
 
 namespace RDInfoTheory {
 
@@ -25,8 +26,8 @@ double ChiSquare(T *dMat, long int dim1, long int dim2) {
   //
   //  Th chi squere formula is
   //  chi = sum((N/Ri)*sum(Nij^2/Cj) ) -N
-  T *rowSums, *colSums;
-  int i, j, tSum;
+  T *rowSums = nullptr, *colSums = nullptr;
+  int i = 0, j = 0, tSum = 0;
   // find the row sum
   tSum = 0;
   rowSums = new T[dim1];
@@ -65,9 +66,9 @@ double ChiSquare(T *dMat, long int dim1, long int dim2) {
 
 template <class T>
 double InfoEntropy(T *tPtr, long int dim) {
-  int i;
+  int i = 0;
   T nInstances = 0;
-  double accum = 0.0, d;
+  double accum = 0.0, d = NAN;
 
   for (i = 0; i < dim; i++) {
     nInstances += tPtr[i];
@@ -86,9 +87,9 @@ double InfoEntropy(T *tPtr, long int dim) {
 
 template <class T>
 double InfoEntropyGain(T *dMat, long int dim1, long int dim2) {
-  T *variableRes, *overallRes;
-  double gain, term2;
-  int tSum;
+  T *variableRes = nullptr, *overallRes = nullptr;
+  double gain = NAN, term2 = NAN;
+  int tSum = 0;
 
   // std::cerr<<" --------\n    ieg: "<<dim1<<" "<<dim2<<std::endl;
   variableRes = new T[dim1];
@@ -113,7 +114,7 @@ double InfoEntropyGain(T *dMat, long int dim1, long int dim2) {
 
   term2 = 0.0;
   for (long int i = 0; i < dim1; i++) {
-    T *tPtr;
+    T *tPtr = nullptr;
     tPtr = dMat + i * dim2;
     term2 += variableRes[i] * InfoEntropy(tPtr, dim2);
   }

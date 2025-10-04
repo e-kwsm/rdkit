@@ -86,13 +86,13 @@ void RealValueVect::initFromText(const char *pkl, const unsigned int len) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
                        std::ios_base::out);
   ss.write(pkl, len);
-  std::int32_t tVers;
+  std::int32_t tVers = 0;
   streamRead(ss, tVers);
   tVers *= -1;
   if (tVers != 0x1) {
     throw ValueErrorException("bad version in RealValueVect pickle");
   }
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   streamRead(ss, tInt);
   d_length = tInt;
   d_data.resize(d_length);
