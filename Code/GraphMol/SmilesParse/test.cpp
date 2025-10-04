@@ -25,7 +25,7 @@ typedef ROMol Mol;
 
 void testPass() {
   int i = 0;
-  ROMol *mol, *mol2;
+  ROMol *mol = nullptr, *mol2 = nullptr;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing molecules which should parse." << std::endl;
   string smis[] = {
@@ -97,7 +97,7 @@ void testPass() {
 
 void testFail() {
   int i = 0;
-  Mol *mol;
+  Mol *mol = nullptr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -154,8 +154,8 @@ void testFail() {
 }
 
 void testDetails() {
-  Mol *mol;
-  Atom *a;
+  Mol *mol = nullptr;
+  Atom *a = nullptr;
   std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -186,7 +186,7 @@ void testDetails() {
 }
 
 void testProblems() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -231,7 +231,7 @@ void testProblems() {
 }
 
 void testBasicCanon() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -316,7 +316,7 @@ void testBasicCanon() {
 
 void testLeak() {
   int i = 0;
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -335,7 +335,7 @@ void testLeak() {
 }
 
 void testStereochem() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi, cip;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -823,7 +823,7 @@ void testStereochem() {
 }
 
 void testIssue127() {
-  Mol *mol, *mol2;
+  Mol *mol = nullptr, *mol2 = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -858,7 +858,7 @@ void testIssue127() {
 }
 
 void testIssue143() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -884,7 +884,7 @@ void testIssue143() {
 }
 
 void testIssue151() {
-  Mol *mol, *mol2;
+  Mol *mol = nullptr, *mol2 = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -984,7 +984,7 @@ void testIssue151() {
 
 void testIssue153() {
   std::string code;
-  Mol *mol, *mol2;
+  Mol *mol = nullptr, *mol2 = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1057,7 +1057,7 @@ void testIssue153() {
 
 void testIssue157() {
   std::string code;
-  Mol *mol, *mol2;
+  Mol *mol = nullptr, *mol2 = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1143,7 +1143,7 @@ void testIssue157() {
 }
 
 void testIssue159() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1321,7 +1321,7 @@ void testIssue159() {
 }
 
 void testIssue175() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1350,7 +1350,7 @@ void testIssue175() {
 }
 
 void testIssue176() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi, tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1387,7 +1387,7 @@ void testIssue176() {
 }
 
 void testIssue180() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1414,7 +1414,7 @@ void testIssue180() {
 }
 
 void testIssue184() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1450,7 +1450,7 @@ void testIssue184() {
 }
 
 void testIssue185() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1523,7 +1523,7 @@ void testIssue185() {
 }
 
 void testIssue191() {
-  Mol *mol;
+  Mol *mol = nullptr;
   std::string smi, refSmi;
   int numE = 0;
 
@@ -1596,7 +1596,7 @@ void testIssue256() {
 }
 
 void testIssue266() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1633,7 +1633,7 @@ void testRootedAt() {
   BOOST_LOG(rdInfoLog) << "Testing rootedAtAtom functionality" << std::endl;
 
   {
-    RWMol *mol;
+    RWMol *mol = nullptr;
     std::string smi;
     smi = "CN(C)C";
     mol = SmilesToMol(smi);
@@ -1743,7 +1743,7 @@ void testIsotopes() {
 }
 
 void testBug1670149() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1767,7 +1767,7 @@ void testBug1670149() {
 }
 
 void testBug1719046() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1847,7 +1847,7 @@ void testBug1842174() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
       << "Testing SF.net bug 1842174: bad bond dirs in branches" << std::endl;
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string smi;
 
   smi = "F/C=N/Cl";
@@ -1914,7 +1914,7 @@ void testBug1844617() {
   BOOST_LOG(rdInfoLog)
       << "Testing SF.net bug 1844617: oscillating chirality in canonical smiles"
       << std::endl;
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string smi, smi2;
   std::string label;
 
@@ -2019,7 +2019,7 @@ void testBug1844959() {
   BOOST_LOG(rdInfoLog)
       << "Testing SF.net bug 1844959: bad handling of Hs in chiral smiles"
       << std::endl;
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string smi, smi2;
   std::string label;
 
@@ -2203,7 +2203,7 @@ void testBug1942220() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing sf.net bug 1942220" << std::endl;
 
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string smi;
 
   smi = "[C](Cl)Br";
@@ -2250,7 +2250,7 @@ void testRingStereochemReporting() {
   BOOST_LOG(rdInfoLog) << "Testing error reporting with ring stereochem"
                        << std::endl;
 
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string smi;
 
   smi = "C[C@H]1CC[C@@H](C)CC1";
@@ -2273,7 +2273,7 @@ void testBug3127883() {
                           "3127883 (kekulization failing) "
                        << std::endl;
   {
-    ROMol *m;
+    ROMol *m = nullptr;
     std::string smi;
     smi = "c(:c:c:1):c:c:c:1";
     m = SmilesToMol(smi);
@@ -2282,7 +2282,7 @@ void testBug3127883() {
   }
 
   {
-    ROMol *m;
+    ROMol *m = nullptr;
     std::string smi;
     smi = "c1(:c(:c(:c(-C(-c2:c(:c(:c(:c(:c:2)))))=C):c(:c:1))))";
     m = SmilesToMol(smi);
@@ -2302,7 +2302,7 @@ void testBug3139534() {
   // smiles generation
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1COC/C=C\\CCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2314,7 +2314,7 @@ void testBug3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1COC/C=C/CCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2326,7 +2326,7 @@ void testBug3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1CC/C=C/C=C/CCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2341,7 +2341,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C/1=C/C=C/CCCCCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2353,7 +2353,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1COC/C=C/C=C/C1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2367,7 +2367,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1=C/OCC/C=C\\CC\\1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2377,7 +2377,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1CCCCN/C=C/1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2394,7 +2394,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     // the 2 initial directed bonds are redundant (/bad ??)
     std::string smiles = "CCC/[N+]/1=C/c2ccccc2OC(=O)/C=C1/O";
     m = SmilesToMol(smiles);
@@ -2424,7 +2424,7 @@ void testBug3139534() {
   }
 
   {  // Github #2023
-    RWMol *m;
+    RWMol *m = nullptr;
     // the initial directed bond is redundant
     std::string smiles = R"(CO/C1=C/C=C\C=C/C=N\1)";
     m = SmilesToMol(smiles);
@@ -2460,7 +2460,7 @@ void testBug3139534() {
   // some torture tests with natural products (thanks to James Davidson for the
   // examples)
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles =
         "NC(=O)O[C@H]1C(/C)=C/[C@H](C)[C@@H](O)[C@@H](OC)C[C@H](C)C\\C2=C(/"
         "OC)C(=O)\\C=C(\\NC(=O)C(\\C)=C\\C=C/[C@@H]1OC)C2=O";
@@ -2472,7 +2472,7 @@ void testBug3139534() {
 
     std::string csmiles = MolToSmiles(*m, true);
 
-    RWMol *m2;
+    RWMol *m2 = nullptr;
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       std::string nsmiles = MolToSmiles(*m, true, false, i, false);
       m2 = SmilesToMol(nsmiles);
@@ -2492,7 +2492,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles =
         "CC(O[C@@H]1C=C(C)[C@H]2[C@H]([C@H]3O[C@@H]2C/"
         "C(C)=C\\CC[C@@]3(C)OC(C)=O)[C@H]1C(OC(C)=O)(C)C)=O";
@@ -2502,7 +2502,7 @@ void testBug3139534() {
 
     std::string csmiles = MolToSmiles(*m, true);
 
-    RWMol *m2;
+    RWMol *m2 = nullptr;
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       std::string nsmiles = MolToSmiles(*m, true, false, i, false);
       m2 = SmilesToMol(nsmiles);
@@ -2522,7 +2522,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles =
         "CC(O[C@@H]1C=C(C)[C@H]2[C@H]([C@H]3O[C@@H]2C/C(C)=C/"
         "CC[C@@]3(C)OC(C)=O)[C@H]1C(OC(C)=O)(C)C)=O";
@@ -2532,7 +2532,7 @@ void testBug3139534() {
 
     std::string csmiles = MolToSmiles(*m, true);
 
-    RWMol *m2;
+    RWMol *m2 = nullptr;
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       std::string nsmiles = MolToSmiles(*m, true, false, i, false);
       m2 = SmilesToMol(nsmiles);
@@ -2552,7 +2552,7 @@ void testBug3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles =
         "CC(=O)[C@@H]1CC=C(C)[C@@H]2[C@@H]3O[C@@H]([C@@H](O)C/"
         "C=C\\CC3)[C@@H]12";
@@ -2562,7 +2562,7 @@ void testBug3139534() {
 
     std::string csmiles = MolToSmiles(*m, true);
 
-    RWMol *m2;
+    RWMol *m2 = nullptr;
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       std::string nsmiles = MolToSmiles(*m, true, false, i, false);
       m2 = SmilesToMol(nsmiles);
@@ -2589,7 +2589,7 @@ void testAtomMaps() {
   BOOST_LOG(rdInfoLog) << "test adding atom-map information" << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "[*:1]CCC([C:200])C";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2613,7 +2613,7 @@ void testBug3145697() {
       << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1.C11.C1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2627,7 +2627,7 @@ void testBug3145697() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1.C11.O1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2650,7 +2650,7 @@ void testBug3145697() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1C.CC11CCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2672,7 +2672,7 @@ void testBug3152751() {
       << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "c1cccc[te+]1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2686,7 +2686,7 @@ void testBug3152751() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "c1cccc[se+]1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2700,7 +2700,7 @@ void testBug3152751() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "c1ccc[te]1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2714,7 +2714,7 @@ void testBug3152751() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "c1ccc[se]1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2823,7 +2823,7 @@ void testBug3525799() {
   BOOST_LOG(rdInfoLog) << "Issue 3525799: bad smiles for r groups" << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC*";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2836,7 +2836,7 @@ void testBug3525799() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC*";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2858,7 +2858,7 @@ void testBug3526810() {
       << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1SCCSCCCSCCSCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2876,7 +2876,7 @@ void testBug3526810() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1NCCNCCCNCCNCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2894,7 +2894,7 @@ void testBug3526810() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1CNCCCNCCNCCCNC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2921,7 +2921,7 @@ void testBug3526815() {
       << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles =
         "O.O.O.O.O.O.O.O.O.[Pd].[Na+].[Na+].[Na+].[Na+].[Na+].[Na+].[Na+].[Na+]"
         ".[Na+].[O-]S(=O)(=O)c1cccc(c1)P(c1cccc(c1)S(=O)(=O)[O-])c1cccc(c1)S(="
@@ -2955,7 +2955,7 @@ void testFragmentSmiles() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Fragment Smiles" << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OCCCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2967,7 +2967,7 @@ void testFragmentSmiles() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OCCCCCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2979,7 +2979,7 @@ void testFragmentSmiles() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OC1CC1CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2991,7 +2991,7 @@ void testFragmentSmiles() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OC1CC1CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3004,7 +3004,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OC1CC1CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3017,7 +3017,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OC1CCCCC1N";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3028,7 +3028,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OCCCCCCN";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3039,7 +3039,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OCCCCCCN";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3053,7 +3053,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OC1CCCCC1N";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3066,7 +3066,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "Oc1ccccc1N";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3077,7 +3077,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "Oc1ccccc1N";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3090,7 +3090,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OCCCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3104,7 +3104,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CCCCO";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3118,7 +3118,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CCCCO";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3132,7 +3132,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=O)OCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3144,7 +3144,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=O)OCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3158,7 +3158,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=O)OCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3172,7 +3172,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=CC)CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3183,7 +3183,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=CC)CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3198,7 +3198,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=CC)CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3213,7 +3213,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC(=CC)CCC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3228,7 +3228,7 @@ void testFragmentSmiles() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "OC1CC1CC";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3249,7 +3249,7 @@ void testBug3528556() {
                        << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "N12.N13.C24.C35.C46.C56";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3272,7 +3272,7 @@ void testBug253() {
                        << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1CCCC1CCC1CCCCC11CCCCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3291,7 +3291,7 @@ void testBug257() {
                        << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CCO";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3313,7 +3313,7 @@ void testGithub12() {
   BOOST_LOG(rdInfoLog) << "Testing Github 12: non-canonical fragment smiles"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "c1c(C)cccc1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3415,7 +3415,7 @@ void testGithub45() {
                           "influencing non-stereo SMILES"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC1CCC[13C]2(C)C1CC[14CH]2C(C)=O";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3433,7 +3433,7 @@ void testGithub45() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CC1CCC[C@@]2(C)C1CC[C@@H]2C(C)=O";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3459,7 +3459,7 @@ void testGithub206() {
   BOOST_LOG(rdInfoLog) << "Testing Github 206: Problems round-tripping P"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "O=[PH3]";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3468,7 +3468,7 @@ void testGithub206() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "O=P";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3477,7 +3477,7 @@ void testGithub206() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "O=[PH]";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3493,7 +3493,7 @@ void testGithub210() {
                           "when calling assignStereochemistry()"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "O[C@H](F)CC(F)(Cl)I";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3540,7 +3540,7 @@ void testGithub378() {
                           "thing for odd dot-disconnected construct"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1.C1CO1.N1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3552,7 +3552,7 @@ void testGithub378() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1(O.C1)CO1.N1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3575,7 +3575,7 @@ void testGithub389() {
                           "allow writing of all explicit hydrogens"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "CCO";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3596,7 +3596,7 @@ void testEmptyStrings() {
   BOOST_LOG(rdInfoLog) << "Testing handling of empty SMILES/SMARTS strings"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -3607,7 +3607,7 @@ void testEmptyStrings() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "";
     m = SmartsToMol(smiles);
     TEST_ASSERT(m);
