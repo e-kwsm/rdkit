@@ -456,7 +456,7 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
 
   // the molecule owns the distance matrix pointer (if we need to get it)
   double *distMat = onlyShortestPaths ? MolOps::getDistanceMat(mol) : nullptr;
-  int *adjMat, dim;
+  int *adjMat = nullptr, dim = 0;
   dim = mol.getNumAtoms();
   adjMat = new int[dim * dim];
   memset((void *)adjMat, 0, dim * dim * sizeof(int));
@@ -584,7 +584,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
     ++beg;
   }
   boost::dynamic_bitset<> bondsIn(mol.getNumBonds());
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < radius; ++i) {
     if (nbrStack.empty()) {
       break;
@@ -592,7 +592,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
 
     std::list<std::pair<int, int>> nextLayer;
     while (!nbrStack.empty()) {
-      int bondIdx, startAtom;
+      int bondIdx = 0, startAtom = 0;
       boost::tie(startAtom, bondIdx) = nbrStack.front();
       nbrStack.pop_front();
       if (!bondsIn.test(bondIdx)) {
