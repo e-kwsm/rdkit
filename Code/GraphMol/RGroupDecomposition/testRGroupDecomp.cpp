@@ -2421,7 +2421,7 @@ C[*:2]
                                          "[*:1]c1c([*:2])ccc(F)c1"_smiles};
     auto m1 = "Cc1c(Cl)ccc(F)c1"_smiles;
     auto m2 = "Cc1c(Br)cccc1"_smiles;
-    size_t i;
+    size_t i = 0;
     RGroupRows rows;
     RGroupDecomposition decomp(cores);
     TEST_ASSERT(decomp.add(*m1) == 0);
