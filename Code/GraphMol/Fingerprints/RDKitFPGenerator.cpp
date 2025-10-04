@@ -220,7 +220,7 @@ RDKitFPEnvGenerator<OutputType>::getEnvironments(
       }
 
       // hash the path to generate a seed:
-      unsigned long seed;
+      unsigned long seed = 0;
       if (path.size() > 1) {
         std::sort(bondHashes.begin(), bondHashes.end());
 
