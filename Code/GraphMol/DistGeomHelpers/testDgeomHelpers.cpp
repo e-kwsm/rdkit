@@ -34,6 +34,7 @@
 
 #include <cmath>
 #include <RDGeneral/Exceptions.h>
+#include <math.h>
 
 #include <boost/tokenizer.hpp>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
@@ -104,9 +105,9 @@ void computeDistMat(const RDGeom::PointPtrVect &origCoords,
                     RDNumeric::DoubleSymmMatrix &distMat) {
   unsigned int N = origCoords.size();
   CHECK_INVARIANT(N == distMat.numRows(), "");
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   RDGeom::Point3D pti, ptj;
-  double d;
+  double d = NAN;
   for (i = 1; i < N; i++) {
     pti = *(RDGeom::Point3D *)origCoords[i];
     for (j = 0; j < i; j++) {
@@ -120,7 +121,7 @@ void computeDistMat(const RDGeom::PointPtrVect &origCoords,
 
 void computeMolDmat(ROMol &mol, RDNumeric::DoubleSymmMatrix &distMat) {
   RDGeom::PointPtrVect origCoords;
-  unsigned int i, nat = mol.getNumAtoms();
+  unsigned int i = 0, nat = mol.getNumAtoms();
   Conformer &conf = mol.getConformer(0);
   for (i = 0; i < nat; i++) {
     origCoords.push_back(&conf.getAtomPos(i));
@@ -134,8 +135,8 @@ void test2() {
   std::string smi = "Cc1c(C=CC(C)N2)c2[nH]n1";
   ROMol *mol = SmilesToMol(smi, 0, 1);
   DistGeom::BoundsMatPtr bm;
-  RDNumeric::DoubleSymmMatrix *dmat;
-  int cid;
+  RDNumeric::DoubleSymmMatrix *dmat = nullptr;
+  int cid = 0;
   unsigned int nat = mol->getNumAtoms();
 
   bm.reset(new DistGeom::BoundsMatrix(nat));
@@ -298,8 +299,8 @@ void test3() {
       rdbase + "/Code/GraphMol/DistGeomHelpers/test_data/combi_coords.sdf";
   SDMolSupplier sdsup(fname);
 
-  unsigned int i, j, nat;
-  bool gotCoords;
+  unsigned int i = 0, j = 0, nat = 0;
+  bool gotCoords = false;
   while (!sdsup.atEnd()) {
     ROMol *mol = sdsup.next();
     std::string mname;
@@ -351,7 +352,7 @@ void test5() {
       rdbase + "/Code/GraphMol/DistGeomHelpers/test_data/cis_trans_cases.csv";
   SmilesMolSupplier smiSup(smifile, ",", 0, 1);
 
-  int cid;
+  int cid = 0;
   while (1) {
     try {
       std::unique_ptr<RWMol> mol{static_cast<RWMol *>(smiSup.next())};
@@ -366,7 +367,7 @@ void test5() {
 
 void test6() {
   std::string smi;
-  ROMol *m;
+  ROMol *m = nullptr;
   DistGeom::BoundsMatPtr bm;
 
   m = SmilesToMol("CC");
@@ -389,9 +390,9 @@ void test6() {
 
 void testIssue215() {
   std::string smi;
-  ROMol *m;
+  ROMol *m = nullptr;
   DistGeom::BoundsMatPtr bm;
-  bool ok;
+  bool ok = false;
 
   m = SmilesToMol("C=C1C2CC1C2");
   TEST_ASSERT(m);
@@ -437,13 +438,13 @@ void testTemp() {
   std::string smifile =
       rdbase + "/Code/GraphMol/DistGeomHelpers/test_data/cis_trans_cases.csv";
   SmilesMolSupplier smiSup(smifile, ",", 0, 1);
-  ROMol *m;
+  ROMol *m = nullptr;
   unsigned int cnt = 0;
   while (!smiSup.atEnd()) {
     m = smiSup.next();
-    unsigned int i;
+    unsigned int i = 0;
     std::vector<double> energies;
-    double energy;
+    double energy = NAN;
     for (i = 0; i < 20; i++) {
       int cid = DGeomHelpers::EmbedMolecule(*m, 10, 1, false);
       if (cid >= 0) {
@@ -454,7 +455,7 @@ void testTemp() {
         delete ff;
       }
     }
-    double mean, stdDev;
+    double mean = NAN, stdDev = NAN;
     _computeStats(energies, mean, stdDev);
     std::string mname;
     cnt++;
@@ -515,7 +516,7 @@ void testMultipleConfs() {
       DGeomHelpers::EmbedMultipleConfs(*m, 10, 30, 100, true, false, -1);
   INT_VECT_CI ci;
   // SDWriter writer("junk.sdf");
-  double energy;
+  double energy = NAN;
 
   for (ci = cids.begin(); ci != cids.end(); ci++) {
     // writer.write(*m, *ci);
@@ -541,7 +542,7 @@ void testMultipleConfsExpTors() {
 
   INT_VECT_CI ci;
   // SDWriter writer("junk.sdf");
-  double energy;
+  double energy = NAN;
 
   for (ci = cids.begin(); ci != cids.end(); ci++) {
     // writer.write(*m, *ci);
@@ -670,7 +671,7 @@ void testIssue251() {
 }
 
 void testIssue276() {
-  bool ok;
+  bool ok = false;
   std::string smi = "CP1(C)=CC=CN=C1C";
   ROMol *m = SmilesToMol(smi, 0, 1);
   unsigned int nat = m->getNumAtoms();
@@ -685,7 +686,7 @@ void testIssue276() {
 }
 
 void testIssue284() {
-  bool ok;
+  bool ok = false;
   std::string smi = "CNC(=O)C";
   ROMol *m = SmilesToMol(smi, 0, 1);
   TEST_ASSERT(m);
@@ -732,7 +733,7 @@ void testIssue284() {
 }
 
 void testIssue285() {
-  bool ok;
+  bool ok = false;
   std::string smi = "CNC(=O)C";
   RWMol *m = SmilesToMol(smi, 0, 1);
   TEST_ASSERT(m);
@@ -765,7 +766,7 @@ void testIssue285() {
 }
 
 void testIssue355() {
-  bool ok;
+  bool ok = false;
   std::string smi = "CNC(=O)C";
   ROMol *m = SmilesToMol(smi, 0, 1);
   TEST_ASSERT(m);
