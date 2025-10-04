@@ -92,7 +92,7 @@ constexpr unsigned char swap_octahedral_table[31][15] = {
 static unsigned int swap_squareplanar(unsigned int perm, unsigned int x,
                                       unsigned int y) {
   constexpr unsigned int offset[3] = {0, 2, 3};
-  unsigned int swapidx;
+  unsigned int swapidx = 0;
   if (x == y) {
     return perm;
   }
@@ -113,7 +113,7 @@ static unsigned int swap_squareplanar(unsigned int perm, unsigned int x,
 static unsigned int swap_trigonalbipyramidal(unsigned int perm, unsigned int x,
                                              unsigned int y) {
   constexpr unsigned int offset[4] = {0, 3, 5, 6};
-  unsigned int swapidx;
+  unsigned int swapidx = 0;
   if (x == y) {
     return perm;
   }
@@ -134,7 +134,7 @@ static unsigned int swap_trigonalbipyramidal(unsigned int perm, unsigned int x,
 static unsigned int swap_octahedral(unsigned int perm, unsigned int x,
                                     unsigned int y) {
   constexpr unsigned int offset[5] = {0, 4, 7, 9, 10};
-  unsigned int swapidx;
+  unsigned int swapidx = 0;
   if (x == y) {
     return perm;
   }
@@ -478,7 +478,7 @@ unsigned int getChiralPermutation(const Atom *cen, const INT_LIST &probe,
   PRECONDITION(cen, "bad center pointer");
   PRECONDITION(cen->hasOwningMol(), "no owning mol");
 
-  int perm;
+  int perm = 0;
   if (!cen->getPropIfPresent(common_properties::_chiralPermutation, perm) ||
       perm <= 0) {
     return 0;
