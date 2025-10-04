@@ -30,7 +30,7 @@ class RDKIT_QUERY_EXPORT RangeQuery
   RangeQuery() : d_upper(0), d_lower(0) { this->df_negate = false; }
   //! construct and set the lower and upper bounds
   RangeQuery(MatchFuncArgType lower, MatchFuncArgType upper)
-      : d_upper(upper), d_lower(lower), df_upperOpen(true), df_lowerOpen(true) {
+      : d_upper(upper), d_lower(lower) {
     this->df_negate = false;
   }
 
