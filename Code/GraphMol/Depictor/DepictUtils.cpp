@@ -168,7 +168,7 @@ int pickFirstRingToEmbed(const RDKit::ROMol &mol,
   // we will pick the ring with the smallest number of substituents
   int res = -1;
   unsigned int maxSize = 0;
-  int subs, minsubs = static_cast<int>(1e8);
+  int subs = 0, minsubs = static_cast<int>(1e8);
   int cnt = 0;
   for (const auto &fusedRing : fusedRings) {
     subs = 0;
@@ -601,7 +601,7 @@ void reducedToFullMatches(const RDKit::RWMol &reducedQuery,
     for (auto pairIt = match.begin(); pairIt != match.end(); ++pairIt) {
       const auto reducedQueryAtom = reducedQuery.getAtomWithIdx(pairIt->first);
       const auto molAtom = molHs.getAtomWithIdx(pairIt->second);
-      unsigned int formerIdx;
+      unsigned int formerIdx = 0;
       reducedQueryAtom->getProp(FORMER_IDX, formerIdx);
       pairIt->first = formerIdx;
       std::vector<unsigned int> formerNbrIndices;
