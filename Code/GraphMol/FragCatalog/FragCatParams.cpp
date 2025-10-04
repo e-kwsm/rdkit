@@ -96,7 +96,7 @@ void FragCatParams::initFromStream(std::istream &ss) {
   ss >> d_lowerFragLen;
   ss >> d_upperFragLen;
   ss >> d_tolerance;
-  int nGroups;
+  int nGroups = 0;
   ss >> nGroups;
   // std::cout << "Reading " << nGroups << " Groups" << std::endl;
 
