@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "MolData3Ddescriptors.h"
 #include <GraphMol/RDKitBase.h>
-#include <math.h>
+#include <cmath>
 
 #include "GraphMol/PartialCharges/GasteigerCharges.h"
 #include "GraphMol/PartialCharges/GasteigerParams.h"

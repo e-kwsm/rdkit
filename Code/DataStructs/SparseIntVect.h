@@ -17,7 +17,7 @@
 #include <sstream>
 #include <RDGeneral/Exceptions.h>
 #include <RDGeneral/StreamOps.h>
-#include <math.h>
+#include <cmath>
 #include <cstdint>
 #include <limits>
 

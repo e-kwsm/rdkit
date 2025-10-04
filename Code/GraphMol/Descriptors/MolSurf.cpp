@@ -11,7 +11,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/PartialCharges/GasteigerCharges.h>
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <algorithm>
 #include <boost/format.hpp>

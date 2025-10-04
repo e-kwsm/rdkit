@@ -12,7 +12,7 @@
 
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawTextFTSVG.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 

@@ -12,7 +12,7 @@
 
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace MolDraw2D_detail {

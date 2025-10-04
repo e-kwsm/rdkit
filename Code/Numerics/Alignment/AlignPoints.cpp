@@ -12,7 +12,7 @@
 #include <Geometry/point.h>
 #include <Geometry/Transform3D.h>
 #include <Numerics/Vector.h>
-#include <math.h>
+#include <cmath>
 
 constexpr double TOLERANCE = 1.e-6;
 

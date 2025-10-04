@@ -18,7 +18,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Subgraphs/SubgraphUtils.h>
 #include <GraphMol/Subgraphs/Subgraphs.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 

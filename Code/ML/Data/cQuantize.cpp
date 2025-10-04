@@ -14,6 +14,7 @@
 namespace python = boost::python;
 
 #include <ML/InfoTheory/InfoGainFuncs.h>
+#include <cmath>
 
 /***********************************************
 
@@ -59,11 +60,11 @@ long int *GenVarTable(double *vals, int nVals, long int *cuts, int nCuts,
                       long int *varTable) {
   RDUNUSED_PARAM(vals);
   int nBins = nCuts + 1;
-  int idx, i, iTab;
+  int iTab = 0;
 
   memset(varTable, 0, nBins * nPossibleRes * sizeof(long int));
-  idx = 0;
-  for (i = 0; i < nCuts; i++) {
+  int idx = 0;
+  for (int i = 0; i < nCuts; i++) {
     int cut = cuts[i];
     iTab = i * nPossibleRes;
     while (idx < starts[cut]) {
@@ -125,15 +126,14 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
                      long int *results, int nPossibleRes) {
   PRECONDITION(vals, "bad vals pointer");
 
-  double maxGain = -1e6, gainHere;
-  long int *bestCuts, *tCuts;
+  double maxGain = -1e6, gainHere = NAN;
   long int *varTable = nullptr;
   int highestCutHere = nStarts - nCuts + which;
-  int i, nBounds = nCuts;
+  int nBounds = nCuts;
 
   varTable = (long int *)calloc((nCuts + 1) * nPossibleRes, sizeof(long int));
-  bestCuts = (long int *)calloc(nCuts, sizeof(long int));
-  tCuts = (long int *)calloc(nCuts, sizeof(long int));
+  long int *bestCuts = (long int *)calloc(nCuts, sizeof(long int));
+  long int *tCuts = (long int *)calloc(nCuts, sizeof(long int));
   CHECK_INVARIANT(varTable, "failed to allocate memory");
   CHECK_INVARIANT(bestCuts, "failed to allocate memory");
   CHECK_INVARIANT(tCuts, "failed to allocate memory");
@@ -160,19 +160,19 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
     // update this cut
     int oldCut = cuts[which];
     cuts[which] += 1;
-    int top, bot;
-    bot = starts[oldCut];
+    int top = 0;
+    int bot = starts[oldCut];
     if (oldCut + 1 < nStarts) {
       top = starts[oldCut + 1];
     } else {
       top = starts[nStarts - 1];
     }
-    for (i = bot; i < top; i++) {
+    for (int i = bot; i < top; i++) {
       int v = results[i];
       varTable[which * nPossibleRes + v] += 1;
       varTable[(which + 1) * nPossibleRes + v] -= 1;
     }
-    for (i = which + 1; i < nBounds; i++) {
+    for (int i = which + 1; i < nBounds; i++) {
       if (cuts[i] == cuts[i - 1]) {
         cuts[i] += 1;
       }
@@ -227,9 +227,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
                                                python::list pyStarts,
                                                python::object results,
                                                int nPossibleRes) {
-  PyArrayObject *contigVals, *contigResults;
-  long int *cuts, *starts;
-
   /*
     -------
 
@@ -237,20 +234,20 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
     -------
   */
-  contigVals = reinterpret_cast<PyArrayObject *>(
+  PyArrayObject *contigVals = reinterpret_cast<PyArrayObject *>(
       PyArray_ContiguousFromObject(vals.ptr(), NPY_DOUBLE, 1, 1));
   if (!contigVals) {
     throw_value_error("could not convert value argument");
   }
 
-  contigResults = reinterpret_cast<PyArrayObject *>(
+  PyArrayObject *contigResults = reinterpret_cast<PyArrayObject *>(
       PyArray_ContiguousFromObject(results.ptr(), NPY_LONG, 1, 1));
   if (!contigResults) {
     throw_value_error("could not convert results argument");
   }
 
   python::ssize_t nCuts = python::len(pyCuts);
-  cuts = (long int *)calloc(nCuts, sizeof(long int));
+  long int *cuts = (long int *)calloc(nCuts, sizeof(long int));
   CHECK_INVARIANT(cuts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nCuts; i++) {
     python::object elem = pyCuts[i];
@@ -258,7 +255,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   }
 
   python::ssize_t nStarts = python::len(pyStarts);
-  starts = (long int *)calloc(nStarts, sizeof(long int));
+  long int *starts = (long int *)calloc(nStarts, sizeof(long int));
   CHECK_INVARIANT(starts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nStarts; i++) {
     python::object elem = pyStarts[i];

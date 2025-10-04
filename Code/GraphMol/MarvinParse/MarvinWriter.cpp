@@ -42,7 +42,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
-#include <math.h>
+#include <cmath>
 
 using namespace RDKit::SGroupWriting;
 

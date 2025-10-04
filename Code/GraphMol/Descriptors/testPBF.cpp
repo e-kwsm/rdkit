@@ -19,7 +19,7 @@
 #include <fstream>
 
 #include <GraphMol/Descriptors/PBF.h>
-#include <math.h>
+#include <cmath>
 
 void test1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;

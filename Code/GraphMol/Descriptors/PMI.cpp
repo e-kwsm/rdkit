@@ -10,7 +10,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <Geometry/point.h>
-#include <math.h>
+#include <cmath>
 
 #include "PMI.h"
 

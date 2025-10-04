@@ -19,7 +19,7 @@
 #include <GraphMol/Subgraphs/Subgraphs.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 unsigned int addOrder1Paths(PATH_LIST &paths, const ROMol &mol,

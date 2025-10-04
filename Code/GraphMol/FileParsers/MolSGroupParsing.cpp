@@ -12,7 +12,7 @@
 #include "FileParserUtils.h"
 #include "MolSGroupParsing.h"
 
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace SGroupParsing {

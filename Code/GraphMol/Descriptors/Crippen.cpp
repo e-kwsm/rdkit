@@ -27,7 +27,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace Descriptors {
