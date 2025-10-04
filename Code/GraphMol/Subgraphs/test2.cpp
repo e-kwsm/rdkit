@@ -267,7 +267,7 @@ void test3() {
     // This test worked on ring system to guarantee that the atom ID
     // is marked correctly with the search radius
     PATH_TYPE pth;
-    unsigned int size;
+    unsigned int size = 0;
     for (size = 2; size < 4; size++) {
       pth = findAtomEnvironmentOfRadiusN(*mol, size, rootedAtAtom, false, true,
                                          &cAtomMap);

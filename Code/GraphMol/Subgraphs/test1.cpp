@@ -62,7 +62,7 @@ void testSubgraphs() {
   // same answer
   INT_PATH_LIST_MAP tmpm;
   tmpm = findAllSubgraphsOfLengthsMtoN(mol, 1, 6);
-  int newTot, idx;
+  int newTot = 0, idx = 0;
   newTot = 0;
   for (idx = 1; idx <= 6; idx++) {
     newTot += tmpm[idx].size();
@@ -120,7 +120,7 @@ void testSubgraphs2() {
 
   int nAll = 0;
   int nUnique = 0;
-  int i;
+  int i = 0;
   for (i = 1; i < 13; i++) {
     PATH_LIST tmp;
     tmp = findAllSubgraphsOfLengthN(*mol, i);
