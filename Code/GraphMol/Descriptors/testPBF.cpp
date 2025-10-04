@@ -19,6 +19,7 @@
 #include <fstream>
 
 #include <GraphMol/Descriptors/PBF.h>
+#include <math.h>
 
 void test1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
@@ -39,7 +40,7 @@ void test1() {
     double dpbf = RDKit::Descriptors::PBF(*m);
 
     std::string inm;
-    double ref;
+    double ref = NAN;
     instrm >> inm;
     instrm >> ref;
     TEST_ASSERT(inm == nm);
