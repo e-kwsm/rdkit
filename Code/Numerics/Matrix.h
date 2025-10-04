@@ -41,7 +41,7 @@ class Matrix {
   Matrix(unsigned int nRows, unsigned int nCols, TYPE val)
       : d_nRows(nRows), d_nCols(nCols), d_dataSize(nRows * nCols) {
     TYPE *data = new TYPE[d_dataSize];
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < d_dataSize; i++) {
       data[i] = val;
     }
@@ -127,7 +127,7 @@ class Matrix {
   inline virtual void getCol(unsigned int i, Vector<TYPE> &col) const {
     PRECONDITION(i < d_nCols, "bad index");
     PRECONDITION(d_nRows == col.size(), "");
-    unsigned int j, id;
+    unsigned int j = 0, id = 0;
     TYPE *rData = col.getData();
     TYPE *data = d_data.get();
     for (j = 0; j < d_nRows; j++) {
@@ -167,7 +167,7 @@ class Matrix {
     PRECONDITION(d_nCols == other.numCols(),
                  "Num cols mismatch in matrix addition");
     const TYPE *oData = other.getData();
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_dataSize; i++) {
       data[i] += oData[i];
@@ -184,7 +184,7 @@ class Matrix {
     PRECONDITION(d_nCols == other.numCols(),
                  "Num cols mismatch in matrix addition");
     const TYPE *oData = other.getData();
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_dataSize; i++) {
       data[i] -= oData[i];
@@ -194,7 +194,7 @@ class Matrix {
 
   //! Multiplication by a scalar
   virtual Matrix<TYPE> &operator*=(TYPE scale) {
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_dataSize; i++) {
       data[i] *= scale;
@@ -204,7 +204,7 @@ class Matrix {
 
   //! division by a scalar
   virtual Matrix<TYPE> &operator/=(TYPE scale) {
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_dataSize; i++) {
       data[i] /= scale;
@@ -225,8 +225,8 @@ class Matrix {
     unsigned int tCols = transpose.numCols();
     PRECONDITION(d_nCols == tRows, "Size mismatch during transposing");
     PRECONDITION(d_nRows == tCols, "Size mismatch during transposing");
-    unsigned int i, j;
-    unsigned int idA, idAt, idT;
+    unsigned int i = 0, j = 0;
+    unsigned int idA = 0, idAt = 0, idT = 0;
     TYPE *tData = transpose.getData();
     TYPE *data = d_data.get();
     for (i = 0; i < d_nRows; i++) {
@@ -280,8 +280,8 @@ Matrix<TYPE> &multiply(const Matrix<TYPE> &A, const Matrix<TYPE> &B,
   TYPE *cData = C.getData();
   const TYPE *bData = B.getData();
   const TYPE *aData = A.getData();
-  unsigned int i, j, k;
-  unsigned int idA, idAt, idB, idC, idCt;
+  unsigned int i = 0, j = 0, k = 0;
+  unsigned int idA = 0, idAt = 0, idB = 0, idC = 0, idCt = 0;
   for (i = 0; i < aRows; i++) {
     idC = i * cCols;
     idA = i * aCols;
@@ -319,8 +319,8 @@ Vector<TYPE> &multiply(const Matrix<TYPE> &A, const Vector<TYPE> &x,
   unsigned int ySiz = y.size();
   CHECK_INVARIANT(aCols == xSiz, "Size mismatch during multiplication");
   CHECK_INVARIANT(aRows == ySiz, "Size mismatch during multiplication");
-  unsigned int i, j;
-  unsigned int idA, idAt;
+  unsigned int i = 0, j = 0;
+  unsigned int idA = 0, idAt = 0;
   const TYPE *xData = x.getData();
   const TYPE *aData = A.getData();
   TYPE *yData = y.getData();
@@ -346,7 +346,7 @@ std::ostream &operator<<(std::ostream &target,
   unsigned int nc = mat.numCols();
   target << "Rows: " << mat.numRows() << " Columns: " << mat.numCols() << "\n";
 
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   for (i = 0; i < nr; i++) {
     for (j = 0; j < nc; j++) {
       target << std::setfill(' ') << std::setw(7) << std::setprecision(3)
