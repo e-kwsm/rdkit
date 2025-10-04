@@ -13,6 +13,7 @@
 
 #include <RDGeneral/Invariant.h>
 #include <Numerics/Optimizer/BFGSOpt.h>
+#include <math.h>
 
 namespace RDKit {
 namespace ForceFieldsHelper {
@@ -78,7 +79,7 @@ void computeDihedral(const RDGeom::Point3D *p1, const RDGeom::Point3D *p2,
   t[1] = r[2].crossProduct(r[3]);
   d[1] = (std::max)(t[1].length(), 1.0e-5);
   t[1] /= d[1];
-  double cosPhiLocal;
+  double cosPhiLocal = NAN;
   if (!cosPhi) {
     cosPhi = &cosPhiLocal;
   }
@@ -213,7 +214,7 @@ double ForceField::distance2(unsigned int i, unsigned int j,
     j = i;
     i = tmp;
   }
-  double res;
+  double res = NAN;
   if (!pos) {
     res = 0.0;
     for (unsigned int idx = 0; idx < d_dimension; ++idx) {
