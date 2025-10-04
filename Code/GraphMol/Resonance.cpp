@@ -276,7 +276,7 @@ void updateV(unsigned int &v) {
 
 // sanitize the resonance structure which has been assembled
 void sanitizeMol(RWMol &mol) {
-  unsigned int opFailed;
+  unsigned int opFailed = 0;
   MolOps::sanitizeMol(
       mol, opFailed, MolOps::SANITIZE_FINDRADICALS | MolOps::SANITIZE_ADJUSTHS);
 }
@@ -582,7 +582,7 @@ ConjElectrons::~ConjElectrons() {
 }
 
 std::size_t ConjElectrons::computeFP(unsigned int flags) {
-  std::uint8_t byte;
+  std::uint8_t byte = 0;
   ConjFP fp;
   size_t fpSize = 0;
   if (flags & FP_ATOMS) {
@@ -918,8 +918,8 @@ void ConjElectrons::enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
     unsigned int missingElectrons = nbTotal - currElectrons();
     // number of atoms which won't have a complete octet
     unsigned int numCand = (missingElectrons - 1) / 2 + 1;
-    unsigned int numComb;
-    unsigned int v;
+    unsigned int numComb = 0;
+    unsigned int v = 0;
     // depending on the number of atoms which won't have a complete
     // octet and the number of those which need non-bonded electrons
     // we compute the number of permutations (numComb) and a
@@ -1114,7 +1114,7 @@ CEVect2::CEVect2(const CEMap &ceMap) {
   }
   std::sort(d_ceVect.begin(), d_ceVect.end(), resonanceStructureCompare);
   bool first = true;
-  std::size_t hashPrev;
+  std::size_t hashPrev = 0;
   for (CEVect::const_iterator it = d_ceVect.begin(); it != d_ceVect.end();
        ++it) {
     if (first || ((*it)->hash() != hashPrev)) {
