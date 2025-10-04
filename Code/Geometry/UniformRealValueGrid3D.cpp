@@ -14,7 +14,7 @@
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/Exceptions.h>
 #include <Geometry/point.h>
-#include <math.h>
+#include <cmath>
 #include <fstream>
 #include <iomanip>
 

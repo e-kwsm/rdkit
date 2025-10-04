@@ -22,7 +22,7 @@
 #include <RDBoost/PySequenceHolder.h>
 #include <RDBoost/Wrap.h>
 #include <GraphMol/ROMol.h>
-#include <math.h>
+#include <cmath>
 
 namespace python = boost::python;
 

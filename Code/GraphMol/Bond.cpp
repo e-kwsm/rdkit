@@ -11,7 +11,7 @@
 #include "Atom.h"
 #include "ROMol.h"
 #include <RDGeneral/Invariant.h>
-#include <math.h>
+#include <cmath>
 #include "Atropisomers.h"
 
 namespace RDKit {

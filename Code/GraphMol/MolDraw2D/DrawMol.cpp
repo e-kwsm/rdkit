@@ -34,7 +34,7 @@
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/StereoGroup.h>
 #include <GraphMol/Atropisomers.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace MolDraw2D_detail {

@@ -20,6 +20,7 @@
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <RDGeneral/RDThreads.h>
 #include <algorithm>
+#include <cmath>
 #include <boost/format.hpp>
 
 namespace RDKit {

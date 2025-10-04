@@ -33,7 +33,7 @@
 #ifdef _WIN32
 #include <RDGeneral/test.h>
 #else
-#include <math.h>
+#include <cmath>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>

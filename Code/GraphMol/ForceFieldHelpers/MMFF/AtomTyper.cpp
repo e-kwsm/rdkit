@@ -17,7 +17,7 @@
 #include <boost/dynamic_bitset.hpp>
 
 #include <GraphMol/QueryOps.h>
-#include <math.h>
+#include <cmath>
 #include "AtomTyper.h"
 #include <cstdarg>
 

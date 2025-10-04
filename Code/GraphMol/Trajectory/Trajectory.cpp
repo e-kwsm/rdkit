@@ -12,7 +12,7 @@
 #include <RDGeneral/BadFileException.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/Conformer.h>
-#include <math.h>
+#include <cmath>
 #include <fstream>
 #include <sstream>
 #include <set>

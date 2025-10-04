@@ -26,7 +26,7 @@
 #include <GraphMol/ForceFieldHelpers/UFF/UFF.h>
 #include <ForceField/ForceField.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
-#include <math.h>
+#include <cmath>
 
 using namespace RDKit;
 void testUFFTyper1() {

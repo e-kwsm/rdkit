@@ -19,7 +19,7 @@
 #include <RDGeneral/RDLog.h>
 #include <RDGeneral/types.h>
 #include <RDGeneral/utils.h>
-#include <math.h>
+#include <cmath>
 
 #include <boost/dynamic_bitset.hpp>
 #include <boost/algorithm/string.hpp>

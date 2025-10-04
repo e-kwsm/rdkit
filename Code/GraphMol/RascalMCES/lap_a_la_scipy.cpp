@@ -48,7 +48,7 @@ pseudocode described in pages 1685-1686 of:
 Author: PM Larsen
 */
 
-#include <math.h>
+#include <cmath>
 
 #include <algorithm>
 #include <limits>

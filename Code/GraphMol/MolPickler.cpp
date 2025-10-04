@@ -20,7 +20,7 @@
 #include <RDGeneral/types.h>
 #include <DataStructs/DatastructsStreamOps.h>
 #include <Query/QueryObjects.h>
-#include <math.h>
+#include <cmath>
 #include <map>
 #include <cstdint>
 #include <string_view>

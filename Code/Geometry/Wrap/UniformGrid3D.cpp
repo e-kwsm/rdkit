@@ -18,7 +18,7 @@
 #include <Geometry/point.h>
 #include <Geometry/UniformGrid3D.h>
 #include <Geometry/GridUtils.h>
-#include <math.h>
+#include <cmath>
 namespace python = boost::python;
 
 using namespace RDKit;

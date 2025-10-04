@@ -12,7 +12,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
-#include <math.h>
+#include <cmath>
 
 namespace ForceFields {
 namespace MMFF {

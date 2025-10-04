@@ -36,7 +36,7 @@
 #include <GraphMol/MolAlign/AlignMolecules.h>
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/RDThreads.h>
-#include <math.h>
+#include <cmath>
 #include <cstddef>
 #include <stdexcept>
 #include <vector>

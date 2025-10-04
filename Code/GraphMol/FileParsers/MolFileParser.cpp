@@ -34,7 +34,7 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/LocaleSwitcher.h>
-#include <math.h>
+#include <cmath>
 #include <typeinfo>
 #include <exception>
 #include <charconv>

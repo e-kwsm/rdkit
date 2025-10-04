@@ -13,7 +13,7 @@
 #include <GraphMol/Bond.h>
 #include <GraphMol/BondIterators.h>
 #include <GraphMol/MolOps.h>
-#include <math.h>
+#include <cmath>
 #include <memory>
 #include <boost/shared_array.hpp>
 #include <algorithm>
