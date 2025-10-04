@@ -59,7 +59,7 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
   //   C-N=N#N -> C-N=[N+]=[N-]
 
   PRECONDITION(atom, "bad atom");
-  bool aromHolder;
+  bool aromHolder = false;
 
   // we only want to do neutrals so that things like this don't get
   // munged:
@@ -475,7 +475,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
   // compute them in a copy of the mol, so as not to change the mol passed in
 
   RWMol molCopy(mol);
-  unsigned int operationThatFailed;
+  unsigned int operationThatFailed = 0;
   unsigned int santitizeOps =
       MolOps::SANITIZE_SETCONJUGATION | MolOps::SANITIZE_SETHYBRIDIZATION;
   MolOps::sanitizeMol(molCopy, operationThatFailed, santitizeOps);
@@ -629,7 +629,7 @@ std::vector<std::unique_ptr<MolSanitizeException>> detectChemistryProblems(
   // clear out any cached properties
   mol.clearComputedProps();
 
-  int operation;
+  int operation = 0;
   operation = SANITIZE_CLEANUP;
   if (sanitizeOps & operation) {
     // clean up things like nitro groups
@@ -1258,7 +1258,7 @@ bool isAttachmentPoint(const Atom *atom, bool markedOnly) {
 
 void expandAttachmentPoints(RWMol &mol, bool addAsQueries, bool addCoords) {
   for (auto atom : mol.atoms()) {
-    int value;
+    int value = 0;
     if (atom->getPropIfPresent(common_properties::molAttachPoint, value)) {
       std::vector<int> tgtVals;
       if (value == 1 || value == -1) {

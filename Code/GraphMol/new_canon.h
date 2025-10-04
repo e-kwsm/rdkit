@@ -300,7 +300,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
   }
 
   int basecomp(int i, int j) const {
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -586,7 +586,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
 
   int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -698,13 +698,13 @@ void RefinePartitions(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
                       int mode, int *order, int *count, int &activeset,
                       int *next, int *changed, char *touchedPartitions) {
   unsigned int nAtoms = mol.getNumAtoms();
-  int partition;
+  int partition = 0;
   int symclass = 0;
-  int *start;
-  int offset;
-  int index;
-  int len;
-  int i;
+  int *start = nullptr;
+  int offset = 0;
+  int index = 0;
+  int len = 0;
+  int i = 0;
   // std::vector<char> touchedPartitions(mol.getNumAtoms(),0);
 
   // std::cerr<<"&&&&&&&&&&&&&&&& RP"<<std::endl;
@@ -795,10 +795,10 @@ void BreakTies(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
                int mode, int *order, int *count, int &activeset, int *next,
                int *changed, char *touchedPartitions) {
   unsigned int nAtoms = mol.getNumAtoms();
-  int partition;
-  int offset;
-  int index;
-  int len;
+  int partition = 0;
+  int offset = 0;
+  int index = 0;
+  int len = 0;
   int oldPart = 0;
 
   for (unsigned int i = 0; i < nAtoms; i++) {
