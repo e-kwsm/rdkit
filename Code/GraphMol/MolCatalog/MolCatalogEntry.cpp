@@ -64,7 +64,7 @@ void MolCatalogEntry::toStream(std::ostream &ss) const {
   PRECONDITION(dp_mol, "bad mol");
   MolPickler::pickleMol(*dp_mol, ss);
 
-  std::int32_t tmpInt;
+  std::int32_t tmpInt = 0;
   tmpInt = getBitId();
   streamWrite(ss, tmpInt);
 
@@ -95,7 +95,7 @@ void MolCatalogEntry::initFromStream(std::istream &ss) {
 
   dp_props = new Dict();
 
-  std::int32_t tmpInt;
+  std::int32_t tmpInt = 0;
   // the bitId:
   streamRead(ss, tmpInt);
   setBitId(tmpInt);
