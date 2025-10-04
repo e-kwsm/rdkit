@@ -46,6 +46,7 @@
 #include <Numerics/Matrix.h>
 #include <Numerics/SquareMatrix.h>
 #include <Numerics/SymmMatrix.h>
+#include <math.h>
 #include <cmath>
 #include <Eigen/Dense>
 #include <Eigen/SVD>
@@ -400,7 +401,7 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
   // use the PBF to determine 2D vs 3D (with Threshold)
   // determine if this is a plane molecule
   double pbf = RDKit::Descriptors::PBF(mol);
-  double D;
+  double D = NAN;
   if (pbf < 1.e-5) {
     D = 2.0;
   } else {
@@ -435,7 +436,8 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
 
   MatrixXd Bi;
   MatrixXd RBw;
-  double HATSc, HATSct, H0ct, R0ct, H0c, R0c, Rkmaxc, tmpc;
+  double HATSc = NAN, HATSct = NAN, H0ct = NAN, R0ct = NAN, H0c = NAN,
+         R0c = NAN, Rkmaxc = NAN, tmpc = NAN;
   double HATSk[9];
   double Hk[9];
   double Rk[8];
@@ -623,7 +625,7 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
   // use the PBF to determine 2D vs 3D (with Threshold)
   // determine if this is a plane molecule
   double pbf = RDKit::Descriptors::PBF(mol);
-  double D;
+  double D = NAN;
   if (pbf < 1.e-5) {
     D = 2.0;
   } else {
@@ -682,14 +684,22 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
 
   MatrixXd Bi;
   MatrixXd RBw;
-  double HATSu, HATSm, HATSv, HATSe, HATSp, HATSi, HATSs;
-  double HATSut, HATSmt, HATSvt, HATSet, HATSpt, HATSit, HATSst;
-  double H0ut, H0mt, H0vt, H0et, H0pt, H0it, H0st;
-  double R0ut, R0mt, R0vt, R0et, R0pt, R0it, R0st;
-  double H0u, H0m, H0v, H0e, H0p, H0i, H0s;
-  double R0u, R0m, R0v, R0e, R0p, R0i, R0s;
-  double Rkmaxu, Rkmaxm, Rkmaxv, Rkmaxe, Rkmaxp, Rkmaxi, Rkmaxs;
-  double tmpu, tmpm, tmpv, tmpe, tmpp, tmpi, tmps;
+  double HATSu = NAN, HATSm = NAN, HATSv = NAN, HATSe = NAN, HATSp = NAN,
+         HATSi = NAN, HATSs = NAN;
+  double HATSut = NAN, HATSmt = NAN, HATSvt = NAN, HATSet = NAN, HATSpt = NAN,
+         HATSit = NAN, HATSst = NAN;
+  double H0ut = NAN, H0mt = NAN, H0vt = NAN, H0et = NAN, H0pt = NAN, H0it = NAN,
+         H0st = NAN;
+  double R0ut = NAN, R0mt = NAN, R0vt = NAN, R0et = NAN, R0pt = NAN, R0it = NAN,
+         R0st = NAN;
+  double H0u = NAN, H0m = NAN, H0v = NAN, H0e = NAN, H0p = NAN, H0i = NAN,
+         H0s = NAN;
+  double R0u = NAN, R0m = NAN, R0v = NAN, R0e = NAN, R0p = NAN, R0i = NAN,
+         R0s = NAN;
+  double Rkmaxu = NAN, Rkmaxm = NAN, Rkmaxv = NAN, Rkmaxe = NAN, Rkmaxp = NAN,
+         Rkmaxi = NAN, Rkmaxs = NAN;
+  double tmpu = NAN, tmpm = NAN, tmpv = NAN, tmpe = NAN, tmpp = NAN, tmpi = NAN,
+         tmps = NAN;
   double HATSk[7][9];
   std::memset(HATSk, 0, sizeof(HATSk));
   double Hk[7][9];
