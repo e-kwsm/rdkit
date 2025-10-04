@@ -36,9 +36,9 @@ void test1() {
   TEST_ASSERT(mcat->getNumEntries() == 0);
   TEST_ASSERT(mcat->getFPLength() == 0);
 
-  MolCatalogEntry *entry;
+  MolCatalogEntry *entry = nullptr;
   std::string smi;
-  RWMol *mol;
+  RWMol *mol = nullptr;
 
   mol = SmilesToMol("c1ccc(O)cc1C(=O)O");
   entry = new MolCatalogEntry(mol);
