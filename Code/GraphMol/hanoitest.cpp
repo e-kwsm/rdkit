@@ -136,7 +136,7 @@ class atomcomparefunctor {
   atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = d_atoms[i].index;
@@ -166,7 +166,7 @@ class atomcomparefunctor2 {
   atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = d_atoms[i].index;
@@ -368,7 +368,7 @@ class atomcomparefunctor3 {
   }
   int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -412,7 +412,7 @@ class atomcomparefunctor3 {
     if (v) {
       return v;
     }
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
     if (df_useNbrs) {
       ivi = dp_atoms[i].index + 1 + getAtomNeighborhood(i);
       ivj = dp_atoms[j].index + 1 + getAtomNeighborhood(j);
