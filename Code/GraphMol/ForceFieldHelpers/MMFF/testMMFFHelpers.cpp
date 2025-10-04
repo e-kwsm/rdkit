@@ -26,6 +26,7 @@
 #include <ForceField/MMFF/Params.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
+#include <math.h>
 
 using namespace RDKit;
 void testMMFFTyper1() {
@@ -33,7 +34,7 @@ void testMMFFTyper1() {
   BOOST_LOG(rdErrorLog) << "    Test MMFF atom types." << std::endl;
 
   {
-    std::uint8_t type;
+    std::uint8_t type = 0;
     ROMol *mol = SmilesToMol("[SiH3]CC(=O)NC");
     TEST_ASSERT(mol);
     MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -53,7 +54,7 @@ void testMMFFTyper1() {
   }
 
   {
-    std::uint8_t type;
+    std::uint8_t type = 0;
     ROMol *mol = SmilesToMol("CC(=O)C");
     TEST_ASSERT(mol);
     MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -71,7 +72,7 @@ void testMMFFTyper1() {
   }
 
   {
-    std::uint8_t type;
+    std::uint8_t type = 0;
     ROMol *mol = SmilesToMol("C(=O)S");
     TEST_ASSERT(mol);
     MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -86,7 +87,7 @@ void testMMFFTyper1() {
     delete mol;
   }
   {
-    std::uint8_t type;
+    std::uint8_t type = 0;
     ROMol *mol = SmilesToMol("SCS(=O)S(=O)(=O)O");
     TEST_ASSERT(mol);
     MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -103,7 +104,7 @@ void testMMFFTyper1() {
     delete mol;
   }
   {
-    std::uint8_t type;
+    std::uint8_t type = 0;
     ROMol *mol = SmilesToMol("PCP(O)CP(=O)(=O)");
     TEST_ASSERT(mol);
     MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -120,7 +121,7 @@ void testMMFFTyper1() {
     delete mol;
   }
   {
-    std::uint8_t type;
+    std::uint8_t type = 0;
     ROMol *mol = SmilesToMol("C(F)(Cl)(Br)I");
     TEST_ASSERT(mol);
     MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -146,9 +147,9 @@ void testMMFFBuilder1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing MMFF builder tools." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol = nullptr, *mol2 = nullptr;
 
-  ForceFields::ForceField *field;
+  ForceFields::ForceField *field = nullptr;
   boost::shared_array<std::uint8_t> nbrMat;
 
   mol = SmilesToMol("CC(O)C");
@@ -312,10 +313,10 @@ void testMMFFBuilder2() {
   BOOST_LOG(rdErrorLog) << "    Testing MMFF builder+minimization."
                         << std::endl;
 
-  RWMol *mol;
-  int needMore;
+  RWMol *mol = nullptr;
+  int needMore = 0;
 
-  ForceFields::ForceField *field;
+  ForceFields::ForceField *field = nullptr;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -440,11 +441,11 @@ void testIssue239() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing Issue239." << std::endl;
 
-  RWMol *mol;
-  int needMore;
+  RWMol *mol = nullptr;
+  int needMore = 0;
   (void)needMore;  // Add test later
-  ForceFields::ForceField *field;
-  double e1, e2;
+  ForceFields::ForceField *field = nullptr;
+  double e1 = NAN, e2 = NAN;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -472,9 +473,9 @@ void testCalcEnergyPassedCoords() {
   BOOST_LOG(rdErrorLog) << "    Testing calcEnergy with passed coords."
                         << std::endl;
 
-  RWMol *mol;
-  ForceFields::ForceField *field;
-  double e1, e2, e3;
+  RWMol *mol = nullptr;
+  ForceFields::ForceField *field = nullptr;
+  double e1 = NAN, e2 = NAN, e3 = NAN;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -512,8 +513,8 @@ void testCalcGrad() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing calcGrad." << std::endl;
 
-  RWMol *mol;
-  ForceFields::ForceField *field;
+  RWMol *mol = nullptr;
+  ForceFields::ForceField *field = nullptr;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -572,12 +573,12 @@ void testIssue242() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing Issue242." << std::endl;
 
-  RWMol *mol, *mol2;
-  int needMore;
+  RWMol *mol = nullptr, *mol2 = nullptr;
+  int needMore = 0;
   (void)needMore;  // add test later
   ForceFields::ForceField *field = nullptr, *field2 = nullptr;
   std::string mb1, mb2;
-  double e1, e2;
+  double e1 = NAN, e2 = NAN;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -630,7 +631,7 @@ void testGithub308() {
       << std::endl;
   ROMol *mol = SmilesToMol("FF");
   TEST_ASSERT(DGeomHelpers::EmbedMolecule(*mol) >= 0);
-  int needMore;
+  int needMore = 0;
   ForceFields::ForceField *field = nullptr;
   TEST_ASSERT(mol);
   MMFF::MMFFMolProperties mmffMolProperties(*mol);
@@ -648,9 +649,9 @@ void testSFIssue1653802() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing SFIssue1653802." << std::endl;
 
-  RWMol *mol;
-  int needMore;
-  ForceFields::ForceField *field;
+  RWMol *mol = nullptr;
+  int needMore = 0;
+  ForceFields::ForceField *field = nullptr;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -788,7 +789,7 @@ void testMMFFParamGetters() {
         new MMFF::MMFFMolProperties(*molH);
     TEST_ASSERT(mmffMolProperties);
     TEST_ASSERT(mmffMolProperties->isValid());
-    unsigned int bondType;
+    unsigned int bondType = 0;
     ForceFields::MMFF::MMFFBond mmffBondStretchParams[2];
     TEST_ASSERT(mmffMolProperties->getMMFFBondStretchParams(
         *molH, 6, 7, bondType, mmffBondStretchParams[0]));
@@ -797,7 +798,7 @@ void testMMFFParamGetters() {
                 ((int)std::round(mmffBondStretchParams[0].kb * 1000) == 4258));
     TEST_ASSERT(!(mmffMolProperties->getMMFFBondStretchParams(
         *molH, 0, 7, bondType, mmffBondStretchParams[0])));
-    unsigned int angleType;
+    unsigned int angleType = 0;
     ForceFields::MMFF::MMFFAngle mmffAngleBendParams;
     TEST_ASSERT(mmffMolProperties->getMMFFAngleBendParams(
         *molH, 6, 7, 8, angleType, mmffAngleBendParams));
@@ -807,7 +808,7 @@ void testMMFFParamGetters() {
         ((int)std::round(mmffAngleBendParams.ka * 1000) == 777));
     TEST_ASSERT(!(mmffMolProperties->getMMFFAngleBendParams(
         *molH, 0, 7, 8, angleType, mmffAngleBendParams)));
-    unsigned int stretchBendType;
+    unsigned int stretchBendType = 0;
     ForceFields::MMFF::MMFFStbn mmffStretchBendParams;
     TEST_ASSERT(mmffMolProperties->getMMFFStretchBendParams(
         *molH, 6, 7, 8, stretchBendType, mmffStretchBendParams,
@@ -825,7 +826,7 @@ void testMMFFParamGetters() {
     TEST_ASSERT(!(mmffMolProperties->getMMFFStretchBendParams(
         *molH, 0, 7, 8, stretchBendType, mmffStretchBendParams,
         mmffBondStretchParams, mmffAngleBendParams)));
-    unsigned int torType;
+    unsigned int torType = 0;
     ForceFields::MMFF::MMFFTor mmffTorsionParams;
     TEST_ASSERT(mmffMolProperties->getMMFFTorsionParams(
         *molH, 6, 7, 8, 9, torType, mmffTorsionParams));
