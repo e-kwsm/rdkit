@@ -12,6 +12,7 @@
 
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
+#include <math.h>
 
 namespace RDKit {
 namespace MolDraw2D_detail {
@@ -456,7 +457,7 @@ double DrawText::selectScaleFactor(char c, TextDrawType draw_type) const {
 // ****************************************************************************
 void DrawText::getStringSize(const std::string &label, double &label_width,
                              double &label_height) const {
-  double x_min, y_min, x_max, y_max;
+  double x_min = NAN, y_min = NAN, x_max = NAN, y_max = NAN;
   getStringExtremes(label, OrientType::E, x_min, y_min, x_max, y_max);
   label_width = x_max - x_min;
   label_height = y_max - y_min;
