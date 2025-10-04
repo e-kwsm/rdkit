@@ -15,7 +15,7 @@
 namespace python = boost::python;
 
 #include <RDBoost/import_array.h>
-#include <math.h>
+#include <cmath>
 
 typedef double real;
 

@@ -17,7 +17,7 @@
 #include <RDGeneral/Dict.h>
 #include <RDGeneral/RDLog.h>
 #include <RDGeneral/utils.h>
-#include <math.h>
+#include <cmath>
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <ctime>

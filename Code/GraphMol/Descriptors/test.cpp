@@ -40,7 +40,7 @@
 
 #include <DataStructs/BitVects.h>
 #include <DataStructs/BitOps.h>
-#include <math.h>
+#include <cmath>
 using namespace RDKit;
 using namespace RDKit::Descriptors;
 

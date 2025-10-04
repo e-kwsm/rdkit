@@ -17,7 +17,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDBoost/PySequenceHolder.h>
 #include <DataStructs/SparseIntVect.h>
-#include <math.h>
+#include <cmath>
 
 using namespace RDKit;
 

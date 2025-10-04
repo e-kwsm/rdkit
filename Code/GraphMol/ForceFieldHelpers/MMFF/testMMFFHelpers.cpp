@@ -27,7 +27,7 @@
 #include <ForceField/MMFF/Params.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
-#include <math.h>
+#include <cmath>
 
 using namespace RDKit;
 void testMMFFTyper1() {

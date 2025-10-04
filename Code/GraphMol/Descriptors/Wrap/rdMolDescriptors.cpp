@@ -34,7 +34,7 @@
 
 #ifdef RDK_BUILD_DESCRIPTORS3D
 #include <GraphMol/Descriptors/MolDescriptors3D.h>
-#include <math.h>
+#include <cmath>
 #endif
 
 #include <vector>

@@ -24,7 +24,7 @@
 #include <DataStructs/ExplicitBitVect.h>
 #include <DataStructs/BitOps.h>
 #include <RDGeneral/RDLog.h>
-#include <math.h>
+#include <cmath>
 #include <string>
 #include <boost/version.hpp>
 

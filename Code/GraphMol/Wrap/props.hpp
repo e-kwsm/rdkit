@@ -35,7 +35,7 @@
 #include <RDBoost/pyint_api.h>
 #include <RDBoost/Wrap.h>
 #include <RDGeneral/Dict.h>
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 

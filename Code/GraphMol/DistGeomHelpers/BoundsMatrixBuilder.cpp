@@ -20,7 +20,7 @@
 #include <RDGeneral/Exceptions.h>
 #include <Numerics/SymmMatrix.h>
 #include <DistGeom/TriangleSmooth.h>
-#include <math.h>
+#include <cmath>
 #include <boost/dynamic_bitset.hpp>
 #include <algorithm>
 #include <unordered_set>

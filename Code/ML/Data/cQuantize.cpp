@@ -14,7 +14,7 @@
 namespace python = boost::python;
 
 #include <ML/InfoTheory/InfoGainFuncs.h>
-#include <math.h>
+#include <cmath>
 
 /***********************************************
 

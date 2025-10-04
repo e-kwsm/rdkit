@@ -34,7 +34,7 @@
 #include <GraphMol/FileParsers/MolSupplier.h>
 
 #include <GraphMol/Descriptors/MolDescriptors3D.h>
-#include <math.h>
+#include <cmath>
 
 using namespace RDKit;
 using namespace RDKit::Descriptors;
