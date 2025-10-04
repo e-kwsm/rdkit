@@ -21,7 +21,7 @@ namespace MolStandardize {
 void TautomerCatalogEntry::toStream(std::ostream &ss) const {
   //  ReactionPickler::pickleReaction(*dp_transform, ss);
 
-  std::int32_t tmpInt;
+  std::int32_t tmpInt = 0;
   tmpInt = getBitId();
   streamWrite(ss, tmpInt);
 
@@ -43,7 +43,7 @@ void TautomerCatalogEntry::initFromStream(std::istream &ss) {
                                        std::vector<int>());
   //  ReactionPickler::reactionFromPickle(ss, *dp_transform);
 
-  std::int32_t tmpInt;
+  std::int32_t tmpInt = 0;
   // the bitId:
   streamRead(ss, tmpInt);
   setBitId(tmpInt);
