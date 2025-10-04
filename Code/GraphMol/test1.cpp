@@ -30,7 +30,7 @@ using namespace RDKit;
 
 // -------------------------------------------------------------------
 void testBookmarks(ROMol m) {
-  int i;
+  int i = 0;
 
   // ------------------------
   // simple bookmark stuff
@@ -40,7 +40,7 @@ void testBookmarks(ROMol m) {
 
   TEST_ASSERT(a2->getIdx() == a1->getIdx());
 
-  bool ok;
+  bool ok = false;
   m.clearAtomBookmark(666);
 
   boost::logging::disable_logs("rdApp.error");
@@ -135,7 +135,7 @@ void testMolProps() {
   CHECK_INVARIANT(!m2.hasProp("prop1"), "");
   CHECK_INVARIANT(!m2.hasProp("prop2"), "");
   m2.setProp("prop1", 2);
-  int tmpI;
+  int tmpI = 0;
   std::string tmpS;
   CHECK_INVARIANT(m2.hasProp("prop1"), "");
   m2.getProp("prop1", tmpI);
@@ -204,7 +204,7 @@ void testClearMol() {
 
   TEST_ASSERT(!m2.hasProp("prop1"));
   m2.setProp("prop1", 2);
-  int tmpI;
+  int tmpI = 0;
   TEST_ASSERT(m2.hasProp("prop1"));
   m2.getProp("prop1", tmpI);
   TEST_ASSERT(tmpI == 2);
@@ -273,7 +273,7 @@ void testAtomProps() {
   }
   TEST_ASSERT(ok);
 
-  int tmp;
+  int tmp = 0;
   a1->getProp("prop1", tmp);
   CHECK_INVARIANT(tmp == 3, "");
   a1->getProp("prop2", tmp);
@@ -332,7 +332,7 @@ void testBondProps() {
   CHECK_INVARIANT(!b1->hasProp("bogus"), "");
   CHECK_INVARIANT(!b2->hasProp("bogus"), "");
 
-  int tmp;
+  int tmp = 0;
   b1->getProp("prop1", tmp);
   CHECK_INVARIANT(tmp == 3, "");
   b1->getProp("prop2", tmp);
@@ -390,7 +390,7 @@ void testPropLeak() {
   CHECK_INVARIANT(!a1->hasProp("bogus"), "");
   CHECK_INVARIANT(!a2->hasProp("bogus"), "");
 
-  int tmp;
+  int tmp = 0;
   a1->getProp("prop1", tmp);
   CHECK_INVARIANT(tmp == 3, "");
   a1->getProp("prop2", tmp);
@@ -442,7 +442,7 @@ void testMisc() {
 
   MolOps::sanitizeMol(m2);
 
-  Bond *bnd;
+  Bond *bnd = nullptr;
   bnd = m2.getBondBetweenAtoms(0, 1);
   CHECK_INVARIANT(bnd, "");
   bnd = m2.getBondBetweenAtoms(1, 0);
@@ -451,7 +451,7 @@ void testMisc() {
   CHECK_INVARIANT(!bnd, "");
   bnd = m2.getBondBetweenAtoms(0, 3);
   CHECK_INVARIANT(!bnd, "");
-  const Bond *cbnd;
+  const Bond *cbnd = nullptr;
   cbnd = m2.getBondBetweenAtoms(0, 1);
   CHECK_INVARIANT(cbnd, "");
   cbnd = m2.getBondBetweenAtoms(1, 0);
@@ -512,7 +512,7 @@ void testMisc() {
 void testDegree() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing degree operations"
                        << std::endl;
-  RWMol *m;
+  RWMol *m = nullptr;
 
   m = new RWMol();
   m->addAtom(new Atom(6), true, true);
@@ -560,7 +560,7 @@ void testDegree() {
 
 void testIssue1993296() {
   auto *m = new RWMol();
-  bool ok;
+  bool ok = false;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 1993296" << std::endl;
 
@@ -836,7 +836,7 @@ void test1() {
     m.finishPartialBond(3, 47, Bond::SINGLE);
     m.clearBondBookmark(47);
     BOOST_LOG(rdInfoLog) << "partial bond added:" << endl;
-    unsigned int i;
+    unsigned int i = 0;
     m.updatePropertyCache();
     for (i = 0; i < m.getNumAtoms(); i++) {
       Atom *a = m.getAtomWithIdx(i);
@@ -970,7 +970,7 @@ void testPeriodicTable() {
   TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(57) == -1);
 
   // this was sf.net issue 269
-  int anum;
+  int anum = 0;
   anum = PeriodicTable::getTable()->getAtomicNumber("C");
   TEST_ASSERT(anum == 6);
   try {
