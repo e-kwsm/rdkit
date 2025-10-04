@@ -222,7 +222,7 @@ void guessFormalCharges(RWMol *res) {
       // than C[S-][O-][O-] but that might change based no different examples
       int nElectrons =
           PeriodicTable::getTable()->getNouterElecs(at->getAtomicNum());
-      int assignChg;
+      int assignChg = 0;
       if (nElectrons >= 4) {
         assignChg = expVal - valens.front();
       } else {
@@ -645,7 +645,7 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
 
 Bond *ParseMol2FileBondLine(const std::string bondLine,
                             const INT_VECT &idxCorresp) {
-  unsigned int idx1, idx2;
+  unsigned int idx1 = 0, idx2 = 0;
 
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
@@ -922,7 +922,7 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
   }
 
   if (!chargeStart) {
-    bool molFixed;
+    bool molFixed = false;
     if (params.cleanupSubstructures) {
       molFixed = cleanUpMol2Substructures(res.get());
     } else {
@@ -972,7 +972,7 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
         MolOps::removeHs(*res, rhp, sanitize);
         MolOps::sanitizeMol(*res, failedOp, sanitizeFlags);
       } else {
-        unsigned int failedOp;
+        unsigned int failedOp = 0;
         MolOps::sanitizeMol(*res, failedOp, sanitizeFlags);
         MolOps::detectBondStereochemistry(*res);
       }
