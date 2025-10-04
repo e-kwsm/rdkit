@@ -72,7 +72,7 @@ void FragCatalogEntry::setDescription(const FragCatParams *params) {
     std::string label = "", temp;
 
     INT_VECT::const_iterator fGroupIdx = fGroups.begin();
-    const ROMol *fGroup;
+    const ROMol *fGroup = nullptr;
     for (unsigned int i = 0; i < fGroups.size() - 1; i++) {
       fGroup = params->getFuncGroup(*fGroupIdx);
       fGroup->getProp(common_properties::_Name, temp);
@@ -179,7 +179,7 @@ Subgraphs::DiscrimTuple FragCatalogEntry::getDiscrims() const {
 void FragCatalogEntry::toStream(std::ostream &ss) const {
   MolPickler::pickleMol(*dp_mol, ss);
 
-  std::int32_t tmpInt;
+  std::int32_t tmpInt = 0;
   tmpInt = getBitId();
   streamWrite(ss, tmpInt);
 
@@ -217,7 +217,7 @@ void FragCatalogEntry::initFromStream(std::istream &ss) {
   dp_mol = new ROMol();
   MolPickler::molFromPickle(ss, *dp_mol);
 
-  std::int32_t tmpInt;
+  std::int32_t tmpInt = 0;
   // the bitId:
   streamRead(ss, tmpInt);
   setBitId(tmpInt);
@@ -236,7 +236,7 @@ void FragCatalogEntry::initFromStream(std::istream &ss) {
   // now the map:
   streamRead(ss, tmpInt);
   for (int i = 0; i < tmpInt; i++) {
-    std::int32_t key, value, size;
+    std::int32_t key = 0, value = 0, size = 0;
     streamRead(ss, key);
     streamRead(ss, size);
     INT_VECT tmpVect;

@@ -18,6 +18,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Subgraphs/SubgraphUtils.h>
 #include <GraphMol/Subgraphs/Subgraphs.h>
+#include <math.h>
 
 namespace RDKit {
 
@@ -59,9 +60,9 @@ void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
   PATH_LIST_CI pi;
   INT_VECT_CI eti;
   const INT_VECT &o1entries = fcat.getEntriesOfOrder(1);
-  const FragCatalogEntry *entry;
-  int bitId;
-  double invar;
+  const FragCatalogEntry *entry = nullptr;
+  int bitId = 0;
+  double invar = NAN;
   for (pi = allPathsMap[1].begin(); pi != allPathsMap[1].end(); pi++) {
     // std::cout << "-*-*-* Fragment *-*-*-*-" << std::endl;
     auto *nent = new FragCatalogEntry(&mol, (*pi), aidToFid);
@@ -100,8 +101,8 @@ void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
   //   of the down entries for these catalog entries to find a match for the
   //   order k path
   INT_PATH_LIST_MAP_CI ordi;
-  double sinvar;
-  int entId;
+  double sinvar = NAN;
+  int entId = 0;
 
   for (ordi = allPathsMap.begin(); ordi != allPathsMap.end(); ordi++) {
     if (ordi->first < 2) {
