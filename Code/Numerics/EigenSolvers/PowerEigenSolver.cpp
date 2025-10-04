@@ -13,6 +13,7 @@
 #include <Numerics/Matrix.h>
 #include <Numerics/SymmMatrix.h>
 #include <RDGeneral/Invariant.h>
+#include <math.h>
 #include <ctime>
 
 namespace RDNumeric {
@@ -30,17 +31,17 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
   CHECK_INVARIANT(eigenValues.size() >= numEig, "");
   CHECK_INVARIANT(numEig <= N, "");
   if (eigenVectors) {
-    unsigned int evRows, evCols;
+    unsigned int evRows = 0, evCols = 0;
     evRows = eigenVectors->numRows();
     evCols = eigenVectors->numCols();
     CHECK_INVARIANT(evCols >= N, "");
     CHECK_INVARIANT(evRows >= numEig, "");
   }
 
-  unsigned int ei;
-  double eigVal, prevVal;
+  unsigned int ei = 0;
+  double eigVal = NAN, prevVal = NAN;
   bool converged = false;
-  unsigned int i, j, id, iter, evalId;
+  unsigned int i = 0, j = 0, id = 0, iter = 0, evalId = 0;
 
   DoubleVector v(N), z(N);
   if (seed <= 0) {
