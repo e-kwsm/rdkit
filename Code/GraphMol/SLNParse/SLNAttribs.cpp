@@ -51,7 +51,7 @@ int parseIntAttribVal(std::string attribName, std::string attribVal,
                       Atom *atom = nullptr) {
   PRECONDITION((!defaultFunc) || atom,
                "If a default func is provided, an atom must be as well.");
-  int iVal;
+  int iVal = 0;
   boost::to_lower(attribVal);
 
   if (defaultFunc && attribVal == "f") {
@@ -273,7 +273,7 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
           // first one is easy:
           atomQuery = query;
         } else {
-          QueryAtom::QUERYATOM_QUERY *tQuery;
+          QueryAtom::QUERYATOM_QUERY *tQuery = nullptr;
           switch (how) {
             case AttribAnd:
               // high-priority and:
@@ -299,7 +299,7 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
                 // if the last query was a low-priority AND, we need to
                 // restructure
                 // the tree a bit:
-                QueryAtom::QUERYATOM_QUERY *newAndQuery;
+                QueryAtom::QUERYATOM_QUERY *newAndQuery = nullptr;
                 newAndQuery = new ATOM_AND_QUERY;
                 newAndQuery->setDescription("AtomAnd");
                 auto andChild = atomQuery->beginChildren();
