@@ -40,8 +40,7 @@ class SymmMatrix {
   SymmMatrix(unsigned int N, TYPE val)
       : d_size(N), d_dataSize(N * (N + 1) / 2) {
     TYPE *data = new TYPE[d_dataSize];
-    unsigned int i = 0;
-    for (i = 0; i < d_dataSize; i++) {
+    for (unsigned int i = 0; i < d_dataSize; i++) {
       data[i] = val;
     }
     d_data.reset(data);
