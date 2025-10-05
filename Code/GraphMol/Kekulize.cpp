@@ -661,7 +661,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
                      [&arings](const int ri) { return arings[ri]; });
       kekulizeFused(mol, frings, maxBackTracks);
       int rix = 0;
-      for (rix = 0; rix < cnrs; ++rix) {
+      for (; rix < cnrs; ++rix) {
         if (!fusDone[rix]) {
           curr = rix;
           break;
