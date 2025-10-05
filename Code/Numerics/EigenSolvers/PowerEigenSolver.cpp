@@ -31,33 +31,30 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
   CHECK_INVARIANT(eigenValues.size() >= numEig, "");
   CHECK_INVARIANT(numEig <= N, "");
   if (eigenVectors) {
-    unsigned int evRows = 0, evCols = 0;
-    evRows = eigenVectors->numRows();
-    evCols = eigenVectors->numCols();
+    unsigned int evRows = eigenVectors->numRows();
+    unsigned int evCols = eigenVectors->numCols();
     CHECK_INVARIANT(evCols >= N, "");
     CHECK_INVARIANT(evRows >= numEig, "");
   }
 
-  unsigned int ei = 0;
   double eigVal = NAN, prevVal = NAN;
   bool converged = false;
-  unsigned int i = 0, j = 0, id = 0, iter = 0, evalId = 0;
 
   DoubleVector v(N), z(N);
   if (seed <= 0) {
     seed = clock();
   }
-  for (ei = 0; ei < numEig; ei++) {
+  for (unsigned int ei = 0; ei < numEig; ei++) {
     eigVal = -HUGE_EIGVAL;
     seed += ei;
     v.setToRandom(seed);
 
     converged = false;
-    for (iter = 0; iter < MAX_ITERATIONS; iter++) {
+    for (unsigned int iter = 0; iter < MAX_ITERATIONS; iter++) {
       // z = mat*v
       multiply(mat, v, z);
       prevVal = eigVal;
-      evalId = z.largestAbsValId();
+      unsigned int evalId = z.largestAbsValId();
       eigVal = z.getVal(evalId);
 
       if (fabs(eigVal) < TINY_EIGVAL) {
@@ -81,9 +78,9 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
     // directly access the data instead of setVal so that we save time
     double *vdata = v.getData();
     if (eigenVectors) {
-      id = ei * eigenVectors->numCols();
+      unsigned int id = ei * eigenVectors->numCols();
       double *eigVecData = eigenVectors->getData();
-      for (i = 0; i < N; i++) {
+      for (unsigned int i = 0; i < N; i++) {
         eigVecData[id + i] = vdata[i];
       }
     }
@@ -91,9 +88,9 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
 
     // now remove this eigen vector space out of the matrix
     double *matData = mat.getData();
-    for (i = 0; i < N; i++) {
-      id = i * (i + 1) / 2;
-      for (j = 0; j < i + 1; j++) {
+    for (unsigned int i = 0; i < N; i++) {
+      unsigned int id = i * (i + 1) / 2;
+      for (unsigned int j = 0; j < i + 1; j++) {
         matData[id + j] -= (eigVal * vdata[i] * vdata[j]);
       }
     }
