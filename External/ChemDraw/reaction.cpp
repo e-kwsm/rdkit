@@ -65,7 +65,7 @@ void ReactionStepInfo::set_reaction_data(
             << std::endl;
         continue;
       }
-      auto &mol = mols[fragment->second];
+      const auto &mol = mols[fragment->second];
       mol->setProp(CDX_SCHEME_ID, scheme_id);
       mol->setProp(CDX_STEP_ID, step_id);
       mol->setProp(prop, reagent_idx);
@@ -119,7 +119,7 @@ void ReactionStepInfo::set_reaction_step(
 
 ReactionInfo::ReactionInfo(CDXReactionScheme &scheme)
     : scheme_id(static_cast<unsigned int>(scheme.GetObjectID())) {
-  for (auto &rxnNode : scheme.ContainedObjects()) {
+  for (const auto &rxnNode : scheme.ContainedObjects()) {
     auto type_id = (CDXDatumID)rxnNode.second->GetTag();
     if (type_id == kCDXObj_ReactionStep) {
       auto &step = (CDXReactionStep &)(*rxnNode.second);
@@ -146,7 +146,7 @@ void ReactionInfo::set_reaction_steps(
     std::map<unsigned int, size_t> products;
     std::map<unsigned int, Atom *> atoms;
     size_t mol_idx = 0;
-    for (auto &mol : mols) {
+    for (const auto &mol : mols) {
       auto idx = mol->getProp<unsigned int>(CDX_FRAG_ID);
       fragments[idx] = mol_idx++;
       for (auto &atom : mol->atoms()) {
@@ -155,7 +155,7 @@ void ReactionInfo::set_reaction_steps(
       }
     }
 
-    for (auto &step : steps) {
+    for (const auto &step : steps) {
       step.set_reaction_step(scheme_id, atoms, fragments, grouped_fragments,
                              mols);
     }
