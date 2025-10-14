@@ -476,7 +476,7 @@ void DrawMol::extractCIPCodes(bool showAllCIPCodes) {
       stereoGroupType = group.getGroupType();
       if (stereoGroupType == RDKit::StereoGroupType::STEREO_OR ||
           stereoGroupType == RDKit::StereoGroupType::STEREO_AND) {
-        for (const auto atom : group.getAtoms()) {
+        for (auto *const atom : group.getAtoms()) {
           maskedAtoms.set(atom->getIdx());
         }
         for (auto *const bond : group.getBonds()) {
