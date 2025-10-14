@@ -340,7 +340,7 @@ const std::vector<const ROMol *> convertPyArgumentsForBulk(
 
 python::list getSparseCountFPBulkPy(python::list &py_molVect, FPType fPType) {
   const auto molVect = convertPyArgumentsForBulk(py_molVect);
-  auto tempResult = getSparseCountFPBulk(molVect, fPType);
+  auto *tempResult = getSparseCountFPBulk(molVect, fPType);
   python::list result;
 
   for (auto &it : *tempResult) {

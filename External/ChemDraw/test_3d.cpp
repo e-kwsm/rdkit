@@ -60,10 +60,10 @@ TEST_CASE("Round TRIP") {
   SECTION("3D structs") {
     auto fname =
         code_path + "/Code/GraphMol/FileParsers/test_data/Issue3514824.mol";
-    auto mol = MolFileToMol(fname);
+    auto *mol = MolFileToMol(fname);
     REQUIRE(mol);
     auto &conf = mol->getConformer(0);
-    for (auto bond : mol->bonds()) {
+    for (auto *bond : mol->bonds()) {
       auto p1 = conf.getAtomPos(bond->getBeginAtomIdx());
       auto p2 = conf.getAtomPos(bond->getEndAtomIdx());
       auto length = (p1 - p2).length();
@@ -76,7 +76,7 @@ TEST_CASE("Round TRIP") {
           code_path + "/Code/GraphMol/FileParsers/test_data/Issue3514824.cdxml";
       auto mols = MolsFromChemDrawFile(fname2);
       auto &conf2 = mols[0]->getConformer(0);
-      for (auto bond : mols[0]->bonds()) {
+      for (auto *bond : mols[0]->bonds()) {
         auto p1 = conf2.getAtomPos(bond->getBeginAtomIdx());
         auto p2 = conf2.getAtomPos(bond->getEndAtomIdx());
         auto length = (p1 - p2).length();
@@ -88,7 +88,7 @@ TEST_CASE("Round TRIP") {
       auto cdx = MolToChemDrawBlock(*mol);
       auto mols = MolsFromChemDrawBlock(cdx);
       auto &conf2 = mols[0]->getConformer(0);
-      for (auto bond : mols[0]->bonds()) {
+      for (auto *bond : mols[0]->bonds()) {
         auto p1 = conf2.getAtomPos(bond->getBeginAtomIdx());
         auto p2 = conf2.getAtomPos(bond->getEndAtomIdx());
         auto length = (p1 - p2).length();
