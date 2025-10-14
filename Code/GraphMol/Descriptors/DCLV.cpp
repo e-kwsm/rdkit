@@ -105,7 +105,7 @@ static bool includeAsPolar(const Atom *atm, const ROMol &mol, bool includeSandP,
       if (!includeHs) {
         return false;
       } else {
-        for (const auto nbr : mol.atomNeighbors(atm)) {
+        for (auto *const nbr : mol.atomNeighbors(atm)) {
           if (includeAsPolar(nbr, mol, includeSandP, includeHs)) {
             return true;
           }
@@ -255,7 +255,7 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
   if (radii_.empty()) {
     const auto *tbl = PeriodicTable::getTable();
     radii_.reserve(mol.getNumAtoms());
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       radii_.push_back(tbl->getRvdw(atom->getAtomicNum()));
     }
   }
