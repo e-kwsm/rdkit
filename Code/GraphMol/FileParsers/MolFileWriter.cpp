@@ -1276,7 +1276,7 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
 
   bool coordMagnitudeTooLargeForV2K = false;
   if (conf) {
-    for (auto &pos : conf->getPositions()) {
+    for (const auto &pos : conf->getPositions()) {
       if ((pos.x >= MAX_V2000_COORD || pos.x <= MIN_V2000_COORD) ||
           (pos.y >= MAX_V2000_COORD || pos.y <= MIN_V2000_COORD) ||
           (pos.z >= MAX_V2000_COORD || pos.z <= MIN_V2000_COORD)) {
