@@ -311,7 +311,7 @@ std::vector<std::unique_ptr<RWMol>> molsFromCDXMLDataStream(
       streamToCDXDocument(inStream, params.format);
   if (!document) {
     // error
-    return std::vector<std::unique_ptr<RWMol>>();
+    return {};
   }
   PageData pagedata;
   auto bondLength = document->m_bondLength;
