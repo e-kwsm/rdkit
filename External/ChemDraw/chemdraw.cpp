@@ -326,7 +326,7 @@ std::vector<std::unique_ptr<RWMol>> molsFromCDXMLDataStream(
       streamToCDXDocument(inStream, params.format);
   if (!document) {
     // error
-    return std::vector<std::unique_ptr<RWMol>>();
+    return {};
   }
   PageData pagedata;
   pagedata.parseQueries = params.parseQueries;
