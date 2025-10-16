@@ -6145,19 +6145,13 @@ H      0.635000    0.635000    0.635000
     self.assertEqual(Chem.MolToXYZBlock(mol), xyzblock_expected)
 
   def testSanitizationExceptionBasics(self):
-    try:
+    with self.assertRaises(Chem.AtomValenceException) as exc:
       Chem.SanitizeMol(Chem.MolFromSmiles('CFC', sanitize=False))
-    except Chem.AtomValenceException as exc:
-      self.assertEqual(exc.cause.GetAtomIdx(), 1)
-    else:
-      self.assertFalse(True)
+    self.assertEqual(exc.cause.GetAtomIdx(), 1)
 
-    try:
+    with self.assertRaises(Chem.KekulizeException) as exc:
       Chem.SanitizeMol(Chem.MolFromSmiles('c1cc1', sanitize=False))
-    except Chem.KekulizeException as exc:
-      self.assertEqual(exc.cause.GetAtomIndices(), (0, 1, 2))
-    else:
-      self.assertFalse(True)
+    self.assertEqual(exc.cause.GetAtomIndices(), (0, 1, 2))
 
   def testSanitizationExceptionHierarchy(self):
     with self.assertRaises(Chem.AtomValenceException):
