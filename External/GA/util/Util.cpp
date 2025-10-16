@@ -34,7 +34,7 @@ string currentTime() {
   return buffer;
 }
 
-bool startsWith(const string &str, const string &prefix) {
+bool startsWith(string str, string prefix) {
   if (prefix.length() > str.length()) {
     return false;
   }
