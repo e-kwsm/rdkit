@@ -739,7 +739,7 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
             }
           }
         }
-        for (const auto &sgroup : getSubstanceGroups(mol)) {
+        for (auto sgroup : getSubstanceGroups(mol)) {
           for (auto aid : sgroup.getAtoms()) {
             if (atomsInFrag[aid]) {
               return true;
@@ -751,7 +751,7 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
             }
           }
         }
-        for (const auto &stereoGroup : mol.getStereoGroups()) {
+        for (auto stereoGroup : mol.getStereoGroups()) {
           // doesn't seem like this should be necessary, but in case
           // we ever need stereogroups where the atoms aren't marked
           // with stereo...
