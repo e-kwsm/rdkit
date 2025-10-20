@@ -31,6 +31,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
 
   const auto nAtoms = mol.getNumAtoms();
   int totalCharge = 0;
+  // unsigned int totalSpinMultiplicity = 1u;
 
   boost::json::array coords_3d;
   boost::json::array elements_number;
@@ -165,7 +166,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
 
   boost::json::object properties;
   properties["totalCharge"] = totalCharge;
-  // properties["totalSpinMultiplicity"] = 1u;
+  // properties["totalSpinMultiplicity"] = totalSpinMultiplicity;
 
   boost::json::object root;
   root["chemicalJson"] = chemicalJson;
