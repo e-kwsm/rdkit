@@ -1894,12 +1894,13 @@ void testGithubIssue429() {
     std::vector<std::vector<int>> fragMap;
 
     for (auto romol : frags) {
-      auto *rwmol = (RWMol *)(romol.get());
+      auto *rwmol = dynamic_cast<RWMol *>(romol.get());
       MolOps::sanitizeMol(*rwmol);
     }
 
     // we actually changed fragmentOnBonds(), check that too:
-    auto *nmol = (RWMol *)MolFragmenter::fragmentOnBonds(*mol, bindices, false);
+    auto *nmol = dynamic_cast<RWMol *>(
+        MolFragmenter::fragmentOnBonds(*mol, bindices, false));
     MolOps::sanitizeMol(*nmol);
     delete nmol;
 
