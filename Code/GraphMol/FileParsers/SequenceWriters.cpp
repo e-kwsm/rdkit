@@ -554,8 +554,8 @@ std::string MolToHELM(const ROMol &mol) {
   for (ROMol::ConstAtomIterator atomIt = mol.beginAtoms();
        atomIt != mol.endAtoms(); ++atomIt) {
     const Atom *atom = *atomIt;
-    auto *info =
-        dynamic_cast<const AtomPDBResidueInfo *>(atom->getMonomerInfo());
+    auto *info = dynamic_cast<AtomPDBResidueInfo *>(
+        const_cast<AtomMonomerInfo *>(atom->getMonomerInfo()));
     // We can only write HELM if all atoms have PDB residue information
     if (!info || info->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
       return "";
