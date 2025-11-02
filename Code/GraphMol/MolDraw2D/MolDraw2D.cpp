@@ -912,9 +912,9 @@ void MolDraw2D::makeReactionComponents(
         atom->setAtomMapNum(0);
       }
     }
-    makeReactionDrawMol(*(RWMol *)bits[midx].get(), cid, heightToUse,
-                        highlightAtoms, highlightBonds, highlightAtomMap,
-                        highlightBondMap, dms);
+    makeReactionDrawMol(*dynamic_cast<RWMol *>(bits[midx].get()), cid,
+                        heightToUse, highlightAtoms, highlightBonds,
+                        highlightAtomMap, highlightBondMap, dms);
     if (dms.back()->getScale() < minScale) {
       minScale = dms.back()->getScale();
       minFontScale = dms.back()->getFontScale();
