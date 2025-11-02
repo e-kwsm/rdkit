@@ -487,21 +487,21 @@ class MrvTests {
       // make sure the Rxn is kekule'ed
 
       for (auto mol : rxn->getReactants()) {
-        auto rwMol = (RWMol *)mol.get();
+        auto rwMol = dynamic_cast<RWMol *>(mol.get());
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
       for (auto mol : rxn->getAgents()) {
-        auto rwMol = (RWMol *)mol.get();
+        auto rwMol = dynamic_cast<RWMol *>(mol.get());
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
       for (auto mol : rxn->getProducts()) {
-        auto rwMol = (RWMol *)mol.get();
+        auto rwMol = dynamic_cast<RWMol *>(mol.get());
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
@@ -554,7 +554,7 @@ class MrvTests {
 
       std::unique_ptr<ROMol> oneMol(ChemicalReactionToRxnMol(*rxn));
 
-      auto rwMol = (RWMol *)oneMol.get();
+      auto rwMol = dynamic_cast<RWMol *>(oneMol.get());
       if (rwMol->needsUpdatePropertyCache()) {
         rwMol->updatePropertyCache(false);
       }
@@ -872,21 +872,21 @@ class MrvTests {
       // // make sure the Rxn is kekule'ed
 
       for (auto mol : rxn->getReactants()) {
-        auto rwMol = (RWMol *)mol.get();
+        auto rwMol = dynamic_cast<RWMol *>(mol.get());
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
       for (auto mol : rxn->getAgents()) {
-        auto rwMol = (RWMol *)mol.get();
+        auto rwMol = dynamic_cast<RWMol *>(mol.get());
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
       for (auto mol : rxn->getProducts()) {
-        auto rwMol = (RWMol *)mol.get();
+        auto rwMol = dynamic_cast<RWMol *>(mol.get());
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }

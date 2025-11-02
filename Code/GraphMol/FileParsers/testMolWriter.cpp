@@ -505,7 +505,7 @@ void testSDMemoryCorruption() {
 
   STR_VECT names;
   ROMol *m1 = sdsup.next();
-  MolOps::sanitizeMol(*(RWMol *)m1);
+  MolOps::sanitizeMol(*dynamic_cast<RWMol *>(m1));
   delete m1;
   sdsup.reset();
   int nDone = 0;

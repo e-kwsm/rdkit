@@ -448,10 +448,10 @@ void testGithub1550() {
   decomp.process();
   RGroupColumns groups = decomp.getRGroupsAsColumns();
 
-  RWMol *coreRes = (RWMol *)groups["Core"][0].get();
+  RWMol *coreRes = dynamic_cast<RWMol *>(groups["Core"][0].get());
   TEST_ASSERT(coreRes->getNumAtoms() == 14);
   MolOps::Kekulize(*coreRes);
-  RWMol *rg2 = (RWMol *)groups["R2"][0].get();
+  RWMol *rg2 = dynamic_cast<RWMol *>(groups["R2"][0].get());
   TEST_ASSERT(rg2->getNumAtoms() == 7);
   MolOps::Kekulize(*rg2);
 
@@ -480,7 +480,7 @@ void testRemoveHs() {
 
     decomp.process();
     RGroupColumns groups = decomp.getRGroupsAsColumns();
-    RWMol *rg2 = (RWMol *)groups["R2"][0].get();
+    RWMol *rg2 = dynamic_cast<RWMol *>(groups["R2"][0].get());
     TEST_ASSERT(rg2->getNumAtoms() == 7);
   }
   {
@@ -499,7 +499,7 @@ void testRemoveHs() {
 
     decomp.process();
     RGroupColumns groups = decomp.getRGroupsAsColumns();
-    RWMol *rg2 = (RWMol *)groups["R2"][0].get();
+    RWMol *rg2 = dynamic_cast<RWMol *>(groups["R2"][0].get());
     TEST_ASSERT(rg2->getNumAtoms() == 12);
   }
   delete core;
