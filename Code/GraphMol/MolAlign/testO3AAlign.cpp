@@ -200,7 +200,7 @@ void testMMFFO3AConstraints() {
   delete m;
   TEST_ASSERT(m1);
   DGeomHelpers::EmbedMolecule(*m1);
-  MMFF::sanitizeMMFFMol((RWMol &)(*m1));
+  MMFF::sanitizeMMFFMol(dynamic_cast<RWMol &>(*m1));
   MMFF::MMFFMolProperties mp(*m1);
   TEST_ASSERT(mp.isValid());
   ForceFields::ForceField *field = MMFF::constructForceField(*m1, &mp);
@@ -248,7 +248,7 @@ void testCrippenO3AConstraints() {
   delete m;
   TEST_ASSERT(m1);
   DGeomHelpers::EmbedMolecule(*m1);
-  MMFF::sanitizeMMFFMol((RWMol &)(*m1));
+  MMFF::sanitizeMMFFMol(dynamic_cast<RWMol &>(*m1));
   MMFF::MMFFMolProperties mp(*m1);
   TEST_ASSERT(mp.isValid());
   ForceFields::ForceField *field = MMFF::constructForceField(*m1, &mp);
