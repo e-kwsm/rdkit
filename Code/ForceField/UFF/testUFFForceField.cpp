@@ -221,8 +221,8 @@ void testUFF2() {
   (*ff.positions()[1])[2] = 0.0;
   (*ff.positions()[1])[0] = 1.814;
   ff.minimize(10, 1e-8);
-  d = *(RDGeom::Point3D *)ff.positions()[0] -
-      *(RDGeom::Point3D *)ff.positions()[1];
+  d = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3));
 
   // minimize in "3D"
@@ -231,8 +231,8 @@ void testUFF2() {
   (*ff.positions()[1])[1] = 0.9;
   (*ff.positions()[1])[0] = 1.00;
   ff.minimize(10, 1e-8);
-  d = *(RDGeom::Point3D *)ff.positions()[0] -
-      *(RDGeom::Point3D *)ff.positions()[1];
+  d = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3));
 
   delete[] p;
@@ -324,10 +324,10 @@ void testUFF4() {
   ff.initialize();
   ff.minimize(10, 1e-8, 1e-8);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[1] -
-       *(RDGeom::Point3D *)ff.positions()[2];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]);
   theta = v1.angleTo(v2);
 
   TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
@@ -348,10 +348,10 @@ void testUFF4() {
   ff.initialize();
   ff.minimize(10, 1e-8, 1e-8);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[1] -
-       *(RDGeom::Point3D *)ff.positions()[2];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]);
   theta = v1.angleTo(v2);
 
   TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
@@ -378,10 +378,10 @@ void testUFF4() {
 
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[2] -
-       *(RDGeom::Point3D *)ff.positions()[1];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
   TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
@@ -416,10 +416,10 @@ void testUFF4() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[2] -
-       *(RDGeom::Point3D *)ff.positions()[1];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   theta = v1.angleTo(v2);
 
   TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
@@ -451,10 +451,10 @@ void testUFF4() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[2] -
-       *(RDGeom::Point3D *)ff.positions()[1];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   theta = v1.angleTo(v2);
 
   TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
@@ -487,10 +487,10 @@ void testUFF4() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[2] -
-       *(RDGeom::Point3D *)ff.positions()[1];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   theta = v1.angleTo(v2);
 
   TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
@@ -603,22 +603,22 @@ void testUFF5() {
   double CHBondLen =
       ForceFields::UFF::Utils::calcBondRestLength(1, &param1, &param2);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[2];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(v1.length(), CCDblBondLen, 1e-3));
   TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
   TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
-  v2 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[3];
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
   TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[2];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
 
@@ -660,8 +660,8 @@ void testUFF6() {
   (*ff.positions()[0])[0] = 0.0;
   (*ff.positions()[1])[0] = 4.0;
   ff.minimize(10, 1e-8, 1e-8);
-  d = *(RDGeom::Point3D *)ff.positions()[0] -
-      *(RDGeom::Point3D *)ff.positions()[1];
+  d = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   TEST_ASSERT(RDKit::feq(d.length(), 3.851, 1e-3));
 
   // minimize in "3D"
@@ -673,8 +673,8 @@ void testUFF6() {
   (*ff.positions()[1])[1] = 0.9;
   (*ff.positions()[1])[0] = 1.00;
   ff.minimize(10, 1e-8, 1e-8);
-  d = *(RDGeom::Point3D *)ff.positions()[0] -
-      *(RDGeom::Point3D *)ff.positions()[1];
+  d = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   TEST_ASSERT(RDKit::feq(d.length(), 3.851, 1e-3));
 
   std::cerr << "  done" << std::endl;
@@ -732,10 +732,10 @@ void testUFF7() {
   ff.initialize();
   ff.minimize(10, 1e-8, 1e-8);
   cosPhi = ForceFields::UFF::Utils::calculateCosTorsion(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
 
   // ------- ------- ------- ------- ------- ------- -------
@@ -765,10 +765,10 @@ void testUFF7() {
   ff.initialize();
   ff.minimize(10, 1e-8, 1e-8);
   cosPhi = ForceFields::UFF::Utils::calculateCosTorsion(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 1.0, 1e-4));
 
   // ------- ------- ------- ------- ------- ------- -------
@@ -798,10 +798,10 @@ void testUFF7() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
   cosPhi = ForceFields::UFF::Utils::calculateCosTorsion(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
 
   // ------- ------- ------- ------- ------- ------- -------
@@ -831,10 +831,10 @@ void testUFF7() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
   cosPhi = ForceFields::UFF::Utils::calculateCosTorsion(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 0.0, 1e-4));
 
   // ------- ------- ------- ------- ------- ------- -------
@@ -864,10 +864,10 @@ void testUFF7() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
   cosPhi = ForceFields::UFF::Utils::calculateCosTorsion(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 0.0, 1e-4));
 
   // ------- ------- ------- ------- ------- ------- -------
@@ -897,10 +897,10 @@ void testUFF7() {
   ff.initialize();
   ff.minimize(100, 1e-8, 1e-8);
   cosPhi = ForceFields::UFF::Utils::calculateCosTorsion(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
 
   std::cerr << "  done" << std::endl;
@@ -1051,22 +1051,22 @@ void testUFF8() {
   double CHBondLen =
       ForceFields::UFF::Utils::calcBondRestLength(1, param1, param2);
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[1];
-  v2 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[2];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(v1.length(), CCDblBondLen, 1e-3));
   TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
   TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4));
-  v2 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[3];
+  v2 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
   TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4));
 
-  v1 = *(RDGeom::Point3D *)ff.positions()[0] -
-       *(RDGeom::Point3D *)ff.positions()[2];
+  v1 = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+       *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]);
   theta = v1.angleTo(v2);
   TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4));
 
@@ -1270,8 +1270,8 @@ void testUFFDistanceConstraints() {
   (*ff.positions()[1])[2] = 0.0;
   (*ff.positions()[1])[0] = 1.20;
   ff.minimize(10, 1e-8);
-  d = *(RDGeom::Point3D *)ff.positions()[0] -
-      *(RDGeom::Point3D *)ff.positions()[1];
+  d = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   TEST_ASSERT(d.length() >= 1.35)
   TEST_ASSERT(d.length() <= 1.55)
 
@@ -1279,8 +1279,8 @@ void testUFFDistanceConstraints() {
   (*ff.positions()[1])[2] = 0.0;
   (*ff.positions()[1])[0] = 1.70;
   ff.minimize(10, 1e-8);
-  d = *(RDGeom::Point3D *)ff.positions()[0] -
-      *(RDGeom::Point3D *)ff.positions()[1];
+  d = *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]) -
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]);
   TEST_ASSERT(d.length() >= 1.35)
   TEST_ASSERT(d.length() <= 1.55)
 
