@@ -108,9 +108,9 @@ void computeDistMat(const RDGeom::PointPtrVect &origCoords,
   RDGeom::Point3D pti, ptj;
   double d;
   for (i = 1; i < N; i++) {
-    pti = *(RDGeom::Point3D *)origCoords[i];
+    pti = *dynamic_cast<RDGeom::Point3D *>(origCoords[i]);
     for (j = 0; j < i; j++) {
-      ptj = *(RDGeom::Point3D *)origCoords[j];
+      ptj = *dynamic_cast<RDGeom::Point3D *>(origCoords[j]);
       ptj -= pti;
       d = ptj.length();
       distMat.setVal(i, j, d);
@@ -843,7 +843,7 @@ void testRandomCoords() {
     std::string smi = *token;
     // std::cerr << "SMI: " << smi << std::endl;
     ROMol *m = SmilesToMol(smi, 0, 1);
-    auto *m2 = (RWMol *)MolOps::addHs(*m);
+    auto *m2 = dynamic_cast<RWMol *>(MolOps::addHs(*m));
     delete m;
     m = m2;
     int cid = DGeomHelpers::EmbedMolecule(*m, 10, 1, true, true, 2, true, 1,
@@ -884,7 +884,7 @@ void testIssue1989539() {
   {
     std::string smi = "c1ccccc1.Cl";
     ROMol *m = SmilesToMol(smi, 0, 1);
-    auto *m2 = (RWMol *)MolOps::addHs(*m);
+    auto *m2 = dynamic_cast<RWMol *>(MolOps::addHs(*m));
     delete m;
     m = m2;
     int cid = DGeomHelpers::EmbedMolecule(*m);
