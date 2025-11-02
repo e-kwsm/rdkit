@@ -40,7 +40,7 @@ static Atom *CreateAAAtom(RWMol *mol, const char *name,
     atom = new Atom(0);
   }
   mol->addAtom(atom, true, true);
-  auto *copy = (AtomPDBResidueInfo *)info.copy();
+  auto *copy = dynamic_cast<AtomPDBResidueInfo *>(info.copy());
   copy->setName(name);
   atom->setMonomerInfo(copy);
 
