@@ -7329,7 +7329,7 @@ void testDblBondCrash() {
       auto prods = rxn->runReactants(v);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
-      MolOps::sanitizeMol(*(RWMol *)prods[0][0].get());
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(prods[0][0].get()));
       TEST_ASSERT(MolToSmiles(*prods[0][0]) == "C/C=C(/C)CN");
     }
     {
@@ -7347,7 +7347,7 @@ void testDblBondCrash() {
       auto prods = rxn->runReactants(v);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
-      MolOps::sanitizeMol(*(RWMol *)prods[0][0].get());
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(prods[0][0].get()));
       TEST_ASSERT(MolToSmiles(*prods[0][0]) == "CC=C(C)CN");
     }
     {
@@ -7358,7 +7358,7 @@ void testDblBondCrash() {
       auto prods = rxn->runReactants(v);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
-      MolOps::sanitizeMol(*(RWMol *)prods[0][0].get());
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(prods[0][0].get()));
       TEST_ASSERT(MolToSmiles(*prods[0][0]) == "CC(=O)/N=C(\\C)c1nonc1N");
     }
     {
@@ -7371,7 +7371,7 @@ void testDblBondCrash() {
       auto prods = rxn->runReactants(v);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
-      MolOps::sanitizeMol(*(RWMol *)prods[0][0].get());
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(prods[0][0].get()));
       TEST_ASSERT(MolToSmiles(*prods[0][0]) == "CC(=O)/N=C(\\C)c1nonc1N");
     }
     {
@@ -7384,7 +7384,7 @@ void testDblBondCrash() {
       auto prods = rxn->runReactants(v);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
-      MolOps::sanitizeMol(*(RWMol *)prods[0][0].get());
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(prods[0][0].get()));
       TEST_ASSERT(MolToSmiles(*prods[0][0]) == "CC(=O)/N=C(\\C)c1nonc1N");
     }
     {
@@ -7399,7 +7399,7 @@ void testDblBondCrash() {
       auto prods = rxn2->runReactants(v);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
-      MolOps::sanitizeMol(*(RWMol *)prods[0][0].get());
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(prods[0][0].get()));
       TEST_ASSERT(MolToSmiles(*prods[0][0]) ==
                   "CC(=O)/C=C(\\N)c1nonc1Nc1cncnn1");
     }
