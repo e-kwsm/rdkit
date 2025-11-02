@@ -131,7 +131,7 @@ int MMFFOptimizeMolecule(ROMol &mol, std::string mmffVariant = "MMFF94",
 }
 
 unsigned int SanitizeMMFFMol(ROMol &mol) {
-  return MMFF::sanitizeMMFFMol((RWMol &)mol);
+  return MMFF::sanitizeMMFFMol(dynamic_cast<RWMol &>(mol));
 };
 
 ForceFields::PyMMFFMolProperties *GetMMFFMolProperties(
