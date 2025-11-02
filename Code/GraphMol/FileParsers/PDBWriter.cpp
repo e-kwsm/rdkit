@@ -67,7 +67,7 @@ std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
       break;
   }
 
-  auto *info = (AtomPDBResidueInfo *)(atom->getMonomerInfo());
+  auto *info = dynamic_cast<AtomPDBResidueInfo *>(atom->getMonomerInfo());
   if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE) {
     ss << (info->getIsHeteroAtom() ? "HETATM" : "ATOM  ");
     ss << std::setw(5) << atom->getIdx() + 1;

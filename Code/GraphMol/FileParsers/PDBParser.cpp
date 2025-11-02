@@ -512,7 +512,7 @@ bool StandardPDBChiralAtom(const char *resnam, const char *atmnam) {
 void StandardPDBResidueChirality(RWMol *mol) {
   for (auto atom : mol->atoms()) {
     if (atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
-      auto *info = (AtomPDBResidueInfo *)atom->getMonomerInfo();
+      auto *info = dynamic_cast<AtomPDBResidueInfo *>(atom->getMonomerInfo());
       if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE &&
           !info->getIsHeteroAtom() &&
           !StandardPDBChiralAtom(info->getResidueName().c_str(),
