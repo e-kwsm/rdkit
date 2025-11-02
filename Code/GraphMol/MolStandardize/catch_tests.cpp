@@ -483,7 +483,7 @@ M  END
     MolOps::RemoveHsParameters rhp;
     bool sanitize = false;
     MolOps::removeHs(*m, rhp, sanitize);
-    std::unique_ptr<RWMol> res((RWMol *)nrml.normalize(*m));
+    std::unique_ptr<RWMol> res(dynamic_cast<RWMol *>(nrml.normalize(*m)));
     REQUIRE(res);
     MolOps::sanitizeMol(*res);
     MolOps::assignStereochemistry(*res);
