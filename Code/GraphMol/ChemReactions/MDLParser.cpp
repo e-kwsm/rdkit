@@ -352,7 +352,8 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnDataStream(
     // to write the mol block, we need ring information:
     for (ROMol::AtomIterator atomIt = (*iter)->beginAtoms();
          atomIt != (*iter)->endAtoms(); ++atomIt) {
-      QueryOps::replaceAtomWithQueryAtom((RWMol *)iter->get(), (*atomIt));
+      QueryOps::replaceAtomWithQueryAtom(dynamic_cast<RWMol *>(iter->get()),
+                                         (*atomIt));
     }
   }
   for (MOL_SPTR_VECT::const_iterator iter = res->beginProductTemplates();
@@ -360,7 +361,8 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnDataStream(
     // to write the mol block, we need ring information:
     for (ROMol::AtomIterator atomIt = (*iter)->beginAtoms();
          atomIt != (*iter)->endAtoms(); ++atomIt) {
-      QueryOps::replaceAtomWithQueryAtom((RWMol *)iter->get(), (*atomIt));
+      QueryOps::replaceAtomWithQueryAtom(dynamic_cast<RWMol *>(iter->get()),
+                                         (*atomIt));
     }
   }
   updateProductsStereochem(res.get());
