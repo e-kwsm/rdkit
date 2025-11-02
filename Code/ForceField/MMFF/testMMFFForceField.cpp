@@ -355,9 +355,9 @@ int mmffValidationSuite(int argc, char *argv[]) {
           mol = molVec[ii];
           if (molTypeIt == "smi") {
             DGeomHelpers::EmbedMolecule(*mol);
-            MolOps::addHs((RWMol &)*mol, false, true);
+            MolOps::addHs(dynamic_cast<RWMol &>(*mol), false, true);
           }
-          MMFF::sanitizeMMFFMol((RWMol &)(*mol));
+          MMFF::sanitizeMMFFMol(dynamic_cast<RWMol &>(*mol));
           if (mol->hasProp(common_properties::_Name)) {
             mol->getProp(common_properties::_Name, molName);
             rdkFStream << molName << std::endl;
