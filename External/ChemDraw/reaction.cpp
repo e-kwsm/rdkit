@@ -122,7 +122,7 @@ ReactionInfo::ReactionInfo(CDXReactionScheme &scheme)
   for (auto &rxnNode : scheme.ContainedObjects()) {
     auto type_id = (CDXDatumID)rxnNode.second->GetTag();
     if (type_id == kCDXObj_ReactionStep) {
-      auto &step = (CDXReactionStep &)(*rxnNode.second);
+      auto &step = dynamic_cast<CDXReactionStep &>(*rxnNode.second);
       auto step_id = step.GetObjectID();
       steps.emplace_back(ReactionStepInfo());
       ReactionStepInfo &scheme = steps.back();
