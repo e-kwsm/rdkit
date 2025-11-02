@@ -514,7 +514,7 @@ void StandardPDBResidueChirality(RWMol *mol) {
        atomIt != mol->endAtoms(); ++atomIt) {
     Atom *atom = *atomIt;
     if (atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
-      auto *info = (AtomPDBResidueInfo *)atom->getMonomerInfo();
+      auto *info = dynamic_cast<AtomPDBResidueInfo *>(atom->getMonomerInfo());
       if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE &&
           !info->getIsHeteroAtom() &&
           !StandardPDBChiralAtom(info->getResidueName().c_str(),
