@@ -38,8 +38,8 @@ DistanceConstraintContrib::DistanceConstraintContrib(
   URANGE_CHECK(idx2, pos.size());
   PRECONDITION(maxLen >= minLen, "bad bounds");
   if (relative) {
-    RDGeom::Point3D &p1 = *((RDGeom::Point3D *)pos[idx1]);
-    RDGeom::Point3D &p2 = *((RDGeom::Point3D *)pos[idx2]);
+    RDGeom::Point3D &p1 = *(dynamic_cast<RDGeom::Point3D *>(pos[idx1]));
+    RDGeom::Point3D &p2 = *(dynamic_cast<RDGeom::Point3D *>(pos[idx2]));
     const auto dist = (p1 - p2).length();
     minLen = std::max(dist + minLen, 0.0);
     maxLen = std::max(dist + maxLen, 0.0);
