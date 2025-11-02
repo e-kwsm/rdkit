@@ -84,7 +84,7 @@ bool hasNonSupportedFeatures(CDXDocument &document, const std::string &fname) {
         for (auto frag : node.second->ContainedObjects()) {
           auto id = (CDXDatumID)frag.second->GetTag();
           if (id == kCDXObj_Fragment) {
-            auto &fragment = (CDXFragment &)(*frag.second);
+            auto &fragment = dynamic_cast<CDXFragment &>(*frag.second);
             if (fragment.m_sequenceType == kCDXSeqType_Unknown) {
               return true;
             }
