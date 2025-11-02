@@ -670,7 +670,7 @@ void test8() {
   std::string sma;
   smi = "C-C";
   m = SmartsToMol(smi);
-  MolOps::sanitizeMol(*((RWMol *)m));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(m)));
   TEST_ASSERT(m);
   TEST_ASSERT(m->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
@@ -3636,7 +3636,7 @@ void testSFNetIssue2313979() {
 
       BOOST_LOG(rdInfoLog) << "     This should finish in a few seconds.  >>>"
                            << std::endl;
-      MolOps::sanitizeMol(*(RWMol *)m);
+      MolOps::sanitizeMol(*dynamic_cast<RWMol *>(m));
       delete m;
       BOOST_LOG(rdInfoLog) << "   <<< Done." << std::endl;
     }
