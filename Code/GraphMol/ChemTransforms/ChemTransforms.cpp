@@ -273,7 +273,8 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     // clear conformers and computed props and do basic updates
     // on the resulting molecules, but allow unhappiness:
     for (auto &re : res) {
-      details::updateSubMolConfs(mol, *(RWMol *)re.get(), removedAtoms);
+      details::updateSubMolConfs(mol, *dynamic_cast<RWMol *>(re.get()),
+                                 removedAtoms);
       re->clearComputedProps(true);
       re->updatePropertyCache(false);
     }
