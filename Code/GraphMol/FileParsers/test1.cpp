@@ -1837,7 +1837,7 @@ void testAtomParity() {
 
     // if we remove the H and write things out, we should
     // still get the right answer back:
-    m2 = (RWMol *)MolOps::removeHs(*((ROMol *)m));
+    m2 = dynamic_cast<RWMol *>(MolOps::removeHs(*((ROMol *)m)));
     molBlock = MolToMolBlock(*m2);
     delete m2;
     m2 = MolBlockToMol(molBlock);
@@ -1872,7 +1872,7 @@ void testAtomParity() {
     TEST_ASSERT(parity == 2);
     delete m2;
 
-    m2 = (RWMol *)MolOps::removeHs(*((ROMol *)m));
+    m2 = dynamic_cast<RWMol *>(MolOps::removeHs(*((ROMol *)m)));
     molBlock = MolToMolBlock(*m2);
     delete m2;
     m2 = MolBlockToMol(molBlock);
@@ -1919,7 +1919,7 @@ void testAtomParity() {
     // add a bogus chiral spec:
     m->getAtomWithIdx(0)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
     std::string molBlock = MolToMolBlock(*m);
-    auto *m2 = (RWMol *)MolOps::removeHs(*((ROMol *)m));
+    auto *m2 = dynamic_cast<RWMol *>(MolOps::removeHs(*((ROMol *)m)));
     molBlock = MolToMolBlock(*m2);
     delete m2;
     m2 = MolBlockToMol(molBlock, true, false);
@@ -3825,9 +3825,8 @@ void testPDBFile() {
 
     // test adding hydrogens
     ROMol *nm = MolOps::addHs(*m, false, false, nullptr, true);
-    auto *info =
-        (AtomPDBResidueInfo *)(nm->getAtomWithIdx(nm->getNumAtoms() - 1)
-                                   ->getMonomerInfo());
+    auto *info = dynamic_cast<AtomPDBResidueInfo *>(
+        nm->getAtomWithIdx(nm->getNumAtoms() - 1)->getMonomerInfo());
     TEST_ASSERT(info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE);
     TEST_ASSERT(info->getName() == " H7 ");
     TEST_ASSERT(info->getResidueName() == "ASN");
