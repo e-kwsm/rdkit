@@ -142,7 +142,7 @@ bool parseNode(
 
   for (auto &child : node.ContainedObjects()) {
     if (child.second->GetTag() == kCDXObj_Text) {
-      const std::string &text = ((CDXText *)child.second)->GetText().str();
+      const std::string &text = (dynamic_cast<CDXText *>(child.second))->GetText().str();
       if (text.size() > 0 && text[0] == 'R') {
         try {
           if (checkForRGroup) {
@@ -309,7 +309,7 @@ bool parseNode(
     //  the external_id is the node's atom_id
     for (auto fragment : node.ContainedObjects()) {
       if (fragment.second->GetTag() == kCDXObj_Fragment) {
-        if (!parseFragment(mol, (CDXFragment &)(*fragment.second), pagedata,
+        if (!parseFragment(mol, dynamic_cast<CDXFragment &>(*fragment.second), pagedata,
                            missingFragId, atom_id)) {
           return false;
         }

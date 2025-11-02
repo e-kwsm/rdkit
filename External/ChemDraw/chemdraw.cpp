@@ -89,7 +89,7 @@ void visit_children(
     auto id = (CDXDatumID)frag.second->GetTag();
     if (id == kCDXObj_Fragment) {
       std::unique_ptr<RWMol> mol = std::make_unique<RWMol>();
-      if (!parseFragment(*mol, (CDXFragment &)(*frag.second), pagedata,
+      if (!parseFragment(*mol, dynamic_cast<CDXFragment &>(*frag.second), pagedata,
                          missing_frag_id)) {
         continue;
       }
@@ -206,7 +206,7 @@ void visit_children(
         MolOps::detectBondStereochemistry(*res);
       }
     } else if (id == kCDXObj_ReactionScheme) {  // get the reaction info
-      auto &scheme = (CDXReactionScheme &)(*frag.second);
+      auto &scheme = dynamic_cast<CDXReactionScheme &>(*frag.second);
       pagedata.schemes.emplace_back(scheme);
       /*
       int scheme_id = scheme.GetObjectID();   //frag.second.template
@@ -224,12 +224,12 @@ void visit_children(
       }
       */
     } else if (id == kCDXObj_Group) {
-      auto &group = (CDXGroup &)(*frag.second);
+      auto &group = dynamic_cast<CDXGroup &>(*frag.second);
       group_id = frag.second->GetObjectID();
       visit_children(group, pagedata, missing_frag_id, bondLength, params,
                      group_id);
     } else if (id == kCDXObj_BracketedGroup) {
-      auto &bracketgroup = (CDXBracketedGroup &)(*frag.second);
+      auto &bracketgroup = dynamic_cast<CDXBracketedGroup &>(*frag.second);
       parseBracket(bracketgroup, pagedata);
     }
   }
