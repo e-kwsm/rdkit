@@ -2361,7 +2361,7 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
       }
     }
     if (isAromaticSet) {
-      MolOps::Kekulize((RWMol &)mol, true);
+      MolOps::Kekulize(dynamic_cast<RWMol &>(mol), true);
     }
     mol.setProp(common_properties::_MMFFSanitized, 1, true);
   }
@@ -2369,7 +2369,7 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
     d_MMFFAtomPropertiesPtrVect[i] =
         MMFFAtomPropertiesPtr(new MMFFAtomProperties());
   }
-  MolOps::setMMFFAromaticity((RWMol &)mol);
+  MolOps::setMMFFAromaticity(dynamic_cast<RWMol &>(mol));
   RingMembershipSize rmSize(mol);
   for (const auto atom : mol.atoms()) {
     if (atom->getAtomicNum() != 1) {

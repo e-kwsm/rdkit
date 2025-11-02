@@ -2843,7 +2843,8 @@ void MarvinMultipleSgroup::expandOneMultipleSgroup() {
         // multiple sgroup has NOT been done yet
 
         if (thisParent->role() == "MultipleSgroup") {
-          auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
+          auto thisMultipleParent =
+              dynamic_cast<MarvinMultipleSgroup *>(thisParent);
           insertItr =
               find(thisMultipleParent->parentAtoms.begin(),
                    thisMultipleParent->parentAtoms.end(), lastAtomInGroupPtr);
@@ -3082,7 +3083,8 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
       // that multiple sgroup has NOT been done yet
 
       if (thisParent->role() == "MultipleSgroup") {
-        auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
+        auto thisMultipleParent =
+            dynamic_cast<MarvinMultipleSgroup *>(thisParent);
 
         auto deleteIter =
             find(thisMultipleParent->parentAtoms.begin(),
@@ -3106,7 +3108,8 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
         thisParent->atoms.push_back(subAtomPtr);
 
         if (thisParent->role() == "MultipleSgroup") {
-          auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
+          auto thisMultipleParent =
+              dynamic_cast<MarvinMultipleSgroup *>(thisParent);
           thisMultipleParent->parentAtoms.push_back(subAtomPtr);
         }
 
@@ -3226,7 +3229,8 @@ void MarvinMulticenterSgroup::processOneMulticenterSgroup() {
                                                 // to the old dummy atom
 
       if (thisParent->role() == "MultipleSgroup") {
-        auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
+        auto thisMultipleParent =
+            dynamic_cast<MarvinMultipleSgroup *>(thisParent);
         auto deleteIter =
             find(thisMultipleParent->parentAtoms.begin(),
                  thisMultipleParent->parentAtoms.end(), centerPtr);
@@ -3400,7 +3404,7 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
     thisParent->atoms.push_back(dummyParentAtom);
 
     if (thisParent->role() == "MultipleSgroup") {
-      ((MarvinMultipleSgroup *)thisParent)
+      (dynamic_cast<MarvinMultipleSgroup *>(thisParent))
           ->parentAtoms.push_back(dummyParentAtom);
     }
 
@@ -3425,7 +3429,8 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
       thisParent->atoms.erase(deleteIter);
 
       if (thisParent->role() == "MultipleSgroup") {
-        auto marvinMultipleSgroup = (MarvinMultipleSgroup *)thisParent;
+        auto marvinMultipleSgroup =
+            dynamic_cast<MarvinMultipleSgroup *>(thisParent);
         auto sgroupIter = find(marvinMultipleSgroup->parentAtoms.begin(),
                                marvinMultipleSgroup->parentAtoms.end(), atom);
         TEST_ASSERT(sgroupIter != marvinMultipleSgroup->parentAtoms.end());
@@ -3950,12 +3955,14 @@ void MarvinMolBase::processSgroupsFromRDKit() {
 
     std::string thisSgroupRole = this->role();
     if (thisSgroupRole == "SuperatomSgroupExpanded") {
-      molToProcess =
-          ((MarvinSuperatomSgroupExpanded *)this)->convertToOneSuperAtom();
+      molToProcess = (dynamic_cast<MarvinSuperatomSgroupExpanded *>(this))
+                         ->convertToOneSuperAtom();
     } else if (thisSgroupRole == "MultipleSgroup" &&
-               ((MarvinMultipleSgroup *)this)->isExpanded == true) {
+               (dynamic_cast<MarvinMultipleSgroup *>(this))->isExpanded ==
+                   true) {
       try {
-        ((MarvinMultipleSgroup *)this)->contractOneMultipleSgroup();
+        (dynamic_cast<MarvinMultipleSgroup *>(this))
+            ->contractOneMultipleSgroup();
       } catch (FileParseException &e) {
         BOOST_LOG(rdErrorLog)
             << e.what() << std::endl

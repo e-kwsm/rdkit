@@ -25,7 +25,7 @@ PositionConstraintContrib::PositionConstraintContrib(ForceField *owner,
   dp_forceField = owner;
   d_atIdx = idx;
   d_maxDispl = maxDispl;
-  d_pos0 = *((RDGeom::Point3D *)pos[idx]);
+  d_pos0 = *(dynamic_cast<RDGeom::Point3D *>(pos[idx]));
   d_forceConstant = forceConst;
 }
 
