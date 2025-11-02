@@ -41,7 +41,7 @@ bool parseBracket(CDXBracketedGroup &bracket, PageData & /*pagedata*/) {
   for (auto &attachment : bracket.ContainedObjects()) {
     auto childid = (CDXDatumID)attachment.second->GetTag();
     if (childid == kCDXObj_BracketAttachment) {
-      auto &bracketattachment = (CDXBracketAttachment &)(*attachment.second);
+      auto &bracketattachment = dynamic_cast<CDXBracketAttachment &>(*attachment.second);
       for (auto &bracketdata : bracketattachment.ContainedObjects()) {
         auto bracketid = (CDXDatumID)bracketdata.second->GetTag();
         if (bracketid == kCDXObj_CrossingBond) {
