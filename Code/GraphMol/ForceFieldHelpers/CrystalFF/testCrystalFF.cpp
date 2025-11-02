@@ -70,10 +70,10 @@ void testTorsionAngleContribs() {
   ff.initialize();
   ff.minimize(10, 1e-8, 1e-8);
   double cosPhi = ForceFields::MMFF::Utils::calcTorsionCosPhi(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
 
   // ------- ------- ------- ------- ------- ------- -------
@@ -108,10 +108,10 @@ void testTorsionAngleContribs() {
   ff.initialize();
   ff.minimize(10, 1e-8, 1e-8);
   cosPhi = ForceFields::MMFF::Utils::calcTorsionCosPhi(
-      *(RDGeom::Point3D *)ff.positions()[0],
-      *(RDGeom::Point3D *)ff.positions()[1],
-      *(RDGeom::Point3D *)ff.positions()[2],
-      *(RDGeom::Point3D *)ff.positions()[3]);
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[0]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[1]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[2]),
+      *dynamic_cast<RDGeom::Point3D *>(ff.positions()[3]));
   TEST_ASSERT(RDKit::feq(cosPhi, 1.0, 1e-4));
 }
 
