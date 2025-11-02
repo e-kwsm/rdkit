@@ -95,7 +95,7 @@ bool parseFragment(RWMol &mol, CDXFragment &fragment, PageData &pagedata,
 #endif
     switch (id) {
       case kCDXObj_Node: {
-        auto &node = (CDXNode &)(*child.second);
+        auto &node = dynamic_cast<CDXNode &>(*child.second);
         if (!parseNode(mol, frag_id, node, pagedata, sgroups, missingFragId,
                        externalAttachment)) {
           skip_fragment = true;
@@ -103,7 +103,7 @@ bool parseFragment(RWMol &mol, CDXFragment &fragment, PageData &pagedata,
         break;
       }
       case kCDXObj_Bond: {
-        auto &bond = (CDXBond &)(*child.second);
+        auto &bond = dynamic_cast<CDXBond &>(*child.second);
         if (!parseBond(mol, frag_id, bond, pagedata)) {
           skip_fragment = true;
           break;
