@@ -2671,25 +2671,25 @@ void testAssignStereochemistryFrom3D() {
   {
     SDMolSupplier suppl(pathName + "stereochem.sdf", false);  // don't sanitize
     {
-      auto *m = (RWMol *)suppl.next();
+      auto *m = dynamic_cast<RWMol *>(suppl.next());
       TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) == "R-Z");
       stereochemTester(m, "R", Bond::STEREOZ);
       delete m;
     }
     {
-      auto *m = (RWMol *)suppl.next();
+      auto *m = dynamic_cast<RWMol *>(suppl.next());
       TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) == "R-E");
       stereochemTester(m, "R", Bond::STEREOE);
       delete m;
     }
     {
-      auto *m = (RWMol *)suppl.next();
+      auto *m = dynamic_cast<RWMol *>(suppl.next());
       TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) == "S-Z");
       stereochemTester(m, "S", Bond::STEREOZ);
       delete m;
     }
     {
-      auto *m = (RWMol *)suppl.next();
+      auto *m = dynamic_cast<RWMol *>(suppl.next());
       TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) == "S-E");
       stereochemTester(m, "S", Bond::STEREOE);
       delete m;

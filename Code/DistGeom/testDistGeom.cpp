@@ -128,9 +128,9 @@ TEST_CASE("testIssue216") {
   REQUIRE(gotCoords);
 
   for (int i = 1; i < 4; i++) {
-    RDGeom::Point3D pti = *(RDGeom::Point3D *)pos[i];
+    RDGeom::Point3D pti = *dynamic_cast<RDGeom::Point3D *>(pos[i]);
     for (int j = 0; j < i; j++) {
-      RDGeom::Point3D ptj = *(RDGeom::Point3D *)pos[j];
+      RDGeom::Point3D ptj = *dynamic_cast<RDGeom::Point3D *>(pos[j]);
       ptj -= pti;
       REQUIRE_THAT(ptj.length(), Catch::Matchers::WithinAbs(1.0, 0.02));
     }
