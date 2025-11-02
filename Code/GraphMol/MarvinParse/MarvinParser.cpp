@@ -81,7 +81,7 @@ class MarvinCMLReader {
     }
 
     std::unique_ptr<MarvinMol> marvinMol{
-        (MarvinMol *)parseMarvinMolecule(molSection)};
+        dynamic_cast<MarvinMol *>(parseMarvinMolecule(molSection))};
 
     marvinMol->prepSgroupsForRDKit();
 
@@ -772,7 +772,7 @@ class MarvinCMLReader {
       if (foundChild) {
         for (auto &v : childTree) {
           res->reactants.push_back(std::unique_ptr<MarvinMol>(
-              (MarvinMol *)parseMarvinMolecule(v.second)));
+              dynamic_cast<MarvinMol *>(parseMarvinMolecule(v.second))));
         }
       }
 
@@ -785,7 +785,7 @@ class MarvinCMLReader {
       if (foundChild) {
         for (auto &v : childTree) {
           res->agents.push_back(std::unique_ptr<MarvinMol>(
-              (MarvinMol *)parseMarvinMolecule(v.second)));
+              dynamic_cast<MarvinMol *>(parseMarvinMolecule(v.second))));
         }
       }
 
@@ -798,7 +798,7 @@ class MarvinCMLReader {
       if (foundChild) {
         for (auto &v : childTree) {
           res->products.push_back(std::unique_ptr<MarvinMol>(
-              (MarvinMol *)parseMarvinMolecule(v.second)));
+              dynamic_cast<MarvinMol *>(parseMarvinMolecule(v.second))));
         }
       }
 

@@ -50,9 +50,9 @@ void AngleConstraintContribs::addContrib(unsigned int idx1, unsigned int idx2,
   PRECONDITION(maxAngleDeg >= minAngleDeg,
                "minAngleDeg must be <= maxAngleDeg");
   if (relative) {
-    const RDGeom::Point3D &p1 = *((RDGeom::Point3D *)pos[idx1]);
-    const RDGeom::Point3D &p2 = *((RDGeom::Point3D *)pos[idx2]);
-    const RDGeom::Point3D &p3 = *((RDGeom::Point3D *)pos[idx3]);
+    const RDGeom::Point3D &p1 = *(dynamic_cast<RDGeom::Point3D *>(pos[idx1]));
+    const RDGeom::Point3D &p2 = *(dynamic_cast<RDGeom::Point3D *>(pos[idx2]));
+    const RDGeom::Point3D &p3 = *(dynamic_cast<RDGeom::Point3D *>(pos[idx3]));
     const RDGeom::Point3D r[2] = {p1 - p2, p3 - p2};
     const double rLengthSq[2] = {std::max(1.0e-5, r[0].lengthSq()),
                                  std::max(1.0e-5, r[1].lengthSq())};

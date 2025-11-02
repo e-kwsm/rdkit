@@ -73,8 +73,10 @@ bool IsBlacklistedPair(Atom *beg_atom, Atom *end_atom) {
   PRECONDITION(beg_atom, "empty atom");
   PRECONDITION(end_atom, "empty atom");
 
-  auto *beg_info = (AtomPDBResidueInfo *)beg_atom->getMonomerInfo();
-  auto *end_info = (AtomPDBResidueInfo *)end_atom->getMonomerInfo();
+  auto *beg_info =
+      dynamic_cast<AtomPDBResidueInfo *>(beg_atom->getMonomerInfo());
+  auto *end_info =
+      dynamic_cast<AtomPDBResidueInfo *>(end_atom->getMonomerInfo());
   if (!beg_info || beg_info->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return false;
   }
@@ -236,7 +238,8 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
         continue;
       }
 
-      auto *atom_info = (AtomPDBResidueInfo *)(atom->getMonomerInfo());
+      auto *atom_info =
+          dynamic_cast<AtomPDBResidueInfo *>(atom->getMonomerInfo());
       // cut all but shortest Bond
       RDGeom::Point3D p = conf->getAtomPos(i);
       RDKit::RWMol::ADJ_ITER nbr, end_nbr;
@@ -246,8 +249,8 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
       while (nbr != end_nbr) {
         RDGeom::Point3D pn = conf->getAtomPos(*nbr);
         float d = (p - pn).length();
-        auto *n_info =
-            (AtomPDBResidueInfo *)(mol->getAtomWithIdx(*nbr)->getMonomerInfo());
+        auto *n_info = dynamic_cast<AtomPDBResidueInfo *>(
+            mol->getAtomWithIdx(*nbr)->getMonomerInfo());
         if (d < best &&
             ((!atom_info || !n_info) ||
              atom_info->getResidueNumber() == n_info->getResidueNumber())) {
@@ -492,11 +495,11 @@ static bool StandardPDBDoubleBond(unsigned int rescode, unsigned int atm1,
 }
 
 static bool StandardPDBDoubleBond(RWMol *mol, Atom *beg, Atom *end) {
-  auto *bInfo = (AtomPDBResidueInfo *)beg->getMonomerInfo();
+  auto *bInfo = dynamic_cast<AtomPDBResidueInfo *>(beg->getMonomerInfo());
   if (!bInfo || bInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return false;
   }
-  auto *eInfo = (AtomPDBResidueInfo *)end->getMonomerInfo();
+  auto *eInfo = dynamic_cast<AtomPDBResidueInfo *>(end->getMonomerInfo());
   if (!eInfo || eInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return false;
   }
