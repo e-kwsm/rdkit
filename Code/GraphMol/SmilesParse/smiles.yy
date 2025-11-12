@@ -408,7 +408,8 @@ chiral_element:	 element
       delete $1;
       YYABORT;
     }
-    $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, $3);
+    $1->setChiralTag($2);
+    $1->setProp(common_properties::_chiralPermutation, $3);
 };
 
 /* --------------------------------------------------------------- */
