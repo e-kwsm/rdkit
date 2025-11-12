@@ -411,7 +411,8 @@ chiral_element:	 element
       yyErrorCleanup(molList);
       YYABORT;
     }
-    $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, $3); 
+    $1->setChiralTag($2);
+    $1->setProp(common_properties::_chiralPermutation, $3); 
 };
 
 /* --------------------------------------------------------------- */
