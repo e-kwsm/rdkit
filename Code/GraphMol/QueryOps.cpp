@@ -878,7 +878,7 @@ bool isAtomListQuery(const Atom *a) {
     // being lost on output
     return true;
   } else if (a->getQuery()->getDescription() == "AtomAtomicNum" &&
-             static_cast<ATOM_EQUALS_QUERY *>(a->getQuery())->getVal() !=
+             dynamic_cast<ATOM_EQUALS_QUERY *>(a->getQuery())->getVal() !=
                  a->getAtomicNum()) {
     // when reading single-member atom lists from CTABs we end up with simple
     // AtomAtomicNum queries where the atomic number of the atom itself is zero.
