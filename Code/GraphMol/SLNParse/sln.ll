@@ -8,19 +8,19 @@
 //
 //  Copyright (c) 2008, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
-// met: 
+// met:
 //
-//     * Redistributions of source code must retain the above copyright 
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
-//       copyright notice, this list of conditions and the following 
-//       disclaimer in the documentation and/or other materials provided 
+//       copyright notice, this list of conditions and the following
+//       disclaimer in the documentation and/or other materials provided
 //       with the distribution.
-//     * Neither the name of Novartis Institutes for BioMedical Research Inc. 
-//       nor the names of its contributors may be used to endorse or promote 
+//     * Neither the name of Novartis Institutes for BioMedical Research Inc.
+//       nor the names of its contributors may be used to endorse or promote
 //       products derived from this software without specific prior
 //       written permission.
 //
@@ -87,17 +87,17 @@ void sln_lexer_error(const char *msg) {
   return TEXT_BLOCK;
 }
 
-<IN_SLN_PARAM_STATE>[a-zA-Z]+[a-zA-Z0-9_\-,]* { 
+<IN_SLN_PARAM_STATE>[a-zA-Z]+[a-zA-Z0-9_\-,]* {
   yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK;
 }
 
-<IN_CTAB_PARAM_VAL_STATE>[\"]?[a-zA-Z0-9_\-,\ \.\(\)]+[\"]? { 
+<IN_CTAB_PARAM_VAL_STATE>[\"]?[a-zA-Z0-9_\-,\ \.\(\)]+[\"]? {
   yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK;
 }
 
-<IN_CTAB_PARAM_NAME_STATE>[a-zA-Z]+[a-zA-Z0-9_\.]* { 
+<IN_CTAB_PARAM_NAME_STATE>[a-zA-Z]+[a-zA-Z0-9_\.]* {
   yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK;
 }
@@ -202,7 +202,7 @@ void sln_lexer_error(const char *msg) {
 <INITIAL,IN_RECURSE_STATE>S  |
 <INITIAL,IN_RECURSE_STATE>F  |
 <INITIAL,IN_RECURSE_STATE>Cl |
-<INITIAL,IN_RECURSE_STATE>Br | 
+<INITIAL,IN_RECURSE_STATE>Br |
 <INITIAL,IN_RECURSE_STATE>I  {
   if ((bool)yyextra) {
     yylval->atom_T =
@@ -271,7 +271,7 @@ void sln_lexer_error(const char *msg) {
 <IN_SLN_PARAM_STATE>Is\= |
 <IN_SLN_PARAM_STATE>iS\= |
 <IN_SLN_PARAM_STATE>IS\= { yy_push_state(IN_RECURSE_STATE, yyscanner); return RECURSE_TOKEN; }
-<IN_SLN_PARAM_STATE>not\= | 
+<IN_SLN_PARAM_STATE>not\= |
 <IN_SLN_PARAM_STATE>Not\= |
 <IN_SLN_PARAM_STATE>nOt\= |
 <IN_SLN_PARAM_STATE>noT\= |
@@ -284,9 +284,9 @@ void sln_lexer_error(const char *msg) {
 \-                      { return MINUS_TOKEN; }
 
 \+                      { return PLUS_TOKEN; }
-\#                      { return HASH_TOKEN; }  
-\~                      { return TILDE_TOKEN; } 
-\:                      { return COLON_TOKEN; } 
+\#                      { return HASH_TOKEN; }
+\~                      { return TILDE_TOKEN; }
+\:                      { return COLON_TOKEN; }
 
 \(              { return OPEN_PAREN_TOKEN; }
 \)              { return CLOSE_PAREN_TOKEN; }
@@ -332,7 +332,7 @@ void sln_lexer_error(const char *msg) {
   yy_pop_state(yyscanner);
   return AND_TOKEN;
 }
-<IN_CTAB_PARAM_NAME_STATE>\; {  
+<IN_CTAB_PARAM_NAME_STATE>\; {
   return SEMI_TOKEN;
  }
 <IN_CTAB_PARAM_NAME_STATE>\& {
@@ -402,7 +402,7 @@ void sln_lexer_error(const char *msg) {
 \<                      { yy_push_state(IN_CTAB_PARAM_NAME_STATE, yyscanner); return OPEN_ANGLE_TOKEN; }
 <IN_CTAB_PARAM_NAME_STATE>\> { yy_pop_state(yyscanner); return CLOSE_ANGLE_TOKEN; }
 <IN_CTAB_PARAM_VAL_STATE>\> { yy_pop_state(yyscanner); return CLOSE_ANGLE_TOKEN; }
-<IN_PROP_VAL_STATE>\>   { 
+<IN_PROP_VAL_STATE>\>   {
   // if we're currently in a CTAB property block (e.g. in <>'s), we need
   // to pop both the prop_val state and the property block state:
   yy_pop_state(yyscanner);
@@ -414,7 +414,7 @@ void sln_lexer_error(const char *msg) {
 
 
 \.              { return SEPARATOR_TOKEN; }
-<IN_RECURSE_STATE>\, { 
+<IN_RECURSE_STATE>\, {
   return COMMA_TOKEN;
 }
 
