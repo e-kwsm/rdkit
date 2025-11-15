@@ -223,7 +223,7 @@ bool hasComplexQuery(const Atom *atom) {
     //
     std::string descr = atom->getQuery()->getDescription();
     if (descr == "AtomAtomicNum" &&
-        static_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
+        dynamic_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
             atom->getAtomicNum()) {
       res = false;
     } else if (descr == "AtomAnd") {
