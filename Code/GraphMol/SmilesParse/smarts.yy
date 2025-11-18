@@ -597,7 +597,7 @@ atom_query:	simple_atom
 | RINGBOND_ATOM_QUERY_TOKEN
 | IMPLICIT_H_ATOM_QUERY_TOKEN
 | COMPLEX_ATOM_QUERY_TOKEN number {
-  static_cast<ATOM_EQUALS_QUERY *>($1->getQuery())->setVal($2);
+  dynamic_cast<ATOM_EQUALS_QUERY *>($1->getQuery())->setVal($2);
   $$ = $1;
 }
 | HETERONEIGHBOR_ATOM_QUERY_TOKEN number {
@@ -621,21 +621,21 @@ atom_query:	simple_atom
   $$ = $1;
 }
 | possible_range_query RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
+  ATOM_EQUALS_QUERY *oq = dynamic_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4,oq->getDataFunc(),
     std::string("greater_")+oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
+  ATOM_EQUALS_QUERY *oq = dynamic_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>($3,oq->getDataFunc(),
     std::string("less_")+oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN number RANGE_CLOSE_TOKEN {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
+  ATOM_EQUALS_QUERY *oq = dynamic_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_RANGE_QUERY *nq = makeAtomRangeQuery($3,$5,false,false,
     oq->getDataFunc(),
     std::string("range_")+oq->getDescription());
