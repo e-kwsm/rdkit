@@ -2509,12 +2509,12 @@ TEST_CASE("Github #4535: operator<< for AtomPDBResidue", "[PDB]") {
     std::unique_ptr<RWMol> mol(SequenceToMol("KY", sanitize, flavor));
     REQUIRE(mol);
     REQUIRE(mol->getAtomWithIdx(0)->getMonomerInfo());
-    auto res = static_cast<AtomPDBResidueInfo *>(
+    auto res = dynamic_cast<AtomPDBResidueInfo *>(
         mol->getAtomWithIdx(0)->getMonomerInfo());
     REQUIRE(res);
     std::stringstream oss;
     oss << *res << std::endl;
-    res = static_cast<AtomPDBResidueInfo *>(
+    res = dynamic_cast<AtomPDBResidueInfo *>(
         mol->getAtomWithIdx(mol->getNumAtoms() - 1)->getMonomerInfo());
     REQUIRE(res);
     oss << *res << std::endl;
