@@ -659,10 +659,10 @@ Query<int, Atom const *, true> *readQuery(Atom const *owner,
     res = new RecursiveStructureQuery(mol);
   } else if (tag == MolPickler::QUERY_ATOMRING) {
     res = new AtomRingQuery();
-    static_cast<EqualityQuery<int, Atom const *, true> *>(res)->setVal(
+    dynamic_cast<EqualityQuery<int, Atom const *, true> *>(res)->setVal(
         static_cast<int>(repVal.at("val").as_int64()));
     if (repVal.as_object().contains("tol")) {
-      static_cast<EqualityQuery<int, Atom const *, true> *>(res)->setTol(
+      dynamic_cast<EqualityQuery<int, Atom const *, true> *>(res)->setTol(
           static_cast<int>(repVal.at("tol").as_int64()));
     }
   } else {
