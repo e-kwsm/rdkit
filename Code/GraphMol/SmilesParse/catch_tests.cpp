@@ -152,7 +152,7 @@ TEST_CASE(
       REQUIRE(mol);
       CHECK(6 == mol->getNumAtoms());
       REQUIRE(mol->getAtomWithIdx(0)->hasQuery());
-      REQUIRE(static_cast<QueryAtom *>(mol->getAtomWithIdx(0))
+      REQUIRE(dynamic_cast<QueryAtom *>(mol->getAtomWithIdx(0))
                   ->getQuery()
                   ->getDescription() == "AtomType");
     }
@@ -722,8 +722,8 @@ TEST_CASE(
     CHECK(osmi == "*C |$M_p;$|");
     auto smi = MolToCXSmiles(cpy);
     CHECK(smi == osmi);
-    QueryAtom *oa1 = static_cast<QueryAtom *>(m->getAtomWithIdx(1));
-    QueryAtom *a1 = static_cast<QueryAtom *>(m->getAtomWithIdx(1));
+    QueryAtom *oa1 = dynamic_cast<QueryAtom *>(m->getAtomWithIdx(1));
+    QueryAtom *a1 = dynamic_cast<QueryAtom *>(m->getAtomWithIdx(1));
     REQUIRE(oa1->hasQuery());
     REQUIRE(a1->hasQuery());
     size_t osz =
