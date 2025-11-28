@@ -469,7 +469,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
 #ifdef VERBOSE
           std::cerr << "Fragment " << MolToSmiles(*newMol) << std::endl;
 #endif
-          for (auto sideChainAtom : newMol->atoms()) {
+          for (auto *sideChainAtom : newMol->atoms()) {
             if (sideChainAtom->getAtomicNum() != 0) {
               // we are only interested in sidechain R group atoms
               continue;
@@ -478,7 +478,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
               // this is the index of the core atom that the R group
               // atom is attached to
               unsigned int coreAtomIndex = sideChainAtom->getIsotope();
-              auto coreAtom = rcore->core->getAtomWithIdx(coreAtomIndex);
+              auto *coreAtom = rcore->core->getAtomWithIdx(coreAtomIndex);
               coreAtomAnyMatched.insert(coreAtomIndex);
               int rlabel;
               if (coreAtom->getPropIfPresent(RLABEL, rlabel)) {
@@ -493,7 +493,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
                 if (const auto [bondIdx, end] =
                         newMol->getAtomBonds(sideChainAtom);
                     bondIdx != end) {
-                  auto connectingBond = (*newMol)[*bondIdx];
+                  auto *connectingBond = (*newMol)[*bondIdx];
                   if (connectingBond->getStereo() >
                       Bond::BondStereo::STEREOANY) {
                     // TODO: how to handle bond stereo on rgroups connected to
@@ -544,7 +544,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
               }
 
               newCore.beginBatchEdit();
-              for (const auto atom : newCore.atoms()) {
+              for (auto *const atom : newCore.atoms()) {
                 if (!atom->hasProp("keep")) {
                   newCore.removeAtom(atom);
                 }
@@ -661,7 +661,7 @@ RWMOL_SPTR RGroupDecomposition::outputCoreMolecule(
 #endif
   std::map<Atom *, int> retainedRGroups;
   for (auto atomIdx = coreWithMatches->getNumAtoms(); atomIdx--;) {
-    auto atom = coreWithMatches->getAtomWithIdx(atomIdx);
+    auto *atom = coreWithMatches->getAtomWithIdx(atomIdx);
     if (atom->getAtomicNum()) {
       continue;
     }
@@ -709,7 +709,7 @@ RWMOL_SPTR RGroupDecomposition::outputCoreMolecule(
         // coordinates of user defined R groups should already be copied over
         continue;
       }
-      const auto neighbor = *coreWithMatches->atomNeighbors(atom).begin();
+      auto *const neighbor = *coreWithMatches->atomNeighbors(atom).begin();
       const auto &mapping = data->finalRlabelMapping;
       if (const auto oldLabel = std::find_if(
               mapping.begin(), mapping.end(),

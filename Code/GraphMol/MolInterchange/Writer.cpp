@@ -70,7 +70,7 @@ void initHeader(bj::object &bjHeader, const JSONWriteParameters &params) {
 
 void addIntVal(bj::object &dest, const bj::object &defaults, const char *tag,
                int val) {
-  auto it = defaults.find(tag);
+  const auto *it = defaults.find(tag);
   if (it != defaults.end()) {
     int dval = it->value().as_int64();
     if (dval != val) {
@@ -85,7 +85,7 @@ void addIntVal(bj::object &dest, const char *tag, int val) { dest[tag] = val; }
 
 void addStringVal(bj::object &dest, const bj::object &defaults, const char *tag,
                   const std::string &val) {
-  auto it = defaults.find(tag);
+  const auto *it = defaults.find(tag);
   if (it != defaults.end()) {
     std::string dval = it->value().as_string().c_str();
     if (val.size() && dval != val) {
@@ -366,14 +366,14 @@ void addStereoGroup(const StereoGroup &sg, bj::object &bjSG) {
 
   if (!sg.getAtoms().empty()) {
     bj::array bjAtoms;
-    for (const auto atm : sg.getAtoms()) {
+    for (auto *const atm : sg.getAtoms()) {
       bjAtoms.push_back(static_cast<int>(atm->getIdx()));
     }
     bjSG["atoms"] = std::move(bjAtoms);
   }
   if (!sg.getBonds().empty()) {
     bj::array bjBonds;
-    for (const auto bnd : sg.getBonds()) {
+    for (auto *const bnd : sg.getBonds()) {
       bjBonds.push_back(static_cast<int>(bnd->getIdx()));
     }
     bjSG["bonds"] = std::move(bjBonds);
