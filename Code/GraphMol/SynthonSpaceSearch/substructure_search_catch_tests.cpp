@@ -152,12 +152,13 @@ TEST_CASE("S Amide 1") {
   CHECK(resSmi == enumSmi);
 
   resSmi.clear();
-  SearchResultCallback cb = [&resSmi](const std::vector<std::unique_ptr<ROMol>> &r) {
-    for (auto &elem : r) {
-      resSmi.insert(MolToSmiles(*elem));
-    }
-    return false;
-  };
+  SearchResultCallback cb =
+      [&resSmi](const std::vector<std::unique_ptr<ROMol>> &r) {
+        for (const auto &elem : r) {
+          resSmi.insert(MolToSmiles(*elem));
+        }
+        return false;
+      };
   synthonspace.substructureSearch(*queryMol, cb, matchParams, params);
   CHECK(resSmi == enumSmi);
 }
@@ -181,13 +182,14 @@ TEST_CASE("Search Callback returns true") {
   params.toTryChunkSize = 2;
   std::set<std::string> cbSmi;
   bool retval = false;
-  SearchResultCallback cb = [&cbSmi,&retval](const std::vector<std::unique_ptr<ROMol>> &r) {
-    for (auto &elem : r) {
-      CHECK(r.size() == 2);
-      cbSmi.insert(MolToSmiles(*elem));
-    }
-    return retval;
-  };
+  SearchResultCallback cb =
+      [&cbSmi, &retval](const std::vector<std::unique_ptr<ROMol>> &r) {
+        for (const auto &elem : r) {
+          CHECK(r.size() == 2);
+          cbSmi.insert(MolToSmiles(*elem));
+        }
+        return retval;
+      };
   synthonspace.substructureSearch(*queryMol, cb, matchParams, params);
   CHECK(cbSmi.size() == 6);
 

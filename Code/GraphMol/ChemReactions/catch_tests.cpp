@@ -1089,7 +1089,7 @@ TEST_CASE("CXSMILES for reactions", "[cxsmiles]") {
         common_properties::atomLabel, alabel));
     CHECK(alabel == "_AP1");
 
-    auto expected_cxsmiles =
+    const auto *expected_cxsmiles =
         "[CH3:1][CH:2]([CH3:3])[*:4].[OH:5][CH2:6][*:7]>>[CH3:1][CH:2]([CH3:3])[CH2:6][OH:5] |$;;;_AP1;;;_AP1;;;;;$|";
     SmilesWriteParams params;
     auto flags = RDKit::SmilesWrite::CX_ALL ^ RDKit::SmilesWrite::CX_ATOM_PROPS;
@@ -1207,7 +1207,7 @@ TEST_CASE("CXSMILES for reactions", "[cxsmiles]") {
     SmilesWriteParams params;
     auto flags = RDKit::SmilesWrite::CX_ALL ^ RDKit::SmilesWrite::CX_ATOM_PROPS;
     auto output_cxsmarts = ChemicalReactionToCXRxnSmarts(*rxn, params, flags);
-    auto expected_cxsmarts =
+    const auto *expected_cxsmarts =
         "[#6:1]-[#6:2](-[#6:3])-[#0:4].[Fe:8]<-[#8:5]-[#6:6]-[#0:7]>>[Fe:8]<-[#8:5]-[#6:6]-[#6:1]-[#6:2](-[#6:3])-[#0:4] |$;;;_AP1;;;;_AP1;;;;;;;_AP1$,C:5.3,9.6,SgD:6:foo:bar::::,SgD:10:bar:baz::::|";
     CHECK(output_cxsmarts == expected_cxsmarts);
   }
@@ -1363,7 +1363,7 @@ TEST_CASE("CXSMILES for reactions", "[cxsmiles]") {
     SmilesWriteParams params;
     auto flags = RDKit::SmilesWrite::CX_ALL ^ RDKit::SmilesWrite::CX_ATOM_PROPS;
     auto output_cxsmarts = ChemicalReactionToCXRxnSmarts(*rxn, params, flags);
-    auto expected_cxsmarts =
+    const auto *expected_cxsmarts =
         "[#6]-[#6](-[#8])(-[#9])-[#17]>>[#6]-[#6](-[#7])(-[#9])-[#17] |w:1.0,6.5|";
     CHECK(output_cxsmarts == expected_cxsmarts);
   }
