@@ -2445,7 +2445,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
         atom->setProp(common_properties::molAtomSeqId, ival);
       }
     } else if (prop == "SEQNAME") {
-      if (val != "") {
+      if (!val.empty()) {
         atom->setProp(common_properties::molAtomSeqName, std::string(val));
       }
     }
