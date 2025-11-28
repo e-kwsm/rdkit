@@ -1016,7 +1016,7 @@ class MolFromSCSRMolConverter {
         if (seqId != 0) {
           sgroupName += "_" + std::to_string(seqId);
         }
-        if (seqName != "") {
+        if (!seqName.empty()) {
           sgroupName += "_" + seqName;
         }
 
@@ -1069,7 +1069,7 @@ class MolFromSCSRMolConverter {
                     if (seqId != 0) {
                       sgroupName += "_" + std::to_string(seqId);
                     }
-                    if (seqName != "") {
+                    if (!seqName.empty()) {
                       sgroupName += "_" + seqName;
                     }
                     sgroupName += "_" + attachPoint.id;
