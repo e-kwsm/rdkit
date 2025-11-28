@@ -1351,13 +1351,13 @@ TEST_CASE("Canonicalization issues watch (see GitHub Issue #8775)") {
 
   auto count_features = [](RWMol m) {
     unsigned int nChiralCenters = 0;
-    for (const auto atom : m.atoms()) {
+    for (auto *const atom : m.atoms()) {
       if (atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED) {
         ++nChiralCenters;
       }
     }
     unsigned int nDoubleBondStereo = 0;
-    for (const auto bond : m.bonds()) {
+    for (auto *const bond : m.bonds()) {
       if (bond->getStereo() > Bond::STEREOANY) {
         ++nDoubleBondStereo;
       }
