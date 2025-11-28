@@ -38,7 +38,7 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
     // worry about messing up chirality, etc.
     unsigned int whichAtom = amatch.abbrev.includesXBonds ? 1 : 0;
     auto connectIdx = amatch.match.at(whichAtom).second;
-    auto connectingAtom = mol.getAtomWithIdx(connectIdx);
+    auto *connectingAtom = mol.getAtomWithIdx(connectIdx);
     connectingAtom->setProp(RDKit::common_properties::atomLabel,
                             amatch.abbrev.label);
     if (!amatch.abbrev.displayLabel.empty()) {
@@ -87,7 +87,7 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
     }
     // make connections between any extraAttachAtoms and the connection point
     for (auto oaidx : amatch.abbrev.extraAttachAtoms) {
-      auto oatom = mol.getAtomWithIdx(oaidx);
+      auto *oatom = mol.getAtomWithIdx(oaidx);
       CHECK_INVARIANT(oatom, "bad extra attachment atom index");
       int bondIdx = -1;
       for (auto *const bond : mol.atomBonds(oatom)) {
