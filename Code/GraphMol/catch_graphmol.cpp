@@ -4949,7 +4949,7 @@ TEST_CASE(
 
   std::vector<StereoGroup> stereo_groups;
   for (auto idx : {1, 4}) {
-    auto chiral_atom = m->getAtomWithIdx(idx);
+    auto *chiral_atom = m->getAtomWithIdx(idx);
     REQUIRE(chiral_atom->getChiralTag() != Atom::CHI_UNSPECIFIED);
     stereo_groups.emplace_back(StereoGroupType::STEREO_ABSOLUTE,
                                std::vector<Atom *>{chiral_atom},
