@@ -7915,7 +7915,7 @@ TEST_CASE(
 
 TEST_CASE("GitHub Issue #8873: Warn/fail on multiple ABS stereo groups") {
   // This is illegal, according to the spec (ABS groups must be unique)
-  auto mb = R"CTAB(
+  const auto *mb = R"CTAB(
      RDKit          2D
 
   0  0  0  0  0  0  0  0  0  0999 V3000
