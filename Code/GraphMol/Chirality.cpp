@@ -1478,7 +1478,7 @@ bool atomIsCandidateForRingStereochem(
       std::vector<const Atom *> nonRingNbrs;
       std::vector<const Atom *> ringNbrs;
       std::set<unsigned int> ringNbrRanks;
-      for (const auto bond : mol.atomBonds(atom)) {
+      for (auto *const bond : mol.atomBonds(atom)) {
         if (!ringInfo->numBondRings(bond->getIdx())) {
           nonRingNbrs.push_back(bond->getOtherAtom(atom));
         } else {

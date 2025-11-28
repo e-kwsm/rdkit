@@ -117,7 +117,7 @@ struct FragmentReplacement {
     std::vector<Bond *> xbonds;  // Reuse this vector to reduce repeated allocations
 
     // Find the connecting atoms and and do the replacement
-    for (auto bond : replacement_bonds) {
+    for (auto *bond : replacement_bonds) {
       // find the position of the attachment bonds in the bond ordering
       unsigned bond_id = 0;
       if (!bond->getPropIfPresent<unsigned int>(CDX_BOND_ID, bond_id)) {

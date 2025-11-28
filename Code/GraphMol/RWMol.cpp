@@ -501,8 +501,8 @@ void RWMol::removeAtom(Atom *atom) { removeAtom(atom, true); }
 unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
                             Bond::BondType bondType) {
   // if the atom indices are bad, the next two calls will catch that.
-  auto beginAtom = getAtomWithIdx(atomIdx1);
-  auto endAtom = getAtomWithIdx(atomIdx2);
+  auto *beginAtom = getAtomWithIdx(atomIdx1);
+  auto *endAtom = getAtomWithIdx(atomIdx2);
   PRECONDITION(atomIdx1 != atomIdx2, "attempt to add self-bond");
   PRECONDITION(!(boost::edge(atomIdx1, atomIdx2, d_graph).second),
                "bond already exists");
