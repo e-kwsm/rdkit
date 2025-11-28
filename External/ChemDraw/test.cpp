@@ -791,17 +791,17 @@ TEST_CASE("CDXML Advanced") {
     {
       auto fname = cdxmlbase + "bad-id.cdxml";
       auto mols = MolsFromChemDrawFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
     {
       auto fname = cdxmlbase + "bad-coords.cdxml";
       auto mols = MolsFromChemDrawFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
     {
       auto fname = cdxmlbase + "bad-bondorder2.cdxml";
       auto mols = MolsFromChemDrawFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
   }
 }
@@ -1360,7 +1360,7 @@ TEST_CASE("Round TRIP") {
           }
           auto smi1 = MolToSmiles(*mol);
 
-          if (mols.size() == 0) {
+          if (mols.empty()) {
             std::cerr << entry.path().filename().string() << std::endl;
             std::cerr << "FAIL (nomol):" << entry.path() << std::endl;
             mol->debugMol(std::cerr);

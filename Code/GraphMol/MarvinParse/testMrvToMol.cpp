@@ -1218,7 +1218,7 @@ M  END
       }
     }
 
-    if (testToRun == "" || testToRun == "scsrFileTests") {
+    if (testToRun.empty() || testToRun == "scsrFileTests") {
       std::list<ScsrMolTest> scsrFileTests{
           ScsrMolTest(
               "153944501_original_structure.mol", true, 859, 1025,
@@ -1233,7 +1233,7 @@ M  END
       }
     }
 
-    if (testToRun == "" || testToRun == "chiral3dFileTests") {
+    if (testToRun.empty() || testToRun == "chiral3dFileTests") {
       std::list<MolTest> chiral3dFileTests{
           MolTest("Cubane.mrv", true, 16, 20),
       };
