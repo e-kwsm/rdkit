@@ -59,7 +59,7 @@ void nitrogensCleanup(RWMol &mol) {
   //   C-N=N#N -> C-N=[N+]=[N-]
 
   boost::dynamic_bitset<> nitrogensToConsider(mol.getNumAtoms());
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->getAtomicNum() != 7) {
       continue;
     }
@@ -86,7 +86,7 @@ void nitrogensCleanup(RWMol &mol) {
     atom->setIsAromatic(0);
     unsigned int aid = atom->getIdx();
     bool updateNeeded = false;
-    for (const auto nbr : mol.atomNeighbors(atom)) {
+    for (auto *const nbr : mol.atomNeighbors(atom)) {
       if ((nbr->getAtomicNum() == 8) && (nbr->getFormalCharge() == 0) &&
           (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
            Bond::DOUBLE)) {
@@ -114,7 +114,7 @@ void nitrogensCleanup(RWMol &mol) {
     auto aromHolder = atom->getIsAromatic();
     atom->setIsAromatic(0);
     bool updateNeeded = false;
-    for (const auto nbr : mol.atomNeighbors(atom)) {
+    for (auto *const nbr : mol.atomNeighbors(atom)) {
       if ((nbr->getAtomicNum() == 7) && (nbr->getFormalCharge() == 0) &&
           (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
            Bond::TRIPLE)) {
@@ -313,7 +313,7 @@ void metalBondCleanup(RWMol &mol, Atom *atom,
 
 void cleanUp(RWMol &mol) {
   nitrogensCleanup(mol);
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     switch (atom->getAtomicNum()) {
       case 15:
         phosphorusCleanup(mol, atom);

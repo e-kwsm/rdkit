@@ -443,8 +443,8 @@ void ROMol::setStereoGroups(std::vector<StereoGroup> stereo_groups) {
     new_stereo_groups.reserve(stereo_groups.size() - num_abs + 1);
     for (auto &&sg : stereo_groups) {
       if (is_abs(sg)) {
-        auto &other_atoms = sg.getAtoms();
-        auto &other_bonds = sg.getBonds();
+        const auto &other_atoms = sg.getAtoms();
+        const auto &other_bonds = sg.getBonds();
         abs_atoms.insert(abs_atoms.begin(), other_atoms.begin(),
                          other_atoms.end());
         abs_bonds.insert(abs_bonds.begin(), other_bonds.begin(),
