@@ -88,7 +88,7 @@ void addStringVal(bj::object &dest, const bj::object &defaults, const char *tag,
   auto it = defaults.find(tag);
   if (it != defaults.end()) {
     std::string dval = it->value().as_string().c_str();
-    if (val.size() && dval != val) {
+    if (!val.empty() && dval != val) {
       dest[tag] = val;
     }
   } else {
@@ -276,7 +276,7 @@ void addProperties(const T &obj, const std::vector<std::string> &propNames,
 void addSubstanceGroup(const SubstanceGroup &sg, bj::object &bjSG) {
   bool includePrivate = false, includeComputed = false;
   auto propNames = sg.getPropList(includePrivate, includeComputed);
-  if (propNames.size()) {
+  if (!propNames.empty()) {
     bj::object properties;
     addProperties(sg, propNames, properties);
     bjSG["properties"] = std::move(properties);
@@ -481,7 +481,7 @@ void addMol(const T &imol, bj::object &rjMol, const bj::object &atomDefaults,
 
   bool includePrivate = false, includeComputed = false;
   auto propNames = mol.getPropList(includePrivate, includeComputed);
-  if (propNames.size()) {
+  if (!propNames.empty()) {
     bj::object properties;
     addProperties(mol, propNames, properties);
     rjMol["properties"] = std::move(properties);
