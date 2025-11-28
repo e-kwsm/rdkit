@@ -315,7 +315,7 @@ TEST_CASE("Round TRIP") {
         }
 
         auto rdkit_smi = MolToSmiles(*m);
-        auto mol_smi = mol.get() ? MolToSmiles(*mol) : "";
+        auto mol_smi = mol ? MolToSmiles(*mol) : "";
 
         if (mol_smi != rdkit_smi) {
           // Do we match chemscripts smiles output at least?
