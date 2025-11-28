@@ -98,7 +98,7 @@ bool parseNode(
       break;
     }
     case kCDXNodeType_GenericNickname: {
-      if (node.m_genericNickname.size()) {
+      if (!node.m_genericNickname.empty()) {
         switch (node.m_genericNickname[0]) {
           case 'R': {
             checkForRGroup = true;
@@ -143,7 +143,7 @@ bool parseNode(
   for (auto &child : node.ContainedObjects()) {
     if (child.second->GetTag() == kCDXObj_Text) {
       const std::string &text = ((CDXText *)child.second)->GetText().str();
-      if (text.size() > 0 && text[0] == 'R') {
+      if (!text.empty() && text[0] == 'R') {
         try {
           if (checkForRGroup) {
             rgroup_num = text.size() > 1 ? stoi(text.substr(1)) : 0;
@@ -243,7 +243,7 @@ bool parseNode(
   const bool updateLabels = true;
   const bool takeOwnership = true;
   auto idx = mol.addAtom(rd_atom, updateLabels, takeOwnership);
-  if (query_label.size()) {
+  if (!query_label.empty()) {
     if (query_label[0] == 'R') {
       rd_atom = addquery(makeAtomNullQuery(), query_label, mol, idx);
     } else if (query_label == "A") {
@@ -257,7 +257,7 @@ bool parseNode(
     } else if (query_label == "X") {
       rd_atom = addquery(makeXAtomQuery(), query_label, mol, idx);
     } else if (query_label == "ElementList") {
-      if (!elementlist.size()) {
+      if (elementlist.empty()) {
         BOOST_LOG(rdWarningLog)
             << "ElementList is empty, ignoring..." << std::endl;
       } else {
@@ -270,7 +270,7 @@ bool parseNode(
         rd_atom = addquery(q, query_label, mol, idx);
         rd_atom->setAtomicNum(elementlist.front());
       }
-    } else if (query_label.size()) {
+    } else if (!query_label.empty()) {
       std::cerr << "Unhandled generic nickname: " << query_label << std::endl;
     } else {
       rd_atom->setProp(common_properties::atomLabel, query_label);
