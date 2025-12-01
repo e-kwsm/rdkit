@@ -134,16 +134,17 @@ SearchResults SynthonSpace::substructureSearch(
         *std::get<GeneralizedSubstruct::ExtendedQueryMol::RWMol_T>(query.xqmol),
         matchParams, params);
 #ifdef RDK_USE_BOOST_SERIALIZATION
-  } else if (std::holds_alternative<
-                 GeneralizedSubstruct::ExtendedQueryMol::MolBundle_T>(
-                 query.xqmol)) {
+  }
+  if (std::holds_alternative<
+          GeneralizedSubstruct::ExtendedQueryMol::MolBundle_T>(query.xqmol)) {
     return extendedSearch(
         *std::get<GeneralizedSubstruct::ExtendedQueryMol::MolBundle_T>(
             query.xqmol),
         matchParams, params);
-  } else if (std::holds_alternative<
-                 GeneralizedSubstruct::ExtendedQueryMol::TautomerQuery_T>(
-                 query.xqmol)) {
+  }
+  if (std::holds_alternative<
+          GeneralizedSubstruct::ExtendedQueryMol::TautomerQuery_T>(
+          query.xqmol)) {
     return extendedSearch(
         *std::get<GeneralizedSubstruct::ExtendedQueryMol::TautomerQuery_T>(
             query.xqmol),
@@ -688,37 +689,36 @@ Synthon *SynthonSpace::addSynthonToPool(const std::string &smiles) {
   // except when reading a Text file which should only be done
   // occasionally, when converting a new database to binary.
   auto tmp = std::make_pair(smiles, std::unique_ptr<Synthon>());
-  if (auto it = std::lower_bound(
-          d_synthonPool.begin(), d_synthonPool.end(), tmp,
-          [](const std::pair<std::string, std::unique_ptr<Synthon>> &p1,
-             const std::pair<std::string, std::unique_ptr<Synthon>> &p2)
-              -> bool { return p1.first < p2.first; });
-      it != d_synthonPool.end() && it->first == smiles) {
+  auto it = std::lower_bound(
+      d_synthonPool.begin(), d_synthonPool.end(), tmp,
+      [](const std::pair<std::string, std::unique_ptr<Synthon>> &p1,
+         const std::pair<std::string, std::unique_ptr<Synthon>> &p2) -> bool {
+        return p1.first < p2.first;
+      });
+  if (it != d_synthonPool.end() && it->first == smiles) {
     return it->second.get();
-  } else {
-    tmp.second.reset(new Synthon(smiles));
-    auto retVal = tmp.second.get();
-    d_synthonPool.insert(it, std::move(tmp));
-    return retVal;
   }
+  tmp.second.reset(new Synthon(smiles));
+  auto retVal = tmp.second.get();
+  d_synthonPool.insert(it, std::move(tmp));
+  return retVal;
 }
 
 std::shared_ptr<SynthonSet> SynthonSpace::addReactionToPool(
     const std::string &reactionName) {
   std::pair<std::string, std::shared_ptr<SynthonSet>> tmp =
       std::make_pair(reactionName, std::shared_ptr<SynthonSet>());
-  if (const auto &it = std::lower_bound(
-          d_reactions.begin(), d_reactions.end(), tmp,
-          [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
-             const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
-              -> bool { return p1.first < p2.first; });
-      it != d_reactions.end() && it->first == reactionName) {
+  const auto &it = std::lower_bound(
+      d_reactions.begin(), d_reactions.end(), tmp,
+      [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
+         const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
+          -> bool { return p1.first < p2.first; });
+  if (it != d_reactions.end() && it->first == reactionName) {
     return it->second;
-  } else {
-    tmp.second.reset(new SynthonSet(reactionName));
-    d_reactions.insert(it, tmp);
-    return tmp.second;
   }
+  tmp.second.reset(new SynthonSet(reactionName));
+  d_reactions.insert(it, tmp);
+  return tmp.second;
 }
 
 Synthon *SynthonSpace::getSynthonFromPool(const std::string &smiles) const {
