@@ -632,7 +632,7 @@ ExplicitBitVect *wrapLayeredFingerprint(
       pythonObjectToVect(fromAtoms, mol.getNumAtoms());
   std::unique_ptr<std::vector<unsigned int>> atomCountsV;
   if (atomCounts) {
-    atomCountsV.reset(new std::vector<unsigned int>);
+    atomCountsV = std::make_unique<std::vector<unsigned int>>();
     unsigned int nAts = python::len(atomCounts);
     if (nAts < mol.getNumAtoms()) {
       throw_value_error("atomCounts shorter than the number of atoms");
