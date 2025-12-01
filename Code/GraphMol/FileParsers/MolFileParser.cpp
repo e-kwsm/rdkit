@@ -3106,7 +3106,8 @@ void processSGroups(RWMol *mol) {
           processZCH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "HYD") {
+        }
+        if (field == "HYD") {
           // RDKit extension for hydrogen-count on atoms involved in
           // zero-order bonds
           processHYD(*mol, sg);
