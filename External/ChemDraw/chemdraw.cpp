@@ -288,19 +288,18 @@ std::unique_ptr<CDXDocument> streamToCDXDocument(std::istream &inStream,
     }
 
     return parser.ReleaseDocument();
-  } else {
-    CDXistream input(inStream);
-    const bool doThrow = true;
-    // if we aren't opened in binary mode on windows, we are going to have a bad
-    // time...
-    try {
-      std::unique_ptr<CDXDocument> doc(CDXReadDocFromStorage(input, doThrow));
-      return doc;
-    } catch (const std::exception &ex) {
-      throw FileParseException(
-          std::string(ex.what()) +
-          "\nPlease ensure for CDX data streams, the stream is in binary mode.");
-    }
+  }
+  CDXistream input(inStream);
+  const bool doThrow = true;
+  // if we aren't opened in binary mode on windows, we are going to have a bad
+  // time...
+  try {
+    std::unique_ptr<CDXDocument> doc(CDXReadDocFromStorage(input, doThrow));
+    return doc;
+  } catch (const std::exception &ex) {
+    throw FileParseException(
+        std::string(ex.what()) +
+        "\nPlease ensure for CDX data streams, the stream is in binary mode.");
   }
 }
 
@@ -350,7 +349,8 @@ std::unique_ptr<CDXDocument> ChemDrawToDocument(const std::string &filename) {
   boost::algorithm::to_lower(ext);
   if (ext == ".cdxml") {
     return streamToCDXDocument(chemdrawfile, CDXFormat::CDXML);
-  } else if (ext == ".cdx") {
+  }
+  if (ext == ".cdx") {
     return streamToCDXDocument(chemdrawfile, CDXFormat::CDX);
   }
   std::string msg =

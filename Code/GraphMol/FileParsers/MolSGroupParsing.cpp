@@ -1176,8 +1176,8 @@ void ParseV3000ParseLabel(const std::string &label,
         errout << "Unsupported SGroup connection type '" << strValue
                << "' on line " << line;
         throw FileParseException(errout.str());
-      } else if (label == "CLASS" &&
-                 !SubstanceGroupChecks::isValidClass(strValue)) {
+      }
+      if (label == "CLASS" && !SubstanceGroupChecks::isValidClass(strValue)) {
         std::ostringstream errout;
         errout << "Unsupported SGroup template class '" << strValue
                << "' on line " << line;
