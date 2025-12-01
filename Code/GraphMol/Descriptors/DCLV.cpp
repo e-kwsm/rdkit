@@ -104,14 +104,13 @@ static bool includeAsPolar(const Atom *atm, const ROMol &mol, bool includeSandP,
     case 1: {
       if (!includeHs) {
         return false;
-      } else {
-        for (const auto nbr : mol.atomNeighbors(atm)) {
-          if (includeAsPolar(nbr, mol, includeSandP, includeHs)) {
-            return true;
-          }
-        }
-        return false;
       }
+      for (const auto nbr : mol.atomNeighbors(atm)) {
+        if (includeAsPolar(nbr, mol, includeSandP, includeHs)) {
+          return true;
+        }
+      }
+      return false;
     }
     // everything else
     default: {
