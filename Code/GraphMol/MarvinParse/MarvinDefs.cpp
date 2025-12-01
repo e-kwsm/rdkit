@@ -968,9 +968,9 @@ const std::string MarvinBond::getBondType() const {
     std::ostringstream err;
     err << "unrecognized convention " << convention << " in MRV File ";
     throw FileParseException(err.str());
-  } else if (tempOrder !=
-             "")  // if no query type not convention,  so check for order
-  {
+  }
+  if (tempOrder !=
+      "") {  // if no query type not convention,  so check for order
     if (tempOrder == "1" || tempOrder == "2" || tempOrder == "3" ||
         tempOrder == "A") {
       return tempOrder;
