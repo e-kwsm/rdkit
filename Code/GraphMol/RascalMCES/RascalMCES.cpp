@@ -458,9 +458,10 @@ void buildPairs(const ROMol &mol1, const std::vector<unsigned int> &vtxLabels1,
             !checkRings(mol1, mol1RingSmiles, i, mol2, mol2RingSmiles, j,
                         false)) {
           continue;
-        } else if (opts.completeAromaticRings &&
-                   !checkRings(mol1, mol1RingSmiles, i, mol2, mol2RingSmiles, j,
-                               true)) {
+        }
+        if (opts.completeAromaticRings &&
+            !checkRings(mol1, mol1RingSmiles, i, mol2, mol2RingSmiles, j,
+                        true)) {
           continue;
         }
         if (!opts.completeSmallestRings && opts.ringMatchesRingOnly &&
