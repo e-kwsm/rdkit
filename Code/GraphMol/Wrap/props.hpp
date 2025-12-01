@@ -235,10 +235,9 @@ PyObject *GetPyProp(const RDOb *obj, const std::string &key, bool autoConvert) {
     std::string res;
     if (obj->getPropIfPresent(key, res)) {
       return rawPy(res);
-    } else {
-      PyErr_SetString(PyExc_KeyError, key.c_str());
-      return nullptr;
     }
+    PyErr_SetString(PyExc_KeyError, key.c_str());
+    return nullptr;
   } else {
     const auto &data = obj->getDict().getData();
     for (auto &rdvalue : data) {
