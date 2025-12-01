@@ -68,7 +68,7 @@ struct RDKIT_FINGERPRINTS_EXPORT AdditionalOutput {
     atomCounts = atomCountsHolder.get();
   }
   void allocateAtomsPerBit() {
-    atomsPerBitHolder.reset(new atomsPerBitType);
+    atomsPerBitHolder = std::make_unique<atomsPerBitType>();
     atomsPerBit = atomsPerBitHolder.get();
   }
 
