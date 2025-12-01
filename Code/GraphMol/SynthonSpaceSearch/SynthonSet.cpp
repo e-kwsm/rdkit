@@ -162,13 +162,13 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
       std::string smiles;
       streamRead(is, smiles, 0);
       // The synthons should be in the pool by now.
-      if (auto synth = space.getSynthonFromPool(smiles); synth == nullptr) {
+      auto synth = space.getSynthonFromPool(smiles);
+      if (synth == nullptr) {
         std::cout << "smiles " << smiles << " not in pool" << std::endl;
         throw std::runtime_error("Database file " + space.getInputFileName() +
                                  " appears corrupted.");
-      } else {
-        d_synthons[i][j] = std::pair(synthonName, synth);
       }
+      d_synthons[i][j] = std::pair(synthonName, synth);
     }
   }
 
