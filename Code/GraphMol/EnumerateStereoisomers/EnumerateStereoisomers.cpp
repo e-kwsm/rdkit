@@ -75,11 +75,9 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::next() {
     ++d_numReturned;
     return std::make_unique<ROMol>(d_mol);
   }
-  else {
-    auto isomer = generateRandomIsomer();
-    ++d_numReturned;
-    return isomer;
-  }
+  auto isomer = generateRandomIsomer();
+  ++d_numReturned;
+  return isomer;
 }
 
 void StereoisomerEnumerator::buildFlippers() {
