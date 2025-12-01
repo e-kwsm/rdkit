@@ -326,9 +326,8 @@ unsigned int Atom::getValence(ValenceType which) const {
       "getValence(ValenceType::IMPLICIT) called without call to calcImplicitValence()");
   if (which == ValenceType::EXPLICIT) {
     return d_explicitValence;
-  } else {
-    return df_noImplicit ? 0 : d_implicitValence;
   }
+  return df_noImplicit ? 0 : d_implicitValence;
 }
 
 unsigned int Atom::getTotalValence() const {
