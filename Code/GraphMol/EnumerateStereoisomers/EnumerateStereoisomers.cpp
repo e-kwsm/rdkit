@@ -57,9 +57,9 @@ StereoisomerEnumerator::StereoisomerEnumerator(
     d_numToReturn = getStereoisomerCount();
   }
   if (d_options.randomSeed == -1) {
-    d_randGen.reset(new std::mt19937(std::random_device()()));
+    d_randGen = std::make_unique<std::mt19937>(std::random_device()());
   } else {
-    d_randGen.reset(new std::mt19937(d_options.randomSeed));
+    d_randGen = std::make_unique<std::mt19937>(d_options.randomSeed);
   }
 }
 
@@ -132,10 +132,10 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::generateRandomIsomer() {
       // We don't need StereoGroups any more so remove them.
       std::unique_ptr<ROMol> isomer;
       if (!d_mol.getStereoGroups().empty()) {
-        isomer.reset(new RWMol(d_mol));
+        isomer = std::make_unique<RWMol>(d_mol);
         isomer->setStereoGroups(std::vector<StereoGroup>());
       } else {
-        isomer.reset(new ROMol(d_mol));
+        isomer = std::make_unique<ROMol>(d_mol);
       }
       MolOps::setDoubleBondNeighborDirections(*isomer);
       isomer->clearComputedProps(false);
