@@ -978,10 +978,9 @@ const std::string MarvinBond::getBondType() const {
     std::ostringstream err;
     err << "unrecognized bond type " << order << " in MRV File ";
     throw FileParseException(err.str());
-  } else {
-    throw FileParseException(
-        "bond must have one of:  order, queryType, or convention in MRV File ");
   }
+  throw FileParseException(
+      "bond must have one of:  order, queryType, or convention in MRV File ");
 }
 
 bool MarvinBond::isEqual(const MarvinAtom &other) const {
