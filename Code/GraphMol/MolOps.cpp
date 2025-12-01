@@ -296,9 +296,8 @@ void metalBondCleanup(RWMol &mol, Atom *atom,
                   int nda2 = numDativeBonds(a2);
                   if (nda1 == nda2) {
                     return ranks[a1->getIdx()] > ranks[a2->getIdx()];
-                  } else {
-                    return nda1 < nda2;
                   }
+                  return nda1 < nda2;
                 });
       auto bond =
           mol.getBondBetweenAtoms(atom->getIdx(), metals.front()->getIdx());
