@@ -327,9 +327,8 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRFile(
   if (!inStream.eof()) {
     unsigned int line = 0;
     return SCSRMolFromSCSRDataStream(inStream, line, params);
-  } else {
-    return std::unique_ptr<SCSRMol>();
   }
+  return std::unique_ptr<SCSRMol>();
 }
 
 class MolFromSCSRMolConverter {
@@ -750,9 +749,9 @@ class MolFromSCSRMolConverter {
           addBonds(bond->getBondType(), mainBeginAtomIdx, mainEndAtomIdx,
                    beginHatomConnections, wobbleEndAtoms);
           return;
-
-        } else if (!endHatomConnections[0].df_isDonor &&
-                   endHatomConnections[1].df_isDonor) {
+        }
+        if (!endHatomConnections[0].df_isDonor &&
+            endHatomConnections[1].df_isDonor) {
           // like U (ADA)
           wobbleEndAtoms.push_back(endHatomConnections[0]);
           wobbleEndAtoms.push_back(endHatomConnections[1]);

@@ -829,9 +829,8 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT *res, bool includeDativeBonds,
   if (!res) {
     VECT_INT_VECT rings;
     return findSSSR(mol, rings, includeDativeBonds, includeHydrogenBonds);
-  } else {
-    return findSSSR(mol, (*res), includeDativeBonds, includeHydrogenBonds);
   }
+  return findSSSR(mol, (*res), includeDativeBonds, includeHydrogenBonds);
 }
 
 int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
