@@ -149,9 +149,10 @@ SearchResults SynthonSpace::substructureSearch(
         *std::get<GeneralizedSubstruct::ExtendedQueryMol::TautomerQuery_T>(
             query.xqmol),
         matchParams, params);
-  } else if (std::holds_alternative<
-                 GeneralizedSubstruct::ExtendedQueryMol::TautomerBundle_T>(
-                 query.xqmol)) {
+  }
+  if (std::holds_alternative<
+          GeneralizedSubstruct::ExtendedQueryMol::TautomerBundle_T>(
+          query.xqmol)) {
     return extendedSearch(
         std::get<GeneralizedSubstruct::ExtendedQueryMol::TautomerBundle_T>(
             query.xqmol),
