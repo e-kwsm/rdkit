@@ -964,11 +964,10 @@ const std::string MarvinBond::getBondType() const {
     }
     if (tempConvention == "CXN:HYDROGEN") {
       return "HYDROGEN";
-    } else {
-      std::ostringstream err;
-      err << "unrecognized convention " << convention << " in MRV File ";
-      throw FileParseException(err.str());
     }
+    std::ostringstream err;
+    err << "unrecognized convention " << convention << " in MRV File ";
+    throw FileParseException(err.str());
   } else if (tempOrder !=
              "")  // if no query type not convention,  so check for order
   {
