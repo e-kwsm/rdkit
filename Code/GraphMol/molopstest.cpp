@@ -584,7 +584,7 @@ TEST_CASE("Testing Hydrogen Ops") {
   m3 = MolOps::removeHs(*m2, true);
   REQUIRE(m3->getNumAtoms() == 5);
 
-  MolOps::removeHs(static_cast<RWMol &>(*m3), false);
+  MolOps::removeHs(dynamic_cast<RWMol &>(*m3), false);
   REQUIRE(m3->getNumAtoms() == 4);
   delete m2;
   delete m3;
@@ -664,20 +664,20 @@ TEST_CASE("Testing Hydrogen Ops") {
   REQUIRE(m);
   REQUIRE(m->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
+      dynamic_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
   REQUIRE(sma == "C");
 
   m2 = MolOps::addHs(*m);
   REQUIRE(m2->getNumAtoms() == 8);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m2->getAtomWithIdx(0)));
+      dynamic_cast<const QueryAtom *>(m2->getAtomWithIdx(0)));
   REQUIRE(sma == "C");
   delete m;
 
   m = MolOps::mergeQueryHs(*m2);
   REQUIRE(m->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
+      dynamic_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
 
   // this was sf.net issue 3415204:
   REQUIRE(sma == "[C&!H0&!H1&!H2]");
@@ -742,7 +742,7 @@ TEST_CASE("Testing Hydrogen Ops") {
   m2 = MolOps::mergeQueryHs(*m);
   REQUIRE(m2->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
+      dynamic_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
 
   REQUIRE(sma == "[#8&!H0]");
   delete m;
@@ -755,7 +755,7 @@ TEST_CASE("Testing Hydrogen Ops") {
   m2 = MolOps::mergeQueryHs(*m);
   REQUIRE(m2->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
+      dynamic_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
 
   REQUIRE(sma == "[#7&!H0&!H1]");
   delete m;
@@ -2807,7 +2807,7 @@ TEST_CASE("Testing SFIssue1894348 (impact of removeHs on bond stereo atoms)") {
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms()[0] == 0);
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms()[1] == 4);
   // we remove an H attached to a stereo bond
-  m2 = static_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
+  m2 = dynamic_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms().size() == 2);
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms()[0] == 0);
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms()[1] == 4);
@@ -2827,7 +2827,7 @@ TEST_CASE("Testing SFIssue1894348 (impact of removeHs on bond stereo atoms)") {
   REQUIRE(m);
   MolOps::sanitizeMol(*m);
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms().size() == 0);
-  m2 = static_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
+  m2 = dynamic_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
   // if we don't assign stereocodes in the original we shouldn't have them here:
   REQUIRE(m2->getBondWithIdx(1)->getStereoAtoms().size() == 0);
   delete m;
