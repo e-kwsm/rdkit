@@ -1814,7 +1814,7 @@ TEST_CASE("Testing shortest path code") {
 
     INT_LIST path = MolOps::getShortestPath(*m, 1, 20);
     REQUIRE(path.size() == 7);
-    INT_LIST_CI pi = path.cbegin();
+    auto pi = path.cbegin();
     REQUIRE((*pi) == 1);
     pi++;
     REQUIRE((*pi) == 2);
@@ -1839,7 +1839,7 @@ TEST_CASE("Testing shortest path code") {
     INT_LIST path = MolOps::getShortestPath(*m, 0, 1);
     std::cerr << "path: " << path.size() << std::endl;
     REQUIRE(path.size() == 2);
-    INT_LIST_CI pi = path.cbegin();
+    auto pi = path.cbegin();
     REQUIRE((*pi) == 0);
     pi++;
     REQUIRE((*pi) == 1);
@@ -1858,7 +1858,7 @@ TEST_CASE("Testing shortest path code") {
 
     INT_LIST path = MolOps::getShortestPath(*m, 8, 11);
     REQUIRE(path.size() == 7);
-    INT_LIST_CI pi = path.cbegin();
+    auto pi = path.cbegin();
     REQUIRE((*pi) == 8);
     pi++;
     REQUIRE((*pi) == 7);
@@ -3891,8 +3891,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
-         ++mvit) {
+    for (auto mvit = mv.cbegin(); mvit != mv.cend(); ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
     REQUIRE(m2->getBondBetweenAtoms(mmap[2], mmap[3])->getBondType() ==
@@ -3927,8 +3926,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
-         ++mvit) {
+    for (auto mvit = mv.cbegin(); mvit != mv.cend(); ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
     REQUIRE(m2->getBondBetweenAtoms(mmap[10], mmap[11])->getBondType() ==
@@ -4057,8 +4055,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
-         ++mvit) {
+    for (auto mvit = mv.cbegin(); mvit != mv.cend(); ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
     REQUIRE(m2->getBondBetweenAtoms(mmap[1], mmap[2])->getBondType() ==
@@ -4086,8 +4083,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
-         ++mvit) {
+    for (auto mvit = mv.cbegin(); mvit != mv.cend(); ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
     REQUIRE(m2->getBondBetweenAtoms(mmap[4], mmap[5])->getBondType() ==
