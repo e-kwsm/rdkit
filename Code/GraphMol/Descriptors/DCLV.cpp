@@ -141,14 +141,14 @@ struct State {
     voxZ = VOXORDER / ((maxXYZ.z - minXYZ.z) + 0.1);
     voxW = minXYZ.z;
 
-    unsigned int pcount = (unsigned int)positions.size();
+    auto pcount = (unsigned int)positions.size();
     for (unsigned int i = 0; i < pcount; i++) {
       if (radii_[i] != 0.0) {
         // get grid positions and add to list
         const Point3D &pos = positions[i];
-        const unsigned int x = (unsigned int)(voxX * (pos.x - voxU));
-        const unsigned int y = (unsigned int)(voxY * (pos.y - voxV));
-        const unsigned int z = (unsigned int)(voxZ * (pos.z - voxW));
+        const auto x = (unsigned int)(voxX * (pos.x - voxU));
+        const auto y = (unsigned int)(voxY * (pos.y - voxV));
+        const auto z = (unsigned int)(voxZ * (pos.z - voxW));
         grid[x][y][z].push_back(i);
       }
     }
