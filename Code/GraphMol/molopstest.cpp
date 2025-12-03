@@ -551,7 +551,7 @@ TEST_CASE("Testing Hydrogen Ops") {
 
   // addHs should not set the noImplicit flag.
   // This was Github Issue #7123
-  for (auto at : m2->atoms()) {
+  for (auto *at : m2->atoms()) {
     REQUIRE(at->getNoImplicit() == false);
   }
 
@@ -2945,8 +2945,8 @@ TEST_CASE("Testing some aromaticity edge cases") {
 }
 
 TEST_CASE("Testing sf.net issue 1942657") {
-  const auto smiles = GENERATE("C[C](C)(C)(C)C", "C[CH](C)(C)C", "C[C](=C)(C)C",
-                               "C[Si](=C)(=C)=C");
+  const auto *const smiles = GENERATE("C[C](C)(C)(C)C", "C[CH](C)(C)C",
+                                      "C[C](=C)(C)C", "C[Si](=C)(=C)=C");
   CAPTURE(smiles);
   CHECK_THROWS_AS(SmilesToMol(smiles), MolSanitizeException);
 }
@@ -3335,7 +3335,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
                             "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1*2*3*4*51"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
-      for (const auto b : m->bonds()) {
+      for (auto *const b : m->bonds()) {
         REQUIRE(!b->getIsAromatic());
       }
     }
@@ -3365,7 +3365,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
           "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1N2*3N4N51"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
-      for (const auto b : m->bonds()) {
+      for (auto *const b : m->bonds()) {
         REQUIRE(b->getIsAromatic());
       }
     }
@@ -6188,7 +6188,7 @@ TEST_CASE("Testing Bond::setStereo(Bond::STEREOCIS / Bond::STEREOTRANS)") {
     constexpr Bond::BondStereo stereos[] = {Bond::STEREOCIS, Bond::STEREOTRANS};
     constexpr Bond::BondStereo ezstros[] = {Bond::STEREOZ, Bond::STEREOE};
 
-    for (auto &smile : smiles) {
+    for (const auto &smile : smiles) {
       ROMol *m = SmilesToMol(smile);
       MolOps::findPotentialStereoBonds(*m);
       Bond *bond = m->getBondWithIdx(1);
@@ -6231,7 +6231,7 @@ TEST_CASE("Testing Bond::setStereo(Bond::STEREOCIS / Bond::STEREOTRANS)") {
 
     for (auto desired_stereo : stereos) {
       std::string refSmiles;
-      for (auto &smile : smiles) {
+      for (const auto &smile : smiles) {
         ROMol *m = SmilesToMol(smile);
         MolOps::findPotentialStereoBonds(*m);
         REQUIRE(m->getNumAtoms() == 4);
@@ -6539,7 +6539,7 @@ TEST_CASE("Testing MMFF94 aromaticity") {
 
   MolOps::setAromaticity(*m, MolOps::AROMATICITY_RDKIT);
   int arombondcount = 0;
-  for (auto b : m->bonds()) {
+  for (auto *b : m->bonds()) {
     if (b->getIsAromatic()) arombondcount++;
   }
   // all bonds, except the fused one, should be aromatic
@@ -6548,7 +6548,7 @@ TEST_CASE("Testing MMFF94 aromaticity") {
 
   MolOps::setAromaticity(*m, MolOps::AROMATICITY_MMFF94);
   arombondcount = 0;
-  for (auto b : m->bonds()) {
+  for (auto *b : m->bonds()) {
     if (b->getIsAromatic()) arombondcount++;
   }
   // no aromatics here
@@ -6979,7 +6979,7 @@ TEST_CASE("Testing Github issue 1622: add MDL aromaticity perception") {
         "C1=CC=CC=CC=CC=C1",              // 10 atoms
         "C1=CC=CC=CC=CC=CC=CC=CC=CC=C1",  // 18 atoms
         "N1=CN=NC=CC=CC=CC=CC=CC=CC=CC=CC=CC=CC=CC=CC=C1"};
-    for (auto smi : aromaticSmis) {
+    for (const auto *smi : aromaticSmis) {
       int debugParse = 0;
       bool sanitize = false;
       RWMol *mol = SmilesToMol(smi, debugParse, sanitize);
@@ -7026,7 +7026,7 @@ TEST_CASE("Testing Github issue 1622: add MDL aromaticity perception") {
         "C1=C[Te]C=C1",
 
     };
-    for (auto smi : nonaromaticSmis) {
+    for (const auto *smi : nonaromaticSmis) {
       int debugParse = 0;
       bool sanitize = false;
       RWMol *mol = SmilesToMol(smi, debugParse, sanitize);
@@ -7048,7 +7048,7 @@ TEST_CASE("Testing Github issue 1622: add MDL aromaticity perception") {
         "N1C2=CC=CC=C2C2=CC=CC=C12", "N1C=CC2=CC=CC=C12",
         "N1C=NC2=CC=CC=C12",         "N1C=NC2=CN=CN=C12",
         "C1CCCC2=CC3=CCCCC3=CC2=1"};
-    for (auto smi : mixedaromaticSmis) {
+    for (const auto *smi : mixedaromaticSmis) {
       int debugParse = 0;
       bool sanitize = false;
       RWMol *mol = SmilesToMol(smi, debugParse, sanitize);
@@ -7944,7 +7944,7 @@ TEST_CASE("Testing isRingFused") {
   auto molOrig = "C1C(C2CC3CCCCC3C12)C1CCCCC1"_smiles;
   {
     RWMol mol(*molOrig);
-    auto ri = mol.getRingInfo();
+    auto *ri = mol.getRingInfo();
     REQUIRE(ri->numRings() == 4);
     boost::dynamic_bitset<> fusedRings(ri->numRings());
     for (size_t i = 0; i < ri->numRings(); ++i) {
@@ -7969,7 +7969,7 @@ TEST_CASE("Testing isRingFused") {
   }
   {
     RWMol mol(*molOrig);
-    auto ri = mol.getRingInfo();
+    auto *ri = mol.getRingInfo();
     REQUIRE(ri->numRings() == 4);
     boost::dynamic_bitset<> fusedRings(ri->numRings());
     for (size_t i = 0; i < ri->numRings(); ++i) {

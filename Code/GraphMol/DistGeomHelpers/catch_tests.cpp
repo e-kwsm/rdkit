@@ -203,7 +203,7 @@ TEST_CASE("EmbedParameters to JSON") {
   SECTION("With CoordMap") {
     auto ps = DGeomHelpers::KDG;
     auto p = RDGeom::Point3D(1.1, 2.2, 3.3);
-    auto coordMap = new std::map<int, RDGeom::Point3D>();
+    auto *coordMap = new std::map<int, RDGeom::Point3D>();
     coordMap->insert({3, p});
     ps.coordMap = coordMap;
     auto json = DGeomHelpers::embedParametersToJSON(ps);
