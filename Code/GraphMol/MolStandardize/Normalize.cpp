@@ -55,7 +55,7 @@ Normalizer::Normalizer() {
 }
 
 // overloaded constructor
-Normalizer::Normalizer(const std::string normalizeFile,
+Normalizer::Normalizer(const std::string &normalizeFile,
                        const unsigned int maxRestarts) {
   BOOST_LOG(rdInfoLog) << "Initializing Normalizer\n";
   const TransformCatalogParams *tparams =
