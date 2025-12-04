@@ -304,8 +304,8 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
   for (unsigned int atomIdx = 0; atomIdx < atomCount; ++atomIdx) {
     auto atom = res->getMol()->getAtomWithIdx(atomIdx);
 
-    std::string dummyLabel = "";
-    std::string atomClass = "";
+    std::string dummyLabel;
+    std::string atomClass;
     std::vector<std::pair<unsigned int, std::string>> attchOrds;
     if (atom->hasProp(common_properties::dummyLabel)) {
       dummyLabel = atom->getProp<std::string>(common_properties::dummyLabel);
@@ -498,7 +498,7 @@ class MolFromSCSRMolConverter {
   std::map<OriginAtomConnection, std::vector<unsigned int>> attachMap;
 
   unsigned int getNewAtomForBond(const Atom *atom, unsigned int otherAtomIdx) {
-    std::string atomClass = "";
+    std::string atomClass;
     unsigned int atomIdx = atom->getIdx();
     if (!atom->getPropIfPresent<std::string>(common_properties::molAtomClass,
                                              atomClass)) {
@@ -527,7 +527,7 @@ class MolFromSCSRMolConverter {
   void getNewAtomsForHydrogenBond(
       Atom *atom, unsigned int otherAtomIdx,
       std::vector<HydrogenBondConnection> &hydrogenBondConnections) {
-    std::string atomClass = "";
+    std::string atomClass;
     unsigned int atomIdx = atom->getIdx();
     auto templateMol = atomIdxToTemplateMol(atomIdx);
     hydrogenBondConnections.clear();
@@ -1001,8 +1001,8 @@ class MolFromSCSRMolConverter {
     unsigned int atomCount = mol->getNumAtoms();
     for (unsigned int atomIdx = 0; atomIdx < atomCount; ++atomIdx) {
       auto atom = mol->getAtomWithIdx(atomIdx);
-      std::string dummyLabel = "";
-      std::string atomClass = "";
+      std::string dummyLabel;
+      std::string atomClass;
 
       if (!atom->getPropIfPresent(common_properties::dummyLabel, dummyLabel) ||
           !atom->getPropIfPresent(common_properties::molAtomClass, atomClass) ||
@@ -1021,7 +1021,7 @@ class MolFromSCSRMolConverter {
       } else {  // it is a macro atom - expand it
 
         unsigned int seqId = 0;
-        std::string seqName = "";
+        std::string seqName;
         atom->getPropIfPresent(common_properties::molAtomSeqId, seqId);
         atom->getPropIfPresent(common_properties::molAtomSeqName, seqName);
 
@@ -1030,7 +1030,7 @@ class MolFromSCSRMolConverter {
         ROMol *templateMol = nullptr;
         unsigned int templateIdx;
         bool templateFound = false;
-        std::string templateNameToUse = "";
+        std::string templateNameToUse;
         for (templateIdx = 0; templateIdx < scsrMol->getTemplateCount();
              ++templateIdx) {
           templateMol = scsrMol->getTemplate(templateIdx);
