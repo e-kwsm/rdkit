@@ -61,8 +61,8 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
         new RDKit::v2::FileParsers::ForwardSDMolSupplier(sbis, owner, params));
     POSTCONDITION(sbis, "bad instream");
   }
-  LocalForwardSDMolSupplier(std::string filename, bool sanitize, bool removeHs,
-                            bool strictParsing) {
+  LocalForwardSDMolSupplier(const std::string &filename, bool sanitize,
+                            bool removeHs, bool strictParsing) {
     std::istream *tmpStream = nullptr;
     tmpStream = static_cast<std::istream *>(
         new std::ifstream(filename.c_str(), std::ios_base::binary));
@@ -131,9 +131,10 @@ struct forwardsdmolsup_wrap {
              (LocalForwardSDMolSupplier * (*)(LocalForwardSDMolSupplier *)) &
                  MolIOEnter,
              python::return_internal_reference<>())
-        .def("__exit__", (bool (*)(LocalForwardSDMolSupplier *, python::object,
-                                   python::object, python::object)) &
-                             MolIOExit)
+        .def("__exit__",
+             (bool (*)(LocalForwardSDMolSupplier *, const python::object &,
+                       const python::object &,
+                       const python::object &))&MolIOExit)
         .def("__next__",
              (ROMol * (*)(LocalForwardSDMolSupplier *)) & MolForwardSupplNext,
              "Returns the next molecule in the file.  Raises _StopIteration_ "

@@ -51,7 +51,7 @@ class ReadOnlySeq {
 
  public:
   ~ReadOnlySeq() = default;
-  ReadOnlySeq(ROMOL_SPTR mol, T1 start, T1 end, T3 lenFunc)
+  ReadOnlySeq(ROMOL_SPTR mol, const T1 &start, const T1 &end, const T3 &lenFunc)
       : _start(start),
         _end(end),
         _pos(start),
