@@ -11,6 +11,8 @@
 #ifndef __RD_SQUARE_MATRIX_H__
 #define __RD_SQUARE_MATRIX_H__
 
+#include <utility>
+
 #include "Matrix.h"
 
 namespace RDNumeric {
@@ -25,7 +27,7 @@ class SquareMatrix : public Matrix<TYPE> {
   SquareMatrix(unsigned int N, TYPE val) : Matrix<TYPE>(N, N, val) {}
 
   SquareMatrix(unsigned int N, typename Matrix<TYPE>::DATA_SPTR data)
-      : Matrix<TYPE>(N, N, data) {}
+      : Matrix<TYPE>(N, N, std::move(data)) {}
 
   // inline unsigned int size() const {
   //  return d_nRows;
