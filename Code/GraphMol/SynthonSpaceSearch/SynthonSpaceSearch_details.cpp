@@ -800,7 +800,7 @@ std::unique_ptr<ROMol> buildConnRegion(const ROMol &mol) {
 
 std::string buildProductName(const std::string &reactionId,
                              const std::vector<std::string> &fragIds) {
-  std::string prodName = "";
+  std::string prodName;
   for (const auto &fragId : fragIds) {
     if (prodName != "") {
       prodName += ";";
@@ -814,7 +814,7 @@ std::string buildProductName(const std::string &reactionId,
 std::string buildProductName(
     const RDKit::SynthonSpaceSearch::SynthonSpaceHitSet *hitset,
     const std::vector<size_t> &fragNums) {
-  std::string prodName = "";
+  std::string prodName;
   for (size_t i = 0; i < fragNums.size(); ++i) {
     if (prodName != "") {
       prodName += ";";
