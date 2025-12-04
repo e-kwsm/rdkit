@@ -19,6 +19,7 @@
 #include <cstring>
 #include <ctime>
 #include <memory>
+#include <utility>
 #include <boost/random.hpp>
 
 static constexpr double zero_tolerance = 1.e-16;
@@ -54,7 +55,7 @@ class Vector {
   */
   constexpr Vector(unsigned int N, DATA_SPTR data) {
     d_size = N;
-    d_data = data;
+    d_data = std::move(data);
   }
 
   //! copy constructor
@@ -241,7 +242,7 @@ class Vector {
   }
 
   //! returns the dot product between two Vectors
-  TYPE dotProduct(const Vector<TYPE> other) const {
+  TYPE dotProduct(const Vector<TYPE> &other) const {
     PRECONDITION(d_size == other.size(),
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
