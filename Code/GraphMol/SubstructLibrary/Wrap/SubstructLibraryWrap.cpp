@@ -39,6 +39,8 @@
 #include <GraphMol/SubstructLibrary/PatternFactory.h>
 #include <GraphMol/GeneralizedSubstruct/XQMol.h>
 
+#include <utility>
+
 namespace python = boost::python;
 using boost_adaptbx::python::streambuf;
 
@@ -63,17 +65,17 @@ class SubstructLibraryWrap {
 
   SubstructLibraryWrap() : ss() {}
   SubstructLibraryWrap(boost::shared_ptr<MolHolderBase> molecules)
-      : ss(molecules) {}
+      : ss(std::move(molecules)) {}
   SubstructLibraryWrap(boost::shared_ptr<MolHolderBase> molecules,
                        boost::shared_ptr<FPHolderBase> fingerprints)
-      : ss(molecules, fingerprints) {}
+      : ss(std::move(molecules), std::move(fingerprints)) {}
   SubstructLibraryWrap(boost::shared_ptr<MolHolderBase> molecules,
                        boost::shared_ptr<KeyHolderBase> keys)
-      : ss(molecules, keys) {}
+      : ss(std::move(molecules), std::move(keys)) {}
   SubstructLibraryWrap(boost::shared_ptr<MolHolderBase> molecules,
                        boost::shared_ptr<FPHolderBase> fingerprints,
                        boost::shared_ptr<KeyHolderBase> keys)
-      : ss(molecules, fingerprints, keys) {}
+      : ss(std::move(molecules), std::move(fingerprints), std::move(keys)) {}
   SubstructLibraryWrap(const std::string &pickle) : ss(pickle) {}
 
   boost::shared_ptr<MolHolderBase> &getMolHolder() { return ss.getMolHolder(); }
@@ -442,7 +444,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib,
                        boost::shared_ptr<FPHolderBase> patterns,
                        int numThreads) {
   NOGIL gil;
-  addPatterns(sslib.ss, patterns, numThreads);
+  addPatterns(sslib.ss, std::move(patterns), numThreads);
 }
 
 void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
