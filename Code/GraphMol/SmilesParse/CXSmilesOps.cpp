@@ -2289,7 +2289,7 @@ std::string get_coord_or_hydrogen_bonds_block(
 std::string get_zerobonds_block(const ROMol &mol,
                                 const std::vector<unsigned int> &,
                                 const std::vector<unsigned int> &bondOrder) {
-  std::string res = "";
+  std::string res;
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
     const auto bond = mol.getBondWithIdx(idx);
