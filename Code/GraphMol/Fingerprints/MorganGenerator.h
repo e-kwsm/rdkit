@@ -14,6 +14,7 @@
 
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <cstdint>
+#include <utility>
 
 namespace RDKit {
 
@@ -142,11 +143,11 @@ class RDKIT_FINGERPRINTS_EXPORT MorganArguments : public FingerprintArguments {
   MorganArguments(unsigned int radius = 3, bool countSimulation = false,
                   bool includeChirality = false,
                   bool onlyNonzeroInvariants = false,
-                  std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
+                  const std::vector<std::uint32_t> &countBounds = {1, 2, 4, 8},
                   std::uint32_t fpSize = 2048,
                   bool includeRedundantEnvironments = false,
                   bool useBondTypes = true)
-      : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
+      : FingerprintArguments(countSimulation, std::move(countBounds), fpSize, 1,
                              includeChirality),
         df_onlyNonzeroInvariants(onlyNonzeroInvariants),
         d_radius(radius),
@@ -270,7 +271,7 @@ RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<OutputType> *getMorganGenerator(
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
     BondInvariantsGenerator *bondInvariantsGenerator = nullptr,
     std::uint32_t fpSize = 2048,
-    std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
+    const std::vector<std::uint32_t> &countBounds = {1, 2, 4, 8},
     bool ownsAtomInvGen = false, bool ownsBondInvGen = false);
 //! \overload
 template <typename OutputType>
@@ -333,12 +334,12 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
     BondInvariantsGenerator *bondInvariantsGenerator = nullptr,
     std::uint32_t fpSize = 2048,
-    std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
+    const std::vector<std::uint32_t> &countBounds = {1, 2, 4, 8},
     bool ownsAtomInvGen = false, bool ownsBondInvGen = false) {
   return getMorganGenerator<OutputType>(
       radius, countSimulation, includeChirality, useBondTypes,
       onlyNonzeroInvariants, false, atomInvariantsGenerator,
-      bondInvariantsGenerator, fpSize, countBounds, ownsAtomInvGen,
+      bondInvariantsGenerator, fpSize, std::move(countBounds), ownsAtomInvGen,
       ownsBondInvGen);
 };
 
