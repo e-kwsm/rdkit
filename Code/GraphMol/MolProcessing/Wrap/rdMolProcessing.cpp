@@ -19,7 +19,7 @@ using namespace RDKit;
 namespace {
 template <typename OutputType>
 python::tuple getFingerprintsHelper(
-    const std::string &fileName, python::object pyGenerator,
+    const std::string &fileName, const python::object &pyGenerator,
     const GeneralMolSupplier::SupplierOptions &options) {
   FingerprintGenerator<OutputType> *generator = nullptr;
   if (pyGenerator) {
@@ -81,16 +81,16 @@ BOOST_PYTHON_MODULE(rdMolProcessing) {
 
   python::def(
       "GetFingerprintsForMolsInFile",
-      (python::tuple(*)(const std::string &, python::object,
-                        const GeneralMolSupplier::SupplierOptions &))
+      (python::tuple (*)(const std::string &, const python::object &,
+                         const GeneralMolSupplier::SupplierOptions &))
           getFingerprintsHelper<std::uint32_t>,
       (python::arg("filename"), python::arg("generator") = python::object(),
        python::arg("options") = GeneralMolSupplier::SupplierOptions()),
       "returns the fingerprints for the molecules in a file (32 bit version)");
   python::def(
       "GetFingerprintsForMolsInFile",
-      (python::tuple(*)(const std::string &, python::object,
-                        const GeneralMolSupplier::SupplierOptions &))
+      (python::tuple (*)(const std::string &, const python::object &,
+                         const GeneralMolSupplier::SupplierOptions &))
           getFingerprintsHelper<std::uint64_t>,
       (python::arg("filename"), python::arg("generator") = python::object(),
        python::arg("options") = GeneralMolSupplier::SupplierOptions()),
