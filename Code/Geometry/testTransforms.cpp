@@ -21,14 +21,14 @@
 using namespace RDGeom;
 using namespace std;
 
-bool ptEq(const Point3D pt1, const Point3D pt2, double val = 1.e-8) {
+bool ptEq(const Point3D &pt1, const Point3D &pt2, double val = 1.e-8) {
   REQUIRE_THAT(pt1.x, Catch::Matchers::WithinAbs(pt2.x, val));
   REQUIRE_THAT(pt1.y, Catch::Matchers::WithinAbs(pt2.y, val));
   REQUIRE_THAT(pt1.z, Catch::Matchers::WithinAbs(pt2.z, val));
   return true;
 }
 
-bool ptEq(const Point2D pt1, const Point2D pt2, double val = 1.e-8) {
+bool ptEq(const Point2D &pt1, const Point2D &pt2, double val = 1.e-8) {
   REQUIRE_THAT(pt1.x, Catch::Matchers::WithinAbs(pt2.x, val));
   REQUIRE_THAT(pt1.y, Catch::Matchers::WithinAbs(pt2.y, val));
   return true;
