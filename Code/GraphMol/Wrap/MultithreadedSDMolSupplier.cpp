@@ -91,9 +91,10 @@ struct multiSDMolSup_wrap {
              (MultithreadedSDMolSupplier * (*)(MultithreadedSDMolSupplier *)) &
                  MolIOEnter,
              python::return_internal_reference<>())
-        .def("__exit__", (bool (*)(MultithreadedSDMolSupplier *, python::object,
-                                   python::object, python::object)) &
-                             MolIOExit)
+        .def("__exit__",
+             (bool (*)(MultithreadedSDMolSupplier *, const python::object &,
+                       const python::object &,
+                       const python::object &))&MolIOExit)
         .def("__next__",
              (ROMol * (*)(MultithreadedSDMolSupplier *)) & MolForwardSupplNext,
              "Returns the next molecule in the file. Raises _StopIteration_ "
