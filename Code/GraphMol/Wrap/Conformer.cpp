@@ -110,7 +110,7 @@ void SetPos(Conformer *conf, np::ndarray const &array) {
     }
   }
 }
-void SetAtomPos(Conformer *conf, unsigned int aid, python::object loc) {
+void SetAtomPos(Conformer *conf, unsigned int aid, const python::object &loc) {
   // const std::vector<double> &loc) {
   unsigned int dim = python::len(loc);
   CHECK_INVARIANT(dim == 3, "");
