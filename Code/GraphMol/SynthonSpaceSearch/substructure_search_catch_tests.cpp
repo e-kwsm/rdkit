@@ -48,7 +48,7 @@ std::unique_ptr<SubstructLibrary> loadSubstructLibrary(
   return subsLib;
 }
 
-std::map<std::string, std::string> loadLibrary(const std::string inFilename) {
+std::map<std::string, std::string> loadLibrary(const std::string &inFilename) {
   v2::FileParsers::SmilesMolSupplierParams params;
   params.titleLine = false;
   v2::FileParsers::SmilesMolSupplier suppl(inFilename, params);
