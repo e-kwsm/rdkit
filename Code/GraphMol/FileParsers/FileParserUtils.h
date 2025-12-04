@@ -165,7 +165,8 @@ void applyMolListPropToAtoms(ROMol &mol, const std::string &pn,
 
 template <typename T, typename U>
 void applyMolListProps(ROMol &mol, const std::string &prefix, size_t nItems,
-                       U getter, const std::string missingValueMarker = "n/a") {
+                       U getter,
+                       const std::string &missingValueMarker = "n/a") {
   for (auto pn : mol.getPropList()) {
     if (pn.find(prefix) == 0 && pn.length() > prefix.length()) {
       applyMolListProp<T>(mol, pn, prefix, missingValueMarker, nItems, getter);

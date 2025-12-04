@@ -45,7 +45,7 @@
 
 using namespace RDKit;
 
-void testGeneral(std::string rdbase) {
+void testGeneral(const std::string &rdbase) {
   BOOST_LOG(rdInfoLog) << "---------------------------------------"
                        << std::endl;
   BOOST_LOG(rdInfoLog) << "-- testing general mol2 file parsing --"
@@ -245,7 +245,7 @@ void testGeneral(std::string rdbase) {
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;
 }
 
-void testAromaticChargedFail(std::string rdbase) {
+void testAromaticChargedFail(const std::string &rdbase) {
   BOOST_LOG(rdInfoLog) << "---------------------------------------"
                        << std::endl;
   BOOST_LOG(rdInfoLog) << "-- testing subst arom groups in mol2 --"
@@ -273,7 +273,7 @@ void testAromaticChargedFail(std::string rdbase) {
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;
 }
 
-void testIssue3399798(std::string rdbase) {
+void testIssue3399798(const std::string &rdbase) {
   BOOST_LOG(rdInfoLog) << "---------------------------------------"
                        << std::endl;
   BOOST_LOG(rdInfoLog) << "-- testing issue 3399798             --"
@@ -309,7 +309,7 @@ void testIssue3399798(std::string rdbase) {
 }
 
 // Test the following GitHub issue: https://github.com/rdkit/rdkit/issues/114
-void testIssue114(std::string rdbase) {
+void testIssue114(const std::string &rdbase) {
   BOOST_LOG(rdInfoLog) << "-----------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "-- testing GitHub issue #114     --" << std::endl;
   BOOST_LOG(rdInfoLog) << "-----------------------------------" << std::endl;
@@ -334,7 +334,7 @@ void testIssue114(std::string rdbase) {
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;
 }
 
-void testGithub438(std::string rdbase) {
+void testGithub438(const std::string &rdbase) {
   BOOST_LOG(rdInfoLog) << "-----------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
       << "-- testing GitHub issue #438: problems with metals in mol2 files  --"
@@ -362,7 +362,7 @@ void testGithub438(std::string rdbase) {
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;
 }
 
-void testDisableCleanup(std::string rdbase) {
+void testDisableCleanup(const std::string &rdbase) {
   BOOST_LOG(rdInfoLog) << "-----------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
       << "-- testing disabling cleanup of substructures in Mol2 parsing  --"
