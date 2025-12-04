@@ -20,6 +20,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 #include <tuple>
+#include <utility>
 
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <GraphMol/Chirality.h>
@@ -450,7 +451,7 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
     bool includeRedundantEnvironments,
     AtomInvariantsGenerator *atomInvariantsGenerator,
     BondInvariantsGenerator *bondInvariantsGenerator, std::uint32_t fpSize,
-    std::vector<std::uint32_t> countBounds, bool ownsAtomInvGen,
+    const std::vector<std::uint32_t> &countBounds, bool ownsAtomInvGen,
     bool ownsBondInvGen) {
   MorganArguments arguments(radius, countSimulation, includeChirality,
                             onlyNonzeroInvariants, countBounds, fpSize,
@@ -472,7 +473,8 @@ getMorganGenerator(unsigned int radius, bool countSimulation,
                    bool includeRedundantEnvironments,
                    AtomInvariantsGenerator *atomInvariantsGenerator,
                    BondInvariantsGenerator *bondInvariantsGenerator,
-                   std::uint32_t fpSize, std::vector<std::uint32_t> countBounds,
+                   std::uint32_t fpSize,
+                   const std::vector<std::uint32_t> &countBounds,
                    bool ownsAtomInvGen, bool ownsBondInvGen);
 
 template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint64_t> *
@@ -482,7 +484,8 @@ getMorganGenerator(unsigned int radius, bool countSimulation,
                    bool includeRedundantEnvironments,
                    AtomInvariantsGenerator *atomInvariantsGenerator,
                    BondInvariantsGenerator *bondInvariantsGenerator,
-                   std::uint32_t fpSize, std::vector<std::uint32_t> countBounds,
+                   std::uint32_t fpSize,
+                   const std::vector<std::uint32_t> &countBounds,
                    bool ownsAtomInvGen, bool ownsBondInvGen);
 
 }  // namespace MorganFingerprint
