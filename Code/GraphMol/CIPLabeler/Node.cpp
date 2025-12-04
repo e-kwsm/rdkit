@@ -25,7 +25,8 @@ Node *Node::newTerminalChild(int idx, Atom *atom, int flags) const {
   if (flags & BOND_DUPLICATE) {
     auto frac = dp_g->getMol().getFractionalAtomicNum(dp_atom);
     if (frac.denominator() > 1) {
-      return &dp_g->addNode(std::move(new_visit), atom, frac, new_dist, flags);
+      return &dp_g->addNode(std::move(new_visit), atom, std::move(frac),
+                            new_dist, flags);
     }
   }
 
