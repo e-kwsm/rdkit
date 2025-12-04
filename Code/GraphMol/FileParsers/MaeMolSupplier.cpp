@@ -525,7 +525,7 @@ void throw_idx_error(unsigned idx) {
 
 }  // namespace
 
-MaeMolSupplier::MaeMolSupplier(std::shared_ptr<std::istream> inStream,
+MaeMolSupplier::MaeMolSupplier(const std::shared_ptr<std::istream> &inStream,
                                const MaeMolSupplierParams &params) {
   PRECONDITION(inStream, "bad stream");
   dp_sInStream = inStream;
