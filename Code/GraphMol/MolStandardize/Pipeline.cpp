@@ -118,7 +118,7 @@ RWMOL_SPTR parse(const std::string &molblock, PipelineResult &result,
   return mol;
 }
 
-void serialize(const RWMOL_SPTR_PAIR &output, PipelineResult &result,
+void serialize(RWMOL_SPTR_PAIR output, PipelineResult &result,
                const PipelineOptions &options) {
   const ROMol &outputMol = *output.first;
   const ROMol &parentMol = *output.second;
@@ -457,7 +457,7 @@ RWMOL_SPTR cleanup2D(RWMOL_SPTR mol, PipelineResult & /*result*/,
 }
 
 namespace {
-void replaceDativeBonds(const RWMOL_SPTR &mol) {
+void replaceDativeBonds(RWMOL_SPTR mol) {
   bool modified{false};
   for (auto bond : mol->bonds()) {
     if (bond->getBondType() != Bond::BondType::DATIVE) {
@@ -475,7 +475,7 @@ void replaceDativeBonds(const RWMOL_SPTR &mol) {
   }
 }
 
-void removeHsAtProtonatedSites(const RWMOL_SPTR &mol) {
+void removeHsAtProtonatedSites(RWMOL_SPTR mol) {
   boost::dynamic_bitset<> protons{mol->getNumAtoms(), 0};
   for (auto atom : mol->atoms()) {
     if (atom->getAtomicNum() != 1 || atom->getDegree() != 1) {
