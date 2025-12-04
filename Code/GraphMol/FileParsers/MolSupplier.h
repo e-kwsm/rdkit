@@ -416,7 +416,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
   MaeMolSupplier() {}
 
   explicit MaeMolSupplier(
-      std::shared_ptr<std::istream> inStream,
+      const std::shared_ptr<std::istream> &inStream,
       const MaeMolSupplierParams &params = MaeMolSupplierParams());
 
   explicit MaeMolSupplier(

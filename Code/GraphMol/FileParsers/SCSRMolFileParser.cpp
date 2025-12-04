@@ -17,6 +17,8 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 
+#include <utility>
+
 using namespace RDKit::SGroupParsing;
 
 namespace RDKit {
@@ -358,7 +360,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
             for (const auto &attachOrd : attchOrds) {
               auto supAttachPoints = mainSUP->getAttachPoints();
               if (std::find_if(supAttachPoints.begin(), supAttachPoints.end(),
-                               [&attachOrd](auto a) {
+                               [&attachOrd](const auto &a) {
                                  return a.id == attachOrd.second;
                                }) == supAttachPoints.end()) {
                 templateFound = false;
@@ -438,7 +440,7 @@ class MolFromSCSRMolConverter {
   class OriginAtomConnection {
    public:
     OriginAtomConnection(unsigned int mainAtomIdx, std::string attachLabel)
-        : mainAtomIdx(mainAtomIdx), attachLabel(attachLabel) {}
+        : mainAtomIdx(mainAtomIdx), attachLabel(std::move(attachLabel)) {}
 
    private:
     unsigned int mainAtomIdx;
@@ -473,7 +475,7 @@ class MolFromSCSRMolConverter {
                    std::vector<HydrogenBondConnection> hBondConnections)
         : d_smarts(smarts),
           d_name(name),
-          d_hBondConnections(hBondConnections),
+          d_hBondConnections(std::move(hBondConnections)),
           dp_mol{SmartsToMol(smarts)} {}
   };
 
@@ -581,7 +583,7 @@ class MolFromSCSRMolConverter {
     const std::string typ = "SUP";
     newSgroups.emplace_back(new SubstanceGroup((ROMol *)resMol.get(), typ));
     auto newSgroup = newSgroups.back().get();
-    newSgroup->setProp("LABEL", sgroupName);
+    newSgroup->setProp("LABEL", std::move(sgroupName));
 
     // copy the atoms of the sgroup into the new molecule
 
