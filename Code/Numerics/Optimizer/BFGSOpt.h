@@ -306,9 +306,12 @@ int minimize(unsigned int dim, double *pos, double gradTol,
 
       for (unsigned int i = 0; i < dim; i++) {
         unsigned int itab = i * dim;
-        double pxi = fac * xi[i], hdgi = fad * hessDGrad[i],
-               dgi = fae * dGrad[i];
-        double *pxj = &(xi[i]), *hdgj = &(hessDGrad[i]), *dgj = &(dGrad[i]);
+        double pxi = fac * xi[i];
+        double hdgi = fad * hessDGrad[i];
+        double dgi = fae * dGrad[i];
+        double *pxj = &(xi[i]);
+        double *hdgj = &(hessDGrad[i]);
+        double *dgj = &(dGrad[i]);
         for (unsigned int j = i; j < dim; ++j, ++pxj, ++hdgj, ++dgj) {
           invHessian[itab + j] += pxi * *pxj - hdgi * *hdgj + dgi * *dgj;
           invHessian[j * dim + i] = invHessian[itab + j];

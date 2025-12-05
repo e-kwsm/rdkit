@@ -621,8 +621,14 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
         "MolFile coordinates must be in (-100000, 1000000)");
   }
 
-  int massDiff, chg, stereoCare, hCount, rxnComponentType, rxnComponentNumber,
-      inversionFlag, exactChangeFlag;
+  int massDiff;
+  int chg;
+  int stereoCare;
+  int hCount;
+  int rxnComponentType;
+  int rxnComponentNumber;
+  int inversionFlag;
+  int exactChangeFlag;
   massDiff = 0;
   chg = 0;
   stereoCare = 0;
