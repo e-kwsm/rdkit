@@ -207,7 +207,7 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
     std::vector<Atom *> atoms;
 
     std::vector<std::pair<double, unsigned int>> angles;
-    auto center = conf.getAtomPos(center_atom->getIdx());
+    const auto &center = conf.getAtomPos(center_atom->getIdx());
 
     for (auto cdx_id : bond_ordering) {
       if (cdx_id == 0) {
