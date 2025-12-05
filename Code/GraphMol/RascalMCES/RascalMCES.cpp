@@ -529,7 +529,8 @@ void makeModularProduct(const ROMol &mol1,
     modProd.clear();
     return;
   }
-  std::vector<std::vector<int>> distMatrix1, distMatrix2;
+  std::vector<std::vector<int>> distMatrix1;
+  std::vector<std::vector<int>> distMatrix2;
   if (opts.maxFragSeparation > -1) {
     calcDistMatrix(adjMatrix1, distMatrix1);
     calcDistMatrix(adjMatrix2, distMatrix2);
