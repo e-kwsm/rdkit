@@ -158,7 +158,8 @@ bool SynthonSpaceRascalSearcher::quickVerify(
   // bound on the Johnson similarity.  Check that that is not below the
   // threshold.
   int qbit = getQuery().getNumAtoms() + getQuery().getNumBonds();
-  int numAtoms = 0, numBonds = 0;
+  int numAtoms = 0;
+  int numBonds = 0;
   for (size_t i = 0; i < synthNums.size(); i++) {
     const auto &synth = hitset->synthonsToUse[i][synthNums[i]].second;
     // Adjust for connector points that aren't in the final product.
