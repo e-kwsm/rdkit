@@ -267,7 +267,11 @@ bool applyHuckel(ROMol &, const INT_VECT &ring, const VECT_EDON_TYPE &edon,
   if (ring.size() < minRingSize) {
     return false;
   }
-  int atlw, atup, rlw, rup, rie;
+  int atlw;
+  int atup;
+  int rlw;
+  int rup;
+  int rie;
   bool aromatic = false;
   rlw = 0;
   rup = 0;
