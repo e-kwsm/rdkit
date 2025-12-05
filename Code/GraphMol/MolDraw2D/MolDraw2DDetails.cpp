@@ -364,7 +364,8 @@ RDKIT_MOLDRAW2D_EXPORT void calcArrowHead(Point2D &arrowEnd, Point2D &arrow1,
   }
 
   auto delta = arrowBegin - arrowEnd;
-  double cos_angle = std::cos(angle), sin_angle = std::sin(angle);
+  double cos_angle = std::cos(angle);
+  double sin_angle = std::sin(angle);
   // To have the arrowhead a consistent fraction of the line length, we need
   // the hypotenuse.
   frac /= cos_angle;
