@@ -25,6 +25,7 @@
 #include <boost/lexical_cast.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 #include <filesystem>
+#include <utility>
 using namespace RDKit;
 using namespace v2::FileParsers;
 
@@ -55,7 +56,7 @@ class ScsiMolTest {
              unsigned int sgroupCountInit, unsigned int totalQueryAtomCountInit,
              unsigned int totalQueryBondCountInit,
              unsigned int querySgroupCountInit = 0)
-        : fileName(fileNameInit),
+        : fileName(std::move(fileNameInit)),
 
           totalAtomCount(totalAtomCountInit),
           totalBondCount(totalBondCountInit),

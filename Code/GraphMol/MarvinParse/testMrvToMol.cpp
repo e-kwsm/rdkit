@@ -78,9 +78,9 @@ class MrvTests {
                 std::vector<int> hbondIdsInit, int sGroupCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          hbondIds(hbondIdsInit),
+          hbondIds(std::move(hbondIdsInit)),
           sGroupCount(sGroupCountInit),
-          fileName(fileNameInit),
+          fileName(std::move(fileNameInit)),
           expectedResult(expectedResultInit) {};
   };
 
