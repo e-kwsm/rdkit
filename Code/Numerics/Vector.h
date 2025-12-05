@@ -32,16 +32,14 @@ class Vector {
   typedef std::shared_ptr<TYPE[]> DATA_SPTR;
 
   //! Initialize with only a size.
-  constexpr explicit Vector(unsigned int N) {
-    d_size = N;
+  constexpr explicit Vector(unsigned int N) : d_size(N) {
     TYPE *data = new TYPE[N];
     memset(static_cast<void *>(data), 0, d_size * sizeof(TYPE));
     d_data.reset(data);
   }
 
   //! Initialize with a size and default value.
-  constexpr Vector(unsigned int N, TYPE val) {
-    d_size = N;
+  constexpr Vector(unsigned int N, TYPE val) : d_size(N) {
     d_data.reset(new TYPE[N]);
     for (auto i = 0u; i < N; i++) {
       d_data[i] = val;
@@ -52,16 +50,12 @@ class Vector {
   /*!
     <b>NOTE:</b> the data is not copied in this case
   */
-  constexpr Vector(unsigned int N, DATA_SPTR data) {
-    d_size = N;
-    d_data = data;
-  }
+  constexpr Vector(unsigned int N, DATA_SPTR data) : d_size(N), d_data(data) {}
 
   //! copy constructor
   /*! We make a copy of the other vector's data.
    */
-  constexpr Vector(const Vector &other) {
-    d_size = other.size();
+  constexpr Vector(const Vector &other) : d_size(other.size()) {
     const TYPE *otherData = other.getData();
     d_data.reset(new TYPE[d_size]);
 
