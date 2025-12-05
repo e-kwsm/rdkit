@@ -61,7 +61,8 @@ bool preprocessReaction(
 bool preprocessReaction(ChemicalReaction &rxn,
                         const std::map<std::string, ROMOL_SPTR> &queries,
                         const std::string_view &propName) {
-  unsigned int numWarnings, numErrors;
+  unsigned int numWarnings;
+  unsigned int numErrors;
   std::vector<std::vector<std::pair<unsigned int, std::string>>> reactantLabels;
 
   return preprocessReaction(rxn, numWarnings, numErrors, reactantLabels,
