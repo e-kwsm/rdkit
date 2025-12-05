@@ -472,7 +472,9 @@ void MolDraw2D::drawArrow(const Point2D &arrowBegin, const Point2D &arrowEnd,
                           const DrawColour &col, bool rawCoords) {
   PRECONDITION(angle > 1.0e-6,
                "Arrow angle must be positive and greater than 0.0.");
-  Point2D ae(arrowEnd), p1, p2;
+  Point2D ae(arrowEnd);
+  Point2D p1;
+  Point2D p2;
   MolDraw2D_detail::calcArrowHead(ae, p1, p2, arrowBegin, frac,
                                   getDrawLineWidth(), angle);
 
