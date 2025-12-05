@@ -863,7 +863,8 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
 
   // Zero-order bonds are not candidates for rings, and dative bonds and
   // hydrogen bonds may also be out
-  ROMol::EDGE_ITER firstB, lastB;
+  ROMol::EDGE_ITER firstB;
+  ROMol::EDGE_ITER lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
     const Bond *bond = mol[*firstB];
