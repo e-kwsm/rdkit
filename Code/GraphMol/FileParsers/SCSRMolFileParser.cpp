@@ -230,7 +230,8 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
     auto molComplete = false;
     Conformer *conf = nullptr;
     try {
-      unsigned int nAtoms = 0, nBonds = 0;
+      unsigned int nAtoms = 0;
+      unsigned int nBonds = 0;
       bool expectMEND = false;
       molComplete = FileParserUtils::ParseV3000CTAB(
           &inStream, line, templateMol, conf, chiralityPossible, nAtoms, nBonds,
