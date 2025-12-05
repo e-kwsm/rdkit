@@ -106,7 +106,9 @@ DrawShapeArrow::DrawShapeArrow(const std::vector<Point2D> &points,
   // for findExtremes and doesRectClash.
   origPts_[0] = points_[0];
   origPts_[1] = points_[1];
-  Point2D ab(points_[1]), p1, p2;
+  Point2D ab(points_[1]);
+  Point2D p1;
+  Point2D p2;
   MolDraw2D_detail::calcArrowHead(ab, p1, p2, points_[1], frac_, 0.0, angle_);
   origPts_[2] = p1;
   origPts_[3] = p2;
