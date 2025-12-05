@@ -6649,13 +6649,13 @@ TEST_CASE("Github5963: bond end wrong on wedge") {
                       std::sregex_iterator()));
     CHECK(match_count2 == 1);
     auto bond72_match = std::sregex_iterator(text.begin(), text.end(), bond72);
-    std::smatch match72 = *bond72_match;
+    const std::smatch &match72 = *bond72_match;
     std::regex bond8(
         "'bond-8 atom-8 atom-9' d='M\\s+(\\d+\\.\\d+),(\\d+\\.\\d+)"
         " L\\s+(\\d+\\.\\d+),(\\d+\\.\\d+)'");
     // only 1 bond8 match
     auto bond8_match = std::sregex_iterator(text.begin(), text.end(), bond8);
-    std::smatch match8 = *bond8_match;
+    const std::smatch &match8 = *bond8_match;
     // the start of the quadrilateral should be the same as the start of the
     // line
     Point2D startquad(std::stod(match72[1]), std::stod(match72[2]));
@@ -11012,7 +11012,7 @@ M  END
     coordVec.clear();
     for (auto it = std::sregex_iterator(text.begin(), text.end(), coordRegex);
          it != std::sregex_iterator(); ++it) {
-      std::smatch match = *it;
+      const std::smatch &match = *it;
       std::vector<double> coords(match.size());
       for (size_t i = 1; i < match.size(); ++i) {
         coords.push_back(stod(match[i]));
