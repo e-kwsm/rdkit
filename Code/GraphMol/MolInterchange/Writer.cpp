@@ -137,7 +137,8 @@ void addQuery(const Q &query, bj::object &bjQuery,
     auto submol = rq->getQueryMol();
     PRECONDITION(submol, "bad recursive query");
     bj::object subquery;
-    bj::object atomDefaults, bondDefaults;
+    bj::object atomDefaults;
+    bj::object bondDefaults;
     initAtomDefaults(atomDefaults);
     initBondDefaults(bondDefaults);
     addMol(*submol, subquery, atomDefaults, bondDefaults, params);
@@ -276,7 +277,8 @@ void addProperties(const T &obj, const std::vector<std::string> &propNames,
 }
 
 void addSubstanceGroup(const SubstanceGroup &sg, bj::object &bjSG) {
-  bool includePrivate = false, includeComputed = false;
+  bool includePrivate = false;
+  bool includeComputed = false;
   auto propNames = sg.getPropList(includePrivate, includeComputed);
   if (propNames.size()) {
     bj::object properties;
@@ -481,7 +483,8 @@ void addMol(const T &imol, bj::object &rjMol, const bj::object &atomDefaults,
     rjMol["conformers"] = std::move(rjConfs);
   }
 
-  bool includePrivate = false, includeComputed = false;
+  bool includePrivate = false;
+  bool includeComputed = false;
   auto propNames = mol.getPropList(includePrivate, includeComputed);
   if (propNames.size()) {
     bj::object properties;
