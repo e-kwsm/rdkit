@@ -188,7 +188,8 @@ void readAtom(RWMol *mol, const bj::value &atomVal,
   at->setNumRadicalElectrons(getIntDefaultValue("nRad", atomVal, atomDefaults));
   at->setIsotope(getIntDefaultValue("isotope", atomVal, atomDefaults));
   at->setChiralTag(stereoVal->second);
-  bool updateLabel = false, takeOwnership = true;
+  bool updateLabel = false;
+  bool takeOwnership = true;
   mol->addAtom(at.release(), updateLabel, takeOwnership);
 }
 
