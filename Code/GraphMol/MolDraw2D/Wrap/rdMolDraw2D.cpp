@@ -630,6 +630,7 @@ void contourAndDrawGridHelper(RDKit::MolDraw2D &drawer, python::object &data,
 void setColoursHelper(RDKit::MolDraw2DUtils::ContourParams &params,
                       python::object pycolors) {
   std::vector<RDKit::DrawColour> cs;
+  cs.reserve(python::len(pycolors));
   for (unsigned int i = 0; i < python::len(pycolors); ++i) {
     cs.push_back(
         pyTupleToDrawColour(python::extract<python::tuple>(pycolors[i])));
