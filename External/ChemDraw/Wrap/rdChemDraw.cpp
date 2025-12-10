@@ -90,8 +90,8 @@ python::object MolsFromChemDrawBlockHelper(const std::string &filename, bool san
   return python::tuple(res);
 }
 
-python::tuple MolsFromChemDrawFileHelper(python::object cdxml, bool sanitize,
-                            bool removeHs) {
+python::tuple MolsFromChemDrawFileHelper(const python::object &cdxml,
+                                         bool sanitize, bool removeHs) {
   auto mols = RDKit::v2::MolsFromChemDrawFile(
       pyObjectToString(std::move(cdxml)),
       {sanitize, removeHs, RDKit::v2::CDXFormat::CDXML});
@@ -124,8 +124,8 @@ python::object ReactionsFromChemDrawFileHelper(const char *filename, bool saniti
   return python::tuple(res);
 }
 
-python::object ReactionsFromChemDrawBlockHelper(python::object imolBlock, bool sanitize,
-                                       bool removeHs) {
+python::object ReactionsFromChemDrawBlockHelper(const python::object &imolBlock,
+                                                bool sanitize, bool removeHs) {
   std::istringstream inStream(pyObjectToString(std::move(imolBlock)));
   std::vector<std::unique_ptr<ChemicalReaction>> rxns;
   try {
