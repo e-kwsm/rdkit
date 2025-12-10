@@ -208,9 +208,9 @@ PyObject *getBestMolAlignTransform(
 
 PyObject *getBestMolAlignTransform2(
     const ROMol &prbMol, const ROMol &refMol, int prbCid = -1, int refCid = -1,
-    python::object map = python::list(), int maxMatches = 1000000,
+    const python::object &map = python::list(), int maxMatches = 1000000,
     bool symmetrizeTerminalGroups = true,
-    python::object weights = python::list(), bool reflect = false,
+    const python::object &weights = python::list(), bool reflect = false,
     unsigned int maxIters = 50, int numThreads = 1) {
   bool ignoreHs = false;
   MolAlign::pyBestAlignmentParams params{
@@ -247,9 +247,9 @@ double AlignMolecule(ROMol &prbMol, const ROMol &refMol, int prbCid = -1,
 }
 
 double GetBestRMS2(ROMol &prbMol, ROMol &refMol, int prbId, int refId,
-                   python::object map, int maxMatches,
+                   const python::object &map, int maxMatches,
                    bool symmetrizeTerminalGroups,
-                   python::object weights = python::list(),
+                   const python::object &weights = python::list(),
                    int numThreads = 1) {
   bool ignoreHs = false;
   MolAlign::pyBestAlignmentParams params{
@@ -285,10 +285,10 @@ python::tuple GetAllConformerBestRMS(
   }
   return python::tuple(res);
 }
-python::tuple GetAllConformerBestRMS2(ROMol &mol, int numThreads,
-                                      python::object map, int maxMatches,
-                                      bool symmetrizeTerminalGroups,
-                                      python::object weights = python::list()) {
+python::tuple GetAllConformerBestRMS2(
+    ROMol &mol, int numThreads, const python::object &map, int maxMatches,
+    bool symmetrizeTerminalGroups,
+    const python::object &weights = python::list()) {
   bool ignoreHs = false;
   MolAlign::pyBestAlignmentParams params{
       maxMatches, symmetrizeTerminalGroups, ignoreHs, numThreads, map, weights};
