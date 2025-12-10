@@ -54,10 +54,12 @@
 #include <GraphMol/ChemReactions/ReactionFingerprints.h>
 #include <GraphMol/ChemReactions/ReactionUtils.h>
 
+#include <utility>
+
 namespace python = boost::python;
 using namespace RDKit;
 namespace {
-std::string pyObjectToString(python::object input) {
+std::string pyObjectToString(const python::object &input) {
   python::extract<std::string> ex(input);
   if (ex.check()) {
     return ex();
@@ -90,8 +92,9 @@ python::object MolsFromChemDrawBlockHelper(const std::string &filename, bool san
 
 python::tuple MolsFromChemDrawFileHelper(python::object cdxml, bool sanitize,
                             bool removeHs) {
-  auto mols = RDKit::v2::MolsFromChemDrawFile(pyObjectToString(cdxml),
-					      {sanitize, removeHs, RDKit::v2::CDXFormat::CDXML});
+  auto mols = RDKit::v2::MolsFromChemDrawFile(
+      pyObjectToString(std::move(cdxml)),
+      {sanitize, removeHs, RDKit::v2::CDXFormat::CDXML});
   python::list res;
   for (auto &mol : mols) {
     // take ownership of the data from the unique_ptr
@@ -123,7 +126,7 @@ python::object ReactionsFromChemDrawFileHelper(const char *filename, bool saniti
 
 python::object ReactionsFromChemDrawBlockHelper(python::object imolBlock, bool sanitize,
                                        bool removeHs) {
-  std::istringstream inStream(pyObjectToString(imolBlock));
+  std::istringstream inStream(pyObjectToString(std::move(imolBlock)));
   std::vector<std::unique_ptr<ChemicalReaction>> rxns;
   try {
     rxns = RDKit::v2::ChemDrawDataStreamToChemicalReactions(inStream, sanitize, removeHs);
