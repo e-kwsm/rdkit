@@ -228,7 +228,7 @@ void setupUnmarkedPolymerSGroup(RWMol &mol, SubstanceGroup &sgroup,
           BOOST_LOG(rdWarningLog)
               << " single atom polymer Sgroup has more than two bonds to "
                  "external atoms. Ignoring all bonds after the first two."
-              << std::endl;
+              << '\n';
         }
       }
     }
@@ -266,7 +266,7 @@ void finalizePolymerSGroup(RWMol &mol, SubstanceGroup &sgroup) {
     connect = "EU";
   } else {
     BOOST_LOG(rdWarningLog) << "unrecognized CXSMILES CONNECT value: '"
-                            << connect << "'. Assuming 'eu'" << std::endl;
+                            << connect << "'. Assuming 'eu'" << '\n';
     connect = "EU";
   }
   sgroup.setProp("CONNECT", connect);
@@ -493,7 +493,7 @@ bool parse_coordinate_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
         if (!bnd || (bnd->getBeginAtomIdx() != aidx - startAtomIdx &&
                      bnd->getEndAtomIdx() != aidx - startAtomIdx)) {
           BOOST_LOG(rdWarningLog) << "BOND NOT FOUND! " << bidx
-                                  << " involving atom " << aidx << std::endl;
+                                  << " involving atom " << aidx << '\n';
           return false;
         }
         bnd->setBondType(typ);
@@ -537,7 +537,7 @@ bool parse_zero_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       if (!bond) {
         BOOST_LOG(rdWarningLog)
             << "bond " << bondIdx
-            << " not found, cannot mark as zero order bond." << std::endl;
+            << " not found, cannot mark as zero order bond." << '\n';
         return false;
       }
       bond->setBondType(Bond::ZERO);
@@ -618,8 +618,7 @@ bool parse_ring_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
           gt = true;
           break;
         default:
-          BOOST_LOG(rdWarningLog)
-              << "unrecognized rb value: " << n2 << std::endl;
+          BOOST_LOG(rdWarningLog) << "unrecognized rb value: " << n2 << '\n';
           return false;
       }
     }
@@ -1015,14 +1014,13 @@ bool parse_variable_attachments(Iterator &first, Iterator last,
     if (VALID_ATIDX(at1idx) &&
         mol.getAtomWithIdx(at1idx - startAtomIdx)->getDegree() != 1) {
       BOOST_LOG(rdWarningLog)
-          << "position variation bond to atom with more than one bond"
-          << std::endl;
+          << "position variation bond to atom with more than one bond\n";
       return false;
     }
     if (first < last && *first == ':') {
       ++first;
     } else {
-      BOOST_LOG(rdWarningLog) << "improperly formatted m: block" << std::endl;
+      BOOST_LOG(rdWarningLog) << "improperly formatted m: block" << '\n';
       return false;
     }
     std::vector<std::string> others;
@@ -1105,7 +1103,7 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
     if (first < last && *first == '.') {
       ++first;
     } else {
-      BOOST_LOG(rdWarningLog) << "improperly formatted w block" << std::endl;
+      BOOST_LOG(rdWarningLog) << "improperly formatted w block" << '\n';
       return false;
     }
     unsigned int bondIdx;
@@ -1120,15 +1118,14 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       if (!bond) {
         BOOST_LOG(rdWarningLog)
             << "bond " << bondIdx << " not found, wedge from atom " << atomIdx
-            << " cannot be applied." << std::endl;
+            << " cannot be applied." << '\n';
         return false;
       }
 
       // we can't set wedging twice:
       if (bond->hasProp(common_properties::_MolFileBondCfg)) {
-        BOOST_LOG(rdWarningLog)
-            << "w block attempts to set wedging on bond " << bond->getIdx()
-            << " more than once." << std::endl;
+        BOOST_LOG(rdWarningLog) << "w block attempts to set wedging on bond "
+                                << bond->getIdx() << " more than once.\n";
         return false;
       }
 
@@ -1140,7 +1137,7 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
               << "atom " << atomIdx << " is not associated with bond "
               << bondIdx << "(" << bond->getBeginAtomIdx() + startAtomIdx << "-"
               << bond->getEndAtomIdx() + startAtomIdx << ")"
-              << " in w block" << std::endl;
+              << " in w block" << '\n';
           return false;
         }
         auto eidx = bond->getBeginAtomIdx();
@@ -1190,7 +1187,7 @@ bool parse_doublebond_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
       if (!bond) {
         BOOST_LOG(rdWarningLog)
             << "bond " << bondIdx
-            << " not found, cannot mark as stereo double bond." << std::endl;
+            << " not found, cannot mark as stereo double bond." << '\n';
         return false;
       }
 
@@ -1360,8 +1357,7 @@ bool parse_enhanced_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
       if (VALID_ATIDX(aidx)) {
         Atom *atom = mol.getAtomWithIdx(aidx - startAtomIdx);
         if (!atom) {
-          BOOST_LOG(rdWarningLog)
-              << "Atom " << aidx << " not found!" << std::endl;
+          BOOST_LOG(rdWarningLog) << "Atom " << aidx << " not found!\n";
           return false;
         }
         atoms.push_back(atom);
@@ -1985,8 +1981,8 @@ std::string get_radical_block(const ROMol &mol,
           res += "^5:";
           break;
         default:
-          BOOST_LOG(rdWarningLog) << "unsupported number of radical electrons "
-                                  << pr.first << std::endl;
+          BOOST_LOG(rdWarningLog)
+              << "unsupported number of radical electrons " << pr.first << '\n';
       }
       for (auto aidx : pr.second) {
         res += boost::str(boost::format("%d,") % aidx);
@@ -2446,7 +2442,7 @@ void checkCXFeatures(const ROMol &mol) {
   if (mol.getPropIfPresent(common_properties::molFileLinkNodes, lns)) {
     BOOST_LOG(rdWarningLog)
         << "CX Extensions: mol has link nodes which are not currently supported"
-        << std::endl;
+        << '\n';
   }
   const auto &sgs = getSubstanceGroups(mol);
   auto parent_check =
@@ -2459,7 +2455,7 @@ void checkCXFeatures(const ROMol &mol) {
   if (parent_check) {
     BOOST_LOG(rdWarningLog)
         << "CX Extensions: Substance group hierarchy is not always preserved."
-        << std::endl;
+        << '\n';
   }
 }
 

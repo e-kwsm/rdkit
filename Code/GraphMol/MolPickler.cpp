@@ -1079,7 +1079,7 @@ void MolPickler::molFromPickle(std::istream &ss, ROMol *mol,
           << "Depickling from a version number (" << majorVersion << "."
           << minorVersion << ")"
           << "that is higher than our version (" << versionMajor << "."
-          << versionMinor << ").\nThis probably won't work." << std::endl;
+          << versionMinor << ").\nThis probably won't work." << '\n';
     }
     // version sanity checking
     if (majorVersion > 1000 || minorVersion > 100 || patchVersion > 100) {

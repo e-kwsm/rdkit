@@ -215,12 +215,11 @@ std::string parseEnhancedStereo(std::istream *inStream, unsigned int &line,
         // Warn only one per mol about multiple ABS groups
         if (abs_group_seen == 1) {
           std::ostringstream errout;
-          errout << "Seen a second ABS stereo group on line " << line
-                 << std::endl;
+          errout << "Seen a second ABS stereo group on line " << line << '\n';
           if (strictParsing) {
             throw FileParseException(errout.str());
           } else {
-            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+            BOOST_LOG(rdWarningLog) << errout.str() << '\n';
           }
         }
         ++abs_group_seen;
@@ -2413,7 +2412,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
         if (itemCount == 0 || itemCount % 2 != 0 ||
             splitToken.size() != itemCount + 1) {
           errout << "Invalid ATTCHORD value: '" << val << "' for atom "
-                 << atom->getIdx() + 1 << " on line " << line << std::endl;
+                 << atom->getIdx() + 1 << " on line " << line << '\n';
           throw FileParseException(errout.str());
         }
         std::vector<std::pair<unsigned int, std::string>> attchOrds;
@@ -2423,7 +2422,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
           for (const auto &[aidx, lbl] : attchOrds) {
             if (idx == aidx + 1 || splitToken[i + 1] == lbl) {
               errout << "Invalid ATTCHORD value: '" << val << "' for atom "
-                     << atom->getIdx() + 1 << " on line " << line << std::endl;
+                     << atom->getIdx() + 1 << " on line " << line << '\n';
 
               throw FileParseException(errout.str());
             }
@@ -2520,7 +2519,7 @@ bool calculate3dFlag(const RWMol &mol, const Conformer &conf,
       BOOST_LOG(rdWarningLog)
           << "Warning: molecule is tagged as 3D, but all Z coords are zero and 2D stereo "
              "markers have been found, marking the mol as 2D."
-          << std::endl;
+          << '\n';
       return false;
     }
     return true;
@@ -2909,24 +2908,23 @@ void processSMARTSQ(RWMol &mol, const SubstanceGroup &sg) {
   std::string field;
   if (sg.getPropIfPresent("QUERYOP", field) && field != "=") {
     BOOST_LOG(rdWarningLog) << "unrecognized QUERYOP '" << field
-                            << "' for SMARTSQ. Query ignored." << std::endl;
+                            << "' for SMARTSQ. Query ignored." << '\n';
     return;
   }
   std::vector<std::string> dataFields;
   if (!sg.getPropIfPresent("DATAFIELDS", dataFields) || dataFields.empty()) {
     BOOST_LOG(rdWarningLog)
-        << "empty FIELDDATA for SMARTSQ. Query ignored." << std::endl;
+        << "empty FIELDDATA for SMARTSQ. Query ignored." << '\n';
     return;
   }
   if (dataFields.size() > 1) {
     BOOST_LOG(rdWarningLog)
-        << "multiple FIELDDATA values for SMARTSQ. Taking the first."
-        << std::endl;
+        << "multiple FIELDDATA values for SMARTSQ. Taking the first.\n";
   }
   const std::string &sma = dataFields[0];
   if (sma.empty()) {
     BOOST_LOG(rdWarningLog)
-        << "Skipping empty SMARTS value for SMARTSQ." << std::endl;
+        << "Skipping empty SMARTS value for SMARTSQ." << '\n';
     return;
   }
 
@@ -2943,7 +2941,7 @@ void processSMARTSQ(RWMol &mol, const SubstanceGroup &sg) {
     if (!m || !m->getNumAtoms()) {
       BOOST_LOG(rdWarningLog)
           << "SMARTS for SMARTSQ '" << sma
-          << "' could not be parsed or has no atoms. Ignoring it." << std::endl;
+          << "' could not be parsed or has no atoms. Ignoring it." << '\n';
       return;
     }
 
@@ -2992,13 +2990,12 @@ void processMrvImplicitH(RWMol &mol, const SubstanceGroup &sg) {
               BOOST_LOG(rdWarningLog)
                   << "MRV_IMPLICIT_H SGroup on atom without aromatic "
                      "bonds, "
-                  << atIdx << ", ignored." << std::endl;
+                  << atIdx << ", ignored." << '\n';
             }
           } else {
             BOOST_LOG(rdWarningLog)
                 << "bad atom index, " << atIdx
-                << ", found in MRV_IMPLICIT_H SGroup. Ignoring it."
-                << std::endl;
+                << ", found in MRV_IMPLICIT_H SGroup. Ignoring it.\n";
           }
         }
       }
@@ -3019,7 +3016,7 @@ void processZCH(RWMol &mol, const SubstanceGroup &sg) {
   if (sg.getPropIfPresent("DATAFIELDS", dataFields)) {
     if (dataFields.empty()) {
       BOOST_LOG(rdWarningLog)
-          << "ignoring ZCHG SGroup without data fields." << std::endl;
+          << "ignoring ZCHG SGroup without data fields." << '\n';
       return;
     }
     for (const auto &df : dataFields) {
@@ -3031,7 +3028,7 @@ void processZCH(RWMol &mol, const SubstanceGroup &sg) {
       if (splitLine.size() < aids.size()) {
         BOOST_LOG(rdWarningLog)
             << "DATAFIELDS in ZCH SGroup is shorter than the number of atoms in the SGroup. Ignoring it."
-            << std::endl;
+            << '\n';
         continue;
       }
       for (auto i = 0u; i < aids.size(); ++i) {
@@ -3051,7 +3048,7 @@ void processHYD(RWMol &mol, const SubstanceGroup &sg) {
   if (sg.getPropIfPresent("DATAFIELDS", dataFields)) {
     if (dataFields.empty()) {
       BOOST_LOG(rdWarningLog)
-          << "ignoring HYD SGroup without data fields." << std::endl;
+          << "ignoring HYD SGroup without data fields." << '\n';
       return;
     }
     for (const auto &df : dataFields) {
@@ -3063,7 +3060,7 @@ void processHYD(RWMol &mol, const SubstanceGroup &sg) {
       if (splitLine.size() < aids.size()) {
         BOOST_LOG(rdWarningLog)
             << "DATAFIELDS in HYD SGroup is shorter than the number of atoms in the SGroup. Ignoring it."
-            << std::endl;
+            << '\n';
         continue;
       }
       for (auto i = 0u; i < aids.size(); ++i) {
@@ -3181,8 +3178,7 @@ void ProcessMolProps(RWMol *mol) {
           BOOST_LOG(rdWarningLog)
               << "atom " << atom->getIdx() << " has specified valence (" << ival
               << ") smaller than the drawn valence "
-              << atom->getValence(Atom::ValenceType::EXPLICIT) << "."
-              << std::endl;
+              << atom->getValence(Atom::ValenceType::EXPLICIT) << ".\n";
           atom->setNumExplicitHs(0);
         } else {
           atom->setNumExplicitHs(ival -
@@ -3336,12 +3332,12 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
         if (strictParsing) {
           throw FileParseException(errout.str());
         } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         }
       }
       BOOST_LOG(rdWarningLog)
           << "3D constraint information in mol block ignored at line " << line
-          << std::endl;
+          << '\n';
       obj3dFound = true;
       for (unsigned int i = 0; i < n3DConstraints; ++i) {
         tempStr = getV3000Line(inStream, line);
@@ -3354,7 +3350,7 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
         if (strictParsing) {
           throw FileParseException(errout.str());
         } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         }
       }
       tempStr = getV3000Line(inStream, line);
@@ -3362,7 +3358,7 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
     } else {
       // skip blocks we don't know how to read
       BOOST_LOG(rdWarningLog) << "skipping block at line " << line << ": '"
-                              << tempStr << "'" << std::endl;
+                              << tempStr << "'" << '\n';
       while (tempStr.length() < 3 || tempStr.substr(0, 3) != "END") {
         tempStr = getV3000Line(inStream, line);
       }
@@ -3377,7 +3373,7 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
     if (strictParsing) {
       throw FileParseException(errout.str());
     } else {
-      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+      BOOST_LOG(rdWarningLog) << errout.str() << '\n';
     }
   }
 
@@ -3387,7 +3383,7 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
     if (strictParsing) {
       throw FileParseException(errout.str());
     } else {
-      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+      BOOST_LOG(rdWarningLog) << errout.str() << '\n';
     }
   }
 
@@ -3396,7 +3392,7 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
     if (strictParsing) {
       throw FileParseException("END CTAB line not found");
     } else {
-      BOOST_LOG(rdWarningLog) << "END CTAB line not found." << std::endl;
+      BOOST_LOG(rdWarningLog) << "END CTAB line not found." << '\n';
     }
   }
 
@@ -3646,7 +3642,7 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
       if (params.strictParsing) {
         throw FileParseException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
       }
     } else if (tempStr.substr(34, 5) == "V3000") {
       ctabVersion = 3000;
@@ -3657,7 +3653,7 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
       if (params.strictParsing) {
         throw FileParseException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
       }
     } else if (params.parsingSCSRMol) {
       std::ostringstream errout;
@@ -3683,7 +3679,7 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
         if (params.strictParsing) {
           throw FileParseException(errout.str());
         } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         }
       }
 
@@ -3704,7 +3700,7 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
     delete conf;
     conf = nullptr;
     BOOST_LOG(rdErrorLog) << " Unhandled CTAB feature: '" << e.what()
-                          << "'. Molecule skipped." << std::endl;
+                          << "'. Molecule skipped." << '\n';
 
     if (!inStream.eof()) {
       tempStr = getLine(inStream);

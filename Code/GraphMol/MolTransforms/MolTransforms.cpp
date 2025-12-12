@@ -164,8 +164,7 @@ bool getEigenValEigenVectHelper(Eigen::Matrix3d &eigVecs,
   // std::cerr<<"getEigenValEigenVectHelper  matrix: "<<mat<<std::endl;
   Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> eigensolver(mat);
   if (eigensolver.info() != Eigen::Success) {
-    BOOST_LOG(rdErrorLog) << "eigenvalue calculation did not converge"
-                          << std::endl;
+    BOOST_LOG(rdErrorLog) << "eigenvalue calculation did not converge\n";
     return false;
   }
   eigVecs = eigensolver.eigenvectors();
