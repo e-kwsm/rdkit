@@ -97,64 +97,63 @@ RDKIT_RDGENERAL_EXPORT std::ostream &operator<<(std::ostream &s,
 
 #if INVARIANT_EXCEPTION_METHOD
 
-#define CHECK_INVARIANT(expr, mess)                                        \
-  if (!(expr)) {                                                           \
-    Invar::Invariant inv("Invariant Violation", mess, #expr, __FILE__,     \
-                         __LINE__);                                        \
-    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl; \
-    throw inv;                                                             \
+#define CHECK_INVARIANT(expr, mess)                                           \
+  if (!(expr)) {                                                              \
+    Invar::Invariant inv("Invariant Violation", mess, #expr, __FILE__,        \
+                         __LINE__);                                           \
+    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
+    throw inv;                                                                \
   }
 
-#define PRECONDITION(expr, mess)                                           \
-  if (!(expr)) {                                                           \
-    Invar::Invariant inv("Pre-condition Violation", mess, #expr, __FILE__, \
-                         __LINE__);                                        \
-    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl; \
-    throw inv;                                                             \
+#define PRECONDITION(expr, mess)                                              \
+  if (!(expr)) {                                                              \
+    Invar::Invariant inv("Pre-condition Violation", mess, #expr, __FILE__,    \
+                         __LINE__);                                           \
+    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
+    throw inv;                                                                \
   }
 
-#define POSTCONDITION(expr, mess)                                           \
-  if (!(expr)) {                                                            \
-    Invar::Invariant inv("Post-condition Violation", mess, #expr, __FILE__, \
-                         __LINE__);                                         \
-    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl;  \
-    throw inv;                                                              \
+#define POSTCONDITION(expr, mess)                                             \
+  if (!(expr)) {                                                              \
+    Invar::Invariant inv("Post-condition Violation", mess, #expr, __FILE__,   \
+                         __LINE__);                                           \
+    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
+    throw inv;                                                                \
   }
 
-#define UNDER_CONSTRUCTION(fn)                                           \
-  Invar::Invariant inv("Incomplete Code",                                \
-                       "This routine is still under development", fn,    \
-                       __FILE__, __LINE__);                              \
-  BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl; \
+#define UNDER_CONSTRUCTION(fn)                                              \
+  Invar::Invariant inv("Incomplete Code",                                   \
+                       "This routine is still under development", fn,       \
+                       __FILE__, __LINE__);                                 \
+  BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
   throw inv;
 
-#define RANGE_CHECK(lo, x, hi)                                              \
-  if ((lo) > (hi) || (x) < (lo) || (x) > (hi)) {                            \
-    std::stringstream errstr;                                               \
-    errstr << lo << " <= " << x << " <= " << hi;                            \
-    Invar::Invariant inv("Range Error", #x, errstr.str().c_str(), __FILE__, \
-                         __LINE__);                                         \
-    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl;  \
-    throw inv;                                                              \
+#define RANGE_CHECK(lo, x, hi)                                                \
+  if ((lo) > (hi) || (x) < (lo) || (x) > (hi)) {                              \
+    std::stringstream errstr;                                                 \
+    errstr << lo << " <= " << x << " <= " << hi;                              \
+    Invar::Invariant inv("Range Error", #x, errstr.str().c_str(), __FILE__,   \
+                         __LINE__);                                           \
+    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
+    throw inv;                                                                \
   }
 
-#define URANGE_CHECK(x, hi)                                                 \
-  if (x >= (hi)) {                                                          \
-    std::stringstream errstr;                                               \
-    errstr << x << " < " << hi;                                             \
-    Invar::Invariant inv("Range Error", #x, errstr.str().c_str(), __FILE__, \
-                         __LINE__);                                         \
-    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl;  \
-    throw inv;                                                              \
+#define URANGE_CHECK(x, hi)                                                   \
+  if (x >= (hi)) {                                                            \
+    std::stringstream errstr;                                                 \
+    errstr << x << " < " << hi;                                               \
+    Invar::Invariant inv("Range Error", #x, errstr.str().c_str(), __FILE__,   \
+                         __LINE__);                                           \
+    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
+    throw inv;                                                                \
   }
 
-#define TEST_ASSERT(expr)                                                  \
-  if (!(expr)) {                                                           \
-    Invar::Invariant inv("Test Assert", "Expression Failed: ", #expr,      \
-                         __FILE__, __LINE__);                              \
-    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl; \
-    ;                                                                      \
-    throw inv;                                                             \
+#define TEST_ASSERT(expr)                                                     \
+  if (!(expr)) {                                                              \
+    Invar::Invariant inv("Test Assert", "Expression Failed: ", #expr,         \
+                         __FILE__, __LINE__);                                 \
+    BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n\n" << std::flush; \
+    throw inv;                                                                \
   }
 
 #elif INVARIANT_ASSERT_METHOD
