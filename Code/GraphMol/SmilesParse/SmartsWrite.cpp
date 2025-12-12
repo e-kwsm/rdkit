@@ -283,7 +283,7 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
   } else {
     BOOST_LOG(rdWarningLog)
         << "Cannot write SMARTS for query type : " << descrip
-        << ". Ignoring it." << std::endl;
+        << ". Ignoring it.\n";
     res << "*";
   }
 
@@ -974,7 +974,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
   auto qbond = dynamic_cast<const QueryBond *>(bond);
   if (!qbond && ((bond->getBondType() == Bond::SINGLE) ||
                  (bond->getBondType() == Bond::AROMATIC))) {
-    BOOST_LOG(rdInfoLog) << "\tbasic:" << res << std::endl;
+    BOOST_LOG(rdInfoLog) << "\tbasic:" << res << '\n';
     return res;
   }
   CHECK_INVARIANT(qbond, "could not convert bond to QueryBond");
