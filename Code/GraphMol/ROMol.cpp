@@ -460,30 +460,30 @@ void ROMol::setStereoGroups(std::vector<StereoGroup> stereo_groups) {
 }
 
 void ROMol::debugMol(std::ostream &str) const {
-  str << "Atoms:" << std::endl;
+  str << "Atoms:" << '\n';
   for (const auto atom : atoms()) {
-    str << "\t" << *atom << std::endl;
+    str << "\t" << *atom << '\n';
   }
 
-  str << "Bonds:" << std::endl;
+  str << "Bonds:" << '\n';
   for (const auto bond : bonds()) {
-    str << "\t" << *bond << std::endl;
+    str << "\t" << *bond << '\n';
   }
 
   const auto &sgs = getSubstanceGroups(*this);
   if (!sgs.empty()) {
-    str << "Substance Groups:" << std::endl;
+    str << "Substance Groups:" << '\n';
     for (const auto &sg : sgs) {
-      str << "\t" << sg << std::endl;
+      str << "\t" << sg << '\n';
     }
   }
 
   const auto &stgs = getStereoGroups();
   if (!stgs.empty()) {
     unsigned idx = 0;
-    str << "Stereo Groups:" << std::endl;
+    str << "Stereo Groups:" << '\n';
     for (const auto &stg : stgs) {
-      str << "\t" << idx << ' ' << stg << std::endl;
+      str << "\t" << idx << ' ' << stg << '\n';
       ++idx;
     }
   }
