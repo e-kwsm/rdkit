@@ -241,7 +241,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
       delete conf;
       conf = nullptr;
       BOOST_LOG(rdErrorLog) << " Unhandled CTAB feature: '" << e.what()
-                            << "'. Molecule skipped." << std::endl;
+                            << "'. Molecule skipped." << '\n';
 
       if (!inStream.eof()) {
         tempStr = getLine(inStream);

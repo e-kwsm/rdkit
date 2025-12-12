@@ -97,7 +97,7 @@ void getAllMatchesPrbRef(const ROMol &prbMol, const ROMol &refMol,
     BOOST_LOG(rdWarningLog)
         << "Warning in " << __FUNCTION__ << ": " << matches.size()
         << " matches detected for molecule " << name << ", this may "
-        << "lead to a performance slowdown." << std::endl;
+        << "lead to a performance slowdown." << '\n';
   }
   if (ignoreHs) {
     // filter Hs out of the matches
