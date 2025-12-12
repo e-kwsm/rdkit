@@ -66,7 +66,7 @@ void CheckRingClosureBranchStatus(RDKit::Atom *atom, RDKit::RWMol *mp) {
 void ReportParseError(const char *message, bool throwIt) {
   PRECONDITION(message, "bad message");
   if (!throwIt) {
-    BOOST_LOG(rdErrorLog) << "SMILES Parse Error: " << message << std::endl;
+    BOOST_LOG(rdErrorLog) << "SMILES Parse Error: " << message << '\n';
   } else {
     throw SmilesParseException(message);
   }
@@ -426,7 +426,7 @@ void CheckChiralitySpecifications(RDKit::RWMol *mol, bool strict) {
             (boost::format("Invalid chiral specification on atom %d") %
              atom->getIdx())
                 .str();
-        BOOST_LOG(rdWarningLog) << error << std::endl;
+        BOOST_LOG(rdWarningLog) << error << '\n';
         if (strict) {
           throw SmilesParseException(error);
         }
@@ -671,8 +671,7 @@ void CleanupAfterParsing(RWMol *mol) {
     }
     if (needWarn) {
       BOOST_LOG(rdWarningLog)
-          << "ignoring non-tetrahedral stereo specification since setAllowNontetrahedralChirality() is false."
-          << std::endl;
+          << "ignoring non-tetrahedral stereo specification since setAllowNontetrahedralChirality() is false.\n";
     }
   }
 }
@@ -719,13 +718,13 @@ void printSyntaxErrorMessage(std::string_view input,
                                          : bad_token_position - 1);
 
   BOOST_LOG(rdErrorLog) << input_type << " Parse Error: " << err_message
-                        << " while parsing: " << input << std::endl;
-  BOOST_LOG(rdErrorLog)
-      << input_type << " Parse Error: check for mistakes around position "
-      << bad_token_position << ":" << std::endl;
+                        << " while parsing: " << input << '\n';
+  BOOST_LOG(rdErrorLog) << input_type
+                        << " Parse Error: check for mistakes around position "
+                        << bad_token_position << ":" << '\n';
   BOOST_LOG(rdErrorLog) << truncate_input(input, bad_token_position - 1)
-                        << std::endl;
-  BOOST_LOG(rdErrorLog) << std::string(num_dashes, '~') << "^" << std::endl;
+                        << '\n';
+  BOOST_LOG(rdErrorLog) << std::string(num_dashes, '~') << "^" << '\n';
 }
 }  // namespace detail
 }  // end of namespace SmilesParseOps
