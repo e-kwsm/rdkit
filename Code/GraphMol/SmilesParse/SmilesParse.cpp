@@ -268,7 +268,7 @@ std::unique_ptr<RWMol> toMol(const std::string &inp,
       nm = "SMARTS";
     }
     BOOST_LOG(rdErrorLog) << nm << " Parse Error: " << e.what()
-                          << " for input: '" << origInp << "'" << std::endl;
+                          << " for input: '" << origInp << "'\n";
 
     // reset res so that we return a nullptr. We don't want to reset(),
     // because that would delete the mol and leak any unmatched
@@ -301,7 +301,7 @@ std::unique_ptr<Atom> toAtom(const std::string &inp,
       nm = "SMARTS";
     }
     BOOST_LOG(rdErrorLog) << nm << " Parse Error: " << e.what()
-                          << " for input: '" << inp << "'" << std::endl;
+                          << " for input: '" << inp << "'\n";
     res = nullptr;
   }
   return std::unique_ptr<Atom>(res);
@@ -322,7 +322,7 @@ std::unique_ptr<Bond> toBond(const std::string &inp,
       nm = "SMARTS";
     }
     BOOST_LOG(rdErrorLog) << nm << " Parse Error: " << e.what()
-                          << " for input: '" << inp << "'" << std::endl;
+                          << " for input: '" << inp << "'\n";
     res = nullptr;
   }
   return std::unique_ptr<Bond>(res);
