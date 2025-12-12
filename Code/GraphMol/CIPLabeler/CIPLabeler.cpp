@@ -244,7 +244,7 @@ void assignCIPLabels(ROMol &mol, const boost::dynamic_bitset<> &atoms,
   }
   if (hdlr.getGotSignal()) {
     BOOST_LOG(rdWarningLog)
-        << "Interrupted, cancelling CIP label calculation" << std::endl;
+        << "Interrupted, cancelling CIP label calculation\n";
     return;
   }
 
