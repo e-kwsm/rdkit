@@ -643,7 +643,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
   boost::dynamic_bitset<> seenFromHere(mol.getNumAtoms());
 
   seenFromHere.set(atomIdx);
-  molStack.push_back(MolStackElem(atom));
+  molStack.emplace_back(atom);
   colors[atomIdx] = GREY_NODE;
 
   INT_LIST travList;
@@ -667,8 +667,8 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
                                  ringIdx)) {
         // this is end of the ring closure
         // we can just pull the ring index from the bond itself:
-        molStack.push_back(MolStackElem(bond, atomIdx));
-        molStack.push_back(MolStackElem(ringIdx));
+        molStack.emplace_back(bond, atomIdx);
+        molStack.emplace_back(ringIdx);
         // don't make the ring digit immediately available again: we don't want
         // to have the same
         // ring digit opening and closing rings on an atom.
@@ -784,7 +784,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
       // we're branching
       molStack.emplace_back("(", rdcast<int>(possiblesIt - possibles.begin()));
     }
-    molStack.push_back(MolStackElem(bond, atomIdx));
+    molStack.emplace_back(bond, atomIdx);
     dfsBuildStack(mol, possibleIdx, bond->getIdx(), colors, cycles, ranks,
                   cyclesAvailable, molStack, atomRingClosures,
                   atomTraversalBondOrder, bondsInPlay, bondSymbols, doRandom);
