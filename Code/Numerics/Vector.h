@@ -161,7 +161,7 @@ class Vector {
 
   //! L2 norm squared
   constexpr inline TYPE normL2Sq() const {
-    TYPE res = (TYPE)0.0;
+    TYPE res = static_cast<TYPE>(0.0);
     unsigned int i;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -175,7 +175,7 @@ class Vector {
 
   //! L1 norm
   constexpr TYPE normL1() const {
-    TYPE res = (TYPE)0.0;
+    TYPE res = static_cast<TYPE>(0.0);
     unsigned int i;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -186,7 +186,7 @@ class Vector {
 
   //! L-infinity norm
   constexpr TYPE normLinfinity() const {
-    TYPE res = (TYPE)(-1.0);
+    TYPE res = static_cast<TYPE>(-1.0);
     unsigned int i;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -200,7 +200,7 @@ class Vector {
   //! \brief Gets the ID of the entry that has the largest absolute value
   //! i.e. the entry being used for the L-infinity norm
   constexpr unsigned int largestAbsValId() const {
-    TYPE res = (TYPE)(-1.0);
+    TYPE res = static_cast<TYPE>(-1.0);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -214,7 +214,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the largest value
   constexpr unsigned int largestValId() const {
-    TYPE res = (TYPE)(-1.e8);
+    TYPE res = static_cast<TYPE>(-1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -228,7 +228,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the smallest value
   constexpr unsigned int smallestValId() const {
-    TYPE res = (TYPE)(1.e8);
+    TYPE res = static_cast<TYPE>(1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
