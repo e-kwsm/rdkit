@@ -5255,9 +5255,8 @@ TEST_CASE(
     smilesVec.emplace_back("C1=CC=C[CH+]C=C1");
     smilesVec.emplace_back("c1c[cH+]1");
     smilesVec.emplace_back("c1ccc[cH+]cc1");
-    for (std::vector<std::string>::const_iterator smiles = smilesVec.begin();
-         smiles != smilesVec.end(); ++smiles) {
-      RWMol *m = SmilesToMol(*smiles);
+    for (const auto &smiles : smilesVec) {
+      RWMol *m = SmilesToMol(smiles);
       REQUIRE(m);
       bool allConjugated = true;
       for (unsigned int i = 0; allConjugated && i < m->getNumBonds(); ++i) {
