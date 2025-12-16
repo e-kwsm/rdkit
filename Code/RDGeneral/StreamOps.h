@@ -143,7 +143,7 @@ inline void appendPackedIntToStream(std::stringstream &ss,
   // val = EndianSwapBytes<HOST_ENDIAN_ORDER,LITTLE_ENDIAN_ORDER>(val);
 
   for (bix = 0; bix < nbytes; bix++) {
-    tc = (char)(val & 255);
+    tc = static_cast<char>(val & 255);
     ss.write(&tc, 1);
     val >>= 8;
   }
@@ -159,7 +159,7 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
     throw std::runtime_error("failed to read from stream");
   }
 
-  val = UCHAR(tmp);
+  val = static_cast<UCHAR>(tmp);
   offset = 0;
   if ((val & 1) == 0) {
     shift = 1;
@@ -169,22 +169,22 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
       throw std::runtime_error("failed to read from stream");
     }
 
-    val |= (UCHAR(tmp) << 8);
+    val |= (static_cast<UCHAR>(tmp) << 8);
     shift = 2;
     offset = (1 << 7);
   } else if ((val & 7) == 3) {
+    ss.read(static_cast<char *>(&tmp), sizeof(tmp));
+    if (ss.fail()) {
+      throw std::runtime_error("failed to read from stream");
+    }
+
+    val |= (static_cast<UCHAR>(tmp) << 8);
     ss.read((char *)&tmp, sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
 
-    val |= (UCHAR(tmp) << 8);
-    ss.read((char *)&tmp, sizeof(tmp));
-    if (ss.fail()) {
-      throw std::runtime_error("failed to read from stream");
-    }
-
-    val |= (UCHAR(tmp) << 16);
+    val |= (static_cast<UCHAR>(tmp) << 16);
     shift = 3;
     offset = (1 << 7) + (1 << 14);
   } else {
@@ -193,19 +193,19 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
       throw std::runtime_error("failed to read from stream");
     }
 
-    val |= (UCHAR(tmp) << 8);
+    val |= (static_cast<UCHAR>(tmp) << 8);
     ss.read((char *)&tmp, sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
 
-    val |= (UCHAR(tmp) << 16);
+    val |= (static_cast<UCHAR>(tmp) << 16);
     ss.read((char *)&tmp, sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
 
-    val |= (UCHAR(tmp) << 24);
+    val |= (static_cast<UCHAR>(tmp) << 24);
     shift = 3;
     offset = (1 << 7) + (1 << 14) + (1 << 21);
   }
@@ -222,35 +222,35 @@ inline boost::uint32_t pullPackedIntFromString(const char *&text) {
   char tmp;
   tmp = *text;
   text++;
-  val = UCHAR(tmp);
+  val = static_cast<UCHAR>(tmp);
   offset = 0;
   if ((val & 1) == 0) {
     shift = 1;
   } else if ((val & 3) == 1) {
     tmp = *text;
     text++;
-    val |= (UCHAR(tmp) << 8);
+    val |= (static_cast<UCHAR>(tmp) << 8);
     shift = 2;
     offset = (1 << 7);
   } else if ((val & 7) == 3) {
     tmp = *text;
     text++;
-    val |= (UCHAR(tmp) << 8);
+    val |= (static_cast<UCHAR>(tmp) << 8);
     tmp = *text;
     text++;
-    val |= (UCHAR(tmp) << 16);
+    val |= (static_cast<UCHAR>(tmp) << 16);
     shift = 3;
     offset = (1 << 7) + (1 << 14);
   } else {
     tmp = *text;
     text++;
-    val |= (UCHAR(tmp) << 8);
+    val |= (static_cast<UCHAR>(tmp) << 8);
     tmp = *text;
     text++;
-    val |= (UCHAR(tmp) << 16);
+    val |= (static_cast<UCHAR>(tmp) << 16);
     tmp = *text;
     text++;
-    val |= (UCHAR(tmp) << 24);
+    val |= (static_cast<UCHAR>(tmp) << 24);
     shift = 3;
     offset = (1 << 7) + (1 << 14) + (1 << 21);
   }
