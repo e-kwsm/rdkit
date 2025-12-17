@@ -40,9 +40,9 @@ class RDKIT_RDGENERAL_EXPORT Dict {
     std::string key;
     RDValue val;
 
-    Pair() : key(), val() {}
-    explicit Pair(std::string s) : key(std::move(s)), val() {}
-    explicit Pair(std::string_view s) : key(std::string(s)), val() {}
+    Pair() = default;
+    explicit Pair(std::string s) : key(std::move(s)) {}
+    explicit Pair(std::string_view s) : key(std::string(s)) {}
     Pair(std::string s, const RDValue &v) : key(std::move(s)), val(v) {}
     Pair(std::string_view s, const RDValue &v) : key(std::string(s)), val(v) {}
     // In the case you are holding onto an rdvalue outside of a dictionary
@@ -361,7 +361,7 @@ inline std::string Dict::getVal<std::string>(
 //  This utility class covers cleanup and copying
 class PairHolder : public Dict::Pair {
  public:
-  PairHolder() : Pair() {}
+  PairHolder() = default;
 
   explicit PairHolder(const PairHolder &p) : Pair(p.key) {
     copy_rdvalue(this->val, p.val);
