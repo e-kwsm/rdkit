@@ -327,7 +327,7 @@ TEST_CASE("HBond") {
   TEST_ASSERT(!grd.compareGrids(grd1));
   const RealValueVect *vect = grd.getOccupancyVect();
   const RealValueVect *vect1 = grd1.getOccupancyVect();
-  CHECK((unsigned int)fabs(((*vect1 - *vect).getTotalVal())) == grd.getSize());
+  CHECK(fabs(((*vect1 - *vect).getTotalVal())) == grd.getSize() > 0);
 
   hbonddes = HBond(*mol, 0, "O", true, 0.001);
   CHECK(hbonddes.getNumInteractions() == 0);
@@ -337,7 +337,7 @@ TEST_CASE("HBond") {
   }
   calculateDescriptors<HBond>(grd, hbonddes);
   TEST_ASSERT(!grd.compareGrids(grd1));
-  CHECK((unsigned int)fabs(((*vect1 - *vect).getTotalVal())));
+  CHECK(fabs(((*vect1 - *vect).getTotalVal())) > 0);
 
   mol = v2::FileParsers::MolFromMolFile(path + "aceticacid.mol",
                                         fopts);  // Acetic Acid
