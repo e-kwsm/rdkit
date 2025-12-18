@@ -1992,8 +1992,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToCXSmiles",
-      (std::string (*)(const ROMol &, bool, bool, int, bool, bool, bool,
-                       bool))RDKit::MolToCXSmiles,
+      static_cast<std::string (*)(const ROMol &, bool, bool, int, bool, bool,
+                                  bool, bool)>(RDKit::MolToCXSmiles),
       (python::arg("mol"), python::arg("isomericSmiles") = true,
        python::arg("kekuleSmiles") = false, python::arg("rootedAtAtom") = -1,
        python::arg("canonical") = true, python::arg("allBondsExplicit") = false,
@@ -2097,10 +2097,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
     a string\n\
 \n";
-  python::def("MolToSmarts",
-              (std::string (*)(const ROMol &,
-                               const SmilesWriteParams &))RDKit::MolToSmarts,
-              (python::arg("mol"), python::arg("params")), docString.c_str());
+  python::def(
+      "MolToSmarts",
+      static_cast<std::string (*)(const ROMol &, const SmilesWriteParams &)>(
+          RDKit::MolToSmarts),
+      (python::arg("mol"), python::arg("params")), docString.c_str());
 
   docString =
       "Returns a SMARTS string for a fragment of a molecule\n\
@@ -2134,10 +2135,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
     a string\n\
 \n";
-  python::def("MolToCXSmarts",
-              (std::string (*)(const ROMol &, bool))RDKit::MolToCXSmarts,
-              (python::arg("mol"), python::arg("isomericSmiles") = true),
-              docString.c_str());
+  python::def(
+      "MolToCXSmarts",
+      static_cast<std::string (*)(const ROMol &, bool)>(RDKit::MolToCXSmarts),
+      (python::arg("mol"), python::arg("isomericSmiles") = true),
+      docString.c_str());
 
   docString =
       "Returns a SMARTS string for a fragment of a molecule\n\
