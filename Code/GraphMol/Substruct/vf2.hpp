@@ -129,7 +129,6 @@ node_id *SortNodesByFrequency(const Graph *g) {
     for (run = 1; i + run < vect.size() && vect[i + run].in == vect[i].in &&
                   vect[i + run].out == vect[i].out;
          ++run) {
-      ;
     }
     for (unsigned int j = 0; j < run; ++j) {
       vect[i + j].in += vect[i + j].out;
