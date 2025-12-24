@@ -131,7 +131,7 @@ class MolBundle : public RDProps {
   // FIX: we don't currently serialize properties
   template <class Archive>
   void save(Archive &ar, const unsigned int version) const {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     std::vector<std::string> pkls;
     for (const auto &mol : d_mols) {
       std::string pkl;
@@ -143,7 +143,7 @@ class MolBundle : public RDProps {
 
   template <class Archive>
   void load(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
 
     std::vector<std::string> pkls;
     ar >> pkls;
