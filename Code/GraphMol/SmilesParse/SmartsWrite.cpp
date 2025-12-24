@@ -969,7 +969,6 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
   std::string res = "";
 
   // BOOST_LOG(rdInfoLog) << "bond: " << bond->getIdx() << std::endl;
-  ;
   // it is possible that we are regular single bond and we don't need to write
   // anything
   if (!bond->hasQuery()) {
