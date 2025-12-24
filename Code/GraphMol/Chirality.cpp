@@ -1156,7 +1156,7 @@ PrecomputedBondFeatures computeBondFeatures(const ROMol &mol) {
           unsigned int nbrDeg = nbr->getDegree();
           isChiralPhosphorusSpecialCase = nbrDeg == 3 || nbrDeg == 4;
         }
-      };
+      }
 
       // general justification of this is:
       // Paragraph 2.2. in the 1966 article is "Valence-Bond Conventions:
