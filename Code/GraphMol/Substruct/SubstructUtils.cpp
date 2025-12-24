@@ -296,7 +296,7 @@ bool isAtomTerminalRGroupOrQueryHydrogen(const Atom *atom) {
 }
 
 #define PT_OPT_GET(opt) params.opt = pt.get(#opt, params.opt)
-#define PT_OPT_PUT(opt) pt.put(#opt, params.opt);
+#define PT_OPT_PUT(opt) pt.put(#opt, params.opt)
 
 void updateSubstructMatchParamsFromJSON(SubstructMatchParameters &params,
                                         const std::string &json) {
