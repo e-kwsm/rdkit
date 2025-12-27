@@ -74,7 +74,7 @@ void SmartsMatcher::setPattern(const std::string &smarts) {
 }
 
 void SmartsMatcher::setPattern(const ROMol &mol) {
-  d_pattern.reset(new ROMol(mol));
+  d_pattern = boost::make_shared<ROMol>(mol);
 }
 
 SmartsMatcher::SmartsMatcher(const SmartsMatcher &rhs)
