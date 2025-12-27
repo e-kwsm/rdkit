@@ -132,7 +132,7 @@ python::tuple smilesTautomerMapValuesHelper(
     const MolStandardize::SmilesTautomerMap &self) {
   python::list values;
   for (const auto &pair : self) {
-    values.append(TAUT_SPTR(new MolStandardize::Tautomer(pair.second)));
+    values.append(boost::make_shared<MolStandardize::Tautomer>(pair.second));
   }
   return python::tuple(values);
 }
@@ -142,7 +142,7 @@ python::tuple smilesTautomerMapItemsHelper(
   python::list items;
   for (const auto &pair : self) {
     items.append(python::make_tuple(
-        pair.first, TAUT_SPTR(new MolStandardize::Tautomer(pair.second))));
+        pair.first, boost::make_shared<MolStandardize::Tautomer>(pair.second)));
   }
   return python::tuple(items);
 }
