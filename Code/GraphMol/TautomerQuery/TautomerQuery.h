@@ -142,7 +142,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
     ar >> pkls;
     d_tautomers.clear();
     for (const auto &pkl : pkls) {
-      d_tautomers.push_back(ROMOL_SPTR(new ROMol(pkl)));
+      d_tautomers.push_back(boost::make_shared<ROMol>(pkl));
     }
     std::string molpkl;
     ar >> molpkl;
