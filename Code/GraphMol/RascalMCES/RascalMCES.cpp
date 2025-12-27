@@ -1086,9 +1086,9 @@ RascalStartPoint makeInitialPartitionSet(const ROMol *mol1, const ROMol *mol2,
     starter.d_lowerBound = calcLowerBound(*starter.d_mol1, *starter.d_mol2,
                                           opts.similarityThreshold);
   }
-  starter.d_partSet.reset(new PartitionSet(starter.d_modProd,
-                                           starter.d_vtxPairs, bondLabels1,
-                                           bondLabels2, starter.d_lowerBound));
+  starter.d_partSet = std::make_shared<PartitionSet>(
+      starter.d_modProd, starter.d_vtxPairs, bondLabels1, bondLabels2,
+      starter.d_lowerBound);
 
   starter.d_deltaYPoss =
       deltaYExchangePossible(*starter.d_mol1, *starter.d_mol2);
