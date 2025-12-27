@@ -338,7 +338,7 @@ TEST_CASE("testRDValue") {
     mptr anym = rdany_cast<mptr>(mv);
     REQUIRE(anym->find(0) != anym->end());
 
-    RDAny any3(boost::shared_ptr<Foo>(new Foo(1, 2.f)));
+    RDAny any3(boost::make_shared<Foo>(1, 2.f));
     REQUIRE(any3.m_value.getTag() == RDTypeTag::AnyTag);
   }
 }
