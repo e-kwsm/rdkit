@@ -96,7 +96,7 @@ void MorganFeatureAtomInvGenerator::fromJSON(
     const auto &patternsNode = pt.get_child("patternSMARTS");
     dp_patterns = new std::vector<const ROMol *>();
     for (const auto &patternNode : patternsNode) {
-      std::string smarts = patternNode.second.get_value<std::string>();
+      auto smarts = patternNode.second.get_value<std::string>();
       ROMol *patternMol = SmartsToMol(smarts);
       if (patternMol) {
         dp_patterns->push_back(patternMol);
