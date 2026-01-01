@@ -1068,7 +1068,7 @@ TEST_CASE("extra atom and bond queries") {
     {
       // specifying conformer ID on the molecule
       ROMol mcp(*m);
-      Conformer *conf = new Conformer(mcp.getConformer());
+      auto *conf = new Conformer(mcp.getConformer());
       mcp.getConformer().getAtomPos(3).z += 10;
       auto cid = mcp.addConformer(conf, true);
       auto matches = SubstructMatch(mcp, *q, ps);
@@ -1087,7 +1087,7 @@ TEST_CASE("extra atom and bond queries") {
     {
       // specifying conformer ID on the query
       ROMol qcp(*q);
-      Conformer *conf = new Conformer(qcp.getConformer());
+      auto *conf = new Conformer(qcp.getConformer());
       qcp.getConformer().getAtomPos(0).z += 10;
       auto cid = qcp.addConformer(conf, true);
       auto matches = SubstructMatch(*m, qcp, ps);
