@@ -413,7 +413,7 @@ std::unique_ptr<ROMol> molzip(
   if (b.getNumAtoms()) {
     newmol.reset(static_cast<RWMol *>(combineMols(a, b)));
   } else {
-    newmol.reset(new RWMol(a));
+    newmol = std::make_unique<RWMol>(a);
   }
 
   // doing the coordinate alignment is quicker if we know which atoms are in
