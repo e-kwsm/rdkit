@@ -154,7 +154,7 @@ TEST_CASE("S Amide 1") {
   resSmi.clear();
   SearchResultCallback cb =
       [&resSmi](const std::vector<std::unique_ptr<ROMol>> &r) {
-        for (auto &elem : r) {
+        for (const auto &elem : r) {
           resSmi.insert(MolToSmiles(*elem));
         }
         return false;
@@ -184,7 +184,7 @@ TEST_CASE("Search Callback returns true") {
   bool retval = false;
   SearchResultCallback cb =
       [&cbSmi, &retval](const std::vector<std::unique_ptr<ROMol>> &r) {
-        for (auto &elem : r) {
+        for (const auto &elem : r) {
           CHECK(r.size() == 2);
           cbSmi.insert(MolToSmiles(*elem));
         }
