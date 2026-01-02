@@ -461,7 +461,7 @@ ROMol *fragmentOnBonds(
     unsigned int bondidx;
     auto nbr_bond_stereo = getNbrBondStereo(*res, bond);
     // Grab a copy of any query on the outgoing bond if it will be needed later.
-    auto outBond = res->getBondBetweenAtoms(bidx, eidx);
+    auto *outBond = res->getBondBetweenAtoms(bidx, eidx);
     std::unique_ptr<Bond::QUERYBOND_QUERY> outQuery;
     if (!bondTypes && outBond->hasQuery()) {
       outQuery.reset(outBond->getQuery()->copy());

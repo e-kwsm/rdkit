@@ -302,7 +302,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
 
   unsigned int atomCount = res.get()->getMol()->getNumAtoms();
   for (unsigned int atomIdx = 0; atomIdx < atomCount; ++atomIdx) {
-    auto *atom = res->getMol()->getAtomWithIdx(atomIdx);
+    const auto *atom = res->getMol()->getAtomWithIdx(atomIdx);
 
     std::string dummyLabel = "";
     std::string atomClass = "";

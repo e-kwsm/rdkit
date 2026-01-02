@@ -59,7 +59,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
   if (params->templateFileDir != "") {
     templateFileDir = params->templateFileDir;
   } else {
-    auto rdbase = std::getenv("RDBASE");
+    auto *rdbase = std::getenv("RDBASE");
     if (rdbase != nullptr) {
       templateFileDir += rdbase;
       templateFileDir += "/Data/";
@@ -69,7 +69,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
   double scaleFactor = params->coordgenScaling;
 
   sketcherMinimizer minimizer(params->minimizerPrecision);
-  auto min_mol = new sketcherMinimizerMolecule();
+  auto *min_mol = new sketcherMinimizerMolecule();
 
   minimizer.setTreatNonterminalBondsToMetalAsZOBs(
       params->treatNonterminalBondsToMetalAsZeroOrder);
@@ -93,7 +93,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
   std::vector<sketcherMinimizerAtom *> ats(mol.getNumAtoms());
   for (auto atit = mol.beginAtoms(); atit != mol.endAtoms(); ++atit) {
     auto oatom = *atit;
-    auto atom = min_mol->addNewAtom();
+    auto *atom = min_mol->addNewAtom();
     atom->molecule = min_mol;  // seems like this should be in addNewAtom()
     atom->atomicNumber = oatom->getAtomicNum();
     atom->charge = oatom->getFormalCharge();
@@ -173,7 +173,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
 
   minimizer.initialize(min_mol);
   minimizer.runGenerateCoordinates();
-  auto conf = new Conformer(mol.getNumAtoms());
+  auto *conf = new Conformer(mol.getNumAtoms());
   for (size_t i = 0; i < mol.getNumAtoms(); ++i) {
     auto coords = RDGeom::Point3D(ats[i]->coordinates.x() / scaleFactor,
                                   ats[i]->coordinates.y() / scaleFactor, 0.0);
