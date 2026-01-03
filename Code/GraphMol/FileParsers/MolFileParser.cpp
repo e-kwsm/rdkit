@@ -3293,11 +3293,10 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
                << line;
         if (strictParsing) {
           throw FileParseException(errout.str());
-        } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-          // Prepare to read a lot of sgroups
-          nSgroups = std::numeric_limits<unsigned int>::max();
         }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        // Prepare to read a lot of sgroups
+        nSgroups = std::numeric_limits<unsigned int>::max();
       }
       sgroupFound = true;
       tempStr =
@@ -3308,9 +3307,8 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
         errout << "END SGROUP line not found on line " << line;
         if (strictParsing) {
           throw FileParseException(errout.str());
-        } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       } else {
         tempStr = getV3000Line(inStream, line);
         boost::to_upper(tempStr);
