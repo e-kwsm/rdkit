@@ -95,7 +95,7 @@ yysmarts_error( const char *input,
                 void *,
                 int,
                 unsigned int bad_token_position,
-                const char * msg )
+                const char *msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -107,7 +107,7 @@ yysmarts_error( const char *input,
 void
 yysmarts_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
-                unsigned int bad_token_position, const char * msg )
+                unsigned int bad_token_position, const char *msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -125,8 +125,8 @@ yysmarts_error( const char *input,
 %lex-param   {unsigned int &current_token_position}
 %parse-param {const char *input}
 %parse-param {std::vector<RDKit::RWMol *> *molList}
-%parse-param {RDKit::Atom* &lastAtom}
-%parse-param {RDKit::Bond* &lastBond}
+%parse-param {RDKit::Atom *&lastAtom}
+%parse-param {RDKit::Bond *&lastBond}
 %parse-param {unsigned &numAtomsParsed}
 %parse-param {unsigned &numBondsParsed}
 %parse-param {std::vector<std::pair<unsigned int, unsigned int>> &branchPoints}
@@ -137,14 +137,14 @@ yysmarts_error( const char *input,
 %code provides {
 #ifndef YY_DECL
 #define YY_DECL int yylex \
-               (YYSTYPE * yylval_param, yyscan_t yyscanner, int &start_token, unsigned int &current_token_position)
+               (YYSTYPE  *yylval_param, yyscan_t yyscanner, int &start_token, unsigned int &current_token_position)
 #endif
 }
 
 %union {
   int                      moli;
-  RDKit::QueryAtom * atom;
-  RDKit::QueryBond * bond;
+  RDKit::QueryAtom *atom;
+  RDKit::QueryBond *bond;
   RDKit::Atom::ChiralType chiraltype;
   int                      ival;
 }
@@ -295,7 +295,7 @@ mol: atomd {
 }
 
 | mol ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
 
   QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(atom, nullptr);
@@ -319,7 +319,7 @@ mol: atomd {
 }
 
 | mol bond_expr ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
 
   mp->setBondBookmark($2, $3);
