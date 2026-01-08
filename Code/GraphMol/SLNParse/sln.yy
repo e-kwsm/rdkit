@@ -57,7 +57,7 @@ namespace SLNParse = RDKit::SLNParse;
 void
 yysln_error( const char *input,
              std::vector<RDKit::RWMol *> *ms, bool doQ,
-	     void *scanner, const char * msg )
+	     void *scanner, const char *msg )
 {
   RDUNUSED_PARAM(ms);
   RDUNUSED_PARAM(doQ);
@@ -95,10 +95,10 @@ yyprint (FILE *file, int type, YYSTYPE value)
 
 %union {
   int                      mol_T;
-  RDKit::Atom *            atom_T;
-  RDKit::Bond *            bond_T;
+  RDKit::Atom             *atom_T;
+  RDKit::Bond             *bond_T;
   int                      ival_T;
-  std::string*             text_T;
+  std::string             *text_T;
   char                     char_T;
   RDKit::SLNParse::AttribType       *attrib_T;
   RDKit::SLNParse::AttribListType   *attriblist_T;

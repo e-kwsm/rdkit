@@ -48,7 +48,7 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
   // Faster implementation of yysmiles__scan_string that handles trimming
   YY_BUFFER_STATE b;
   char *buf;
-  yyconst char * yybytes = text.c_str();
+  yyconst char *yybytes = text.c_str();
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;

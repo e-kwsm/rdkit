@@ -45,7 +45,7 @@ yysmiles_error( const char *input,
                 RDKit::Bond* &,
                 unsigned int &, unsigned int &,
                 std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *, int, unsigned int bad_token_position, const char * msg )
+		void *, int, unsigned int bad_token_position, const char *msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -58,7 +58,7 @@ void
 yysmiles_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
                 std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *, int, unsigned int bad_token_position, const char * msg )
+		void *, int, unsigned int bad_token_position, const char *msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -70,7 +70,7 @@ yysmiles_error( const char *input,
 void
 yysmiles_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
-                unsigned int bad_token_position, const char * msg )
+                unsigned int bad_token_position, const char *msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -87,8 +87,8 @@ yysmiles_error( const char *input,
 %lex-param   {unsigned int &current_token_position}
 %parse-param {const char *input}
 %parse-param {std::vector<RDKit::RWMol *> *molList}
-%parse-param {RDKit::Atom* &lastAtom}
-%parse-param {RDKit::Bond* &lastBond}
+%parse-param {RDKit::Atom *&lastAtom}
+%parse-param {RDKit::Bond *&lastBond}
 %parse-param {unsigned &numAtomsParsed}
 %parse-param {unsigned &numBondsParsed}
 %parse-param {std::vector<std::pair<unsigned int, unsigned int>> &branchPoints}
@@ -98,13 +98,13 @@ yysmiles_error( const char *input,
 
 %code provides {
 #define YY_DECL int yylex \
-               (YYSTYPE * yylval_param, yyscan_t yyscanner, int &start_token, unsigned int &current_token_position)
+               (YYSTYPE *yylval_param, yyscan_t yyscanner, int &start_token, unsigned int &current_token_position)
 }
 
 %union {
   int                      moli;
-  RDKit::Atom * atom;
-  RDKit::Bond * bond;
+  RDKit::Atom *atom;
+  RDKit::Bond *bond;
   RDKit::Atom::ChiralType chiraltype;
   int                      ival;
 }
@@ -247,7 +247,7 @@ mol: atomd {
 }
 
 | mol ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
   mp->setAtomBookmark(atom, $2);
 
@@ -268,7 +268,7 @@ mol: atomd {
 }
 
 | mol BOND_TOKEN ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     $2->getBondType());
@@ -292,7 +292,7 @@ mol: atomd {
 }
 
 | mol MINUS_TOKEN ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     Bond::SINGLE);
