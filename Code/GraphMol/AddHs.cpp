@@ -1069,7 +1069,7 @@ void removeHs(RWMol &mol, const RemoveHsParameters &ps, bool sanitize) {
   // if we removed Hs and any chiral atoms now have more than 1 explict H,
   // remove those
   if (!atomsToRemove.empty()) {
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       if (!atom->getNoImplicit() &&
           atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
         unsigned int numExplicitHs = atom->getNumExplicitHs();
