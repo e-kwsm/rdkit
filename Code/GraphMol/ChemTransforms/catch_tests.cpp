@@ -62,7 +62,7 @@ TEST_CASE("Github #1039") {
     auto m = "O/C=N/C=C"_smiles;
     std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1}};
     std::vector<unsigned int> bonds{0};
-    auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+    auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
     CHECK(MolToSmiles(*resa) == "*/C=N/C=C.[1*]O");
     // make sure we still have stereo atoms
     std::vector<std::vector<int>> expected_stereo_atoms{
@@ -80,7 +80,7 @@ TEST_CASE("Github #1039") {
     auto m = "C/C(O)=N/C=C"_smiles;
     std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1}};
     std::vector<unsigned int> bonds{0};
-    auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+    auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
     CHECK(MolToSmiles(*resa) == "*/C(O)=N/C=C.[1*]C");
     // make sure we still have stereo atoms
     std::vector<std::vector<int>> expected_stereo_atoms;
@@ -106,7 +106,7 @@ TEST_CASE("Github #1039") {
         "[2*]C=C.[3*]/N=C/O", "[3*]=C.[4*]=C/N=C/O"};
     for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
       std::vector<unsigned int> bonds{i};
-      auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+      auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
       auto smiles = MolToSmiles(*resa);
       CHECK(smiles == expected[i]);
       delete resa;
@@ -124,7 +124,7 @@ TEST_CASE("Github #1039") {
         "[3*]F.[5*][C@@H](I)/N=C/O"};
     for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
       std::vector<unsigned int> bonds{i};
-      auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+      auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
       auto smiles = MolToSmiles(*resa);
       CHECK(smiles == expected[i]);
       delete resa;
@@ -197,14 +197,14 @@ TEST_CASE("molzip") {
         for (unsigned int j = 0; j < m->getNumBonds(); ++j) {
           if (i != j) {
             std::vector<unsigned int> bonds{i, j};
-            auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+            auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
             MolzipParams p;
             p.label = MolzipLabel::FragmentOnBonds;
             CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
             delete resa;
             // Now try using atom labels
-            auto res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
-                                                             &dummyLabels);
+            auto *res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
+                                                              &dummyLabels);
             for (auto *atom : res->atoms()) {
               if (atom->getIsotope()) {
                 atom->setAtomMapNum(atom->getIsotope());
@@ -480,7 +480,7 @@ TEST_CASE("Molzip with 2D coordinates", "[molzip]") {
   for (size_t i = 0; i < frags.size(); i++) {
     const auto sma =
         std::regex_replace(frags[i], std::regex(R"(\[\d\*\:\d\])"), "*");
-    const auto query = SmartsToMol(sma);
+    auto *const query = SmartsToMol(sma);
     const auto &mol = mols[i];
     const auto &molConformer = mol->getConformer();
     const auto molMatches = SubstructMatch(*mol, *query);
@@ -529,7 +529,7 @@ TEST_CASE("Github #6034: FragmentOnBonds may create unexpected radicals") {
   REQUIRE(pieces);
   REQUIRE(nCutsPerAtom == std::vector<unsigned>{1, 1, 0, 0, 0, 0, 0, 0, 0});
 
-  for (auto at : pieces->atoms()) {
+  for (auto *at : pieces->atoms()) {
     INFO("atom " + std::to_string(at->getIdx()));
     if (at->getAtomicNum() == 6) {
       CHECK(at->getNoImplicit() == (at->getIdx() == 1));
