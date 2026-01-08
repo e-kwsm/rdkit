@@ -83,22 +83,22 @@ yysmiles_error( const char *input,
 
 %define api.pure full
 %lex-param   {yyscan_t *scanner}
-%lex-param   {int& start_token}
-%lex-param   {unsigned int& current_token_position}
+%lex-param   {int &start_token}
+%lex-param   {unsigned int &current_token_position}
 %parse-param {const char *input}
 %parse-param {std::vector<RDKit::RWMol *> *molList}
 %parse-param {RDKit::Atom* &lastAtom}
 %parse-param {RDKit::Bond* &lastBond}
 %parse-param {unsigned &numAtomsParsed}
 %parse-param {unsigned &numBondsParsed}
-%parse-param {std::vector<std::pair<unsigned int, unsigned int>>& branchPoints}
+%parse-param {std::vector<std::pair<unsigned int, unsigned int>> &branchPoints}
 %parse-param {void *scanner}
-%parse-param {int& start_token}
-%parse-param {unsigned int& current_token_position}
+%parse-param {int &start_token}
+%parse-param {unsigned int &current_token_position}
 
 %code provides {
 #define YY_DECL int yylex \
-               (YYSTYPE * yylval_param , yyscan_t yyscanner, int& start_token, unsigned int& current_token_position)
+               (YYSTYPE * yylval_param , yyscan_t yyscanner, int &start_token, unsigned int &current_token_position)
 }
 
 %union {
