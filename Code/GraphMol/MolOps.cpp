@@ -266,7 +266,7 @@ int numDativeBonds(const Atom *atom) {
 // Returns true if the atom shouldn't do dative bonds.
 bool noDative(const Atom *a) {
   static const std::set<int> noD{1, 2, 9, 10};
-  return (noD.find(a->getAtomicNum()) != noD.end());
+  return noD.contains(a->getAtomicNum());
 };
 
 void metalBondCleanup(RWMol &mol, Atom *atom,
@@ -854,7 +854,7 @@ unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
   INT_INT_VECT_MAP comMap;
   for (unsigned int i = 0; i < mol.getNumAtoms(); i++) {
     int mi = mapping[i];
-    if (comMap.find(mi) == comMap.end()) {
+    if (!comMap.contains(mi)) {
       INT_VECT comp;
       comMap[mi] = comp;
     }

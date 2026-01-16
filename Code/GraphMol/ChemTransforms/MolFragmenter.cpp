@@ -70,7 +70,7 @@ void constructFragmenterAtomTypes(
       continue;
     }
     auto idx = boost::lexical_cast<unsigned int>(tokens[0]);
-    if (defs.find(idx) != defs.end()) {
+    if (defs.contains(idx)) {
       BOOST_LOG(rdWarningLog)
           << "definition #" << idx
           << " encountered more than once. Using the first occurrence."
@@ -161,13 +161,13 @@ void constructFragmenterBondTypes(
       continue;
     }
     auto idx1 = boost::lexical_cast<unsigned int>(tokens[0]);
-    if (atomTypes.find(idx1) == atomTypes.end()) {
+    if (!atomTypes.contains(idx1)) {
       BOOST_LOG(rdWarningLog)
           << "atom type #" << idx1 << " not recognized." << std::endl;
       continue;
     }
     auto idx2 = boost::lexical_cast<unsigned int>(tokens[1]);
-    if (atomTypes.find(idx2) == atomTypes.end()) {
+    if (!atomTypes.contains(idx2)) {
       BOOST_LOG(rdWarningLog)
           << "atom type #" << idx2 << " not recognized." << std::endl;
       continue;

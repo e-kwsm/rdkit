@@ -494,7 +494,7 @@ inline bool streamWriteProps(
   STR_VECT propsToSave = props.getPropList(savePrivate, saveComputed);
   std::unordered_set<std::string> propnames;
   for (const auto &pn : propsToSave) {
-    if (ignore.empty() || ignore.find(pn) == ignore.end()) {
+    if (ignore.empty() || !ignore.contains(pn)) {
       propnames.insert(pn);
     }
   }
@@ -502,7 +502,7 @@ inline bool streamWriteProps(
   const Dict &dict = props.getDict();
   COUNT_TYPE count = 0;
   for (const auto &elem : dict.getData()) {
-    if (propnames.find(elem.key) != propnames.end()) {
+    if (propnames.contains(elem.key)) {
       if (isSerializable(elem, handlers)) {
         count++;
       }
@@ -515,7 +515,7 @@ inline bool streamWriteProps(
 
   COUNT_TYPE writtenCount = 0;
   for (const auto &elem : dict.getData()) {
-    if (propnames.find(elem.key) != propnames.end()) {
+    if (propnames.contains(elem.key)) {
       if (isSerializable(elem, handlers)) {
         // note - not all properties are serializable, this may be
         //  a null op
