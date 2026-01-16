@@ -453,7 +453,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
       // if we haven't seen this exact environment before, add it to the
       // result
       if (morganArguments->df_includeRedundantEnvironments ||
-          neighborhoods.count(std::get<0>(*iter)) == 0) {
+          !neighborhoods.contains(std::get<0>(*iter))) {
         if (!morganArguments->df_onlyNonzeroInvariants ||
             (*atomInvariants)[std::get<2>(*iter)]) {
           if (includeAtoms[std::get<2>(*iter)]) {

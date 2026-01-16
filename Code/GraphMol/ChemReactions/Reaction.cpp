@@ -530,7 +530,7 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
     if (nbr->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
       // if we don't have a bond to a similarly mapped atom in the reactant,
       // we're done:
-      if (reactantBonds.find(mapNum) == reactantBonds.end()) {
+      if (!reactantBonds.contains(mapNum)) {
         return true;
       }
       const Bond *rBond = reactantBonds[mapNum];
@@ -636,7 +636,7 @@ VECT_INT_VECT getReactingAtoms(const ChemicalReaction &rxn,
       } else {
         // but mapped ones require more careful consideration
         // if this is found in a reactant:
-        if (mappedProductAtoms.find(mapNum) != mappedProductAtoms.end()) {
+        if (mappedProductAtoms.contains(mapNum)) {
           if (isChangedAtom(*oAtom, *(mappedProductAtoms[mapNum]), mapNum,
                             mappedProductAtoms)) {
             resIt->push_back(oAtom->getIdx());

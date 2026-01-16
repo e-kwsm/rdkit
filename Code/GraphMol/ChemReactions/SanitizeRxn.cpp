@@ -262,7 +262,7 @@ void fixAtomMaps(ChemicalReaction &rxn) {
     for (auto atom : (*it)->atoms()) {
       AtomInfo at(atom, templateIdx);
       if (at.rlabel && !at.atomMap) {
-        if (potential_mappings.find(at.rlabel) != potential_mappings.end()) {
+        if (potential_mappings.contains(at.rlabel)) {
           throw RxnSanitizeException(std::string("Duplicated RLabels"));
         }
         int map = potential_mappings[at.rlabel] =
@@ -339,8 +339,7 @@ void fixHs(ChemicalReaction &rxn) {
           if (atom->getPropIfPresent(common_properties::molAtomMapNumber,
                                      atomMap)) {
             if (atomMap) {
-              if (mappedToNonHeavyProductAtom.find(atomMap) ==
-                  mappedToNonHeavyProductAtom.end()) {
+              if (!mappedToNonHeavyProductAtom.contains(atomMap)) {
                 atom->clearProp(common_properties::molAtomMapNumber);
               } else {
                 BOOST_LOG(rdWarningLog)
