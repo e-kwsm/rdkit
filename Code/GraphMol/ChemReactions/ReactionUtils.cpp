@@ -281,7 +281,7 @@ void updateProductsStereochem(ChemicalReaction *rxn) {
       }
       int mapNum;
       prodAtom->getProp(common_properties::molAtomMapNumber, mapNum);
-      if (reactantMapping.find(mapNum) != reactantMapping.end()) {
+      if (reactantMapping.contains(mapNum)) {
         const auto reactAtom = reactantMapping[mapNum];
         if (prodAtom->getChiralTag() != Atom::CHI_UNSPECIFIED &&
             prodAtom->getChiralTag() != Atom::CHI_OTHER) {
