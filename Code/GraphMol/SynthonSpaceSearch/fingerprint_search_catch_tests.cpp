@@ -138,7 +138,7 @@ TEST_CASE("FP Small tests") {
       // to synthon c1ccccc1-n([3*])[1*] which it isn't.  Instead, make sure
       // all the ones that are found are in the brute force results.
       for (const auto &rs : resSmis) {
-        CHECK(fullSmis.find(rs) != fullSmis.end());
+        CHECK(fullSmis.contains(rs));
       }
     }
   }
