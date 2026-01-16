@@ -499,7 +499,7 @@ std::unique_ptr<ROMol> molzip(
           if (!mappings.contains(molno)) {
             auto &bond = mappings[molno];
             CHECK_INVARIANT(
-                linkerBonds.find(attached_molno) == linkerBonds.end(),
+                !linkerBonds.contains(attached_molno),
                 ("molzip: Linker attachment point with label: " +
                  std::to_string(attached_molno) + " found before linker bond"));
             linkerBonds[attached_molno] = &bond;
