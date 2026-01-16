@@ -216,7 +216,7 @@ std::string labelRecursivePatterns(const std::string &sma) {
         if (pos + 1 >= sma.size() || sma[pos + 1] != '_') {
           std::string recurs = sma.substr(dollarPos, pos - dollarPos + 1);
           std::string label;
-          if (patterns.find(recurs) != patterns.end()) {
+          if (patterns.contains(recurs)) {
             // seen this one before, add the label
             label = patterns[recurs];
           } else {
