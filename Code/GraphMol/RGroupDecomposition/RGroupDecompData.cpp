@@ -191,7 +191,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
   std::set<int> coresVisited;
   for (auto &position : results) {
     int core_idx = position.core_idx;
-    if (coresVisited.find(core_idx) == coresVisited.end()) {
+    if (!coresVisited.contains(core_idx)) {
       coresVisited.insert(core_idx);
       auto core = cores.find(core_idx);
       if (core != cores.end()) {
@@ -211,8 +211,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
     bool allH = true;
     for (auto &position : results) {
       R_DECOMP::const_iterator rgroup = position.rgroups.find(label);
-      bool labelHasCore =
-          labelCores[label].find(position.core_idx) != labelCores[label].end();
+      bool labelHasCore = labelCores[label].contains(position.core_idx);
       if (labelHasCore && rgroup != position.rgroups.end() &&
           !rgroup->second->is_hydrogen) {
         allH = false;
@@ -235,7 +234,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
         if (atomLabel > 0 && !params.removeAllHydrogenRGroupsAndLabels) {
           continue;
         }
-        if (labelsToErase.find(atomLabel) != labelsToErase.end()) {
+        if (labelsToErase.contains(atomLabel)) {
           atom->setAtomicNum(1);
           atom->clearProp(RLABEL);
           if (atom->hasProp(RLABEL_TYPE)) {
@@ -254,7 +253,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
 }
 
 bool RGroupDecompData::UsedLabels::add(int rlabel) {
-  if (labels_used.find(rlabel) != labels_used.end()) {
+  if (labels_used.contains(rlabel)) {
     return false;
   }
   labels_used.insert(rlabel);
@@ -263,7 +262,7 @@ bool RGroupDecompData::UsedLabels::add(int rlabel) {
 
 int RGroupDecompData::UsedLabels::next() {
   int i = 1;
-  while (labels_used.find(i) != labels_used.end()) {
+  while (labels_used.contains(i)) {
     ++i;
   }
   labels_used.insert(i);
@@ -358,7 +357,7 @@ void RGroupDecompData::relabelCore(
                                            userLabel);
         // If we can't replace a hydrogen only add the dummy if it exists in
         // the decomp This is unexpected.
-        if (addNew && match->rgroups.find(userLabel) == match->rgroups.end()) {
+        if (addNew && !match->rgroups.contains(userLabel)) {
           addNew = false;
         }
       }
@@ -399,7 +398,7 @@ void RGroupDecompData::relabelCore(
             !replaceHydrogenCoreDummy(*match, core, *atom, newLabel, rlabel);
         // If we can't replace a hydrogen only add the dummy if it exists in
         // the decomp This is unexpected.
-        if (addNew && match->rgroups.find(newLabel) == match->rgroups.end()) {
+        if (addNew && !match->rgroups.contains(newLabel)) {
           addNew = false;
         }
       }
