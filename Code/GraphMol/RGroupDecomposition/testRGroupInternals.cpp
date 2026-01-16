@@ -76,7 +76,7 @@ TEST_CASE("testCoresLabelledProperly", "[RGroupInternals]") {
       if (atom->hasProp(RLABEL)) {
         int rlabel = atom->getProp<int>(RLABEL);
         if (rlabel < 0) {
-          CHECK(rlabels.find(rlabel) == rlabels.end());
+          CHECK(!rlabels.contains(rlabel));
           rlabels.insert(rlabel);
         }
       }
