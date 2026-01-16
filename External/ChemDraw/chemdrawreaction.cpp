@@ -56,7 +56,7 @@ void make_query_atoms(RWMol &mol) {
 void add_template(const std::string &prop, std::map<int, ROMOL_SPTR> &templates,
                   std::unique_ptr<RWMol> &mol) {
   auto reactant_idx = mol->getProp<int>(prop);
-  if (templates.find(reactant_idx) != templates.end()) {
+  if (templates.contains(reactant_idx)) {
     templates[reactant_idx] =
         ROMOL_SPTR(combineMols(*templates[reactant_idx], *mol));
   } else {
