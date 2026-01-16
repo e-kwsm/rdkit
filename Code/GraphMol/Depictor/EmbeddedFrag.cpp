@@ -745,8 +745,8 @@ RDGeom::Transform2D EmbeddedFrag::computeOneAtomTrans(
 RDGeom::Transform2D EmbeddedFrag::computeTwoAtomTrans(
     unsigned int aid1, unsigned int aid2,
     const RDGeom::INT_POINT2D_MAP &nringCor) {
-  CHECK_INVARIANT(d_eatoms.find(aid1) != d_eatoms.end(), "");
-  CHECK_INVARIANT(d_eatoms.find(aid2) != d_eatoms.end(), "");
+  CHECK_INVARIANT(d_eatoms.contains(aid1), "");
+  CHECK_INVARIANT(d_eatoms.contains(aid2), "");
 
   // this is an easier thing to do than computeOneAtomTrans
   // we know that there are at least two atoms in common between the new ring
@@ -924,9 +924,9 @@ void EmbeddedFrag::addNonRingAtom(unsigned int aid, unsigned int toAid) {
   // const RDKit::ROMol *mol) {
   PRECONDITION(dp_mol, "");
   // check that aid does not belong the embedded fragment yet
-  PRECONDITION(d_eatoms.find(aid) == d_eatoms.end(), "");
+  PRECONDITION(!d_eatoms.contains(aid), "");
   // and that toAid is already in the embedded system
-  PRECONDITION(d_eatoms.find(toAid) != d_eatoms.end(), "");
+  PRECONDITION(d_eatoms.contains(toAid), "");
   if (d_eatoms[toAid].angle > 0.0) {
     addAtomToAtomWithAng(aid, toAid);
   } else {
