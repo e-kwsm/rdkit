@@ -1308,8 +1308,7 @@ TEST_CASE("Round TRIP") {
       }
       if (entry.is_regular_file() &&
           entry.path().extension().string() == ".mol") {
-        if (exceptions.find(entry.path().filename().string()) !=
-            exceptions.end()) {
+        if (exceptions.contains(entry.path().filename().string())) {
           std::cerr << "Skipping exception: " << entry.path() << std::endl;
           continue;
         }

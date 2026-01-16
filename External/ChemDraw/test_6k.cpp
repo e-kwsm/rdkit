@@ -335,8 +335,7 @@ TEST_CASE("Round TRIP") {
                 sanitizationpath + entry.path().filename().string());
             saniFailed++;
           } else {
-            if (known_failures.find(entry.path().filename().string()) !=
-                known_failures.end()) {
+            if (known_failures.contains(entry.path().filename().string())) {
               continue;  // we know this failure and it's ok for now
             }
 
