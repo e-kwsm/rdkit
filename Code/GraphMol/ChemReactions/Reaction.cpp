@@ -493,7 +493,7 @@ int numComplexQueries(
 }
 bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
                    const std::map<int, const Atom *> &mappedProductAtoms) {
-  PRECONDITION(mappedProductAtoms.find(mapNum) != mappedProductAtoms.end(),
+  PRECONDITION(mappedProductAtoms.contains(mapNum),
                "atom not mapped in products");
 
   if (rAtom.getAtomicNum() != pAtom.getAtomicNum() &&
