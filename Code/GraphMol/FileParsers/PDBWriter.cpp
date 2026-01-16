@@ -142,7 +142,7 @@ std::string GetDefaultAtomNumber(const Atom *atom,
                                  std::map<unsigned int, unsigned int> &elem) {
   std::string ret = "  ";
   unsigned int atno = atom->getAtomicNum();
-  if (elem.find(atno) == elem.end()) {
+  if (!elem.contains(atno)) {
     elem[atno] = 1;
     ret[0] = '1';
   } else {
