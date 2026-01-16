@@ -456,7 +456,7 @@ int pickBondToWedgeImpl(
     }
 
     int bid = bond->getIdx();
-    if (wedgeBonds.find(bid) == wedgeBonds.end()) {
+    if (!wedgeBonds.contains(bid)) {
       // very strong preference for Hs:
       auto *oatom = bond->getOtherAtom(atom);
       if (oatom->getAtomicNum() == 1) {

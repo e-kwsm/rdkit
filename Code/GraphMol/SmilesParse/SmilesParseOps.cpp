@@ -406,7 +406,7 @@ static const std::map<int, int> permutationLimits = {
 
 bool checkChiralPermutation(int chiralTag, int permutation) {
   if (chiralTag > RDKit::Atom::ChiralType::CHI_OTHER &&
-      permutationLimits.find(chiralTag) != permutationLimits.end() &&
+      permutationLimits.contains(chiralTag) &&
       (permutation < 0 || permutation > permutationLimits.at(chiralTag))) {
     return false;
   }
@@ -418,8 +418,7 @@ void CheckChiralitySpecifications(RDKit::RWMol *mol, bool strict) {
   for (const auto atom : mol->atoms()) {
     int permutation;
     if (atom->getChiralTag() > RDKit::Atom::ChiralType::CHI_OTHER &&
-        permutationLimits.find(atom->getChiralTag()) !=
-            permutationLimits.end() &&
+        permutationLimits.contains(atom->getChiralTag()) &&
         atom->getPropIfPresent(common_properties::_chiralPermutation,
                                permutation)) {
       if (!checkChiralPermutation(atom->getChiralTag(), permutation)) {
