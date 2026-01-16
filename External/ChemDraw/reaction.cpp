@@ -97,7 +97,7 @@ void ReactionStepInfo::set_reaction_step(
     ++atommap;
     unsigned int idx1 = mapping.first;
     unsigned int idx2 = mapping.second;
-    if (atoms.find(idx1) != atoms.end()) {
+    if (atoms.contains(idx1)) {
       atoms[idx1]->setAtomMapNum(atommap);
     } else {
       BOOST_LOG(rdWarningLog)
@@ -105,7 +105,7 @@ void ReactionStepInfo::set_reaction_step(
           << " ReactionStepAtomMap cannot find atom with node id " << idx1
           << "skipping schema..." << std::endl;
     }
-    if (atoms.find(idx2) != atoms.end()) {
+    if (atoms.contains(idx2)) {
       atoms[idx2]->setAtomMapNum(atommap);
     } else {
       // XXX log error
