@@ -36,7 +36,7 @@ class RDKIT_DEPICTOR_EXPORT CoordinateTemplates {
   }
 
   bool hasTemplateOfSize(unsigned int atomCount) {
-    if (m_templates.find(atomCount) != m_templates.end()) {
+    if (m_templates.contains(atomCount)) {
       return true;
     }
     return false;

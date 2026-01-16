@@ -273,7 +273,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
     }
     int ncnd;
     // if we are here because of backtracking
-    if (options.find(curr) != options.end()) {
+    if (options.contains(curr)) {
       opts = options[curr];
       CHECK_INVARIANT(opts.size() > 0, "");
     } else {
@@ -345,7 +345,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
         // if this is an atom we previously visted and picked we
         // simply tried a different option now, overwrite the options
         // stored for this atoms
-        if (options.find(curr) != options.end()) {
+        if (options.contains(curr)) {
           if (opts.size() == 0) {
             options.erase(curr);
             btmoves.pop_back();

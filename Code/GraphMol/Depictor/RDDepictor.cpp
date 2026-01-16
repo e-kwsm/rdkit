@@ -272,7 +272,7 @@ void embedFusedSystems(const RDKit::ROMol &mol,
       boost::dynamic_bitset<> coordMapAtoms(mol.getNumAtoms());
       for (const auto &ring : frings) {
         for (const auto &aid : ring) {
-          if (coordMap->find(aid) != coordMap->end()) {
+          if (coordMap->contains(aid)) {
             coordMapAtoms.set(aid);
           }
         }

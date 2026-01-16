@@ -254,7 +254,7 @@ void EmbeddedFrag::updateNewNeighs(
   d_eatoms[aid].neighs.clear();
   RDKit::INT_VECT hIndices;
   for (const auto nbr : dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(aid))) {
-    if (d_eatoms.find(nbr->getIdx()) == d_eatoms.end()) {
+    if (!d_eatoms.contains(nbr->getIdx())) {
       if (dp_mol->getAtomWithIdx(nbr->getIdx())->getAtomicNum() != 1) {
         d_eatoms[aid].neighs.push_back(nbr->getIdx());
       } else {
@@ -301,7 +301,7 @@ int EmbeddedFrag::findNeighbor(
   PRECONDITION(dp_mol, "");
 
   for (const auto nbr : dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(aid))) {
-    if (d_eatoms.find(nbr->getIdx()) != d_eatoms.end()) {
+    if (d_eatoms.contains(nbr->getIdx())) {
       return nbr->getIdx();
     }
   }
@@ -786,7 +786,7 @@ void EmbeddedFrag::reflectIfNecessaryCisTrans(EmbeddedFrag &embFrag,
     // us where the ring single bond in the cis/trans system should have gone
     p1norm = embFrag.d_eatoms[aid1].normal;
     auto ringAtm = embFrag.d_eatoms[aid1].CisTransNbr;
-    if (d_eatoms.find(ringAtm) != d_eatoms.end()) {
+    if (d_eatoms.contains(ringAtm)) {
       rAtmLoc = d_eatoms[ringAtm].loc;
     } else {
       // FIX: this is a work-around arising from issue 3135833
@@ -841,7 +841,7 @@ void EmbeddedFrag::reflectIfNecessaryDensity(EmbeddedFrag &embFrag,
   double densityNormal = 0.0;
   double densityReflect = 0.0;
   for (const auto &oci : embFrag.GetEmbeddedAtoms()) {
-    if (d_eatoms.find(oci.first) == d_eatoms.end()) {
+    if (!d_eatoms.contains(oci.first)) {
       auto loc1 = oci.second.loc;
       auto rloc1 = reflectPoint(loc1, pin1, pin2);
       for (const auto &tci : d_eatoms) {
@@ -895,7 +895,7 @@ void EmbeddedFrag::mergeRing(const EmbeddedFrag &embRing, unsigned int nCommon,
   const auto &oatoms = embRing.GetEmbeddedAtoms();
   for (const auto &ori : oatoms) {
     auto aid = ori.first;
-    if (d_eatoms.find(aid) == d_eatoms.end()) {
+    if (!d_eatoms.contains(aid)) {
       d_eatoms[aid] = ori.second;
     } else {
       // update the neighbor only on atoms that were used to compute the
@@ -1316,7 +1316,7 @@ void EmbeddedFrag::expandEfrag(RDKit::INT_LIST &nratms,
           // don't search fragments that are done
           if (!efri->isDone()) {
             const auto &eatoms = efri->GetEmbeddedAtoms();
-            if (eatoms.find(nbri) != eatoms.end()) {
+            if (eatoms.contains(nbri)) {
               nfri = efri;
               break;
             }
@@ -1721,8 +1721,7 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
       auto bid1 = b1->getIdx();
       auto beg1 = b1->getBeginAtomIdx();
       auto end1 = b1->getEndAtomIdx();
-      if ((d_eatoms.find(beg1) != d_eatoms.end()) &&
-          (d_eatoms.find(end1) != d_eatoms.end())) {
+      if ((d_eatoms.contains(beg1)) && (d_eatoms.contains(end1))) {
         auto v1 = d_eatoms[end1].loc - d_eatoms[beg1].loc;
         auto avg1 = d_eatoms[end1].loc + d_eatoms[beg1].loc;
         avg1 *= 0.5;
@@ -1733,8 +1732,7 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
 
           auto beg2 = b2->getBeginAtomIdx();
           auto end2 = b2->getEndAtomIdx();
-          if ((d_eatoms.find(beg2) != d_eatoms.end()) &&
-              (d_eatoms.find(end2) != d_eatoms.end())) {
+          if ((d_eatoms.contains(beg2)) && (d_eatoms.contains(end2))) {
             auto avg2 = d_eatoms[end2].loc + d_eatoms[beg2].loc;
             avg2 *= 0.5;
             avg2 -= avg1;

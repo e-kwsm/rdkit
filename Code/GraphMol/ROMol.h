@@ -507,7 +507,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! blows out all atomic \c bookmarks
   void clearAllAtomBookmarks() { d_atomBookmarks.clear(); }
   //! queries whether or not any atoms are associated with a \c bookmark
-  bool hasAtomBookmark(int mark) const { return d_atomBookmarks.count(mark); }
+  bool hasAtomBookmark(int mark) const { return d_atomBookmarks.contains(mark); }
   //! returns a pointer to all of our atom \c bookmarks
   ATOM_BOOKMARK_MAP *getAtomBookmarks() { return &d_atomBookmarks; }
 
@@ -530,7 +530,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! blows out all bond \c bookmarks
   void clearAllBondBookmarks() { d_bondBookmarks.clear(); }
   //! queries whether or not any bonds are associated with a \c bookmark
-  bool hasBondBookmark(int mark) const { return d_bondBookmarks.count(mark); }
+  bool hasBondBookmark(int mark) const { return d_bondBookmarks.contains(mark); }
   //! returns a pointer to all of our bond \c bookmarks
   BOND_BOOKMARK_MAP *getBondBookmarks() { return &d_bondBookmarks; }
 

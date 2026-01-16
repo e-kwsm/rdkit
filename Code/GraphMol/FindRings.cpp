@@ -183,7 +183,7 @@ void findSSSRforDupCands(const ROMol &mol, VECT_INT_VECT &res,
       for (const auto &nring : nrings) {
         if (nring.size() == minSiz) {
           auto invr = RingUtils::computeRingInvariant(nring, mol.getNumAtoms());
-          if (invars.find(invr) == invars.end()) {
+          if (!invars.contains(invr)) {
             res.push_back(nring);
             invars.insert(invr);
           }
@@ -331,7 +331,7 @@ void findRingsD2nodes(const ROMol &tMol, VECT_INT_VECT &res,
     bfs_workspace.smallestRingsBfs(tMol, cand, srings, activeBonds);
     for (const auto &nring : srings) {
       auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
-      if (invars.find(invr) == invars.end()) {
+      if (!invars.contains(invr)) {
         res.push_back(nring);
         invars.insert(invr);
         for (unsigned int i = 0; i < nring.size() - 1; ++i) {
@@ -423,7 +423,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
   for (VECT_INT_VECT_CI sri = srings.begin(); sri != srings.end(); ++sri) {
     const INT_VECT &nring = (*sri);
     auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
-    if (invars.find(invr) == invars.end()) {
+    if (!invars.contains(invr)) {
       res.push_back(nring);
       invars.insert(invr);
     }
@@ -488,7 +488,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
         const INT_VECT &nring = (*sri);
         auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
 
-        if (invars.find(invr) == invars.end()) {
+        if (!invars.contains(invr)) {
           res.push_back(nring);
           invars.insert(invr);
         }
@@ -527,7 +527,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
       for (VECT_INT_VECT_CI sri = trings.begin(); sri != trings.end(); ++sri) {
         const INT_VECT &nring = (*sri);
         auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
-        if (invars.find(invr) == invars.end()) {
+        if (!invars.contains(invr)) {
           res.push_back(nring);
           invars.insert(invr);
         }
@@ -541,7 +541,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
       for (VECT_INT_VECT_CI sri = trings.begin(); sri != trings.end(); ++sri) {
         const INT_VECT &nring = (*sri);
         auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
-        if (invars.find(invr) == invars.end()) {
+        if (!invars.contains(invr)) {
           res.push_back(nring);
           invars.insert(invr);
         }
@@ -766,7 +766,7 @@ bool _atomSearchBFS(const ROMol &tMol, unsigned int startAtomIdx,
           // make sure the ring we just found isn't already in our set
           // of rings (this was an extension of sf.net issue 249)
           auto invr = RingUtils::computeRingInvariant(nv, tMol.getNumAtoms());
-          if (invars.find(invr) == invars.end()) {
+          if (!invars.contains(invr)) {
             // we're done!
             res.resize(nv.size());
             std::copy(nv.begin(), nv.end(), res.begin());
@@ -802,7 +802,7 @@ bool findRingConnectingAtoms(const ROMol &tMol, const Bond *bond,
   if (_atomSearchBFS(tMol, bond->getBeginAtomIdx(), bond->getEndAtomIdx(),
                      ringAtoms, nring, invars)) {
     auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
-    if (invars.find(invr) == invars.end()) {
+    if (!invars.contains(invr)) {
       res.push_back(nring);
       invars.insert(invr);
       for (unsigned int i = 0; i < nring.size() - 1; ++i) {
