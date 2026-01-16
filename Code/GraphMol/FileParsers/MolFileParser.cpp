@@ -1522,8 +1522,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
   } else if (symb == "Pol" || symb == "Mod") {
     res->setAtomicNum(0);
     res->setProp(common_properties::dummyLabel, symb);
-  } else if (GenericGroups::genericMatchers.find(symb) !=
-             GenericGroups::genericMatchers.end()) {
+  } else if (GenericGroups::genericMatchers.contains(symb)) {
     res.reset(new QueryAtom(0));
     res->setProp(common_properties::atomLabel, std::string(symb));
   } else {
@@ -2193,8 +2192,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
     } else if (token == "Pol" || token == "Mod") {
       res.reset(new Atom(0));
       res->setProp(common_properties::dummyLabel, std::string(token));
-    } else if (GenericGroups::genericMatchers.find(std::string(token)) !=
-               GenericGroups::genericMatchers.end()) {
+    } else if (GenericGroups::genericMatchers.contains(std::string(token))) {
       res.reset(new QueryAtom(0));
       res->setProp(common_properties::atomLabel, std::string(token));
     } else {

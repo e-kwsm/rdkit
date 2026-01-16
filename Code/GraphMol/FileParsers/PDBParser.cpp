@@ -322,7 +322,7 @@ void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
 
   try {
     src = FileParserUtils::toInt(tmp);
-    if (amap.find(src) == amap.end()) {
+    if (!amap.contains(src)) {
       return;
     }
   } catch (boost::bad_lexical_cast &) {
@@ -339,7 +339,7 @@ void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
       }
       try {
         dst = FileParserUtils::toInt(std::string(ptr + pos, 5));
-        if (dst == src || amap.find(dst) == amap.end()) {
+        if (dst == src || !amap.contains(dst)) {
           continue;
         }
       } catch (boost::bad_lexical_cast &) {
