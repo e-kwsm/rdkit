@@ -124,7 +124,7 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::generateRandomIsomer() {
       bool config = d_randDis(*d_randGen);
       nextConfig[i] = config;
     }
-    if (d_seen.find(nextConfig) == d_seen.end()) {
+    if (!d_seen.contains(nextConfig)) {
       d_seen.insert(nextConfig);
       for (size_t i = 0; i < d_flippers.size(); i++) {
         d_flippers[i]->flip(nextConfig[i]);
@@ -144,7 +144,7 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::generateRandomIsomer() {
         auto smi =
             MolToCXSmiles(*isomer, SmilesWriteParams(),
                           SmilesWrite::CXSmilesFields::CX_ALL_BUT_COORDS);
-        if (d_generatedIsomers.find(smi) != d_generatedIsomers.end()) {
+        if (d_generatedIsomers.contains(smi)) {
           continue;
         }
         d_generatedIsomers.insert(smi);
