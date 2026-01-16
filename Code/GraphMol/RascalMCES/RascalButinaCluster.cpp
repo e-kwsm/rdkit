@@ -78,7 +78,7 @@ std::vector<std::vector<unsigned int>> formClusters(
     nborLists.front().clear();
     for (auto &nborList : nborLists) {
       for (auto &n : nborList) {
-        if (inNborList.find(n) != inNborList.end()) {
+        if (inNborList.contains(n)) {
           n = std::numeric_limits<unsigned int>::max();
         }
       }
