@@ -75,18 +75,15 @@ void LinkNodeOp::initFromMol() {
     auto attach1 = dp_frame->getAtomWithIdx(node.bondAtoms[0].second);
     auto attach2 = dp_frame->getAtomWithIdx(node.bondAtoms[1].second);
     // save the isotope values:
-    if (d_isotopeMap.find(1000 * (node.bondAtoms[0].first + 1)) ==
-        d_isotopeMap.end()) {
+    if (!d_isotopeMap.contains(1000 * (node.bondAtoms[0].first + 1))) {
       d_isotopeMap[1000 * (node.bondAtoms[0].first + 1)] =
           varAtom->getIsotope();
     }
-    if (d_isotopeMap.find(1000 * (node.bondAtoms[0].second + 1)) ==
-        d_isotopeMap.end()) {
+    if (!d_isotopeMap.contains(1000 * (node.bondAtoms[0].second + 1))) {
       d_isotopeMap[1000 * (node.bondAtoms[0].second + 1)] =
           attach1->getIsotope();
     }
-    if (d_isotopeMap.find(1000 * (node.bondAtoms[1].second + 1)) ==
-        d_isotopeMap.end()) {
+    if (!d_isotopeMap.contains(1000 * (node.bondAtoms[1].second + 1))) {
       d_isotopeMap[1000 * (node.bondAtoms[1].second + 1)] =
           attach2->getIsotope();
     }
