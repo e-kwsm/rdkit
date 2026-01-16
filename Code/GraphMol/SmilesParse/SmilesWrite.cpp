@@ -432,7 +432,7 @@ std::string FragmentSmilesConstruct(
       case Canon::MOL_STACK_RING:
         ringIdx = mSE.number;
         // std::cout << "\t\tRing: " << ringIdx << std::endl;
-        if (ringClosureMap.count(ringIdx)) {
+        if (ringClosureMap.contains(ringIdx)) {
           // the index is already in the map ->
           //   we're closing a ring, so grab
           //   the index and then delete the value:
