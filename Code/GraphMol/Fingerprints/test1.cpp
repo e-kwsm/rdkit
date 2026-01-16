@@ -1936,7 +1936,7 @@ void testMorganAtomInfo() {
              bitInfo1.begin();
          iter1 != bitInfo1.end(); ++iter1) {
       TEST_ASSERT(iter1->first < 2048);
-      TEST_ASSERT(bitInfo2.find(iter1->first) != bitInfo2.end());
+      TEST_ASSERT(bitInfo2.contains(iter1->first));
     }
 
     delete mol;
