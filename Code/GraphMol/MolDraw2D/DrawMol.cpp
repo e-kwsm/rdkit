@@ -366,8 +366,7 @@ void DrawMol::extractAttachments() {
   if (drawOptions_.dummiesAreAttachments) {
     for (const auto at1 : drawMol_->atoms()) {
       if (at1->hasProp(common_properties::atomLabel) ||
-          drawOptions_.atomLabels.find(at1->getIdx()) !=
-              drawOptions_.atomLabels.end()) {
+          drawOptions_.atomLabels.contains(at1->getIdx())) {
         // skip dummies that explicitly have a label provided
         continue;
       }
@@ -1532,7 +1531,7 @@ std::string getComplexQueryAtomEquivalent(const std::string &query) {
 }
 
 bool hasSymbolQueryType(const Atom &atom) {
-  return getComplexQuerySymbolSet().count(atom.getQueryType()) > 0;
+  return getComplexQuerySymbolSet().contains(atom.getQueryType());
 }
 
 // ****************************************************************************
@@ -1547,8 +1546,7 @@ std::string DrawMol::getAtomSymbol(const Atom &atom,
   std::string symbol;
   bool literal_symbol = true;
   unsigned int iso = atom.getIsotope();
-  if (drawOptions_.atomLabels.find(atom.getIdx()) !=
-      drawOptions_.atomLabels.end()) {
+  if (drawOptions_.atomLabels.contains(atom.getIdx())) {
     // specified labels are trump: no matter what else happens we will show
     // them.
     symbol = drawOptions_.atomLabels.find(atom.getIdx())->second;
@@ -2366,7 +2364,7 @@ std::pair<DrawColour, DrawColour> DrawMol::getBondColours(Bond *bond) {
       col1 = getColour(bond->getBeginAtomIdx());
       col2 = getColour(bond->getEndAtomIdx());
     } else {
-      if (highlightBondMap_.find(bond->getIdx()) != highlightBondMap_.end()) {
+      if (highlightBondMap_.contains(bond->getIdx())) {
         col1 = col2 = highlightBondMap_.find(bond->getIdx())->second;
       } else {
         col1 = col2 = drawOptions_.highlightColour;
@@ -2402,13 +2400,13 @@ void DrawMol::makeAtomCircleHighlights() {
     unsigned int thisIdx = at->getIdx();
     if (std::find(highlightAtoms_.begin(), highlightAtoms_.end(), thisIdx) !=
         highlightAtoms_.end()) {
-      if (highlightAtomMap_.find(thisIdx) != highlightAtomMap_.end()) {
+      if (highlightAtomMap_.contains(thisIdx)) {
         col = highlightAtomMap_.find(thisIdx)->second;
       } else {
         col = drawOptions_.highlightColour;
       }
       double radius = drawOptions_.highlightRadius;
-      if (highlightRadii_.find(thisIdx) != highlightRadii_.end()) {
+      if (highlightRadii_.contains(thisIdx)) {
         radius = highlightRadii_.find(thisIdx)->second;
       }
       Point2D radii(radius, radius);
@@ -2431,12 +2429,12 @@ void DrawMol::makeAtomEllipseHighlights(double lineWidth) {
     if (std::find(highlightAtoms_.begin(), highlightAtoms_.end(), thisIdx) !=
         highlightAtoms_.end()) {
       DrawColour col = drawOptions_.highlightColour;
-      if (highlightAtomMap_.find(thisIdx) != highlightAtomMap_.end()) {
+      if (highlightAtomMap_.contains(thisIdx)) {
         col = highlightAtomMap_.find(thisIdx)->second;
       }
       Point2D centre = atCds_[thisIdx];
       double xradius, yradius;
-      if (highlightRadii_.find(thisIdx) != highlightRadii_.end()) {
+      if (highlightRadii_.contains(thisIdx)) {
         xradius = highlightRadii_.find(thisIdx)->second;
       } else {
         xradius = drawOptions_.highlightRadius;
@@ -3774,7 +3772,7 @@ DrawColour DrawMol::getColour(int atom_idx) const {
         const auto &nbr = (*drawMol_)[nbri];
         if (std::find(highlightBonds_.begin(), highlightBonds_.end(),
                       nbr->getIdx()) != highlightBonds_.end() ||
-            highlightBondMap_.find(nbr->getIdx()) != highlightBondMap_.end()) {
+            highlightBondMap_.contains(nbr->getIdx())) {
           auto hc = getHighlightBondColour(nbr, drawOptions_, highlightBonds_,
                                            highlightBondMap_, highlightAtoms_,
                                            highlightAtomMap_);
@@ -3880,7 +3878,7 @@ DrawColour getHighlightBondColour(
   if (std::find(highlightBonds.begin(), highlightBonds.end(), bond->getIdx()) !=
       highlightBonds.end()) {
     col = drawOptions.highlightColour;
-    if (highlightBondMap.find(bond->getIdx()) != highlightBondMap.end()) {
+    if (highlightBondMap.contains(bond->getIdx())) {
       col = highlightBondMap.find(bond->getIdx())->second;
     } else {
       // the highlight color of the bond is not explicitly provided. What about
@@ -3890,12 +3888,10 @@ DrawColour getHighlightBondColour(
       //  - begin atom color if that is set
       //  - end atom color if that is set
       //  - the default highlight color otherwise
-      if (highlightAtomMap.find(bond->getBeginAtomIdx()) !=
-          highlightAtomMap.end()) {
+      if (highlightAtomMap.contains(bond->getBeginAtomIdx())) {
         col = highlightAtomMap.find(bond->getBeginAtomIdx())->second;
 
-      } else if (highlightAtomMap.find(bond->getEndAtomIdx()) !=
-                 highlightAtomMap.end()) {
+      } else if (highlightAtomMap.contains(bond->getEndAtomIdx())) {
         col = highlightAtomMap.find(bond->getEndAtomIdx())->second;
       }
     }
