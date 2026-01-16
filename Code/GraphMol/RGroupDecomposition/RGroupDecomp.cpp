@@ -65,7 +65,7 @@ namespace {
 static const std::string TARGET_ATOM_IDX = "__rgdTargetAtomIdx";
 static const std::string TARGET_BOND_IDX = "__rgdTargetBondIdx";
 void ADD_MATCH(R_DECOMP &match, int rlabel) {
-  if (match.find(rlabel) == match.end()) {
+  if (!match.contains(rlabel)) {
     match[rlabel] = boost::make_shared<RGroupData>();
   }
 }
@@ -823,7 +823,7 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
   // purge R-group entries that have no mols
   for (auto it = groups.begin(); it != groups.end();) {
     auto itToErase = groups.end();
-    if (!rGroupWithRealMol.count(it->first)) {
+    if (!rGroupWithRealMol.contains(it->first)) {
       itToErase = it;
     }
     ++it;
