@@ -978,9 +978,9 @@ TEST_CASE("testRowColumnAlignmentProblem", "[RGroupDecomp]") {
       REQUIRE(row.count("Core") == 1);
       REQUIRE(row.count("R1") == 1);
     }
-    REQUIRE(rows[0].count("R2") == 0);
-    REQUIRE(rows[2].count("R2") == 0);
-    REQUIRE(rows[1].count("R2") == 0);
+    REQUIRE(!rows[0].contains("R2"));
+    REQUIRE(!rows[2].contains("R2"));
+    REQUIRE(!rows[1].contains("R2"));
 
     auto cols = decomp.getRGroupsAsColumns();
     auto &core = cols["Core"];
@@ -1692,8 +1692,8 @@ $$$$
     REQUIRE(decomp.process());
     RGroupColumns groups = decomp.getRGroupsAsColumns();
     REQUIRE(groups.size() == 3);
-    REQUIRE(groups.find("R1") != groups.end());
-    REQUIRE(groups.find("R2") != groups.end());
+    REQUIRE(groups.contains("R1"));
+    REQUIRE(groups.contains("R2"));
     REQUIRE(MolToSmiles(*groups.at("R1")[0]) == "C[*:1]");
     REQUIRE(MolToSmiles(*groups.at("R2")[0]) == "C1CC([*:2])C1");
 
