@@ -80,7 +80,7 @@ CDXMLDataStreamToChemicalReactions(std::istream &inStream, bool sanitize,
     result.push_back(std::unique_ptr<ChemicalReaction>(res));
     for (auto idx : scheme.second) {
       CHECK_INVARIANT(
-          used.find(idx) == used.end(),
+          !used.contains(idx),
           "Fragment used in twice in one or more reactions, this shouldn't happen");
       if (mols[idx]->hasProp("CDX_REAGENT_ID")) {
         used.insert(idx);
