@@ -346,7 +346,7 @@ void test1() {
     }
     std::cout << "\n --- UNMATCHED Reference RESULTS: --- \n";
     for (size_t r = 0; r < sizeof(fs) / sizeof(fs[0]); r++) {
-      if (fs2res.end() == fs2res.find(r)) {
+      if (!fs2res.contains(r)) {
         test_failed = true;
         std::cout << (r < 9 ? " " : "") << r + 1 << ": " << fs[r] << "\n";
       }
@@ -468,7 +468,7 @@ void test2() {
         std::cout << " ";
       }
 
-      if (ref_map.find(res_str.str()) != ref_map.end()) {
+      if (ref_map.contains(res_str.str())) {
         size_t matchedRefRes = ref_map[res_str.str()];
         fs2res[matchedRefRes] = res_idx;
         std::cout << res_idx + 1
@@ -486,7 +486,7 @@ void test2() {
       n_failed++;
       std::cout << "\n --- UNMATCHED Reference RESULTS: --- \n";
       for (size_t r = 0; r < sizeof(fs) / sizeof(fs[0]); r++) {
-        if (fs2res.end() == fs2res.find(r)) {
+        if (!fs2res.contains(r)) {
           std::cout << (r < 9 ? " " : "") << r + 1 << ": " << fs[r] << "\n";
         }
       }
@@ -564,7 +564,7 @@ void doTest(const char *smi, const char *fs[], unsigned fs_size) {
       std::cout << " ";
     }
 
-    if (ref_map.find(res_str.str()) != ref_map.end()) {
+    if (ref_map.contains(res_str.str())) {
       size_t matchedRefRes = ref_map[res_str.str()];
       fs2res[matchedRefRes] = res_idx;
       std::cout << res_idx + 1
@@ -582,7 +582,7 @@ void doTest(const char *smi, const char *fs[], unsigned fs_size) {
     n_failed++;
     std::cout << "\n --- UNMATCHED Reference RESULTS: --- \n";
     for (size_t r = 0; r < fs_size; r++) {
-      if (fs2res.end() == fs2res.find(r)) {
+      if (!fs2res.contains(r)) {
         std::cout << (r < 9 ? " " : "") << r + 1 << ": " << fs[r] << "\n";
       }
     }
