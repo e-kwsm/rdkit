@@ -540,7 +540,7 @@ ConjElectrons::ConjElectrons(ResonanceMolSupplier *parent,
     const Atom *atom[2] = {bond->getBeginAtom(), bond->getEndAtom()};
     for (auto &i : atom) {
       unsigned int ai = i->getIdx();
-      if (d_conjAtomMap.find(ai) == d_conjAtomMap.end()) {
+      if (!d_conjAtomMap.contains(ai)) {
         d_conjAtomMap[ai] = new AtomElectrons(this, i);
       }
     }

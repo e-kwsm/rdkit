@@ -215,7 +215,7 @@ bool MolMatchFinalCheckFunctor::operator()(const std::uint32_t q_c[],
     for (unsigned int i = 0; i < d_query.getNumAtoms(); ++i) {
       match[m_c[i]] = 1;
     }
-    if (matchesSeen.find(match) != matchesSeen.end()) {
+    if (matchesSeen.contains(match)) {
       return false;
     }
   }
@@ -674,7 +674,7 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
     rsq->clear();
     bool matchDone = false;
     if (rsq->getSerialNumber() &&
-        subqueryMap.find(rsq->getSerialNumber()) != subqueryMap.end()) {
+        subqueryMap.contains(rsq->getSerialNumber())) {
       // we've matched an equivalent serial number before, just
       // copy in the matches:
       matchDone = true;
