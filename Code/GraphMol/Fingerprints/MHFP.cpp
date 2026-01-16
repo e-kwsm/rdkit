@@ -136,7 +136,7 @@ std::vector<std::string> MHFPEncoder::CreateShingling(
       std::unique_ptr<ROMol> submol(
           Subgraphs::pathToSubmol(tmol, path, use_query, amap));
 
-      if (amap.find(index) == amap.end()) {
+      if (!amap.contains(index)) {
         continue;
       }
 
