@@ -74,7 +74,7 @@ bool setLabel(Atom *atom, int label, std::set<int> &labels, int &maxLabel,
   }
 
   if (label) {
-    if (labels.find(label) != labels.end()) {
+    if (labels.contains(label)) {
       if (relabel) {
         if (type == Labelling::INTERNAL_LABELS) {
           BOOST_LOG(rdWarningLog) << "Relabelling existing label" << std::endl;
