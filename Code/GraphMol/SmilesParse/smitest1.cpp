@@ -3655,10 +3655,9 @@ TEST_CASE("Testing the random Generator for SMILES") {
     }
     // we will get dupes, but there's enough choice available here that we
     // should have gotten at least 3 unique
-    REQUIRE(starts.find('C') != starts.end());
-    REQUIRE(starts.find('c') != starts.end());
-    REQUIRE(
-        (starts.find('n') != starts.end() || starts.find('O') != starts.end()));
+    REQUIRE(starts.contains('C'));
+    REQUIRE(starts.contains('c'));
+    REQUIRE((starts.contains('n') || starts.contains('O')));
 
     delete m;
   }
