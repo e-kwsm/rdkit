@@ -4917,10 +4917,10 @@ TEST_CASE("Testing getMolFragsWithQuery()") {
     std::map<int, boost::shared_ptr<ROMol>> res =
         MolOps::getMolFragsWithQuery(*m, getAtNum);
     REQUIRE(res.size() == 3);
-    REQUIRE(res.find(6) != res.end());
-    REQUIRE(res.find(7) != res.end());
-    REQUIRE(res.find(8) != res.end());
-    REQUIRE(res.find(5) == res.end());
+    REQUIRE(res.contains(6));
+    REQUIRE(res.contains(7));
+    REQUIRE(res.contains(8));
+    REQUIRE(!res.contains(5));
     REQUIRE(res[6]->getNumAtoms() == 5);
     REQUIRE(res[6]->getNumBonds() == 4);
     REQUIRE(res[7]->getNumAtoms() == 2);
@@ -4931,10 +4931,10 @@ TEST_CASE("Testing getMolFragsWithQuery()") {
     std::map<int, std::unique_ptr<ROMol>> otherRes;
     MolOps::getMolFragsWithQuery(*m, getAtNum, otherRes);
     REQUIRE(otherRes.size() == 3);
-    REQUIRE(otherRes.find(6) != otherRes.end());
-    REQUIRE(otherRes.find(7) != otherRes.end());
-    REQUIRE(otherRes.find(8) != otherRes.end());
-    REQUIRE(otherRes.find(5) == otherRes.end());
+    REQUIRE(otherRes.contains(6));
+    REQUIRE(otherRes.contains(7));
+    REQUIRE(otherRes.contains(8));
+    REQUIRE(!otherRes.contains(5));
     REQUIRE(otherRes[6]->getNumAtoms() == 5);
     REQUIRE(otherRes[6]->getNumBonds() == 4);
     REQUIRE(otherRes[7]->getNumAtoms() == 2);
@@ -4954,9 +4954,9 @@ TEST_CASE("Testing getMolFragsWithQuery()") {
     std::map<int, boost::shared_ptr<ROMol>> res =
         MolOps::getMolFragsWithQuery(*m, getAtNum, true, &keep);
     REQUIRE(res.size() == 2);
-    REQUIRE(res.find(6) != res.end());
-    REQUIRE(res.find(7) == res.end());
-    REQUIRE(res.find(8) != res.end());
+    REQUIRE(res.contains(6));
+    REQUIRE(!res.contains(7));
+    REQUIRE(res.contains(8));
     REQUIRE(res[6]->getNumAtoms() == 5);
     REQUIRE(res[6]->getNumBonds() == 4);
     REQUIRE(res[8]->getNumAtoms() == 1);
@@ -4964,9 +4964,9 @@ TEST_CASE("Testing getMolFragsWithQuery()") {
     std::map<int, std::unique_ptr<ROMol>> otherRes;
     MolOps::getMolFragsWithQuery(*m, getAtNum, otherRes, true, &keep);
     REQUIRE(otherRes.size() == 2);
-    REQUIRE(otherRes.find(6) != otherRes.end());
-    REQUIRE(otherRes.find(7) == otherRes.end());
-    REQUIRE(otherRes.find(8) != otherRes.end());
+    REQUIRE(otherRes.contains(6));
+    REQUIRE(!otherRes.contains(7));
+    REQUIRE(otherRes.contains(8));
     REQUIRE(otherRes[6]->getNumAtoms() == 5);
     REQUIRE(otherRes[6]->getNumBonds() == 4);
     REQUIRE(otherRes[8]->getNumAtoms() == 1);
@@ -4985,18 +4985,18 @@ TEST_CASE("Testing getMolFragsWithQuery()") {
     std::map<int, boost::shared_ptr<ROMol>> res =
         MolOps::getMolFragsWithQuery(*m, getAtNum, true, &keep, true);
     REQUIRE(res.size() == 1);
-    REQUIRE(res.find(6) == res.end());
-    REQUIRE(res.find(7) != res.end());
-    REQUIRE(res.find(8) == res.end());
+    REQUIRE(!res.contains(6));
+    REQUIRE(res.contains(7));
+    REQUIRE(!res.contains(8));
     REQUIRE(res[7]->getNumAtoms() == 2);
     REQUIRE(res[7]->getNumBonds() == 1);
 
     std::map<int, std::unique_ptr<ROMol>> otherRes;
     MolOps::getMolFragsWithQuery(*m, getAtNum, otherRes, true, &keep, true);
     REQUIRE(otherRes.size() == 1);
-    REQUIRE(otherRes.find(6) == otherRes.end());
-    REQUIRE(otherRes.find(7) != otherRes.end());
-    REQUIRE(otherRes.find(8) == otherRes.end());
+    REQUIRE(!otherRes.contains(6));
+    REQUIRE(otherRes.contains(7));
+    REQUIRE(!otherRes.contains(8));
     REQUIRE(otherRes[7]->getNumAtoms() == 2);
     REQUIRE(otherRes[7]->getNumBonds() == 1);
 
