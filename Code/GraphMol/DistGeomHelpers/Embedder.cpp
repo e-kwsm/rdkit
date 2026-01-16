@@ -1056,9 +1056,8 @@ RDKIT_DISTGEOMHELPERS_EXPORT void findDoubleBonds(
       // if there's stereo, handle that too:
       if (bnd->getStereo() > Bond::BondStereo::STEREOANY) {
         // only do this if the controlling atoms aren't in the coord map
-        if (coordMap &&
-            coordMap->find(bnd->getStereoAtoms()[0]) != coordMap->end() &&
-            coordMap->find(bnd->getStereoAtoms()[1]) != coordMap->end()) {
+        if (coordMap && coordMap->contains(bnd->getStereoAtoms()[0]) &&
+            coordMap->contains(bnd->getStereoAtoms()[1])) {
           continue;
         }
         int sign = 1;
@@ -1142,7 +1141,7 @@ void findChiralSets(const ROMol &mol, DistGeom::VECT_CHIRALSET &chiralCenters,
           DistGeom::ChiralSetPtr cptr(cset);
           chiralCenters.push_back(cptr);
         } else {
-          if ((coordMap && coordMap->find(atom->getIdx()) != coordMap->end()) ||
+          if ((coordMap && coordMap->contains(atom->getIdx())) ||
               (mol.getRingInfo()->isInitialized() &&
                (mol.getRingInfo()->numAtomRings(atom->getIdx()) < 2 ||
                 mol.getRingInfo()->isAtomInRingOfSize(atom->getIdx(), 3)))) {

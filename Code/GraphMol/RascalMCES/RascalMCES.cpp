@@ -842,8 +842,7 @@ bool equivalentRootAlreadyDone(unsigned int rootVtx,
   if (newClasses.first == -1) {
     return false;
   }
-  if (!rootClasses.empty() &&
-      rootClasses.find(newClasses) != rootClasses.end()) {
+  if (!rootClasses.empty() && rootClasses.contains(newClasses)) {
     return true;
   }
   rootClasses.insert(newClasses);
