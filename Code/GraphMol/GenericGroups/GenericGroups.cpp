@@ -727,7 +727,7 @@ void setGenericQueriesFromProperties(ROMol &mol, bool useAtomLabels,
       if (label.size() > 4 && label.compare(label.size() - 2, 2, "_p") == 0) {
         label = label.substr(0, label.size() - 2);
       }
-      if (genericMatchers.find(label) != genericMatchers.end()) {
+      if (genericMatchers.contains(label)) {
         atom->setProp(common_properties::_QueryAtomGenericLabel, label);
         atom->clearProp(common_properties::atomLabel);
       }
@@ -741,7 +741,7 @@ void setGenericQueriesFromProperties(ROMol &mol, bool useAtomLabels,
       if (sgroup.getProp<std::string>("TYPE") == "SUP") {
         std::string label;
         if (sgroup.getPropIfPresent("LABEL", label) &&
-            genericMatchers.find(label) != genericMatchers.end()) {
+            genericMatchers.contains(label)) {
           for (auto aidx : sgroup.getAtoms()) {
             mol.getAtomWithIdx(aidx)->setProp(
                 common_properties::_QueryAtomGenericLabel, label);
