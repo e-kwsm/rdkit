@@ -961,8 +961,7 @@ void addReactantNeighborsToProduct(
     atomStack.pop_front();
 
     // each atom in the stack is guaranteed to already be in the product:
-    CHECK_INVARIANT(mapping->reactProdAtomMap.find(lReactantAtom->getIdx()) !=
-                        mapping->reactProdAtomMap.end(),
+    CHECK_INVARIANT(mapping->reactProdAtomMap.contains(lReactantAtom->getIdx()),
                     "reactant atom on traversal stack not present in product.");
 
     std::vector<unsigned> lReactantAtomProductIndex =
@@ -994,8 +993,7 @@ void addReactantNeighborsToProduct(
           // product template was
           // copied in to start things off).;
           if (!mapping->mappedAtoms[lreactIdx]) {
-            CHECK_INVARIANT(mapping->reactProdAtomMap.find(*nbrIdx) !=
-                                mapping->reactProdAtomMap.end(),
+            CHECK_INVARIANT(mapping->reactProdAtomMap.contains(*nbrIdx),
                             "reactant atom not present in product.");
             const Bond *origB =
                 reactant.getBondBetweenAtoms(lreactIdx, *nbrIdx);
@@ -1223,8 +1221,7 @@ void checkAndCorrectChiralityOfProduct(
           const Bond *reactantBond = reactantAtom->getOwningMol()[*beg];
           unsigned int oAtomIdx =
               reactantBond->getOtherAtomIdx(reactantAtom->getIdx());
-          CHECK_INVARIANT(mapping->reactProdAtomMap.find(oAtomIdx) !=
-                              mapping->reactProdAtomMap.end(),
+          CHECK_INVARIANT(mapping->reactProdAtomMap.contains(oAtomIdx),
                           "other atom from bond not mapped.");
           const Bond *productBond;
           unsigned neighborBondIdx = mapping->reactProdAtomMap[oAtomIdx][i];
@@ -1353,8 +1350,7 @@ void addReactantAtomsAndBonds(const ChemicalReaction &rxn, RWMOL_SPTR product,
   for (const auto &matchIdx : match) {
     int reactantAtomIdx = matchIdx.second;
     if (mapping->mappedAtoms[reactantAtomIdx]) {
-      CHECK_INVARIANT(mapping->reactProdAtomMap.find(reactantAtomIdx) !=
-                          mapping->reactProdAtomMap.end(),
+      CHECK_INVARIANT(mapping->reactProdAtomMap.contains(reactantAtomIdx),
                       "mapped reactant atom not present in product.");
 
       const Atom *reactantAtom = reactant->getAtomWithIdx(reactantAtomIdx);
