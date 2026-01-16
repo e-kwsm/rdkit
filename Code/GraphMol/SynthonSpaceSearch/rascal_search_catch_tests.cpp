@@ -122,7 +122,7 @@ TEST_CASE("RASCAL Small tests") {
     // As with fingerprints, we don't get all the hits with synthon search
     // that we would with a full search.
     for (const auto &rs : resSmis) {
-      CHECK(fullSmis.find(rs) != fullSmis.end());
+      CHECK(fullSmis.contains(rs));
     }
   }
 }
