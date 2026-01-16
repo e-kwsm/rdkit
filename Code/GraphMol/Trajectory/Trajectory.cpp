@@ -173,7 +173,7 @@ unsigned int readGromosTrajectory(const std::string &fName, Trajectory &traj) {
     if (inStream.bad() || inStream.eof()) {
       continue;
     }
-    if (ignoredKeywordSet.find(tempStr) != ignoredKeywordSet.end()) {
+    if (ignoredKeywordSet.contains(tempStr)) {
       // ignored block
       while (inStream.good() && !inStream.eof() && (tempStr != "END")) {
         std::getline(inStream, tempStr);

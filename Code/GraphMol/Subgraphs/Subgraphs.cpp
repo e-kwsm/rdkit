@@ -45,7 +45,7 @@ void getNbrsList(const ROMol &mol, bool useHs, INT_INT_VECT_MAP &nbrs) {
         // in it ignore
         if (useHs || bond1->getOtherAtom(atom)->getAtomicNum() != 1) {
           int bid1 = bond1->getIdx();
-          if (nbrs.find(bid1) == nbrs.end()) {
+          if (!nbrs.contains(bid1)) {
             INT_VECT nlst;
             nbrs[bid1] = nlst;
           }
@@ -602,7 +602,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
         // add the next set of neighbors:
         int oAtom = mol.getBondWithIdx(bondIdx)->getOtherAtomIdx(startAtom);
         if (atomMap) {
-          if (atomMap->find(oAtom) == atomMap->end()) {
+          if (!atomMap->contains(oAtom)) {
             (*atomMap)[oAtom] = i + 1;
           } else {
             (*atomMap)[oAtom] = std::min(atomMap->at(oAtom), i + 1);

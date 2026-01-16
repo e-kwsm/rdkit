@@ -1704,11 +1704,10 @@ std::string get_sgroup_hierarchy_block(const ROMol &mol) {
     std::map<unsigned int, std::vector<unsigned int>> accum;
     for (const auto &sg : sgs) {
       unsigned pidx;
-      if (sg.getPropIfPresent("PARENT", pidx) &&
-          sgroupOrder.find(pidx) != sgroupOrder.end()) {
+      if (sg.getPropIfPresent("PARENT", pidx) && sgroupOrder.contains(pidx)) {
         unsigned int sgidx = sg.getIndexInMol();
         sg.getPropIfPresent("index", sgidx);
-        if (sgroupOrder.find(sgidx) != sgroupOrder.end()) {
+        if (sgroupOrder.contains(sgidx)) {
           accum[sgroupOrder[pidx]].push_back(sgroupOrder[sgidx]);
         }
       }
@@ -1758,15 +1757,14 @@ std::string get_sgroup_polymer_block(
 
   std::map<std::string, std::string> reverseTypemap;
   for (const auto &pr : SmilesParseOps::sgroupTypemap) {
-    if (reverseTypemap.find(pr.second) == reverseTypemap.end()) {
+    if (!reverseTypemap.contains(pr.second)) {
       reverseTypemap[pr.second] = pr.first;
     }
   }
 
   for (const auto &sg : sgs) {
     std::string typ;
-    if (sg.getPropIfPresent("TYPE", typ) &&
-        reverseTypemap.find(typ) != reverseTypemap.end()) {
+    if (sg.getPropIfPresent("TYPE", typ) && reverseTypemap.contains(typ)) {
       sg.setProp("_cxsmilesOutputIndex", sgroupOutputIndex);
       ++sgroupOutputIndex;
 
@@ -2243,7 +2241,7 @@ std::string get_bond_config_block(
     }
 
     if (wType != "") {
-      if (wParts.find(wType) == wParts.end()) {
+      if (!wParts.contains(wType)) {
         wParts[wType] = std::vector<std::string>();
       }
       wParts[wType].push_back(
