@@ -114,7 +114,7 @@ TEST_CASE("Enumerate") {
   auto oldSmiles = loadLibrary(enumLibName);
   REQUIRE(newSmiles.size() == oldSmiles.size());
   for (const auto &[name, smiles] : oldSmiles) {
-    REQUIRE(oldSmiles.find(name) != oldSmiles.end());
+    REQUIRE(oldSmiles.contains(name));
     REQUIRE(newSmiles.at(name) == oldSmiles.at(name));
   }
   std::remove(testName);
