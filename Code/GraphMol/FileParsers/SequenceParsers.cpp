@@ -1819,7 +1819,7 @@ static bool ParseHELM(RWMol *mol, const char *ptr) {
     if (res1 < 1 || res2 < 1) {
       return false;
     }
-    if (seqs.find(id1) == seqs.end() || seqs.find(id2) == seqs.end()) {
+    if (!seqs.contains(id1) || !seqs.contains(id2)) {
       return false;
     }
     std::vector<HELMMonomer> *vseq1 = &seqs[id1];
