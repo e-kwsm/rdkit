@@ -1585,23 +1585,21 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
           if (bid3 != bid2) {
             auto id1 = bid1 * nb * nb + bid2 * nb + bid3;
             auto id2 = bid3 * nb * nb + bid2 * nb + bid1;
-            if (donePaths.find(id1) == donePaths.end() &&
-                donePaths.find(id2) == donePaths.end()) {
+            if (!donePaths.contains(id1) && !donePaths.contains(id2)) {
               // we haven't dealt with this path before
               auto pid1 = bid1 * nb + bid2;
               auto pid2 = bid2 * nb + bid1;
               auto pid3 = bid2 * nb + bid3;
               auto pid4 = bid3 * nb + bid2;
 
-              if (ringBondPairs.find(pid1) != ringBondPairs.end() ||
-                  ringBondPairs.find(pid2) != ringBondPairs.end() ||
-                  ringBondPairs.find(pid3) != ringBondPairs.end() ||
-                  ringBondPairs.find(pid4) != ringBondPairs.end()) {
+              if (ringBondPairs.contains(pid1) ||
+                  ringBondPairs.contains(pid2) ||
+                  ringBondPairs.contains(pid3) ||
+                  ringBondPairs.contains(pid4)) {
                 // either (bid1, bid2) or (bid2, bid3) are in the
                 // same ring (note all three cannot be in the same
                 // ring; we dealt with that before)
-                if (useMacrocycle14config &&
-                    bidIsMacrocycle.find(bid2) != bidIsMacrocycle.end()) {
+                if (useMacrocycle14config && bidIsMacrocycle.contains(bid2)) {
                   _setMacrocycleTwoInSameRing14Bounds(
                       mol, bnd1, bond, bnd3, accumData, mmat, distMatrix);
                 } else {
@@ -1992,12 +1990,11 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
           unsigned long pathId =
               static_cast<unsigned long>(bid2) * nb * nb + (bid3)*nb + i;
           if (type == 0) {
-            if (accumData.cisPaths.find(pathId) != accumData.cisPaths.end()) {
+            if (accumData.cisPaths.contains(pathId)) {
               dl = _compute15DistsCisCis(d1, d2, d3, d4, ang12, ang23, ang34);
               du = dl + DIST15_TOL;
               dl -= DIST15_TOL;
-            } else if (accumData.transPaths.find(pathId) !=
-                       accumData.transPaths.end()) {
+            } else if (accumData.transPaths.contains(pathId)) {
               dl = _compute15DistsCisTrans(d1, d2, d3, d4, ang12, ang23, ang34);
               du = dl + DIST15_TOL;
               dl -= DIST15_TOL;
@@ -2010,12 +2007,11 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
             }
 
           } else if (type == 1) {
-            if (accumData.cisPaths.find(pathId) != accumData.cisPaths.end()) {
+            if (accumData.cisPaths.contains(pathId)) {
               dl = _compute15DistsTransCis(d1, d2, d3, d4, ang12, ang23, ang34);
               du = dl + DIST15_TOL;
               dl -= DIST15_TOL;
-            } else if (accumData.transPaths.find(pathId) !=
-                       accumData.transPaths.end()) {
+            } else if (accumData.transPaths.contains(pathId)) {
               dl = _compute15DistsTransTrans(d1, d2, d3, d4, ang12, ang23,
                                              ang34);
               du = dl + DIST15_TOL;
@@ -2029,14 +2025,13 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
                    DIST15_TOL;
             }
           } else {
-            if (accumData.cisPaths.find(pathId) != accumData.cisPaths.end()) {
+            if (accumData.cisPaths.contains(pathId)) {
               dl = _compute15DistsCisCis(d4, d3, d2, d1, ang34, ang23, ang12) -
                    DIST15_TOL;
               du =
                   _compute15DistsCisTrans(d4, d3, d2, d1, ang34, ang23, ang12) +
                   DIST15_TOL;
-            } else if (accumData.transPaths.find(pathId) !=
-                       accumData.transPaths.end()) {
+            } else if (accumData.transPaths.contains(pathId)) {
               dl =
                   _compute15DistsTransCis(d4, d3, d2, d1, ang34, ang23, ang12) -
                   DIST15_TOL;
