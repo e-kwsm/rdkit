@@ -193,7 +193,7 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
 
         std::vector<unsigned int> key = {poccur.back(), ioccur.back()};
         std::sort(key.begin(), key.end());
-        const bool is_in = already_moved.find(key) != already_moved.end();
+        const bool is_in = already_moved.contains(key);
         if (is_in) {
           BOOST_LOG(rdInfoLog)
               << "Aborting reionization to avoid infinite loop due \
