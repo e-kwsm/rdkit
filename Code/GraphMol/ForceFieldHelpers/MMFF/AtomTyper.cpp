@@ -299,7 +299,7 @@ bool isAromaticAtomType(const unsigned int atomType) {
       aromatic_array,
       aromatic_array + sizeof(aromatic_array) / sizeof(aromatic_array[0]));
 
-  return (aromaticTypes.find(atomType) != aromaticTypes.end());
+  return aromaticTypes.contains(atomType);
 }
 
 bool isRingAromatic(const ROMol &mol, const INT_VECT &ringIndxVect) {

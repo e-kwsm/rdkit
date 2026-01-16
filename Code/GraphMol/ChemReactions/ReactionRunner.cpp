@@ -1030,17 +1030,15 @@ void addReactantNeighborsToProduct(
               if (a1mapidx > a2mapidx) {
                 std::swap(a1mapidx, a2mapidx);
               }
-              if (mapping->reactantTemplateAtomBonds.find(
-                      std::make_pair(a1mapidx, a2mapidx)) ==
-                  mapping->reactantTemplateAtomBonds.end()) {
+              if (!mapping->reactantTemplateAtomBonds.contains(
+                      std::make_pair(a1mapidx, a2mapidx))) {
                 const Bond *origB =
                     reactant.getBondBetweenAtoms(lreactIdx, *nbrIdx);
                 addMissingProductBonds(*origB, product, mapping);
               }
             }
           }
-        } else if (mapping->reactProdAtomMap.find(*nbrIdx) !=
-                   mapping->reactProdAtomMap.end()) {
+        } else if (mapping->reactProdAtomMap.contains(*nbrIdx)) {
           // case 2, the neighbor has been added and we just need to set a bond
           // to it:
           const Bond *origB = reactant.getBondBetweenAtoms(lreactIdx, *nbrIdx);
@@ -1101,8 +1099,7 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
     INT_LIST pOrder;
     for (const auto &nbri :
          boost::make_iterator_range(product->getAtomNeighbors(productAtom))) {
-      if (mapping->prodReactAtomMap.find(nbri) ==
-              mapping->prodReactAtomMap.end() ||
+      if (!mapping->prodReactAtomMap.contains(nbri) ||
           !reactant.getBondBetweenAtoms(reactantAtom.getIdx(),
                                         mapping->prodReactAtomMap[nbri])) {
         ++nUnknown;
@@ -1558,8 +1555,7 @@ void identifyAtomsInReactantTemplateNotProductTemplate(
     const MatchVectType &reactantMatch) {
   for (const auto atom : reactant.atoms()) {
     if (atom->getAtomMapNum()) {
-      if (reactantProductMap.find(atom->getAtomMapNum()) ==
-          reactantProductMap.end()) {
+      if (!reactantProductMap.contains(atom->getAtomMapNum())) {
         // atom map not present in product
         atoms.set(reactantMatch[atom->getIdx()].second);
       }
@@ -1754,8 +1750,7 @@ bool updateBondsModifiedByReaction(
     const auto atom = reactant.getAtomWithIdx(match[pr.second].second);
     for (const auto nbr : productTemplate->atomNeighbors(pAtom)) {
       if (nbr->getAtomMapNum() &&
-          reactantProductMap.find(nbr->getAtomMapNum()) !=
-              reactantProductMap.end()) {
+          reactantProductMap.contains(nbr->getAtomMapNum())) {
         const auto pBond = productTemplate->getBondBetweenAtoms(pAtom->getIdx(),
                                                                 nbr->getIdx());
         ASSERT_INVARIANT(pBond,
@@ -1801,7 +1796,7 @@ bool updateBondsModifiedByReaction(
     // product template
     for (const auto nbr : reactantTemplate->atomNeighbors(rAtom)) {
       if (nbr->getAtomMapNum() &&
-          productAtomMap.find(nbr->getAtomMapNum()) != productAtomMap.end() &&
+          productAtomMap.contains(nbr->getAtomMapNum()) &&
           !productTemplate->getBondBetweenAtoms(
               pAtom->getIdx(), productAtomMap.at(nbr->getAtomMapNum()))) {
         // remove the bond in the reactant
@@ -1841,7 +1836,7 @@ bool run_Reactant(const ChemicalReaction &rxn, RWMol &reactant,
                            // which are also mapped in the product
   for (const auto atom : reactantTemplate->atoms()) {
     if (atom->getAtomMapNum()) {
-      if (productAtomMap.find(atom->getAtomMapNum()) != productAtomMap.end()) {
+      if (productAtomMap.contains(atom->getAtomMapNum())) {
         reactantProductMap[atom->getAtomMapNum()] = atom->getIdx();
       }
     }
@@ -1850,8 +1845,7 @@ bool run_Reactant(const ChemicalReaction &rxn, RWMol &reactant,
   // we don't support reactions with unmapped or new atoms in the products
   for (const auto atom : productTemplate->atoms()) {
     if (!atom->getAtomMapNum() ||
-        reactantProductMap.find(atom->getAtomMapNum()) ==
-            reactantProductMap.end()) {
+        !reactantProductMap.contains(atom->getAtomMapNum())) {
       throw ChemicalReactionException(
           "single component reactions which add atoms in the product "
           "are not supported");

@@ -442,7 +442,7 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
           std::cout << "Applied rule: " << name << " to "
                     << smilesTautomerPair.first << std::endl;
 #endif
-          if (res.d_tautomers.find(tsmiles) != res.d_tautomers.end()) {
+          if (res.d_tautomers.contains(tsmiles)) {
 #ifdef VERBOSE_ENUMERATION
             std::cout << "Previous tautomer produced again: " << tsmiles
                       << std::endl;
