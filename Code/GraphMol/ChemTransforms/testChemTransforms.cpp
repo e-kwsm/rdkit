@@ -1487,10 +1487,10 @@ void testParseQueryDefFile() {
     parseQueryDefFile(pathName, qdefs, false);
     TEST_ASSERT(!qdefs.empty());
     TEST_ASSERT(qdefs.size() == 7);
-    TEST_ASSERT(qdefs.find("AcidChloride") != qdefs.end());
-    TEST_ASSERT(qdefs.find("AcideChloride") == qdefs.end());
-    TEST_ASSERT(qdefs.find("AcidChloride.Aliphatic") != qdefs.end());
-    TEST_ASSERT(qdefs.find("CarboxylicAcid.AlphaAmino") != qdefs.end());
+    TEST_ASSERT(qdefs.contains("AcidChloride"));
+    TEST_ASSERT(!qdefs.contains("AcideChloride"));
+    TEST_ASSERT(qdefs.contains("AcidChloride.Aliphatic"));
+    TEST_ASSERT(qdefs.contains("CarboxylicAcid.AlphaAmino"));
 
     std::string msmi = "CCC(=O)Cl";
     ROMol *mmol = SmilesToMol(msmi);
