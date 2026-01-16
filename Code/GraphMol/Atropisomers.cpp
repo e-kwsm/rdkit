@@ -621,7 +621,7 @@ void getAllAtomIdsForStereoGroup(
 
         if (atomBond->getBondDir() == Bond::BEGINWEDGE ||
             atomBond->getBondDir() == Bond::BEGINDASH ||
-            (wedgeBonds.find(atomBond->getIdx()) != wedgeBonds.end() &&
+            (wedgeBonds.contains(atomBond->getIdx()) &&
              (wedgeBonds.at(atomBond->getIdx())->getType()) ==
                  Chirality::WedgeInfoType::WedgeInfoTypeAtropisomer)) {
           if (std::find(atomIds.begin(), atomIds.end(), atom->getIdx()) ==
@@ -709,7 +709,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
       auto bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
 
       if (!canHaveDirection(*bondToTry) ||
-          wedgeBonds.find(bondToTry->getIdx()) != wedgeBonds.end()) {
+          wedgeBonds.contains(bondToTry->getIdx())) {
         continue;  // must be a single OR aromatic bond and not already
                    // spoken for by a chiral center
       }
@@ -915,7 +915,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
       auto bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
 
       if (!canHaveDirection(*bondToTry) ||
-          wedgeBonds.find(bondToTry->getIdx()) != wedgeBonds.end()) {
+          wedgeBonds.contains(bondToTry->getIdx())) {
         continue;  // must be a single OR aromatic bond and not already
                    // spoken for by a chiral center
       }
@@ -1093,7 +1093,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
       // to be used for a chiral center
 
       if (!canHaveDirection(*bondToTry) ||
-          wedgeBonds.find(bond->getIdx()) != wedgeBonds.end()) {
+          wedgeBonds.contains(bond->getIdx())) {
         continue;  // must be a single bond and not already spoken
                    // for by a chiral center
       }
