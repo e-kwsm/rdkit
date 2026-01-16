@@ -18,7 +18,7 @@ void addFormalChargeIndices(const ROMol *mol,
     int fc = (*it)->getFormalCharge();
     unsigned int idx = (*it)->getIdx();
     if (fc) {
-      if (fcMap.find(idx) == fcMap.end()) {
+      if (!fcMap.contains(idx)) {
         fcMap[idx] = fc;
       } else {
         fcMap[idx] += fc;
