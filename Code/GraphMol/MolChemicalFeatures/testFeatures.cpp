@@ -40,27 +40,27 @@ void test1() {
 
   inLine = "AtomType donor [N,O]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"));
+  TEST_ASSERT(atomTypeDefs.contains("{donor}"));
+  TEST_ASSERT(!atomTypeDefs.contains("{unsaturatedDonor}"));
   TEST_ASSERT(atomTypeDefs["{donor}"] == "$([N,O])");
 
   // check robustness to whitespace as we expand:
   inLine = " AtomType donor\t[S]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"));
+  TEST_ASSERT(atomTypeDefs.contains("{donor}"));
+  TEST_ASSERT(!atomTypeDefs.contains("{unsaturatedDonor}"));
   TEST_ASSERT(atomTypeDefs["{donor}"] == "$([N,O,$([S])])");
 
   inLine = "AtomType !donor [NH0]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"));
+  TEST_ASSERT(atomTypeDefs.contains("{donor}"));
+  TEST_ASSERT(!atomTypeDefs.contains("{unsaturatedDonor}"));
   TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0]);N,O,$([S])])");
 
   inLine = "AtomType unsaturatedDonor [$([{donor}]!-[*])]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(atomTypeDefs.count("{unsaturatedDonor}"));
+  TEST_ASSERT(atomTypeDefs.contains("{donor}"));
+  TEST_ASSERT(atomTypeDefs.contains("{unsaturatedDonor}"));
   TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0]);N,O,$([S])])");
   TEST_ASSERT(atomTypeDefs["{unsaturatedDonor}"] ==
               "$([$([$([!$([NH0]);N,O,$([S])])]!-[*])])");
