@@ -112,7 +112,7 @@ void addAtom(const Atom &atom, bj::object &bjAtom,
   addIntVal(bjAtom, bjDefaults, "isotope", atom.getIsotope());
   addIntVal(bjAtom, bjDefaults, "nRad", atom.getNumRadicalElectrons());
   std::string chi = "";
-  if (inv_chilookup.find(atom.getChiralTag()) != inv_chilookup.end()) {
+  if (inv_chilookup.contains(atom.getChiralTag())) {
     chi = inv_chilookup.find(atom.getChiralTag())->second;
   } else {
     BOOST_LOG(rdWarningLog)
@@ -356,8 +356,7 @@ void addSubstanceGroup(const SubstanceGroup &sg, bj::object &bjSG) {
 }
 
 void addStereoGroup(const StereoGroup &sg, bj::object &bjSG) {
-  if (inv_stereoGrouplookup.find(sg.getGroupType()) ==
-      inv_stereoGrouplookup.end()) {
+  if (!inv_stereoGrouplookup.contains(sg.getGroupType())) {
     throw ValueErrorException("unrecognized StereoGroup type");
   }
   bjSG["type"] = inv_stereoGrouplookup.at(sg.getGroupType());
