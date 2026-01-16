@@ -42,7 +42,7 @@ void DrawMolMCH::getAtomRadius(unsigned int atomIdx, double &xradius,
                                double &yradius) const {
   xradius = drawOptions_.highlightRadius;
   yradius = xradius;
-  if (highlightRadii_.find(atomIdx) != highlightRadii_.end()) {
+  if (highlightRadii_.contains(atomIdx)) {
     xradius = highlightRadii_.find(atomIdx)->second;
     yradius = xradius;
   }

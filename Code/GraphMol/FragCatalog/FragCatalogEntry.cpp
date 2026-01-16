@@ -40,9 +40,9 @@ FragCatalogEntry::FragCatalogEntry(const ROMol *omol, const PATH_TYPE &path,
   // functional groups on dp_mol
   for (const auto &mvtci : aidToFid) {
     int oldAid = mvtci.first;
-    if (aIdxMap.find(oldAid) != aIdxMap.end()) {
+    if (aIdxMap.contains(oldAid)) {
       int newAid = aIdxMap[oldAid];
-      if (d_aToFmap.find(newAid) != d_aToFmap.end()) {
+      if (d_aToFmap.contains(newAid)) {
         d_aToFmap[newAid].push_back(mvtci.second);
       } else {
         INT_VECT tmpVect;

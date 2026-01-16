@@ -150,7 +150,7 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
         // here is a check for "did we see this path before ?"
         // this should also take care of disconnected subpaths (since the
         // catalog should have only connected subgraphs)
-        if (mapkm1.find(sinvar) == mapkm1.end()) {
+        if (!mapkm1.contains(sinvar)) {
           continue;
         }
 
