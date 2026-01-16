@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
   options::store(options::parse_command_line(argc, argv, desc), vm);
   options::notify(vm);
 
-  if (vm.count("help")) {
+  if (vm.contains("help")) {
     cerr << desc << endl;
     return 0;
   }
