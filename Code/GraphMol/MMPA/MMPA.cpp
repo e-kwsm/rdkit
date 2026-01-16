@@ -213,15 +213,15 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
     //'\*.*\*.*\*', f)
     //  check if exists a fragment with maxCut connection points (*.. *.. *)
     if (isotope >= 3) {
-      bool valid = std::any_of(
-          frags.begin(), frags.end(),
-          [&isotope_track, &maxCuts](const INT_VECT &frag) {
-            size_t nLabels = std::count_if(
-                frag.begin(), frag.end(), [&isotope_track](int ai) {
-                  return isotope_track.end() != isotope_track.find(ai);
-                });
-            return (nLabels >= maxCuts);
-          });
+      bool valid =
+          std::any_of(frags.begin(), frags.end(),
+                      [&isotope_track, &maxCuts](const INT_VECT &frag) {
+                        size_t nLabels = std::count_if(
+                            frag.begin(), frag.end(), [&isotope_track](int ai) {
+                              return isotope_track.contains(ai);
+                            });
+                        return (nLabels >= maxCuts);
+                      });
       if (!valid) {
 #ifdef MMPA_DEBUG
         std::cout << "isotope>=3: invalid fragments. fragment with maxCut "
@@ -237,9 +237,8 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
     size_t maxAttachments = 0;
     for (size_t i = 0; i < frags.size(); i++) {
       size_t nAttachments = std::count_if(
-          frags[i].begin(), frags[i].end(), [&isotope_track](int ai) {
-            return isotope_track.end() != isotope_track.find(ai);
-          });
+          frags[i].begin(), frags[i].end(),
+          [&isotope_track](int ai) { return isotope_track.contains(ai); });
       if (maxAttachments < nAttachments) {
         maxAttachments = nAttachments;
       }
@@ -342,8 +341,7 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
       std::sort(rankedAtoms.begin(), rankedAtoms.end());
       int nextMap = 0;
       for (auto &rankedAtom : rankedAtoms) {
-        if (canonicalAtomMaps.find(rankedAtom.second) ==
-            canonicalAtomMaps.end()) {
+        if (!canonicalAtomMaps.contains(rankedAtom.second)) {
           canonicalAtomMaps[rankedAtom.second] = ++nextMap;
         }
       }
