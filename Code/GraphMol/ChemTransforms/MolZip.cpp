@@ -248,11 +248,11 @@ struct ZipBond {
     PRECONDITION(b, "Must have an end atom to bond");
     PRECONDITION(a_dummy, "Must have a begin dummy atom");
     PRECONDITION(b_dummy, "Must have an end dummy atom");
-    if (already_checked.find(a) == already_checked.end()) {
+    if (!already_checked.contains(a)) {
       restore(a);
       already_checked.insert(a);
     }
-    if (already_checked.find(b) == already_checked.end()) {
+    if (!already_checked.contains(b)) {
       restore(b);
       already_checked.insert(b);
     }
@@ -496,7 +496,7 @@ std::unique_ptr<ROMol> molzip(
               ("molzip: link bond with labels: " + std::to_string(molno) + "," +
                std::to_string(attached_molno) + " is missing"));
           auto bondType = link_bond->getBondType();
-          if (mappings.find(molno) == mappings.end()) {
+          if (!mappings.contains(molno)) {
             auto &bond = mappings[molno];
             CHECK_INVARIANT(
                 linkerBonds.find(attached_molno) == linkerBonds.end(),
@@ -530,8 +530,7 @@ std::unique_ptr<ROMol> molzip(
                  "," + std::to_string(attached_molno) +
                  " not setup correctly"));
           }
-        } else if (mappings.find(molno) == mappings.end() &&
-                   linkerBonds.find(molno) == linkerBonds.end()) {
+        } else if (!mappings.contains(molno) && !linkerBonds.contains(molno)) {
           // Normal linkage C[*:1].S[*:1] links C and S
           // LinkBond [*:1][*:2].C[*:1].S[*:2] links C and S
           auto &bond = mappings[molno];
@@ -542,9 +541,8 @@ std::unique_ptr<ROMol> molzip(
           bond.a = attached_atom;
           bond.a_dummy = atom;
         } else {
-          auto &bond = linkerBonds.find(molno) == linkerBonds.end()
-                           ? mappings[molno]
-                           : *linkerBonds[molno];
+          auto &bond = !linkerBonds.contains(molno) ? mappings[molno]
+                                                    : *linkerBonds[molno];
           if (bond.isLinker) {
             CHECK_INVARIANT(
                 !bond.a || !bond.b,
