@@ -239,9 +239,8 @@ void readStereoGroups(RWMol *mol, const bj::value &sgVals) {
       throw FileParseException(
           "Bad Format: stereogroup does not have either atoms or bonds");
     }
-    if (MolInterchange::stereoGrouplookup.find(
-            sgVal.at("type").as_string().c_str()) ==
-        MolInterchange::stereoGrouplookup.end()) {
+    if (!MolInterchange::stereoGrouplookup.contains(
+            sgVal.at("type").as_string().c_str())) {
       throw FileParseException("Bad Format: bad stereogroup type");
     }
     const auto typ = MolInterchange::stereoGrouplookup.at(
@@ -407,7 +406,7 @@ void readBondStereo(Bond *bnd, const bj::value &bondVal,
   if (stereo == "unspecified") {
     return;
   }
-  if (stereoBondlookup.find(stereo) == stereoBondlookup.end()) {
+  if (!stereoBondlookup.contains(stereo)) {
     throw FileParseException("Bad Format: bond stereo value for bond");
   }
   if (bondVal.as_object().contains("stereoAtoms")) {
