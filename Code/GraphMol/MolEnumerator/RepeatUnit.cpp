@@ -335,7 +335,7 @@ void connectRepeatToFrame(unsigned int nOrigAtoms, RWMol &mol,
     auto sruAtom = mol.getAtomWithIdx(aidx);
     unsigned int val;
     if (sruAtom->getPropIfPresent(headmarker, val)) {
-      if (tailMap.find(val) != tailMap.end()) {
+      if (tailMap.contains(val)) {
         // there's an atom in the frame to connect to:
         mol.addBond(sruAtom, tailMap[val], Bond::BondType::SINGLE);
         sruAtom->clearProp(headmarker);
@@ -343,7 +343,7 @@ void connectRepeatToFrame(unsigned int nOrigAtoms, RWMol &mol,
       }
     }
     if (sruAtom->getPropIfPresent(tailmarker, val)) {
-      if (headMap.find(val) != headMap.end()) {
+      if (headMap.contains(val)) {
         // there's an atom in the frame to connect to:
         mol.addBond(sruAtom, headMap[val], Bond::BondType::SINGLE);
         sruAtom->clearProp(tailmarker);
@@ -372,7 +372,7 @@ void constructHeadAndTailMaps(RWMol &mol, std::map<unsigned, Atom *> &headMap,
     std::vector<unsigned int> vals;
     if (atom->getPropIfPresent(headmarker_frame, vals)) {
       for (auto val : vals) {
-        if (headMap.find(val) != headMap.end()) {
+        if (headMap.contains(val)) {
           throw ValueErrorException(
               "SRU group present with multiple head atoms with the same index");
         }
@@ -381,7 +381,7 @@ void constructHeadAndTailMaps(RWMol &mol, std::map<unsigned, Atom *> &headMap,
     }
     if (atom->getPropIfPresent(tailmarker_frame, vals)) {
       for (auto val : vals) {
-        if (tailMap.find(val) != tailMap.end()) {
+        if (tailMap.contains(val)) {
           throw ValueErrorException(
               "SRU group present with multiple tail atoms with the same index");
         }
