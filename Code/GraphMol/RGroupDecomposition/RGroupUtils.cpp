@@ -43,7 +43,7 @@ std::map<int, Atom *> getRlabels(const RWMol &mol) {
   for (auto atom : mol.atoms()) {
     if (atom->hasProp(RLABEL)) {
       int rlabel = atom->getProp<int>(RLABEL);  // user label
-      CHECK_INVARIANT(atoms.find(rlabel) == atoms.end(),
+      CHECK_INVARIANT(!atoms.contains(rlabel),
                       "Duplicate labels in rgroup core!");
       atoms[rlabel] = atom;
     }
