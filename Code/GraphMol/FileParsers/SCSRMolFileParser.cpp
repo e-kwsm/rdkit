@@ -1133,8 +1133,8 @@ class MolFromSCSRMolConverter {
 
         if (molFromSCSRParams.includeLeavingGroups) {
           for (auto attachPoint : sgroup->getAttachPoints()) {
-            if (attachMap.find(OriginAtomConnection(atomIdx, attachPoint.id)) ==
-                attachMap.end()) {
+            if (!attachMap.contains(
+                    OriginAtomConnection(atomIdx, attachPoint.id))) {
               bool foundLgSgroup = false;
 
               for (auto lgSgroup : getSubstanceGroups(*templateMol)) {
@@ -1179,10 +1179,10 @@ class MolFromSCSRMolConverter {
         // Bonds to atoms in leaving groups that "left" are NOT copied
 
         for (auto bond : templateMol->bonds()) {
-          if (originAtomMap.find(OriginAtomDef(
-                  atomIdx, bond->getBeginAtomIdx())) == originAtomMap.end() ||
-              originAtomMap.find(OriginAtomDef(
-                  atomIdx, bond->getEndAtomIdx())) == originAtomMap.end()) {
+          if (!originAtomMap.contains(
+                  OriginAtomDef(atomIdx, bond->getBeginAtomIdx())) ||
+              !originAtomMap.contains(
+                  OriginAtomDef(atomIdx, bond->getEndAtomIdx()))) {
             continue;  // bond not in the new molecule
           }
           auto newBeginAtomIdx =

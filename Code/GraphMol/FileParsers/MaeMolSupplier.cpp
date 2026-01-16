@@ -238,7 +238,7 @@ bool is_ignored_property(const std::string &prop) {
       MAE_STEREO_STATUS,
   };
 
-  return ignored_properties.find(prop) != ignored_properties.end();
+  return ignored_properties.contains(prop);
 }
 
 //! Copy over the structure properties, including stereochemistry.
