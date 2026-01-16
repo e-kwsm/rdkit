@@ -69,8 +69,7 @@ struct RCore {
   std::shared_ptr<TautomerQuery> getMatchingTautomerQuery();
 
   inline bool isTerminalRGroupWithUserLabel(const int idx) const {
-    return terminalRGroupAtomToNeighbor.find(idx) !=
-           terminalRGroupAtomToNeighbor.end();
+    return terminalRGroupAtomToNeighbor.contains(idx);
   }
 
   /*
