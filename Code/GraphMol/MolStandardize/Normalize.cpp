@@ -196,7 +196,8 @@ ROMOL_SPTR Normalizer::normalizeFragment(
     // Iterate through Normalization transforms and apply each in order
     for (auto &transform : transforms) {
       SmilesMolPair product = applyTransform(nfrag, *transform);
-      if (!product.first.empty() && !seenProductSmiles.count(product.first)) {
+      if (!product.first.empty() &&
+          !seenProductSmiles.contains(product.first)) {
         seenProductSmiles.insert(product.first);
         BOOST_LOG(rdInfoLog)
             << "Rule applied: "
