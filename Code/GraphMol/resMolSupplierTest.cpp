@@ -177,7 +177,7 @@ void testBenzylCation() {
   }
   unsigned int indices[] = {0, 2, 4, 6};
   for (unsigned int &idx : indices) {
-    TEST_ASSERT(fcMap.find(idx) != fcMap.end());
+    TEST_ASSERT(fcMap.contains(idx));
     TEST_ASSERT(fcMap[idx] == 1);
   }
   delete resMolSuppl;
@@ -199,7 +199,7 @@ void testBenzylAnion() {
   }
   unsigned int indices[] = {0, 2, 4, 6};
   for (unsigned int &idx : indices) {
-    TEST_ASSERT(fcMap.find(idx) != fcMap.end());
+    TEST_ASSERT(fcMap.contains(idx));
     TEST_ASSERT(fcMap[idx] == -1);
   }
   delete resMolSuppl;
@@ -228,7 +228,7 @@ void testButadiene() {
   }
   unsigned int indices[] = {0, 3};
   for (unsigned int &idx : indices) {
-    TEST_ASSERT(fcMap.find(idx) != fcMap.end());
+    TEST_ASSERT(fcMap.contains(idx));
     TEST_ASSERT(fcMap[idx] == 0);
   }
   delete resMolSuppl;
@@ -277,7 +277,7 @@ void testChargeMigration() {
   }
   unsigned int indices[] = {0, 2, 4, 6};
   for (unsigned int &idx : indices) {
-    TEST_ASSERT(fcMap.find(idx) != fcMap.end());
+    TEST_ASSERT(fcMap.contains(idx));
     TEST_ASSERT(fcMap[idx] == 1);
   }
   delete resMolSuppl;
@@ -300,7 +300,7 @@ void testChargeSeparation1() {
   }
   unsigned int indices[] = {0, 8, 10};
   for (unsigned int &idx : indices) {
-    TEST_ASSERT(fcMap.find(idx) != fcMap.end());
+    TEST_ASSERT(fcMap.contains(idx));
     TEST_ASSERT(fcMap[idx] == 1);
   }
   delete resMolSuppl;
