@@ -77,7 +77,7 @@ TEST_CASE(
       fp->getOnBits(obl);
       for (const auto bid : obl) {
         INFO(bid);
-        CHECK(ao.bitPaths->find(bid) != ao.bitPaths->end());
+        CHECK(ao.bitPaths->contains(bid));
       }
       std::vector<unsigned int> atomCounts{1, 2, 3, 4, 4, 3, 2, 1};
       CHECK(*ao.atomCounts == atomCounts);
@@ -105,7 +105,7 @@ TEST_CASE(
       fp->getOnBits(obl);
       for (const auto bid : obl) {
         INFO(bid);
-        CHECK(ao.bitPaths->find(bid) != ao.bitPaths->end());
+        CHECK(ao.bitPaths->contains(bid));
       }
       std::vector<unsigned int> atomCounts{1, 2, 3, 4, 4, 3, 2, 1};
       CHECK(*ao.atomCounts == atomCounts);
@@ -143,7 +143,7 @@ TEST_CASE(
       fp->getOnBits(obl);
       for (const auto bid : obl) {
         INFO(bid);
-        CHECK(ao.bitInfoMap->find(bid) != ao.bitInfoMap->end());
+        CHECK(ao.bitInfoMap->contains(bid));
       }
       std::vector<unsigned int> atomCounts{2, 3, 3, 3, 3, 3, 3, 2};
       CHECK(*ao.atomCounts == atomCounts);
