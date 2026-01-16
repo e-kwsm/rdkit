@@ -125,7 +125,7 @@ void parseAtomType(const std::string &inLine,
                                     "bad AtomType line, missing definition");
   }
   std::string sma;
-  if (atomTypeDefs.count(atomType)) {
+  if (atomTypeDefs.contains(atomType)) {
     std::string base = atomTypeDefs[atomType];
     sma = "$(" + *tokIt + ")";
     if (negater) {
