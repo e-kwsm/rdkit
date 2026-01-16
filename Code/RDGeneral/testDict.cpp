@@ -315,7 +315,7 @@ TEST_CASE("testRDValue") {
     RDAny mv(m);
     // leaks
     auto *anym = rdany_cast<std::map<int, int> *>(mv);
-    REQUIRE(anym->find(0) != anym->end());
+    REQUIRE(anym->contains(0));
     delete anym;
   }
 
@@ -336,7 +336,7 @@ TEST_CASE("testRDValue") {
     RDAny mv(m);
     // leaks
     mptr anym = rdany_cast<mptr>(mv);
-    REQUIRE(anym->find(0) != anym->end());
+    REQUIRE(anym->contains(0));
 
     RDAny any3(boost::shared_ptr<Foo>(new Foo(1, 2.f)));
     REQUIRE(any3.m_value.getTag() == RDTypeTag::AnyTag);
