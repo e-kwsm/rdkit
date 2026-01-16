@@ -4385,8 +4385,8 @@ void testPDBResidues() {
         MolOps::getMolFragsWithQuery(*m, getResidue, false);
 
     TEST_ASSERT(res.size() == 22);
-    TEST_ASSERT(res.find(std::string("8NH")) != res.end());
-    TEST_ASSERT(res.find(std::string("ALA")) != res.end());
+    TEST_ASSERT(res.contains(std::string("8NH")));
+    TEST_ASSERT(res.contains(std::string("ALA")));
     TEST_ASSERT(res[std::string("8NH")]->getNumAtoms() == 21);
 
     const ROMol *lig = res[std::string("8NH")].get();
@@ -4412,7 +4412,7 @@ void testPDBResidues() {
         MolOps::getMolFragsWithQuery(*m, getResidue, false, &keep);
 
     TEST_ASSERT(res.size() == 1);
-    TEST_ASSERT(res.find(std::string("8NH")) != res.end());
+    TEST_ASSERT(res.contains(std::string("8NH")));
     TEST_ASSERT(res[std::string("8NH")]->getNumAtoms() == 21);
 
     const ROMol *lig = res[std::string("8NH")].get();
@@ -4438,8 +4438,8 @@ void testPDBResidues() {
         MolOps::getMolFragsWithQuery(*m, getResidue, false, &keep, true);
 
     TEST_ASSERT(res.size() == 21);
-    TEST_ASSERT(res.find(std::string("8NH")) == res.end());
-    TEST_ASSERT(res.find(std::string("ALA")) != res.end());
+    TEST_ASSERT(!res.contains(std::string("8NH")));
+    TEST_ASSERT(res.contains(std::string("ALA")));
     delete m;
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
