@@ -134,7 +134,7 @@ void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
         // here is a check for "did we see this path before ?"
         // this should take care of disconnected subpaths (since the
         // catalog should have only connected subgraphs)
-        if (mapkm1.find(sinvar) == mapkm1.end()) {
+        if (!mapkm1.contains(sinvar)) {
           continue;
         }
 
