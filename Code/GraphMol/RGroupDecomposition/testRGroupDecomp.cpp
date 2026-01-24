@@ -115,7 +115,7 @@ TEST_CASE("testSymmetryMatching", "[RGroupDecomp]") {
 
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
+    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
          ++it, ++i) {
       CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
     }
@@ -140,7 +140,7 @@ TEST_CASE("testSymmetryMatching", "[RGroupDecomp]") {
 
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
+    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
          ++it, ++i) {
       CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
     }
@@ -170,7 +170,7 @@ TEST_CASE("testGaSymmetryMatching", "[RGroupDecomp]") {
 
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
+    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
          ++it, ++i) {
       CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
     }
