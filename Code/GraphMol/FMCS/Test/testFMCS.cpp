@@ -43,6 +43,7 @@
 #include <cstring>
 #include <ctime>
 #include <string>
+#include <utility>
 #include "../../RDKitBase.h"
 #include "../../FileParsers/FileParsers.h"  //MOL single molecule !
 #include "../../FileParsers/MolSupplier.h"  //SDF
@@ -273,7 +274,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
   fprintf(f, "#software RDKit C++ FMCS \n#options  timeout=%u threshold=%g\n",
           p.Timeout, p.Threshold);
   std::cout << "Perform test cases ... \n";
-  for (auto tc = testCase.begin(); tc != testCase.end(); tc++, n++) {
+  for (auto tc = testCase.cbegin(); tc != testCase.cend(); tc++, n++) {
     if (!test_N.empty() &&
         test_N.end() == std::find(test_N.begin(), test_N.end(), n + 1)) {
       continue;
@@ -290,7 +291,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
       fprintf(fs, "\n//TEST %u\n", n + 1);
     }
     for (const auto &mid : *tc) {
-      auto id = molIdMap.find(mid);
+      auto id = std::as_const(molIdMap).find(mid);
       if (molIdMap.end() == id) {
         continue;
       }
