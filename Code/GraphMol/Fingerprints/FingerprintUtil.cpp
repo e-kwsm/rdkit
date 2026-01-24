@@ -300,8 +300,8 @@ void enumerateAllPaths(const ROMol &mol, INT_PATH_LIST_MAP &allPaths,
         tPaths =
             findAllPathsOfLengthsMtoN(mol, minPath, maxPath, true, useHs, aidx);
       }
-      for (INT_PATH_LIST_MAP::const_iterator tpit = tPaths.begin();
-           tpit != tPaths.end(); ++tpit) {
+      for (INT_PATH_LIST_MAP::const_iterator tpit = tPaths.cbegin();
+           tpit != tPaths.cend(); ++tpit) {
 #ifdef VERBOSE_FINGERPRINTING
         std::cerr << "paths from " << aidx << " size: " << tpit->first
                   << std::endl;
