@@ -3927,7 +3927,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -4057,7 +4057,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -4086,7 +4086,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -4133,7 +4133,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -4204,7 +4204,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -4228,7 +4228,7 @@ TEST_CASE("Testing canonicalization basics") {
     m2 = SmilesToMol(tsmi);
     REQUIRE(SubstructMatch(*m, *m2, mv));
     mmap.clear();
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -4265,7 +4265,7 @@ TEST_CASE("Testing canonicalization basics") {
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
     mmap.clear();
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }
@@ -5261,8 +5261,8 @@ TEST_CASE(
     smilesVec.emplace_back("C1=CC=C[CH+]C=C1");
     smilesVec.emplace_back("c1c[cH+]1");
     smilesVec.emplace_back("c1ccc[cH+]cc1");
-    for (std::vector<std::string>::const_iterator smiles = smilesVec.begin();
-         smiles != smilesVec.end(); ++smiles) {
+    for (std::vector<std::string>::const_iterator smiles = smilesVec.cbegin();
+         smiles != smilesVec.cend(); ++smiles) {
       RWMol *m = SmilesToMol(*smiles);
       REQUIRE(m);
       bool allConjugated = true;
