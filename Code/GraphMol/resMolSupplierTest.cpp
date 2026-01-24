@@ -610,12 +610,12 @@ void testSubstructMatchDMAP() {
 }
 
 void setResidueFormalCharge(RWMol *mol, std::vector<RWMol *> &res, int fc) {
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
+  for (std::vector<RWMol *>::const_iterator it = res.cbegin(); it != res.cend();
        ++it) {
     std::vector<MatchVectType> matchVect;
     SubstructMatch(*mol, *(*it), matchVect);
-    for (std::vector<MatchVectType>::const_iterator it = matchVect.begin();
-         it != matchVect.end(); ++it) {
+    for (std::vector<MatchVectType>::const_iterator it = matchVect.cbegin();
+         it != matchVect.cend(); ++it) {
       mol->getAtomWithIdx((*it).back().second)->setFormalCharge(fc);
     }
   }
@@ -669,7 +669,7 @@ void testCrambin() {
   TEST_ASSERT(query);
   res.push_back(query);
   setResidueFormalCharge(crambin, res, 1);
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
+  for (std::vector<RWMol *>::const_iterator it = res.cbegin(); it != res.cend();
        ++it) {
     delete *it;
   }
@@ -679,7 +679,7 @@ void testCrambin() {
   TEST_ASSERT(query);
   res.push_back(query);
   setResidueFormalCharge(crambin, res, -1);
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
+  for (std::vector<RWMol *>::const_iterator it = res.cbegin(); it != res.cend();
        ++it) {
     delete *it;
   }
