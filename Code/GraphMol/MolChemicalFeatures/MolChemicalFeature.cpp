@@ -12,6 +12,7 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include "MolChemicalFeature.h"
 #include "MolChemicalFeatureDef.h"
+#include <utility>
 
 namespace RDKit {
 
@@ -41,7 +42,7 @@ RDGeom::Point3D MolChemicalFeature::getPos(int confId) const {
 
   // -------------
   // Check to see if we've got the value cached:
-  auto cacheIt = d_locs.find(confId);
+  auto cacheIt = std::as_const(d_locs).find(confId);
   if (cacheIt != d_locs.end()) {
     return cacheIt->second;
   }
