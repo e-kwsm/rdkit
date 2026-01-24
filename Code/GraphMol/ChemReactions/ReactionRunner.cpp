@@ -1307,8 +1307,8 @@ void generateProductConformers(Conformer *productConf, const ROMol &reactant,
   if (reactConf.is3D()) {
     productConf->set3D(true);
   }
-  for (auto pr = mapping->reactProdAtomMap.begin();
-       pr != mapping->reactProdAtomMap.end(); ++pr) {
+  for (auto pr = mapping->reactProdAtomMap.cbegin();
+       pr != mapping->reactProdAtomMap.cend(); ++pr) {
     std::vector<unsigned> prodIdxs = pr->second;
     if (prodIdxs.size() > 1) {
       BOOST_LOG(rdWarningLog) << "reactant atom match more than one product "
