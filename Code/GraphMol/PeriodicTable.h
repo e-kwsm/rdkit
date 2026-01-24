@@ -13,6 +13,7 @@
 
 #include <map>
 #include <vector>
+#include <utility>
 #include <RDGeneral/types.h>
 #include "atomic_data.h"
 
@@ -85,7 +86,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
     } else if (elementSymbol == "O") {
       anum = 8;
     } else {
-      auto iter = byname.find(elementSymbol);
+      auto iter = std::as_const(byname).find(elementSymbol);
       if (iter != byname.end()) {
         anum = iter->second;
       }
@@ -242,7 +243,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
     PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
     const std::map<unsigned int, std::pair<double, double>> &m =
         byanum[atomicNumber].d_isotopeInfoMap;
-    auto item = m.find(isotope);
+    auto item = std::as_const(m).find(isotope);
     if (item == m.end()) {
       return 0.0;
     } else {
@@ -266,7 +267,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
     PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
     const std::map<unsigned int, std::pair<double, double>> &m =
         byanum[atomicNumber].d_isotopeInfoMap;
-    auto item = m.find(isotope);
+    auto item = std::as_const(m).find(isotope);
     if (item == m.end()) {
       return 0.0;
     } else {
