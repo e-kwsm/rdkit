@@ -2701,7 +2701,7 @@ TEST_CASE("Read SD properties till last '>'") {
   SDMolSupplier supplier;
   supplier.setData(molblock);
 
-  auto m2 = supplier.next();
+  auto *m2 = supplier.next();
   REQUIRE(m2);
   CHECK(m2->hasProp(prop_name));
 }
