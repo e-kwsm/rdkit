@@ -244,8 +244,8 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
   }
 
   // loop over bond bookmarks in the branch and close the corresponding rings
-  for (auto bmIt = branch->getBondBookmarks()->begin();
-       bmIt != branch->getBondBookmarks()->end(); ++bmIt) {
+  for (auto bmIt = branch->getBondBookmarks()->cbegin();
+       bmIt != branch->getBondBookmarks()->cend(); ++bmIt) {
     CHECK_INVARIANT(bmIt->second.size() >= 1,
                     "bad bond bookmark list on branch");
     for (auto bondIt = bmIt->second.cbegin(); bondIt != bmIt->second.cend();
