@@ -329,7 +329,7 @@ ExplicitBitVect *LayeredFingerprintMol(
 
   boost::dynamic_bitset<> atomsInPath(mol.getNumAtoms());
   boost::dynamic_bitset<> bondsInPath(mol.getNumBonds());
-  for (INT_PATH_LIST_MAP_CI paths = allPaths.begin(); paths != allPaths.end();
+  for (INT_PATH_LIST_MAP_CI paths = allPaths.cbegin(); paths != allPaths.cend();
        ++paths) {
     for (const auto &path : paths->second) {
 #ifdef VERBOSE_FINGERPRINTING
