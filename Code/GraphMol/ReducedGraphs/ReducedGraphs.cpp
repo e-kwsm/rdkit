@@ -84,8 +84,8 @@ void getErGAtomTypes(const ROMol &mol,
   std::vector<const ROMol *> featureMatchers;
   if (!patterns) {
     featureMatchers.reserve(defaultFeatureSmarts.size());
-    for (auto smaIt = defaultFeatureSmarts.begin();
-         smaIt != defaultFeatureSmarts.end(); ++smaIt) {
+    for (auto smaIt = defaultFeatureSmarts.cbegin();
+         smaIt != defaultFeatureSmarts.cend(); ++smaIt) {
       const ROMol *matcher = pattern_flyweight(*smaIt).get().getMatcher();
       CHECK_INVARIANT(matcher, "bad smarts");
       featureMatchers.push_back(matcher);
