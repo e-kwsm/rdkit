@@ -149,8 +149,8 @@ void testUFFTyper2() {
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
   TEST_ASSERT(foundAll);
   TEST_ASSERT(types.size() == mol->getNumAtoms());
-  for (UFF::AtomicParamVect::const_iterator it = types.begin();
-       it != types.end(); it++) {
+  for (UFF::AtomicParamVect::const_iterator it = types.cbegin();
+       it != types.cend(); it++) {
     TEST_ASSERT((*it));
   }
   mol2 = MolOps::addHs(*mol);
@@ -158,8 +158,8 @@ void testUFFTyper2() {
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol2);
   TEST_ASSERT(foundAll);
   TEST_ASSERT(types.size() == mol2->getNumAtoms());
-  for (UFF::AtomicParamVect::const_iterator it = types.begin();
-       it != types.end(); it++) {
+  for (UFF::AtomicParamVect::const_iterator it = types.cbegin();
+       it != types.cend(); it++) {
     TEST_ASSERT((*it));
   }
   delete mol2;

@@ -1846,8 +1846,8 @@ void testMorganAtomInfo() {
          iter != nze.end(); ++iter) {
       TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()));
     }
-    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
-         iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.cbegin();
+         iter != bitInfo.cend(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0);
     }
 
@@ -1862,8 +1862,8 @@ void testMorganAtomInfo() {
          iter != nze.end(); ++iter) {
       TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()));
     }
-    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
-         iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.cbegin();
+         iter != bitInfo.cend(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0 ||
                   iter->second.begin()->second == 1);
     }
@@ -1882,13 +1882,13 @@ void testMorganAtomInfo() {
         *mol, 0, 2048, nullptr, nullptr, false, true, false, &bitInfo);
     TEST_ASSERT(fp->getNumOnBits() == 2);
     TEST_ASSERT(bitInfo.size() == 2);
-    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
-         iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.cbegin();
+         iter != bitInfo.cend(); ++iter) {
       TEST_ASSERT(iter->first < 2048);
       TEST_ASSERT(fp->getBit(iter->first));
     }
-    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
-         iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.cbegin();
+         iter != bitInfo.cend(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0);
     }
 
@@ -1898,13 +1898,13 @@ void testMorganAtomInfo() {
         *mol, 1, 2048, nullptr, nullptr, false, true, false, &bitInfo);
     TEST_ASSERT(fp->getNumOnBits() == 5);
     TEST_ASSERT(bitInfo.size() == 5);
-    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
-         iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.cbegin();
+         iter != bitInfo.cend(); ++iter) {
       TEST_ASSERT(iter->first < 2048);
       TEST_ASSERT(fp->getBit(iter->first));
     }
-    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
-         iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.cbegin();
+         iter != bitInfo.cend(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0 ||
                   iter->second.begin()->second == 1);
     }

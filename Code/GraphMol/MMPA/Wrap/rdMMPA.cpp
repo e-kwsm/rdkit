@@ -26,8 +26,8 @@ python::tuple fragmentMolHelper(const RDKit::ROMol &mol, unsigned int maxCuts,
   python::list pyres;
   if (ok) {
     for (std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>>::
-             const_iterator pr = tres.begin();
-         pr != tres.end(); ++pr) {
+             const_iterator pr = tres.cbegin();
+         pr != tres.cend(); ++pr) {
       python::list lres;
       if (resultsAsMols) {
         lres.append(pr->first);
@@ -56,8 +56,8 @@ python::tuple fragmentMolHelper2(const RDKit::ROMol &mol, unsigned int minCuts,
   python::list pyres;
   if (ok) {
     for (std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>>::
-             const_iterator pr = tres.begin();
-         pr != tres.end(); ++pr) {
+             const_iterator pr = tres.cbegin();
+         pr != tres.cend(); ++pr) {
       python::list lres;
       if (resultsAsMols) {
         lres.append(pr->first);
@@ -89,8 +89,8 @@ python::tuple fragmentMolHelper3(const RDKit::ROMol &mol, python::object ob,
   python::list pyres;
   if (ok) {
     for (std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>>::
-             const_iterator pr = tres.begin();
-         pr != tres.end(); ++pr) {
+             const_iterator pr = tres.cbegin();
+         pr != tres.cend(); ++pr) {
       python::list lres;
       if (resultsAsMols) {
         lres.append(pr->first);
