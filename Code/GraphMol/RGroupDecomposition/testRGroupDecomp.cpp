@@ -115,8 +115,7 @@ TEST_CASE("testSymmetryMatching", "[RGroupDecomp]") {
 
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
     }
     delete core;
@@ -140,8 +139,7 @@ TEST_CASE("testSymmetryMatching", "[RGroupDecomp]") {
 
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
     }
     delete core;
@@ -170,8 +168,7 @@ TEST_CASE("testGaSymmetryMatching", "[RGroupDecomp]") {
 
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
     }
     delete core;
@@ -211,7 +208,7 @@ TEST_CASE("testGaBatch", "[RGroupDecomp]") {
 
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend(); ++it) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
     CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
   }
   delete core;
@@ -246,8 +243,7 @@ TEST_CASE("testRGroupOnlyMatching", "[RGroupDecomp]") {
   RGroupRows rows = decomp.getRGroupsAsRows();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
   }
   delete core;
@@ -286,8 +282,7 @@ TEST_CASE("testRingMatching", "[RGroupDecomp]") {
   auto cols = decomp.getRGroupsAsColumns();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     // Ring rgroups not supported by molzip yet.
     CHECK_RGROUP(it, ringDataRes[i]);
   }
@@ -317,8 +312,7 @@ TEST_CASE("testRingMatching2", "[RGroupDecomp]") {
   RGroupRows rows = decomp.getRGroupsAsRows();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     CHECK_RGROUP(it, ringDataRes2[i]);
   }
   delete core;
@@ -354,8 +348,7 @@ TEST_CASE("testRingMatching3", "[RGroupDecomp]") {
     RGroupRows rows = decomp.getRGroupsAsRows();
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, ringDataRes3[i]);
     }
   }
@@ -395,8 +388,7 @@ TEST_CASE("testMultiCore", "[RGroupDecomp]") {
   RGroupRows rows = decomp.getRGroupsAsRows();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     // molzip doesn't support double attachments yet (it probably should)
     CHECK_RGROUP(it, coreSmiRes[i]);
   }
@@ -931,8 +923,7 @@ $$$$)CTAB";
         "Core:C1C2C(C(N([*:2])[*:4])NC1[*:1])N([*:6])CN2[*:5] R1:O[*:1] "
         "R2:[H][*:2] R4:[H][*:4] R5:C[*:5] R6:[H][*:6]"};
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       REQUIRE(i < 4);
       // molzip doesn't support double attachment points yet
       CHECK_RGROUP(it, expected[i]);
@@ -969,8 +960,7 @@ TEST_CASE("testRowColumnAlignmentProblem", "[RGroupDecomp]") {
                               "Core:c1cncc([*:1])c1 R1:Cl[*:1]"};
 
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, expected[i], mols[i].get());
     }
 
@@ -1451,8 +1441,7 @@ TEST_CASE("testMultiCorePreLabelled", "[RGroupDecomp]") {
       decomp.process();
       RGroupRows rows = decomp.getRGroupsAsRows();
       i = 0;
-      for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-           ++it, ++i) {
+      for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
         CHECK_RGROUP(it, expectedRows[i]);
       }
       RGroupColumns groups = decomp.getRGroupsAsColumns();
@@ -1699,7 +1688,7 @@ $$$$
 
     auto rows = decomp.getRGroupsAsRows();
     REQUIRE(rows.size() == 1);
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     std::string expected(
         "Core:c1cc(N[*:1])cc(O[*:2])c1 R1:C[*:1] R2:C1CC([*:2])C1");
     CHECK_RGROUP(it, expected);
@@ -1859,8 +1848,7 @@ M  END
           "Core:C1CCC([*:5])([*:6])CC1 R5:Br[*:5] R6:Cl[*:6]"};
       REQUIRE(rows.size() == res.size());
       size_t i = 0;
-      for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-           ++it) {
+      for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
         CHECK_RGROUP(it, res.at(i++));
       }
     }
@@ -1912,7 +1900,7 @@ M  END
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   REQUIRE(rows.size() == 1);
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   std::string expected(
       "Core:O=C(NC1CCN([*:3])CC1)[*:1] R1:Clc1cc([*:1])[nH]c1Cl "
       "R3:O=[N+]([O-])c1cccnc1[*:3]");
@@ -1953,7 +1941,7 @@ TEST_CASE("testNoAlignmentAndSymmetry", "[RGroupDecomp]") {
       "Core:c1ncc([*:3])c([*:2])c1[*:1] R1:NC[*:1] R2:Cl[*:2] R3:OC[*:3]"};
   REQUIRE(rows.size() == res.size());
   i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend(); ++it) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
     CHECK_RGROUP(it, res.at(i++));
   }
 }
@@ -1972,7 +1960,7 @@ TEST_CASE("testSingleAtomBridge", "[RGroupDecomp]") {
   const std::string expected(
       "Core:C1CC([*:2])C1[*:1] R1:N([*:1])[*:2]"
       " R2:N([*:1])[*:2]");
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   CHECK_RGROUP(it, expected);
 
   core = "C1([*:1])CCC1"_smiles;
@@ -2097,7 +2085,7 @@ TEST_CASE("testUserMatchTypes", "[RGroupDecomp]") {
       REQUIRE(decomp.process());
       auto rows = decomp.getRGroupsAsRows();
       REQUIRE(rows.size() == 1);
-      RGroupRows::const_iterator it = rows.cbegin();
+      auto it = rows.cbegin();
       CHECK_RGROUP(it, expected);
     }
   };
@@ -2141,7 +2129,7 @@ TEST_CASE("testUnlabelledRGroupsOnAromaticNitrogen", "[RGroupDecomp]") {
       "Core:c1ccc(-c2cccc3c2cnn3[*:2])nc1 R2:C[*:2]",
       "Core:c1cc[n+]([*:1])c(-c2cccc3c2cnn3[*:2])c1 R1:CC[*:1] R2:[H][*:2]",
   };
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend(); ++it) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
     CHECK_RGROUP(it, expected.at(i++));
   }
 }
@@ -2249,8 +2237,7 @@ C[*:2]
     std::vector<std::string> expected1{
         "Core:Fc1ccc([*:2])c([*:1])c1 R1:C[*:1] R2:Cl[*:2]"};
     i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
       CHECK_RGROUP(it, expected1.at(i++));
     }
     REQUIRE(decomp.add(*m2) == 1);
@@ -2261,8 +2248,7 @@ C[*:2]
         "Core:Fc1ccc([*:2])c([*:1])c1 R1:C[*:1] R2:Cl[*:2]",
         "Core:c1ccc([*:3])c([*:1])c1 R1:C[*:1] R3:Br[*:3]"};
     i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
       CHECK_RGROUP(it, expected2.at(i++));
     }
   }
@@ -2289,8 +2275,7 @@ C[*:2]
         "Core:c1cc([*:2])c([*:1])cc1[*:3] R1:C[*:1] R2:Br[*:2] R3:[H][*:3]",
         "Core:Fc1ccc([*:2])c([*:1])c1 R1:C[*:1] R2:[H][*:2]"};
     size_t i = 0;
-    for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-         ++it) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
       CHECK_RGROUP(it, expected.at(i++));
     }
   }
@@ -2342,7 +2327,7 @@ M  END
   REQUIRE(pos == std::string::npos);
   std::string expected(
       "Core:c1cc([*:2])ncc1[*:1] R1:Cl[*:1] R2:C1CCN([*:2])C1");
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   CHECK_RGROUP(it, expected);
 }
 
@@ -2501,7 +2486,7 @@ M  END
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   REQUIRE(rows.size() == 1);
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   std::string expected(
       "Core:c1c([*:2])c([*:1])cc([*:4])c1[*:3] R1:Cl[*:1] R2:*O[*:2] "
       "R3:CC1CCN([*:3])C1 R4:N#C[*:4]");
@@ -2622,7 +2607,7 @@ M  END
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   REQUIRE(rows.size() == 1);
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   std::string expected(
       "Core:c1c([*:1])nc([*:3])nc1[*:2] R1:COC(=O)[*:1] R2:C[*:2] R3:*[*:3]");
   // Check R3 atom labelling
@@ -2838,7 +2823,7 @@ M  END
   REQUIRE(rows.size() == 1);
   auto row = rows[0];
   std::string expected("Core:COC1CCC([*:1])([*:2])CN1 R1:C[*:1] R2:C[*:2]");
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   CHECK_RGROUP(it, expected);
 }
 
@@ -2859,7 +2844,7 @@ TEST_CASE("testGithub4505", "[RGroupDecomp]") {
     REQUIRE(rows.size() == 1);
     auto row = rows[0];
     std::string expected("Core:c1cncc([*:2])c1 R2:CO[*:2]");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
   {
@@ -2877,7 +2862,7 @@ TEST_CASE("testGithub4505", "[RGroupDecomp]") {
     REQUIRE(rows.size() == 1);
     auto row = rows[0];
     std::string expected("Core:C1=C([*:1])CCCC1 R1:C[*:1]");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
 }
@@ -2897,7 +2882,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     REQUIRE(rows.size() == 1);
     auto row = rows[0];
     std::string expected("Core:C1CCS(=[*:1])(=[*:2])NC1 R1:O=[*:1] R2:O=[*:2]");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
   {
@@ -2914,7 +2899,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     REQUIRE(rows.size() == 1);
     auto row = rows[0];
     std::string expected("Core:COC1CCC([*:1])([*:2])CN1 R1:C[*:1] R2:C[*:2]");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
   {
@@ -2964,7 +2949,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     auto row = rows[0];
     std::string expected(
         "Core:C1CC([*:2])([*:3])CNC1O[*:1] R1:C[*:1] R2:C[*:2] R3:C[*:3]");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
     // Check core with terminal wildcard - dummy atom labels not allowed
     params.labels = IsotopeLabels;
@@ -3028,7 +3013,7 @@ TEST_CASE("testGithub5613", "[RGroupDecomp]") {
         "Core:O=C(N[C@H]1CCN([*:3])C1)[*:1] "
         "R1:Cc1[nH]c([*:1])c(Cl)c1Cl "
         "R3:O=C(O)c1cc([*:3])nc(Cl)n1");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
   {
@@ -3048,7 +3033,7 @@ TEST_CASE("testGithub5613", "[RGroupDecomp]") {
         "Core:O=C(N[C@@H]1CCN([*:3])C[C@@H]1[*:2])[*:1] "
         "R1:Cc1[nH]c([*:1])c(Cl)c1Cl R2:CO[*:2] "
         "R3:CN1CCN(CCOc2cnc(-c3nc([*:3])sc3C(=O)O)cn2)CC1");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
   {
@@ -3068,7 +3053,7 @@ TEST_CASE("testGithub5613", "[RGroupDecomp]") {
         "Core:O=C(N[C@@H]1CCN([*:1])C[C@@H]1[*:2])[*:3] "
         "R1:CN1CCN(CCOc2cnc(-c3nc([*:1])sc3C(=O)O)cn2)CC1 "
         "R2:CO[*:2] R3:Cc1[nH]c([*:3])c(Cl)c1Cl");
-    RGroupRows::const_iterator it = rows.cbegin();
+    auto it = rows.cbegin();
     CHECK_RGROUP(it, expected);
   }
 }
@@ -3622,8 +3607,7 @@ M  END
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     REQUIRE(i < 2);
     CHECK_RGROUP(it, expected[i]);
   }
@@ -3656,8 +3640,7 @@ TEST_CASE("testTautomerCore", "[RGroupDecomp]") {
   decomp1.process();
   auto rows = decomp1.getRGroupsAsRows();
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     REQUIRE(i < 2);
     CHECK_RGROUP(it, expected1[i]);
   }
@@ -3670,8 +3653,7 @@ TEST_CASE("testTautomerCore", "[RGroupDecomp]") {
   decomp2.process();
   rows = decomp2.getRGroupsAsRows();
   i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     REQUIRE(i < 2);
     CHECK_RGROUP(it, expected2[i]);
   }
@@ -3710,8 +3692,7 @@ M  END
   decomp3.process();
   rows = decomp3.getRGroupsAsRows();
   i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     REQUIRE(i < 2);
     CHECK_RGROUP(it, expected2[i]);
   }
@@ -3852,7 +3833,7 @@ TEST_CASE("testNotEnumeratedCore", "[RGroupDecomp]") {
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   REQUIRE(rows.size() == 1);
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   CHECK_RGROUP(it, expected);
 }
 
@@ -3871,7 +3852,7 @@ TEST_CASE("testRgroupDecompZipping", "[RGroupDecomp]") {
   decomp.process();
   RGroupRows rows = decomp.getRGroupsAsRows();
   REQUIRE(rows.size() == 1);
-  RGroupRows::const_iterator it = rows.cbegin();
+  auto it = rows.cbegin();
   std::vector<ROMOL_SPTR> mols;
   for (auto rgroups = it->begin(); rgroups != it->end(); ++rgroups) {
     mols.push_back(rgroups->second);
@@ -3903,8 +3884,7 @@ TEST_CASE("testSmartsOnDummyAtoms", "[RGroupDecomp]") {
   decomp.process();
   RGroupRows rows = decomp.getRGroupsAsRows();
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.cbegin(); it != rows.cend();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     CHECK_RGROUP(it, expected[i]);
   }
 }
