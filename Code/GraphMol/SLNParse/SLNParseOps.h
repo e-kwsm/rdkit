@@ -219,8 +219,8 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
   mp->insertMol(*branch);
 
   // copy in any atom bookmarks from the branch:
-  for (auto bmIt = branch->getAtomBookmarks()->begin();
-       bmIt != branch->getAtomBookmarks()->end(); ++bmIt) {
+  for (auto bmIt = branch->getAtomBookmarks()->cbegin();
+       bmIt != branch->getAtomBookmarks()->cend(); ++bmIt) {
     if (bmIt->first < 0) {
       continue;
     }
