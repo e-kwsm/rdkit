@@ -586,7 +586,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
     if (newAt->getPropIfPresent(common_properties::_isotopicHs, isoHs)) {
       newAt->clearProp(common_properties::_isotopicHs);
     }
-    std::vector<unsigned int>::const_iterator isoH = isoHs.begin();
+    std::vector<unsigned int>::const_iterator isoH = isoHs.cbegin();
     unsigned int newIdx;
     newAt->clearComputedProps();
     // always convert explicit Hs

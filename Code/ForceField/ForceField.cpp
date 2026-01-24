@@ -317,8 +317,8 @@ double ForceField::calcEnergy(double *pos) {
   }
 
   // now loop over the contribs
-  for (ContribPtrVect::const_iterator contrib = d_contribs.begin();
-       contrib != d_contribs.end(); contrib++) {
+  for (ContribPtrVect::const_iterator contrib = d_contribs.cbegin();
+       contrib != d_contribs.cend(); contrib++) {
     double E = (*contrib)->getEnergy(pos);
     res += E;
   }
@@ -357,13 +357,13 @@ void ForceField::calcGrad(double *pos, double *grad) {
     return;
   }
 
-  for (ContribPtrVect::const_iterator contrib = d_contribs.begin();
-       contrib != d_contribs.end(); contrib++) {
+  for (ContribPtrVect::const_iterator contrib = d_contribs.cbegin();
+       contrib != d_contribs.cend(); contrib++) {
     (*contrib)->getGrad(pos, grad);
   }
 
-  for (INT_VECT::const_iterator it = d_fixedPoints.begin();
-       it != d_fixedPoints.end(); it++) {
+  for (INT_VECT::const_iterator it = d_fixedPoints.cbegin();
+       it != d_fixedPoints.cend(); it++) {
     CHECK_INVARIANT(static_cast<unsigned int>(*it) < d_numPoints,
                     "bad fixed point index");
     unsigned int idx = d_dimension * (*it);
