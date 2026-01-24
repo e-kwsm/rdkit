@@ -871,8 +871,8 @@ ROMol *pathToSubmolHelper(const ROMol &mol, python::object &path, bool useQuery,
     // make sure the optional argument actually was a dictionary
     python::dict typecheck = python::extract<python::dict>(atomMap);
     atomMap.attr("clear")();
-    for (std::map<int, int>::const_iterator mIt = mapping.begin();
-         mIt != mapping.end(); ++mIt) {
+    for (std::map<int, int>::const_iterator mIt = mapping.cbegin();
+         mIt != mapping.cend(); ++mIt) {
       atomMap[mIt->first] = mIt->second;
     }
   }

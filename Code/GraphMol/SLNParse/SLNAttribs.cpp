@@ -134,8 +134,8 @@ QueryAtom::QUERYATOM_QUERY *makeQueryFromOp(const std::string &op, int val,
 void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
   QueryAtom::QUERYATOM_QUERY *atomQuery = nullptr;
   bool lastWasLowPriAnd = false;
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (AttribListType::const_iterator it = attribs.cbegin();
+       it != attribs.cend(); ++it) {
     QueryAtom::QUERYATOM_QUERY *query = nullptr;
     AttribCombineOp how = it->first;
 
@@ -372,8 +372,8 @@ void parseFinalAtomAttribs(Atom *atom, bool doingQuery) {
 void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
   // FIX: need to do the same query tree reordering here as we did above.
   bool seenTypeQuery = false;
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (AttribListType::const_iterator it = attribs.cbegin();
+       it != attribs.cend(); ++it) {
     Queries::CompositeQueryType how;
     switch (it->first) {
       case AttribAnd:
@@ -448,8 +448,8 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
 }
 
 void parseMolAttribs(ROMol *mol, AttribListType attribs) {
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (AttribListType::const_iterator it = attribs.cbegin();
+       it != attribs.cend(); ++it) {
     CHECK_INVARIANT(it->first == AttribAnd, "bad attrib type");
 
     boost::shared_ptr<AttribType> attribPtr = it->second;
