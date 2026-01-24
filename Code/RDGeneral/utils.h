@@ -53,7 +53,7 @@ RDKIT_RDGENERAL_EXPORT double_source_type &getDoubleRandomSource();
 template <class T>
 unsigned int countSwapsToInterconvert(const T &ref, T probe) {
   PRECONDITION(ref.size() == probe.size(), "size mismatch");
-  typename T::const_iterator refIt = ref.begin();
+  typename T::const_iterator refIt = ref.cbegin();
   typename T::iterator probeIt = probe.begin();
   typename T::iterator probeIt2;
 
