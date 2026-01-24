@@ -52,7 +52,6 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 using namespace RDKit;
 
 typedef std::vector<std::unique_ptr<ROMol>> UMOLS;
-#define UPTR(m) std::unique_ptr<ROMol>(m)
 
 void CHECK_RGROUP(RGroupRows::const_iterator &it, const std::string &expected,
                   ROMol *mol = nullptr) {
@@ -107,7 +106,7 @@ TEST_CASE("testSymmetryMatching", "[RGroupDecomp]") {
       ROMol *mol = SmilesToMol(symdata[i]);
       int res = decomp.add(*mol);
       REQUIRE(res == i);
-      mols.push_back(UPTR(mol));
+      mols.emplace_back(mol);
     }
 
     decomp.process();
@@ -132,7 +131,7 @@ TEST_CASE("testSymmetryMatching", "[RGroupDecomp]") {
       ROMol *mol = SmilesToMol(symdata[i]);
       int res = decomp.add(*mol);
       CHECK(res == i);
-      mols.push_back(UPTR(mol));
+      mols.emplace_back(mol);
     }
 
     decomp.process();
@@ -162,7 +161,7 @@ TEST_CASE("testGaSymmetryMatching", "[RGroupDecomp]") {
       ROMol *mol = SmilesToMol(symdata[i]);
       int res = decomp.add(*mol);
       CHECK(res == i);
-      mols.push_back(UPTR(mol));
+      mols.emplace_back(mol);
     }
 
     decomp.process();
@@ -194,7 +193,7 @@ TEST_CASE("testGaBatch", "[RGroupDecomp]") {
     ROMol *mol = SmilesToMol(symdata[i]);
     int res = decomp.add(*mol);
     REQUIRE(res == i);
-    mols.push_back(UPTR(mol));
+    mols.emplace_back(mol);
   }
 
   decomp.process();
@@ -235,7 +234,7 @@ TEST_CASE("testRGroupOnlyMatching", "[RGroupDecomp]") {
     int res = decomp.add(*mol);
     if (i < 4) {
       REQUIRE(res == i);
-      mols.push_back(UPTR(mol));
+      mols.emplace_back(mol);
     } else {
       REQUIRE(res == -1);
       delete mol;
@@ -278,7 +277,7 @@ TEST_CASE("testRingMatching", "[RGroupDecomp]") {
     ROMol *mol = SmilesToMol(ringData[i]);
     int res = decomp.add(*mol);
     REQUIRE(res == i);
-    mols.push_back(UPTR(mol));
+    mols.emplace_back(mol);
   }
 
   decomp.process();
@@ -387,7 +386,7 @@ TEST_CASE("testMultiCore", "[RGroupDecomp]") {
   for (unsigned int i = 0; i < sizeof(coreSmi) / sizeof(const char *); ++i) {
     ROMol *mol = SmilesToMol(coreSmi[i]);
     unsigned int res = decomp.add(*mol);
-    mols.push_back(UPTR(mol));
+    mols.emplace_back(mol);
     REQUIRE(res == i);
   }
 
