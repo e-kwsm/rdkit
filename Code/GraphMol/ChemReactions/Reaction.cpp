@@ -39,6 +39,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <map>
 #include <algorithm>
+#include <utility>
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/ChemReactions/ReactionUtils.h>
@@ -460,7 +461,7 @@ void addRecursiveQueriesToReaction(
     (*reactantLabels).resize(0);
   }
 
-  for (auto rIt = rxn.beginReactantTemplates();
+  for (auto rIt = std::as_const(rxn).beginReactantTemplates();
        rIt != rxn.endReactantTemplates(); ++rIt) {
     if (reactantLabels != nullptr) {
       std::vector<std::pair<unsigned int, std::string>> labels;
