@@ -319,8 +319,8 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
       ostr
           << "mapped atoms in the reactants were not mapped in the products.\n";
       ostr << "  unmapped numbers are: ";
-      for (std::vector<int>::const_iterator ivIt = mapNumbersSeen.begin();
-           ivIt != mapNumbersSeen.end(); ++ivIt) {
+      for (std::vector<int>::const_iterator ivIt = mapNumbersSeen.cbegin();
+           ivIt != mapNumbersSeen.cend(); ++ivIt) {
         ostr << *ivIt << " ";
       }
       ostr << "\n";

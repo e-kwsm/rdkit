@@ -754,8 +754,8 @@ void testIssue285() {
   for (INT_VECT_CI cid = cids.begin(); cid != cids.end(); ++cid) {
     molBlocks.push_back(MolToMolBlock(*m, true, *cid));
   }
-  for (std::vector<std::string>::const_iterator mbI = molBlocks.begin();
-       mbI != molBlocks.end(); ++mbI) {
+  for (std::vector<std::string>::const_iterator mbI = molBlocks.cbegin();
+       mbI != molBlocks.cend(); ++mbI) {
     for (auto mbJ = mbI + 1; mbJ != molBlocks.end(); ++mbJ) {
       TEST_ASSERT((*mbI) != (*mbJ));
     }

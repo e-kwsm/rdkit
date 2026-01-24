@@ -61,8 +61,8 @@ void getCrippenAtomContribs(const ROMol &mol, std::vector<double> &logpContribs,
   for (const auto &param : *params) {
     std::vector<MatchVectType> matches;
     SubstructMatch(mol, *(param.dp_pattern.get()), matches, false, true);
-    for (std::vector<MatchVectType>::const_iterator matchIt = matches.begin();
-         matchIt != matches.end(); ++matchIt) {
+    for (std::vector<MatchVectType>::const_iterator matchIt = matches.cbegin();
+         matchIt != matches.cend(); ++matchIt) {
       int idx = (*matchIt)[0].second;
       if (atomNeeded[idx]) {
         atomNeeded[idx] = 0;
@@ -102,13 +102,13 @@ void calcCrippenDescriptors(const ROMol &mol, double &logp, double &mr,
   std::vector<double> mrContribs(workMol->getNumAtoms());
   getCrippenAtomContribs(*workMol, logpContribs, mrContribs, force);
   logp = 0.0;
-  for (std::vector<double>::const_iterator iter = logpContribs.begin();
-       iter != logpContribs.end(); ++iter) {
+  for (std::vector<double>::const_iterator iter = logpContribs.cbegin();
+       iter != logpContribs.cend(); ++iter) {
     logp += *iter;
   }
   mr = 0.0;
-  for (std::vector<double>::const_iterator iter = mrContribs.begin();
-       iter != mrContribs.end(); ++iter) {
+  for (std::vector<double>::const_iterator iter = mrContribs.cbegin();
+       iter != mrContribs.cend(); ++iter) {
     mr += *iter;
   }
 

@@ -1966,8 +1966,8 @@ std::vector<MOL_SPTR_VECT> run_Reactant(const ChemicalReaction &rxn,
 namespace {
 int getAtomMapNo(ROMol::ATOM_BOOKMARK_MAP *map, Atom *atom) {
   if (map) {
-    for (ROMol::ATOM_BOOKMARK_MAP::const_iterator it = map->begin();
-         it != map->end(); ++it) {
+    for (ROMol::ATOM_BOOKMARK_MAP::const_iterator it = map->cbegin();
+         it != map->cend(); ++it) {
       for (auto ait = it->second.begin(); ait != it->second.end(); ++ait) {
         if (*ait == atom) {
           return it->first;

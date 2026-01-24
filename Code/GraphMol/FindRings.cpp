@@ -1056,8 +1056,8 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
     }
 
     res.reserve(res.size() + fragRes.size());
-    for (VECT_INT_VECT::const_iterator iter = fragRes.begin();
-         iter != fragRes.end(); ++iter) {
+    for (VECT_INT_VECT::const_iterator iter = fragRes.cbegin();
+         iter != fragRes.cend(); ++iter) {
       res.push_back(*iter);
     }
   }  // done with all fragments

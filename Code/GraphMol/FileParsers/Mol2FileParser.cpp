@@ -91,7 +91,7 @@ void readFormalChargesFromAttr(std::istream *inStream, RWMol *res) {
   }
   while (readNextAtomAttribs) {
     tokenizer tokens(tempStr, sep);
-    tokenizer::const_iterator itemIt = tokens.begin();
+    tokenizer::const_iterator itemIt = tokens.cbegin();
     try {
       atomIdx = boost::lexical_cast<unsigned int>(*itemIt);
       ++itemIt;
@@ -530,7 +530,7 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
   boost::char_separator<char> sep(" \t\n");
   std::string tAN, tAT;
   tokenizer tokens(atomLine, sep);
-  tokenizer::const_iterator itemIt = tokens.begin();
+  tokenizer::const_iterator itemIt = tokens.cbegin();
   if (itemIt == tokens.end()) {
     throw FileParseException("no info in mol2 atom line");
   }
@@ -651,7 +651,7 @@ Bond *ParseMol2FileBondLine(const std::string bondLine,
   boost::char_separator<char> sep(" \t\n");
 
   tokenizer tokens(bondLine, sep);
-  tokenizer::const_iterator itemIt = tokens.begin();
+  tokenizer::const_iterator itemIt = tokens.cbegin();
   if (itemIt == tokens.end()) {
     throw FileParseException("no info in mol2 bond line");
   }
@@ -765,7 +765,7 @@ void ParseMol2AtomBlock(std::istream *inStream, RWMol *res, unsigned int nAtoms,
   }
   // create conformer based on 3DPoints and add to RWMol
   auto *conf = new Conformer(nAtoms - nLP);
-  std::vector<RDGeom::Point3D>::const_iterator threeDPsIt = threeDPs.begin();
+  std::vector<RDGeom::Point3D>::const_iterator threeDPsIt = threeDPs.cbegin();
   for (unsigned int i = 0; i < threeDPs.size(); ++i) {
     conf->setAtomPos(i, *threeDPsIt);
     ++threeDPsIt;
@@ -889,7 +889,7 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
   }
 
   unsigned int nAtoms = 0, nBonds = 0;
-  tokenizer::const_iterator itemIt = tokens.begin();
+  tokenizer::const_iterator itemIt = tokens.cbegin();
   // counts line, this is where we really get started
   try {
     nAtoms = boost::lexical_cast<unsigned int>(*itemIt);
