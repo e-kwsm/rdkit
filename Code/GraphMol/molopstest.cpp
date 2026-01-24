@@ -3891,7 +3891,7 @@ TEST_CASE("Testing canonicalization basics") {
     MatchVectType mv;
     REQUIRE(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+    for (MatchVectType::const_iterator mvit = mv.cbegin(); mvit != mv.cend();
          ++mvit) {
       mmap[mvit->second] = mvit->first;
     }

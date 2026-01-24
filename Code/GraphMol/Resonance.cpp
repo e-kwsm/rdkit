@@ -571,12 +571,12 @@ ConjElectrons::ConjElectrons(const ConjElectrons &ce)
 
 // object destructor
 ConjElectrons::~ConjElectrons() {
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (ConjAtomMap::const_iterator it = d_conjAtomMap.cbegin();
+       it != d_conjAtomMap.cend(); ++it) {
     delete it->second;
   }
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       it != d_conjBondMap.end(); ++it) {
+  for (ConjBondMap::const_iterator it = d_conjBondMap.cbegin();
+       it != d_conjBondMap.cend(); ++it) {
     delete it->second;
   }
 }
@@ -596,8 +596,8 @@ std::size_t ConjElectrons::computeFP(unsigned int flags) {
     // for each atom, we push a byte to the FP vector whose
     // 4 least significant bits are total valence and the
     // 4 most significant bits are non-bonded electrons
-    for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-         it != d_conjAtomMap.end(); ++it) {
+    for (ConjAtomMap::const_iterator it = d_conjAtomMap.cbegin();
+         it != d_conjAtomMap.cend(); ++it) {
       byte = it->second->tv() | (it->second->nb() << 4);
       fp.push_back(byte);
     }
