@@ -57,8 +57,8 @@ FeatSPtrList MolChemicalFeatureFactory::getFeaturesForMol(
         // loop over the matches we've already found and see if this one
         // is unique:
         bool unique = true;
-        for (MatchSetCollection::const_iterator vsiCI = matchSets.begin();
-             vsiCI != matchSets.end(); ++vsiCI) {
+        for (MatchSetCollection::const_iterator vsiCI = matchSets.cbegin();
+             vsiCI != matchSets.cend(); ++vsiCI) {
           if (vsiCI->first == featDef->getFamily() &&
               std::includes(vsiCI->second.begin(), vsiCI->second.end(),
                             matchSet.begin(), matchSet.end())) {

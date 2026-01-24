@@ -250,8 +250,8 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
        bmIt != branch->getBondBookmarks()->end(); ++bmIt) {
     CHECK_INVARIANT(bmIt->second.size() >= 1,
                     "bad bond bookmark list on branch");
-    for (ROMol::BOND_PTR_LIST::const_iterator bondIt = bmIt->second.begin();
-         bondIt != bmIt->second.end(); ++bondIt) {
+    for (ROMol::BOND_PTR_LIST::const_iterator bondIt = bmIt->second.cbegin();
+         bondIt != bmIt->second.cend(); ++bondIt) {
       Bond *tgtBond = *bondIt;
       if (bmIt->first > 0 && mp->hasAtomBookmark(bmIt->first)) {
         Atom *tmpAtom = mp->getActiveAtom();
