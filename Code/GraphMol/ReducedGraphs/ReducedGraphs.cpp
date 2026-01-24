@@ -104,8 +104,8 @@ void getErGAtomTypes(const ROMol &mol,
     // to maintain thread safety, we have to copy the pattern
     // molecules:
     SubstructMatch(mol, ROMol(*(*patterns)[i], true), matchVect);
-    for (std::vector<MatchVectType>::const_iterator mvIt = matchVect.begin();
-         mvIt != matchVect.end(); ++mvIt) {
+    for (std::vector<MatchVectType>::const_iterator mvIt = matchVect.cbegin();
+         mvIt != matchVect.cend(); ++mvIt) {
       types[i].set((*mvIt)[0].second);
     }
   }
