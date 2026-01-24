@@ -15,6 +15,7 @@
 #include "RGroupMatch.h"
 #include "RGroupGa.h"
 #include "GraphMol/MolEnumerator/MolEnumerator.h"
+#include <utility>
 
 // #define VERBOSE 1
 
@@ -210,7 +211,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
     }
     bool allH = true;
     for (auto &position : results) {
-      auto rgroup = position.rgroups.find(label);
+      auto rgroup = std::as_const(position.rgroups).find(label);
       bool labelHasCore =
           labelCores[label].find(position.core_idx) != labelCores[label].end();
       if (labelHasCore && rgroup != position.rgroups.end() &&
