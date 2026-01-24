@@ -1761,7 +1761,7 @@ TEST_CASE("testMultipleCoreRelabellingIssues", "[RGroupDecomp]") {
     decomposition.process();
     const auto &columns = decomposition.getRGroupsAsColumns();
     REQUIRE(columns.size() == 7u);
-    for (auto &col : columns) {
+    for (const auto &col : columns) {
       REQUIRE(30U == col.second.size());
     }
   }
@@ -3285,8 +3285,8 @@ M  END
           return a->getAtomicNum() == 0 && a->getAtomMapNum() == 2;
         });
     REQUIRE(match != coreRgd->atoms().end());
-    auto dummy = *match;
-    auto neighbor = *coreRgd->atomNeighbors(dummy).begin();
+    auto *dummy = *match;
+    auto *neighbor = *coreRgd->atomNeighbors(dummy).begin();
     auto &conf = coreRgd->getConformer();
     auto &dummyPoint = conf.getAtomPos(dummy->getIdx());
     auto &neighborPoint = conf.getAtomPos(neighbor->getIdx());
@@ -3303,7 +3303,7 @@ M  END
           return a->getAtomicNum() == 0 && a->getAtomMapNum() == 2;
         });
     REQUIRE(match != coreRgd->atoms().end());
-    auto dummy = *match;
+    auto *dummy = *match;
     auto &conf = coreRgd->getConformer();
     auto &dummyPoint = conf.getAtomPos(dummy->getIdx());
     // R2 dummy should be over input chiral oxygen, which is first oxygen of
