@@ -1106,10 +1106,10 @@ ROMol *copyMolSubsetHelper1(const ROMol &mol, python::object pyAtomIndices,
                             const SubsetOptions &options = SubsetOptions()) {
   auto atomIndices = pythonObjectToVect<unsigned int>(pyAtomIndices);
   auto bondIndices = pythonObjectToVect<unsigned int>(pyBondIndices);
-  if (!atomIndices.get()) {
+  if (!atomIndices) {
     atomIndices = std::make_unique<std::vector<unsigned int>>();
   }
-  if (!bondIndices.get()) {
+  if (!bondIndices) {
     bondIndices = std::make_unique<std::vector<unsigned int>>();
   }
 
@@ -1121,10 +1121,10 @@ ROMol *copyMolSubsetHelper2(const ROMol &mol, python::object pyAtomIndices,
                             const SubsetOptions &options = SubsetOptions()) {
   auto atomIndices = pythonObjectToVect<unsigned int>(pyAtomIndices);
   auto bondIndices = pythonObjectToVect<unsigned int>(pyBondIndices);
-  if (!atomIndices.get()) {
+  if (!atomIndices) {
     atomIndices = std::make_unique<std::vector<unsigned int>>();
   }
-  if (!bondIndices.get()) {
+  if (!bondIndices) {
     bondIndices = std::make_unique<std::vector<unsigned int>>();
   }
 
@@ -1135,7 +1135,7 @@ ROMol *copyMolSubsetHelper2(const ROMol &mol, python::object pyAtomIndices,
 ROMol *copyMolSubsetHelper3(const ROMol &mol, python::object path,
                             const SubsetOptions &options = SubsetOptions()) {
   auto pathvect = pythonObjectToVect<unsigned int>(path);
-  if (!pathvect.get()) {
+  if (!pathvect) {
     pathvect = std::make_unique<std::vector<unsigned int>>();
   }
   return copyMolSubset(mol, *pathvect, options).release();
@@ -1145,7 +1145,7 @@ ROMol *copyMolSubsetHelper4(const ROMol &mol, python::object path,
                             SubsetInfo &selectionInfo,
                             const SubsetOptions &options = SubsetOptions()) {
   auto pathvect = pythonObjectToVect<unsigned int>(path);
-  if (!pathvect.get()) {
+  if (!pathvect) {
     pathvect = std::make_unique<std::vector<unsigned int>>();
   }
   return copyMolSubset(mol, *pathvect, selectionInfo, options).release();
