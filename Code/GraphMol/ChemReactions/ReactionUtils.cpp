@@ -35,6 +35,7 @@
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/ROMol.h>
 #include <cmath>
+#include <utility>
 
 namespace RDKit {
 
@@ -267,7 +268,7 @@ int countSwapsBetweenReactantAndProduct(const Atom *reactAtom,
 void updateProductsStereochem(ChemicalReaction *rxn) {
   std::map<int, Atom *> reactantMapping;
   getMappingNumAtomIdxMapReactants(*rxn, reactantMapping);
-  for (auto prodIt = rxn->beginProductTemplates();
+  for (auto prodIt = std::as_const(rxn)->beginProductTemplates();
        prodIt != rxn->endProductTemplates(); ++prodIt) {
     for (auto prodAtom : (*prodIt)->atoms()) {
       if (prodAtom->hasProp(common_properties::molInversionFlag)) {
