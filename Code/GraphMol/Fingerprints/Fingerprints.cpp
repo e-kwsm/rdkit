@@ -319,8 +319,8 @@ ExplicitBitVect *LayeredFingerprintMol(
         tPaths =
             findAllPathsOfLengthsMtoN(mol, minPath, maxPath, true, false, aidx);
       }
-      for (INT_PATH_LIST_MAP::const_iterator tpit = tPaths.begin();
-           tpit != tPaths.end(); ++tpit) {
+      for (INT_PATH_LIST_MAP::const_iterator tpit = tPaths.cbegin();
+           tpit != tPaths.cend(); ++tpit) {
         allPaths[tpit->first].insert(allPaths[tpit->first].begin(),
                                      tpit->second.begin(), tpit->second.end());
       }
