@@ -350,10 +350,10 @@ void ringTest() {
   boost::shared_ptr<Holder> holder = boost::make_shared<Holder>();
 
   SubstructLibrary lib(molHolder, holder);
-  lib.addMol(*m.get());
-  std::vector<unsigned int> results = lib.getMatches(*q.get());
+  lib.addMol(*m);
+  std::vector<unsigned int> results = lib.getMatches(*q);
   REQUIRE(results.size() == 1);
-  results = lib.getMatches(*q2.get());
+  results = lib.getMatches(*q2);
   REQUIRE(results.size() == 1);
 }
 
