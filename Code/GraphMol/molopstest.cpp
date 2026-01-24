@@ -1813,7 +1813,7 @@ TEST_CASE("Testing shortest path code") {
 
     INT_LIST path = MolOps::getShortestPath(*m, 1, 20);
     REQUIRE(path.size() == 7);
-    INT_LIST_CI pi = path.begin();
+    INT_LIST_CI pi = path.cbegin();
     REQUIRE((*pi) == 1);
     pi++;
     REQUIRE((*pi) == 2);
@@ -1838,7 +1838,7 @@ TEST_CASE("Testing shortest path code") {
     INT_LIST path = MolOps::getShortestPath(*m, 0, 1);
     std::cerr << "path: " << path.size() << std::endl;
     REQUIRE(path.size() == 2);
-    INT_LIST_CI pi = path.begin();
+    INT_LIST_CI pi = path.cbegin();
     REQUIRE((*pi) == 0);
     pi++;
     REQUIRE((*pi) == 1);
@@ -1857,7 +1857,7 @@ TEST_CASE("Testing shortest path code") {
 
     INT_LIST path = MolOps::getShortestPath(*m, 8, 11);
     REQUIRE(path.size() == 7);
-    INT_LIST_CI pi = path.begin();
+    INT_LIST_CI pi = path.cbegin();
     REQUIRE((*pi) == 8);
     pi++;
     REQUIRE((*pi) == 7);

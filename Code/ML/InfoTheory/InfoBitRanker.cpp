@@ -48,7 +48,7 @@ void InfoBitRanker::setBiasList(RDKit::INT_VECT &classList) {
 void InfoBitRanker::setMaskBits(RDKit::INT_VECT &maskBits) {
   delete dp_maskBits;
   dp_maskBits = new ExplicitBitVect(d_dims);
-  for (RDKit::INT_VECT_CI bi = maskBits.begin(); bi != maskBits.end(); ++bi) {
+  for (RDKit::INT_VECT_CI bi = maskBits.cbegin(); bi != maskBits.cend(); ++bi) {
     dp_maskBits->setBit(*bi);
   }
 }
