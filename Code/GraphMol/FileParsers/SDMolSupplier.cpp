@@ -310,7 +310,7 @@ void SDMolSupplier::buildIndexTo(unsigned int targetIdx) {
 
     while (true) {
       constexpr char dollarSigns[]{"$$$$"};
-      auto match = std::search(ptr, bufEnd, dollarSigns, dollarSigns + 4);
+      auto *match = std::search(ptr, bufEnd, dollarSigns, dollarSigns + 4);
       if (match == bufEnd) break;
       if (*(match - 1) == '\n') {  // ensure $$$$ is at start of line
         char *nlPos = match + 4;
