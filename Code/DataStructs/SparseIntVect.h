@@ -138,7 +138,7 @@ class SparseIntVect {
     }
 
     typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.cbegin();
     while (iter != d_data.end()) {
       // we're relying on the fact that the maps are sorted:
       while (oIter != other.d_data.end() && oIter->first < iter->first) {
@@ -177,7 +177,7 @@ class SparseIntVect {
     }
 
     typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.cbegin();
     while (iter != d_data.end()) {
       // we're relying on the fact that the maps are sorted:
       while (oIter != other.d_data.end() && oIter->first < iter->first) {
@@ -211,7 +211,7 @@ class SparseIntVect {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
     typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.cbegin();
     while (oIter != other.d_data.end()) {
       while (iter != d_data.end() && iter->first < oIter->first) {
         ++iter;
@@ -245,7 +245,7 @@ class SparseIntVect {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
     typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.cbegin();
     while (oIter != other.d_data.end()) {
       while (iter != d_data.end() && iter->first < oIter->first) {
         ++iter;
@@ -345,7 +345,7 @@ class SparseIntVect {
     IndexType nEntries = d_data.size();
     streamWrite(ss, nEntries);
 
-    typename StorageType::const_iterator iter = d_data.begin();
+    typename StorageType::const_iterator iter = d_data.cbegin();
     while (iter != d_data.end()) {
       streamWrite(ss, iter->first);
       std::int32_t tInt = iter->second;
