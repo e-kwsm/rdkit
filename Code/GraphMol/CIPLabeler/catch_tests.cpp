@@ -1413,7 +1413,7 @@ TEST_CASE("neighbor_annotations", "[basic]") {
     auto mol = R"(C1C[C@H](C)C(=O)C[C@H]1O)"_smiles;
     REQUIRE(mol);
 
-    auto a = mol->getAtomWithIdx(2);
+    auto *a = mol->getAtomWithIdx(2);
     REQUIRE(a->getChiralTag() != Atom::CHI_UNSPECIFIED);
 
     CIPLabeler::assignCIPLabels(*mol, 100);
@@ -1428,7 +1428,7 @@ TEST_CASE("neighbor_annotations", "[basic]") {
     auto mol = R"(C/C=C(C)/N)"_smiles;
     REQUIRE(mol);
 
-    auto b = mol->getBondWithIdx(1);
+    auto *b = mol->getBondWithIdx(1);
     REQUIRE(b->getBondType() == Bond::DOUBLE);
 
     b->setStereoAtoms(0, 3);
@@ -1491,7 +1491,7 @@ $$$$
 )"_ctab;
     REQUIRE(mol);
 
-    auto b = mol->getBondWithIdx(6);
+    auto *b = mol->getBondWithIdx(6);
     REQUIRE(b->getStereo() == Bond::STEREOATROPCW);
 
     // Check that reference atoms for the atropisomer bond
@@ -1519,7 +1519,7 @@ $$$$
     auto mol = R"([2H]/C(=C(/[1H])\[H])/[H])"_smiles;
     REQUIRE(mol);
 
-    auto b = mol->getBondWithIdx(1);
+    auto *b = mol->getBondWithIdx(1);
     REQUIRE(b->getBondType() == Bond::DOUBLE);
 
     b->setStereoAtoms(0, 3);

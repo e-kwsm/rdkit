@@ -7439,7 +7439,7 @@ void testWedges(const std::string &fileName, unsigned int origWedgeCount,
   RDKit::Chirality::reapplyMolBlockWedging(*mol, true, false);
 
   unsigned int wedgeCount = 0;
-  for (const auto bond : mol->bonds()) {
+  for (auto *const bond : mol->bonds()) {
     if (bond->getBondDir() == Bond::BEGINWEDGE ||
         bond->getBondDir() == Bond::BEGINDASH) {
       ++wedgeCount;
@@ -7451,7 +7451,7 @@ void testWedges(const std::string &fileName, unsigned int origWedgeCount,
   RDKit::Chirality::reapplyMolBlockWedging(*mol, true, true);
 
   wedgeCount = 0;
-  for (const auto bond : mol->bonds()) {
+  for (auto *const bond : mol->bonds()) {
     if (bond->getBondDir() == Bond::BEGINWEDGE ||
         bond->getBondDir() == Bond::BEGINDASH) {
       ++wedgeCount;
