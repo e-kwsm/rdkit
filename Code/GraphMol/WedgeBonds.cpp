@@ -561,7 +561,7 @@ bool wedgingHasChirality(const ROMol &mol, const Bond *b) {
   }
 
   // see if this is part of an atropisomer bond
-  for (const auto bond2 : mol.atomBonds(atom)) {
+  for (auto *const bond2 : mol.atomBonds(atom)) {
     if (bond2->getBondType() == Bond::BondType::SINGLE) {
       if (bond2 == b) {
         continue;  // a bond is NOT its own neighbor
