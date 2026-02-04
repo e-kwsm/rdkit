@@ -706,9 +706,9 @@ Query<int, Atom const *, true> *unpickleQuery(std::istream &ss,
       }
       res = new AtomRingQuery();
       streamRead(ss, val, version);
-      static_cast<EqualityQuery<int, Atom const *, true> *>(res)->setVal(val);
+      dynamic_cast<EqualityQuery<int, Atom const *, true> *>(res)->setVal(val);
       streamRead(ss, val, version);
-      static_cast<EqualityQuery<int, Atom const *, true> *>(res)->setTol(val);
+      dynamic_cast<EqualityQuery<int, Atom const *, true> *>(res)->setTol(val);
       break;
     case MolPickler::QUERY_RECURSIVE:
       streamRead(ss, tag, version);
@@ -1769,7 +1769,7 @@ void MolPickler::_pickleAtom(std::ostream &ss, const Atom *atom) {
   ss.write(tss.str().c_str(), tss.str().size());
   if (atom->hasQuery()) {
     streamWrite(ss, BEGINQUERY);
-    pickleQuery(ss, static_cast<const QueryAtom *>(atom)->getQuery());
+    pickleQuery(ss, dynamic_cast<const QueryAtom *>(atom)->getQuery());
     streamWrite(ss, ENDQUERY);
   }
   if (getAtomMapNumber(atom, tmpInt)) {
@@ -1789,7 +1789,8 @@ void MolPickler::_pickleAtom(std::ostream &ss, const Atom *atom) {
   if (atom->getMonomerInfo()) {
     if (atom->getMonomerInfo()->getMonomerType() == AtomMonomerInfo::PDBRESIDUE) {
       streamWrite(ss, BEGIN_PDB_RESIDUE);
-      pickleAtomPDBResidueInfo(ss, static_cast<const AtomPDBResidueInfo*>(atom->getMonomerInfo()));
+      pickleAtomPDBResidueInfo(
+          ss, dynamic_cast<const AtomPDBResidueInfo *>(atom->getMonomerInfo()));
       streamWrite(ss, END_PDB_RESIDUE);
     } else {
       streamWrite(ss, BEGIN_ATOM_MONOMER_INFO);
@@ -1954,7 +1955,7 @@ Atom *MolPickler::_addAtomFromPickle(std::istream &ss, ROMol *mol,
     if (tag != BEGINQUERY) {
       throw MolPicklerException("Bad pickle format: BEGINQUERY tag not found.");
     }
-    static_cast<QueryAtom *>(atom)->setQuery(unpickleQuery(ss, atom, version));
+    dynamic_cast<QueryAtom *>(atom)->setQuery(unpickleQuery(ss, atom, version));
     streamRead(ss, tag, version);
     if (tag != ENDQUERY) {
       throw MolPicklerException("Bad pickle format: ENDQUERY tag not found.");
@@ -2098,7 +2099,7 @@ void MolPickler::_pickleBond(std::ostream &ss, const Bond *bond,
   }
   if (bond->hasQuery()) {
     streamWrite(ss, BEGINQUERY);
-    pickleQuery(ss, static_cast<const QueryBond *>(bond)->getQuery());
+    pickleQuery(ss, dynamic_cast<const QueryBond *>(bond)->getQuery());
     streamWrite(ss, ENDQUERY);
   }
   if (!endpts.empty()) {
@@ -2210,7 +2211,7 @@ Bond *MolPickler::_addBondFromPickle(std::istream &ss, ROMol *mol, int version,
       delete bond;
       throw MolPicklerException("Bad pickle format: BEGINQUERY tag not found.");
     }
-    static_cast<QueryBond *>(bond)->setQuery(unpickleQuery(ss, bond, version));
+    dynamic_cast<QueryBond *>(bond)->setQuery(unpickleQuery(ss, bond, version));
     streamRead(ss, tag, version);
     if (tag != ENDQUERY) {
       delete bond;
