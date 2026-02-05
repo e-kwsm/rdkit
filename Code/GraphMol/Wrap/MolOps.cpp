@@ -402,7 +402,7 @@ void addRecursiveQuery(ROMol &mol, const ROMol &query, unsigned int atomIdx,
 }
 
 void reapplyWedging(ROMol &mol, bool allBondTypes, bool verify) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   RDKit::Chirality::reapplyMolBlockWedging(wmol, allBondTypes, verify);
 }
 
