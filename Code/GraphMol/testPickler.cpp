@@ -1796,7 +1796,7 @@ void testAtomMonomerInfoFields() {
     TEST_ASSERT(info1->getMonomerType() == AtomMonomerInfo::PDBRESIDUE);
 
     // Also check PDB-specific fields
-    auto *pdbInfo1 = static_cast<const AtomPDBResidueInfo *>(info1);
+    auto *pdbInfo1 = dynamic_cast<const AtomPDBResidueInfo *>(info1);
     TEST_ASSERT(pdbInfo1->getSerialNumber() == 123);
     TEST_ASSERT(pdbInfo1->getAltLoc() == "A");
     TEST_ASSERT(pdbInfo1->getInsertionCode() == "1");
