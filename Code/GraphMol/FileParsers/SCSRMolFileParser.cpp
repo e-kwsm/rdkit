@@ -104,7 +104,7 @@ std::string getQuotedToken(const char *&linePtr) {
   return res;
 }
 
-void parseTemplateLine(RWMol *templateMol, std::string lineStr,
+void parseTemplateLine(RWMol *templateMol, const std::string &lineStr,
                        unsigned int &line) {
   PRECONDITION(templateMol, "bad template molecule");
 
