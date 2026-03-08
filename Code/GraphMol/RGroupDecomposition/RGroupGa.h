@@ -45,6 +45,10 @@ typedef enum {
 class RGroupDecompositionChromosome : public IntegerStringChromosome {
  public:
   RGroupDecompositionChromosome(RGroupGa &rGroupGa);
+  RGroupDecompositionChromosome(const RGroupDecompositionChromosome &other) =
+      delete;
+  RGroupDecompositionChromosome &operator=(
+      const RGroupDecompositionChromosome &other) = delete;
 
   double getFitness() const { return fitness; }
 
@@ -75,10 +79,6 @@ class RGroupDecompositionChromosome : public IntegerStringChromosome {
   const RGroupGa &getRGroupGA() const { return rGroupGa; }
 
  private:
-  RGroupDecompositionChromosome(const RGroupDecompositionChromosome &other) =
-      delete;
-  RGroupDecompositionChromosome &operator=(
-      const RGroupDecompositionChromosome &other) = delete;
   double fitness;
   FingerprintVarianceScoreData fingerprintVarianceScoreData;
   OperationName operationName = Create;
