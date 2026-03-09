@@ -105,8 +105,8 @@ LinkedPopLinearSel<Chromosome, PopulationPolicy>::LinkedPopLinearSel(
       operations(populationPolicy.getOperations()),
       selectionPressure(populationPolicy.getSelectionPressure()),
       population(),
-      freeChromosomes() {
-  totalOperatorWeights = 0;
+      freeChromosomes(),
+      totalOperatorWeights(0) {
   for (auto &operation : operations) {
     totalOperatorWeights += operation->getWeight();
   }
