@@ -735,7 +735,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
   boost::dynamic_bitset<> seenFromHere(mol.getNumAtoms());
 
   seenFromHere.set(atomIdx);
-  molStack.push_back(MolStackElem(atom));
+  molStack.emplace_back(atom);
   colors[atomIdx] = GREY_NODE;
 
   INT_LIST travList;
@@ -759,8 +759,8 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
                                  ringIdx)) {
         // this is end of the ring closure
         // we can just pull the ring index from the bond itself:
-        molStack.push_back(MolStackElem(bond, atomIdx));
-        molStack.push_back(MolStackElem(ringIdx));
+        molStack.emplace_back(bond, atomIdx);
+        molStack.emplace_back(ringIdx);
         // don't make the ring digit immediately available again: we don't want
         // to have the same
         // ring digit opening and closing rings on an atom.
@@ -777,7 +777,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
         ++lowestRingIdx;
         bond->setProp(common_properties::_TraversalRingClosureBond,
                       static_cast<unsigned int>(lowestRingIdx));
-        molStack.push_back(MolStackElem(lowestRingIdx));
+        molStack.emplace_back(lowestRingIdx);
       }
     }
     for (auto ringIdx : ringsClosed) {
@@ -867,16 +867,14 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
     travList.push_back(bond->getIdx());
     if (possiblesIt + 1 != possibles.end()) {
       // we're branching
-      molStack.push_back(
-          MolStackElem("(", rdcast<int>(possiblesIt - possibles.begin())));
+      molStack.emplace_back("(", rdcast<int>(possiblesIt - possibles.begin()));
     }
-    molStack.push_back(MolStackElem(bond, atomIdx));
+    molStack.emplace_back(bond, atomIdx);
     dfsBuildStack(mol, possibleIdx, bond->getIdx(), colors, ranks,
                   cyclesAvailable, molStack, atomRingClosures,
                   atomTraversalBondOrder, bondsInPlay, bondSymbols, doRandom);
     if (possiblesIt + 1 != possibles.end()) {
-      molStack.push_back(
-          MolStackElem(")", rdcast<int>(possiblesIt - possibles.begin())));
+      molStack.emplace_back(")", rdcast<int>(possiblesIt - possibles.begin()));
     }
   }
 
@@ -1341,8 +1339,8 @@ void canonicalizeEnhancedStereo(ROMol &mol,
         bond->invertChirality();
       }
     }
-    newSgs.emplace_back(
-        StereoGroup(sg.getGroupType(), std::move(sgAtoms), std::move(sgBonds)));
+    newSgs.emplace_back(sg.getGroupType(), std::move(sgAtoms),
+                        std::move(sgBonds));
 
     // note that we do not forward the Group Ids: this is intentional, so that
     // the Ids are reassigned based on the canonicalized order.
