@@ -187,7 +187,7 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
 }
 
 unsigned int calcNumRotatableBonds(const ROMol &mol, bool strict) {
-  return calcNumRotatableBonds(mol, (strict) ? Strict : NonStrict);
+  return calcNumRotatableBonds(mol, strict ? Strict : NonStrict);
 }
 
 // SMARTSCOUNTFUNC(NumHBD,

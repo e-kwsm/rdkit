@@ -1368,7 +1368,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
     }
     mols.clear();
   }
-  delete (suppl);
+  delete suppl;
 
   std::cout << "\n****** RANDOM SET test *********\n\n";
   const unsigned int N_RandomTests = all_mols.size() * 7;

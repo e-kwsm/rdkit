@@ -62,7 +62,7 @@ bool AllAtomsMatch(const ROMol &mol, const Atom &atom,
       }
       if (bondMatcher || !bondAtLeast) {
         const auto bnd = mol.getBondBetweenAtoms(atm->getIdx(), nbr->getIdx());
-        if (bondMatcher && !(bondMatcher)(*bnd)) {
+        if (bondMatcher && !bondMatcher(*bnd)) {
           return false;
         }
         if (!bondAtLeast && atLeastOneBond(*bnd)) {

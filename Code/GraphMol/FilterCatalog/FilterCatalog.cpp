@@ -171,7 +171,7 @@ FilterCatalog::CONST_SENTRY FilterCatalog::getEntry(unsigned int idx) const {
 
 bool FilterCatalog::removeEntry(unsigned int idx) {
   if (idx < d_entries.size()) {
-    d_entries.erase(d_entries.begin() + (idx));
+    d_entries.erase(d_entries.begin() + idx);
     return true;
   }
   return false;

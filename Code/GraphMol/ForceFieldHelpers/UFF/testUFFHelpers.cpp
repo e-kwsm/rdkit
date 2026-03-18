@@ -226,7 +226,7 @@ void testUFFBuilder1() {
   field = new ForceFields::ForceField();
   // add the atomic positions:
   for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
-    field->positions().push_back(&((conf->getAtomPos(i))));
+    field->positions().push_back(&(conf->getAtomPos(i)));
   }
 
   UFF::Tools::addBonds(*mol, types, field);
@@ -483,7 +483,7 @@ void testUFFBuilder2() {
 
     // add the atomic positions:
     for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
-      field->positions().push_back(&((mol->getConformer().getAtomPos(i))));
+      field->positions().push_back(&(mol->getConformer().getAtomPos(i)));
     }
 
     UFF::Tools::addBonds(*mol, types, field);
@@ -829,7 +829,7 @@ void testSFIssue1653802() {
   field = new ForceFields::ForceField();
   // add the atomic positions:
   for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
-    field->positions().push_back(&((mol->getConformer().getAtomPos(i))));
+    field->positions().push_back(&(mol->getConformer().getAtomPos(i)));
   }
 
   UFF::Tools::addBonds(*mol, types, field);

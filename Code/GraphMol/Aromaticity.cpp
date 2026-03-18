@@ -462,7 +462,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
     case AnyElectronDonorType:
       break;
     default:
-      return (false);
+      return false;
   }
 
   // atoms that aren't in their default valence state also get shut out
@@ -516,7 +516,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
       }
     }
     if (nMult > 1) {
-      return (false);
+      return false;
     }
   }
 
@@ -531,7 +531,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
     }
   }
 
-  return (true);
+  return true;
 }
 
 ElectronDonorType getAtomDonorTypeArom(

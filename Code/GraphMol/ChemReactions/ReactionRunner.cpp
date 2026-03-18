@@ -1407,7 +1407,7 @@ void addReactantAtomsAndBonds(const ChemicalReaction &rxn, RWMOL_SPTR product,
     generateProductConformers(productConf, *reactant, mapping);
   }
 
-  delete (mapping);
+  delete mapping;
 }  // end of addReactantAtomsAndBonds
 
 namespace {

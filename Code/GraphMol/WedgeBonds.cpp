@@ -467,7 +467,7 @@ int pickBondToWedgeImpl(
       // prefer lower atomic numbers with lower degrees and no specified
       // chirality:
       int nbrScore = oatom->getAtomicNum() + 100 * oatom->getDegree() +
-                     1000 * ((oatom->getChiralTag() != Atom::CHI_UNSPECIFIED));
+                     1000 * (oatom->getChiralTag() != Atom::CHI_UNSPECIFIED);
       // prefer neighbors that are nonchiral or have as few chiral neighbors
       // as possible:
       int oIdx = oatom->getIdx();
