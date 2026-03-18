@@ -2821,15 +2821,14 @@ class TestAssignChiralTypesFromMolParity {
     MolOps::assignChiralTypesFrom3D(*d_rwMol);
     for (const auto atom : d_rwMol->atoms()) {
       int parity = parityMap.at(atom->getChiralTag());
-      (atom)->setProp(common_properties::molParity, parity);
-      (atom)->setChiralTag(Atom::CHI_UNSPECIFIED);
+      atom->setProp(common_properties::molParity, parity);
+      atom->setChiralTag(Atom::CHI_UNSPECIFIED);
     }
   }
   void fillBondDefVect() {
     for (const auto bond : d_rwMol->bonds()) {
-      d_bondDefVect.emplace_back(BondDef((bond)->getBeginAtomIdx(),
-                                         (bond)->getEndAtomIdx(),
-                                         (bond)->getBondType()));
+      d_bondDefVect.emplace_back(BondDef(
+          bond->getBeginAtomIdx(), bond->getEndAtomIdx(), bond->getBondType()));
     }
   }
   void stripBonds() {

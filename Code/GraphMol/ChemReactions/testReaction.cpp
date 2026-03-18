@@ -3068,7 +3068,7 @@ void test30ReactProdQueries() {
     TEST_ASSERT(isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == 0);
     TEST_ASSERT(isMoleculeReactantOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
     smi = "c1ccccc1Cl";
     mol = SmilesToMol(smi);
@@ -3076,42 +3076,42 @@ void test30ReactProdQueries() {
     TEST_ASSERT(!isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumReactantTemplates());
     TEST_ASSERT(!isMoleculeReactantOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
     smi = "c1ccncc1Br";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     TEST_ASSERT(isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == 0);
-    delete (mol);
+    delete mol;
 
     smi = "c1cccnc1Br";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     TEST_ASSERT(!isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumReactantTemplates());
-    delete (mol);
+    delete mol;
 
     smi = "c1cccc(C)c1Br";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     TEST_ASSERT(!isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumReactantTemplates());
-    delete (mol);
+    delete mol;
 
     smi = "ClC(=O)C";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     TEST_ASSERT(isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == 1);
-    delete (mol);
+    delete mol;
 
     smi = "C(=O)C";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     TEST_ASSERT(!isMoleculeReactantOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumReactantTemplates());
-    delete (mol);
+    delete mol;
 
     smi = "c1ccccc1C(=O)C";
     mol = SmilesToMol(smi);
@@ -3119,7 +3119,7 @@ void test30ReactProdQueries() {
     TEST_ASSERT(isMoleculeProductOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == 0);
     TEST_ASSERT(isMoleculeProductOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
     smi = "c1cccnc1C(=O)C";
     mol = SmilesToMol(smi);
@@ -3127,9 +3127,9 @@ void test30ReactProdQueries() {
     TEST_ASSERT(!isMoleculeProductOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumProductTemplates());
     TEST_ASSERT(!isMoleculeProductOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
-    delete (rxn);
+    delete rxn;
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -3165,7 +3165,7 @@ void test31Issue3140490() {
         common_properties::molAtomMapNumber));
     TEST_ASSERT(!prods[0][0]->getAtomWithIdx(1)->hasProp(
         common_properties::molAtomMapNumber));
-    delete (rxn);
+    delete rxn;
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -3200,7 +3200,7 @@ void test32Replacements() {
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
     TEST_ASSERT(prods[0][0]->getNumAtoms() == 4);
-    delete (rxn);
+    delete rxn;
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -3697,7 +3697,7 @@ void test37ProtectOption() {
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
 
-    delete (rxn);
+    delete rxn;
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -4157,7 +4157,7 @@ void test43Github243() {
     TEST_ASSERT(prods[0][0]->getAtomWithIdx(10)->hasProp(
         common_properties::_MolFileRLabel));
 
-    delete (rxn);
+    delete rxn;
   }
 
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
@@ -4400,7 +4400,7 @@ void test46Agents() {
     TEST_ASSERT(isMoleculeAgentOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == 0);
     TEST_ASSERT(isMoleculeAgentOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
     smi = "C(=O)N";
     mol = SmilesToMol(smi);
@@ -4408,7 +4408,7 @@ void test46Agents() {
     TEST_ASSERT(!isMoleculeAgentOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumAgentTemplates());
     TEST_ASSERT(!isMoleculeAgentOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
     smi = "C(=O)O";
     mol = SmilesToMol(smi);
@@ -4416,7 +4416,7 @@ void test46Agents() {
     TEST_ASSERT(!isMoleculeAgentOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == rxn->getNumAgentTemplates());
     TEST_ASSERT(!isMoleculeAgentOfReaction(*rxn, *mol));
-    delete (mol);
+    delete mol;
 
     smi = "C(=O)O";
     mol = SmilesToMol(smi);
@@ -4429,7 +4429,7 @@ void test46Agents() {
     TEST_ASSERT(mol);
     TEST_ASSERT(isMoleculeAgentOfReaction(*rxn, *mol, which));
     TEST_ASSERT(which == 3);
-    delete (mol);
+    delete mol;
 
     delete rxn;
   }
@@ -7996,5 +7996,5 @@ int main() {
 
   BOOST_LOG(rdInfoLog)
       << "*******************************************************\n";
-  return (0);
+  return 0;
 }

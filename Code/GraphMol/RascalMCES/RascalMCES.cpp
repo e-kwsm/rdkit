@@ -774,7 +774,7 @@ void updateMaxClique(const std::vector<unsigned int> &clique, bool deltaYPoss,
   if (!didDeltaY) {
     if (maxCliques.empty()) {
       if (cliqueOk(clique, opts, mol1, mol2, vtxPairs)) {
-        maxCliques.push_back((clique));
+        maxCliques.push_back(clique);
       }
     } else {
       bool goodClique = false, didCliqueOk = false;

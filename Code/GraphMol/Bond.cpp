@@ -320,7 +320,7 @@ constexpr const char *bondTypeToString(RDKit::Bond::BondType d) {
     case RDKit::Bond::BondType::ZERO:
       return "0";
   }
-  return ("");
+  return "";
 }
 constexpr const char *bondDirToString(RDKit::Bond::BondDir d) {
   switch (d) {
@@ -339,7 +339,7 @@ constexpr const char *bondDirToString(RDKit::Bond::BondDir d) {
     case RDKit::Bond::BondDir::UNKNOWN:
       return "?";
   }
-  return ("");
+  return "";
 }
 constexpr const char *bondStereoToString(RDKit::Bond::BondStereo d) {
   switch (d) {
@@ -360,7 +360,7 @@ constexpr const char *bondStereoToString(RDKit::Bond::BondStereo d) {
     case RDKit::Bond::BondStereo::STEREOATROPCCW:
       return "CCW";
   }
-  return ("");
+  return "";
 }
 }  // namespace
 

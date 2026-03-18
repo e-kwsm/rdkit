@@ -109,7 +109,7 @@ void testWrite() {
       TEST_ASSERT((*atom0)->getIdx() == (*atom1)->getIdx());
     }
   }
-  delete (m1);
+  delete m1;
 
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
 }

@@ -218,7 +218,7 @@ void EleContrib::getGrad(double *pos, double *grad) const {
     double corr_dist = dist + 0.05;
     corr_dist *= ((d_dielModel == RDKit::MMFF::DISTANCE) ? corr_dist * corr_dist
                                                          : corr_dist);
-    double dE_dr = -332.0716 * (double)(d_dielModel)*d_chargeTerm / corr_dist *
+    double dE_dr = -332.0716 * (double)d_dielModel * d_chargeTerm / corr_dist *
                    (d_is1_4 ? 0.75 : 1.0);
     for (unsigned int i = 0; i < 3; ++i) {
       double dGrad;
@@ -363,7 +363,7 @@ void NonbondedContrib::getGrad(double *pos, double *grad) const {
       corr_dist *=
           ((d_dielModel == RDKit::MMFF::DISTANCE) ? corr_dist * corr_dist
                                                   : corr_dist);
-      const double dE_dr = -332.0716 * (double)(d_dielModel)*d_chargeTerm /
+      const double dE_dr = -332.0716 * (double)d_dielModel * d_chargeTerm /
                            corr_dist * (d_is1_4 ? 0.75 : 1.0);
       eleGrad = dE_dr / dist;
     }

@@ -1997,5 +1997,5 @@ int main() {
   testNormalizeStraighten();
   testValidRingSystemTemplates();
 
-  return (0);
+  return 0;
 }
