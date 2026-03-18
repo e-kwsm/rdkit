@@ -851,7 +851,7 @@ void findRingsFigueras(const ROMol &mol, VECT_INT_VECT &res,
         for (auto aidi : curFrag) {
           unsigned int deg = atomDegrees[aidi];
           if (deg == 3) {
-            cand = (aidi);
+            cand = aidi;
             break;
           }
         }

@@ -517,13 +517,13 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
     //  if descrip=="AtomAnd"
     csmarts1 = getAtomSmartsSimple(qatom, child1, needParen,
                                    descrip == "AtomAnd", params);
-    bool nneg = (negate) ^ (child1->getNegation());
+    bool nneg = negate ^ (child1->getNegation());
     if (nneg) {
       csmarts1 = "!" + csmarts1;
     }
   } else {
     // child 1 is composite node - recurse
-    bool nneg = (negate) ^ (child1->getNegation());
+    bool nneg = negate ^ (child1->getNegation());
     csmarts1 = _recurseGetSmarts(qatom, child1, nneg, child1Features, params);
   }
   // ok if we have a negation and we have an OR , we have to change to
@@ -551,12 +551,12 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
     } else if ((dsc2 != "AtomOr") && (dsc2 != "AtomAnd")) {
       // child 2 is a simple node
       csmarts2 = getAtomSmartsSimple(qatom, child2, needParen, false, params);
-      bool nneg = (negate) ^ (child2->getNegation());
+      bool nneg = negate ^ (child2->getNegation());
       if (nneg) {
         csmarts2 = "!" + csmarts2;
       }
     } else {
-      bool nneg = (negate) ^ (child2->getNegation());
+      bool nneg = negate ^ (child2->getNegation());
       csmarts2 = _recurseGetSmarts(qatom, child2, nneg, child2Features, params);
     }
 
@@ -621,13 +621,13 @@ std::string _recurseBondSmarts(const Bond *bond,
     // child1 is  simple node get the smarts directly
     const auto *tchild = static_cast<const BOND_EQUALS_QUERY *>(child1);
     csmarts1 = getBondSmartsSimple(bond, tchild, atomToLeftIdx, params);
-    bool nneg = (negate) ^ (tchild->getNegation());
+    bool nneg = negate ^ (tchild->getNegation());
     if (nneg) {
       csmarts1 = "!" + csmarts1;
     }
   } else {
     // child1 is a composite node recurse further
-    bool nneg = (negate) ^ (child1->getNegation());
+    bool nneg = negate ^ (child1->getNegation());
     csmarts1 = _recurseBondSmarts(bond, child1, nneg, atomToLeftIdx,
                                   child1Features, params);
   }
@@ -637,13 +637,13 @@ std::string _recurseBondSmarts(const Bond *bond,
     // child 2 is a simple node
     const auto *tchild = static_cast<const BOND_EQUALS_QUERY *>(child2);
     csmarts2 = getBondSmartsSimple(bond, tchild, atomToLeftIdx, params);
-    bool nneg = (negate) ^ (tchild->getNegation());
+    bool nneg = negate ^ (tchild->getNegation());
     if (nneg) {
       csmarts2 = "!" + csmarts2;
     }
   } else {
     // child two is a composite node - recurse
-    bool nneg = (negate) ^ (child2->getNegation());
+    bool nneg = negate ^ (child2->getNegation());
     csmarts1 = _recurseBondSmarts(bond, child2, nneg, atomToLeftIdx,
                                   child2Features, params);
   }

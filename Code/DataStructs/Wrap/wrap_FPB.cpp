@@ -158,7 +158,7 @@ struct FPB_wrapper {
              "above the specified threshold")
         .def(
             "GetContainingNeighbors", &containingNbrHelper,
-            ((python::arg("self"), python::arg("bv"))),
+            (python::arg("self"), python::arg("bv")),
             "returns indices of neighbors that contain this fingerprint (where "
             "all bits from this fingerprint are also set)");
 

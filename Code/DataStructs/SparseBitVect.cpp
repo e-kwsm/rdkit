@@ -121,7 +121,7 @@ SparseBitVect SparseBitVect::operator^(const SparseBitVect &other) const {
   std::set_symmetric_difference(
       dp_bits->begin(), dp_bits->end(), other.dp_bits->begin(),
       other.dp_bits->end(), std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
-  return (ans);
+  return ans;
 }
 
 // """ -------------------------------------------------------
@@ -138,7 +138,7 @@ SparseBitVect SparseBitVect::operator~() const {
     }
   }
 
-  return (ans);
+  return ans;
 }
 
 // """ -------------------------------------------------------

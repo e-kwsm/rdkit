@@ -34,7 +34,7 @@ using namespace RDKit;
 
 template <typename T>
 inline void TXTMSG(const char *__a__, T __b__) {
-  BOOST_LOG(rdInfoLog) << (__a__) << " " << (__b__) << std::endl;
+  BOOST_LOG(rdInfoLog) << __a__ << " " << __b__ << std::endl;
 }
 
 template <typename T>

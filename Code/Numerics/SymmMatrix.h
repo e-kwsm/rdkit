@@ -319,7 +319,7 @@ Vector<TYPE> &multiply(const SymmMatrix<TYPE> &A, const Vector<TYPE> &x,
   const TYPE *aData = A.getData();
   TYPE *yData = y.getData();
   for (unsigned int i = 0; i < aSize; i++) {
-    yData[i] = (TYPE)(0.0);
+    yData[i] = (TYPE)0.0;
     unsigned int idA = i * (i + 1) / 2;
     for (unsigned int j = 0; j < i + 1; j++) {
       // idA = i*(i+1)/2 + j;
