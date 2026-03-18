@@ -331,7 +331,7 @@ Vector<TYPE> &multiply(const Matrix<TYPE> &A, const Vector<TYPE> &x,
   TYPE *yData = y.getData();
   for (i = 0; i < aRows; i++) {
     idA = i * aCols;
-    yData[i] = (TYPE)(0.0);
+    yData[i] = (TYPE)0.0;
     for (j = 0; j < aCols; j++) {
       idAt = idA + j;
       yData[i] += (aData[idAt] * xData[j]);

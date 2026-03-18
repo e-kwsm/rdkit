@@ -169,7 +169,7 @@ struct sparseIntVec_wrapper {
         //.def(python::self * int())
         .def(python::self *= int())
         .def("GetTotalVal", &SparseIntVect<IndexType>::getTotalVal,
-             ((python::args("self"), python::args("useAbs") = false)),
+             (python::args("self"), python::args("useAbs") = false),
              "Get the sum of the values in the vector, basically L1 norm")
         .def("GetLength", &SparseIntVect<IndexType>::getLength,
              python::args("self"), "Returns the length of the vector")

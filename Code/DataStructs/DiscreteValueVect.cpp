@@ -112,8 +112,8 @@ unsigned int computeL1Norm(const DiscreteValueVect &v1,
   if (valType <= DiscreteValueVect::EIGHTBITVALUE) {
     DiscreteDistMat *dmat = getDiscreteDistMat();
 
-    auto *cd1 = (unsigned char *)(data1);
-    auto *cd2 = (unsigned char *)(data2);
+    auto *cd1 = (unsigned char *)data1;
+    auto *cd2 = (unsigned char *)data2;
     const unsigned char *cend = cd1 + (v1.getNumInts() * 4);
     while (cd1 != cend) {
       if (*cd1 == *cd2) {
@@ -129,8 +129,8 @@ unsigned int computeL1Norm(const DiscreteValueVect &v1,
     // we have a sixteen bits per value type
     // REVIEW: we are making an assumption here that a short
     // is 16 bit - may fail on a different compiler
-    const unsigned short int *sd1 = (unsigned short int *)(data1);
-    const unsigned short int *sd2 = (unsigned short int *)(data2);
+    const unsigned short int *sd1 = (unsigned short int *)data1;
+    const unsigned short int *sd2 = (unsigned short int *)data2;
 
     const unsigned short int *send = sd1 + (v1.getNumInts() * 2);
     while (sd1 != send) {
@@ -232,7 +232,7 @@ DiscreteValueVect DiscreteValueVect::operator&(
     unsigned int v2 = other.getVal(i);
     ans.setVal(i, std::min(v2, v1));
   }
-  return (ans);
+  return ans;
 };
 
 DiscreteValueVect DiscreteValueVect::operator|(
@@ -248,7 +248,7 @@ DiscreteValueVect DiscreteValueVect::operator|(
     unsigned int v2 = other.getVal(i);
     ans.setVal(i, std::max(v2, v1));
   }
-  return (ans);
+  return ans;
 };
 
 DiscreteValueVect &DiscreteValueVect::operator+=(

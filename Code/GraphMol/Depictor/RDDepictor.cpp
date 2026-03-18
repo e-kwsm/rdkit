@@ -431,7 +431,7 @@ void computeInitialCoords(RDKit::ROMol &mol,
   // user-specified coordinates exist
   bool preSpec = false;
   // first embed any atoms for which the coordinates have been specified.
-  if ((coordMap) && (coordMap->size() > 1)) {
+  if (coordMap && (coordMap->size() > 1)) {
     EmbeddedFrag efrag(&mol, *coordMap);
     // add this to the list of embedded fragments
     efrags.push_back(efrag);

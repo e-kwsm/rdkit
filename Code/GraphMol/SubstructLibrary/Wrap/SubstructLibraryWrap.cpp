@@ -680,8 +680,8 @@ struct substructlibrary_wrapper {
              "Adds a molecule to the fingerprint database, returns the index "
              "of the new pattern")
         .def("AddFingerprint",
-             (unsigned int (FPHolderBase::*)(const ExplicitBitVect &)) &
-                 FPHolderBase::addFingerprint,
+             (unsigned int (FPHolderBase::*)(
+                 const ExplicitBitVect &))&FPHolderBase::addFingerprint,
              python::args("self", "v"),
              "Adds a raw bit vector to the fingerprint database, returns the "
              "index of the supplied pattern")
@@ -695,7 +695,7 @@ struct substructlibrary_wrapper {
              "Returns True if the specified index passes the filter supplied "
              "by the query bit vector")
         .def("MakeFingerprint", &FPHolderBase::makeFingerprint,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              python::return_value_policy<python::manage_new_object>(),
              "Compute the query bits for the holder");
 
@@ -766,7 +766,7 @@ struct substructlibrary_wrapper {
         .def("GetKeyHolder", &GetKeyHolder, python::args("self"))
 
         .def("AddMol", &SubstructLibraryWrap::addMol,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Adds a molecule to the substruct library")
 
         // clang-format off

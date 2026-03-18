@@ -449,5 +449,5 @@ int main() {
   std::cout << "\t testWeightedCentroid \n\n";
   testWeightedCentroid();
   std::cout << "***********************************************************\n";
-  return (0);
+  return 0;
 }

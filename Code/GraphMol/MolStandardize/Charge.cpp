@@ -460,7 +460,7 @@ void Uncharger::unchargeInPlace(RWMol &mol) {
     Atom *atom = mol.getAtomWithIdx(idx);
     for (const auto &nbri :
          boost::make_iterator_range(mol.getAtomNeighbors(atom))) {
-      const auto &nbr = (mol)[nbri];
+      const auto &nbr = mol[nbri];
       auto nbrIdx = nbr->getIdx();
       // if the neighbor has a positive charge,
       // neutralize only the negative charges that are not

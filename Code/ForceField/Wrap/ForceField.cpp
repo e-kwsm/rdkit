@@ -311,11 +311,11 @@ BOOST_PYTHON_MODULE(rdForceField) {
       .def("CalcEnergy",
            (double (PyForceField::*)(const python::object &) const) &
                PyForceField::calcEnergyWithPos,
-           ((python::arg("self"), python::arg("pos") = python::object())),
+           (python::arg("self"), python::arg("pos") = python::object()),
            "Returns the energy (in kcal/mol) of the current arrangement\n"
            "or of the supplied coordinate list (if non-empty)")
       .def("CalcGrad", &PyForceField::calcGradWithPos,
-           ((python::arg("self"), python::arg("pos") = python::object())),
+           (python::arg("self"), python::arg("pos") = python::object()),
            "Returns a tuple filled with the per-coordinate gradients\n"
            "of the current arrangement or of the supplied coordinate list "
            "(if non-empty)")

@@ -88,13 +88,13 @@ const MMFFCovRadPauEleCollection *getMMFFCovRadPauEle() {
 const MMFFTorCollection *getMMFFTor(const bool isMMFFs) {
   static MMFFTorCollection MMFF94(false, "");
   static MMFFTorCollection MMFF94s(true, "");
-  return (isMMFFs) ? &MMFF94s : &MMFF94;
+  return isMMFFs ? &MMFF94s : &MMFF94;
 }
 
 const MMFFOopCollection *getMMFFOop(const bool isMMFFs) {
   static MMFFOopCollection MMFF94(false, "");
   static MMFFOopCollection MMFF94s(true, "");
-  return (isMMFFs) ? &MMFF94s : &MMFF94;
+  return isMMFFs ? &MMFF94s : &MMFF94;
 }
 
 const MMFFVdWCollection *getMMFFVdW() {
@@ -1845,7 +1845,7 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
           // two atoms of oxygen/nitrogen and double-bonded
           // to carbon, or if it has 4 neighbors
           if (((atom->getTotalDegree() == 3) && (nOorNbondedToS == 2) &&
-               (isCDoubleBondedToS)) ||
+               isCDoubleBondedToS) ||
               (atom->getTotalDegree() == 4)) {
             // =SO2
             // Sulfone sulfur, doubly bonded to carbon

@@ -117,7 +117,7 @@ struct EditableMol_wrapper {
              "add a bond, returns the total number of bonds")
 
         .def("AddAtom", &EditableMol::AddAtom,
-             ((python::arg("self"), python::arg("atom"))),
+             (python::arg("self"), python::arg("atom")),
              "add an atom, returns the index of the newly added atom")
 
         .def("ReplaceAtom", &EditableMol::ReplaceAtom,

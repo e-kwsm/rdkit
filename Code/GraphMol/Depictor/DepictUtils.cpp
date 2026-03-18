@@ -297,7 +297,7 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
     commonAtoms.clear();
     int numCommonAtoms = 0;
     for (auto rii : fusedRing) {
-      if (std::find(doneAtoms.begin(), doneAtoms.end(), (rii)) !=
+      if (std::find(doneAtoms.begin(), doneAtoms.end(), rii) !=
           doneAtoms.end()) {
         commonAtoms.push_back(rii);
         numCommonAtoms++;

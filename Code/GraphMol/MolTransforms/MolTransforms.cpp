@@ -76,7 +76,7 @@ void computeCovarianceTerms(const Conformer &conf,
   double wSum = 0.0;
   for (ROMol::ConstAtomIterator cai = mol.beginAtoms(); cai != mol.endAtoms();
        cai++) {
-    if (((*cai)->getAtomicNum() == 1) && (ignoreHs)) {
+    if (((*cai)->getAtomicNum() == 1) && ignoreHs) {
       continue;
     }
     RDGeom::Point3D loc = conf.getAtomPos((*cai)->getIdx());
@@ -132,7 +132,7 @@ void computeInertiaTerms(const Conformer &conf, const RDGeom::Point3D &center,
   const ROMol &mol = conf.getOwningMol();
   for (ROMol::ConstAtomIterator cai = mol.beginAtoms(); cai != mol.endAtoms();
        cai++) {
-    if (((*cai)->getAtomicNum() == 1) && (ignoreHs)) {
+    if (((*cai)->getAtomicNum() == 1) && ignoreHs) {
       continue;
     }
     RDGeom::Point3D loc = conf.getAtomPos((*cai)->getIdx());

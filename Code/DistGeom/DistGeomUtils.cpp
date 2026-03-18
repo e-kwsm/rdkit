@@ -57,7 +57,7 @@ double pickRandomDistMat(const BoundsMatrix &mmat,
       CHECK_INVARIANT(ub >= lb, "");
       double rval = rng();
       // std::cerr<<i<<"-"<<j<<": "<<rval<<std::endl;
-      double d = lb + (rval) * (ub - lb);
+      double d = lb + rval * (ub - lb);
       ddata[id + j] = d;
       if (d > largestVal) {
         largestVal = d;
@@ -139,7 +139,7 @@ bool computeInitialCoords(const RDNumeric::SymmMatrix<double> &distMat,
       foundNeg = true;
     }
   }
-  if ((foundNeg) && (!randNegEig)) {
+  if (foundNeg && (!randNegEig)) {
     return false;
   }
 
