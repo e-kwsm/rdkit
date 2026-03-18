@@ -33,15 +33,15 @@ TopologicalTorsionArguments::TopologicalTorsionArguments(
 template <typename OutputType>
 OutputType TopologicalTorsionEnvGenerator<OutputType>::getResultSize() const {
   OutputType result = 1;
-  return (result << ((
-              dynamic_cast<const TopologicalTorsionArguments *>(
-                  this->dp_fingerprintArguments)
-                  ->d_torsionAtomCount *
-              (codeSize + (dynamic_cast<const TopologicalTorsionArguments *>(
-                               this->dp_fingerprintArguments)
-                                   ->df_includeChirality
-                               ? numChiralBits
-                               : 0)))));
+  return (
+      result << (dynamic_cast<const TopologicalTorsionArguments *>(
+                     this->dp_fingerprintArguments)
+                     ->d_torsionAtomCount *
+                 (codeSize + (dynamic_cast<const TopologicalTorsionArguments *>(
+                                  this->dp_fingerprintArguments)
+                                      ->df_includeChirality
+                                  ? numChiralBits
+                                  : 0))));
 };
 
 std::string TopologicalTorsionArguments::infoString() const {

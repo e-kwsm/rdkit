@@ -2978,7 +2978,7 @@ void processMrvImplicitH(RWMol &mol, const SubstanceGroup &sg) {
             bool hasAromaticBonds = false;
             for (auto bndI :
                  boost::make_iterator_range(mol.getAtomBonds(atom))) {
-              auto bnd = (mol)[bndI];
+              auto bnd = mol[bndI];
               if (bnd->getIsAromatic() ||
                   bnd->getBondType() == Bond::AROMATIC) {
                 hasAromaticBonds = true;

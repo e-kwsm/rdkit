@@ -250,7 +250,7 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(
-            "=", val, (int (*)(const RDKit::Atom *))(queryAtomAllBondProduct),
+            "=", val, (int (*)(const RDKit::Atom *))queryAtomAllBondProduct,
             fTag + "AtomBondEnvironment");
       } else {
         // anything we don't know how to deal with we'll just store in raw form:

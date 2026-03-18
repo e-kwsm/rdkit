@@ -448,7 +448,7 @@ struct mol_wrapper {
              "  NOTE: atom indices start at 0\n")
 
         .def("GetNumBonds", &ROMol::getNumBonds,
-             ((python::arg("self"), python::arg("onlyHeavy") = true)),
+             (python::arg("self"), python::arg("onlyHeavy") = true),
              "Returns the number of Bonds in the molecule.\n\n"
              "  ARGUMENTS:\n"
              "    - onlyHeavy: (optional) include only bonds to heavy atoms "
@@ -936,7 +936,7 @@ struct mol_wrapper {
              "add a bond, returns the new number of bonds")
 
         .def("AddAtom", &ReadWriteMol::AddAtom,
-             ((python::arg("self"), python::arg("atom"))),
+             (python::arg("self"), python::arg("atom")),
              "add an atom, returns the index of the newly added atom")
         .def("ReplaceAtom", &ReadWriteMol::ReplaceAtom,
              ((python::arg("self"), python::arg("index")),
@@ -960,11 +960,11 @@ struct mol_wrapper {
              python::args("self"))
 
         .def("SetStereoGroups", &ReadWriteMol::SetStereoGroups,
-             ((python::arg("self"), python::arg("stereo_groups"))),
+             (python::arg("self"), python::arg("stereo_groups")),
              "Set the stereo groups")
 
         .def("InsertMol", &ReadWriteMol::insertMol,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Insert (add) the given molecule into this one")
 
         .def("BeginBatchEdit", &RWMol::beginBatchEdit, python::args("self"),

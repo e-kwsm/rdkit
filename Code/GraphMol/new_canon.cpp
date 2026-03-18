@@ -490,7 +490,7 @@ void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
-    const Bond *bond = (mol)[*beg];
+    const Bond *bond = mol[*beg];
     ++beg;
     nbrs.push_back(makeBondHolder(bond, bond->getOtherAtomIdx(at->getIdx()),
                                   includeChirality, atoms));
@@ -504,7 +504,7 @@ void getChiralBonds(const ROMol &mol, const Atom *at,
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
-    const Bond *bond = (mol)[*beg];
+    const Bond *bond = mol[*beg];
     ++beg;
     unsigned int nbrIdx = bond->getOtherAtomIdx(at->getIdx());
     const Atom *nbr = mol.getAtomWithIdx(nbrIdx);

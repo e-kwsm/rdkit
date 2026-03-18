@@ -3118,7 +3118,7 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
       superatomSgroupExpanded->atoms.push_back(subAtomPtr);
 
       // remove the sgroupRef from the atom if it has one
-      (subAtomPtr)->sgroupAttachmentPoint = "";
+      subAtomPtr->sgroupAttachmentPoint = "";
     }
 
     for (auto &bond : this->bonds) {
@@ -3455,12 +3455,12 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
     bool atom1InGroup =
         (std::find_if(marvinSuperatomSgroup->atoms.begin(),
                       marvinSuperatomSgroup->atoms.end(), [&bond](auto a) {
-                        return a->id == (bond)->atomRefs2[0];
+                        return a->id == bond->atomRefs2[0];
                       }) != marvinSuperatomSgroup->atoms.end());
     bool atom2InGroup =
         (std::find_if(marvinSuperatomSgroup->atoms.begin(),
                       marvinSuperatomSgroup->atoms.end(), [&bond](auto a) {
-                        return a->id == (bond)->atomRefs2[1];
+                        return a->id == bond->atomRefs2[1];
                       }) != marvinSuperatomSgroup->atoms.end());
 
     if (atom1InGroup && atom2InGroup) {  // both are in, so copy the bond
@@ -3474,14 +3474,14 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
       if (atom1InGroup) {
         atomPtr =
             marvinSuperatomSgroup->atoms[marvinSuperatomSgroup->getAtomIndex(
-                (bond)->atomRefs2[0])];
-        (bond)->atomRefs2[0] = newAtomName;
+                bond->atomRefs2[0])];
+        bond->atomRefs2[0] = newAtomName;
 
       } else {
         atomPtr =
             marvinSuperatomSgroup->atoms[marvinSuperatomSgroup->getAtomIndex(
-                (bond)->atomRefs2[1])];
-        (bond)->atomRefs2[1] = newAtomName;
+                bond->atomRefs2[1])];
+        bond->atomRefs2[1] = newAtomName;
       }
 
       atomPtr->sgroupAttachmentPoint = std::to_string(++attachmentPointsAdded);
@@ -3667,13 +3667,13 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
     bool atom1ToBeDeleted =
         (std::find_if(atomsToDelete.begin(), atomsToDelete.end(),
                       [&bondPtr](auto a) {
-                        return a->id == (bondPtr)->atomRefs2[0];
+                        return a->id == bondPtr->atomRefs2[0];
                       }) != atomsToDelete.end());
 
     bool atom2ToBeDeleted =
         (std::find_if(atomsToDelete.begin(), atomsToDelete.end(),
                       [&bondPtr](auto a) {
-                        return a->id == (bondPtr)->atomRefs2[1];
+                        return a->id == bondPtr->atomRefs2[1];
                       }) != atomsToDelete.end());
 
     if (atom1ToBeDeleted && atom2ToBeDeleted) {

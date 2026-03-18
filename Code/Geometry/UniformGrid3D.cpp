@@ -252,7 +252,7 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
                       d = sqrt(d2);
                       valChange = (static_cast<unsigned int>(
                                       (d - bgRad) / gStepSize + 1)) *
-                                  (valStep);
+                                  valStep;
                       if (valChange < maxVal) {
                         val = maxVal - valChange;
                       } else {
@@ -342,7 +342,7 @@ std::string UniformGrid3D::toString() const {
   ss.write(storePkl.c_str(), pklSz * sizeof(char));
 
   std::string res(ss.str());
-  return (res);
+  return res;
 }
 void UniformGrid3D::initFromText(const char *pkl, const unsigned int length) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |

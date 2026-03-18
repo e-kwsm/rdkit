@@ -337,10 +337,10 @@ struct filtercat_wrapper {
         .def("IsValid", &FilterMatcherBase::isValid, python::args("self"),
              "Return True if the filter matcher is valid, False otherwise")
         .def("HasMatch", &FilterMatcherBase::hasMatch,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Returns True if mol matches the filter")
         .def("GetMatches", &FilterMatcherBaseGetMatches,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Returns the list of matching subfilters mol matches any filter")
 
         .def("GetName", &FilterMatcherBase::getName, python::args("self"))
@@ -384,14 +384,14 @@ struct filtercat_wrapper {
              "Get the minimum times pattern must appear for the filter to "
              "match")
         .def("SetMinCount", &SmartsMatcher::setMinCount,
-             ((python::arg("self"), python::arg("count"))),
+             (python::arg("self"), python::arg("count")),
              "Set the minimum times pattern must appear to match")
 
         .def("GetMaxCount", &SmartsMatcher::getMaxCount, python::args("self"),
              "Get the maximum times pattern can appear for the filter to match")
         .def(
             "SetMaxCount", &SmartsMatcher::setMaxCount,
-            ((python::arg("self"), python::arg("count"))),
+            (python::arg("self"), python::arg("count")),
             "Set the maximum times pattern can appear for the filter to match");
 
     python::class_<ExclusionList, python::bases<FilterMatcherBase>>(
@@ -440,7 +440,7 @@ struct filtercat_wrapper {
         .def("GetDescription", &FilterCatalogEntry::getDescription,
              python::args("self"), "Get the description of the catalog entry")
         .def("SetDescription", &FilterCatalogEntry::setDescription,
-             ((python::arg("self"), python::arg("description"))),
+             (python::arg("self"), python::arg("description")),
              "Set the description of the catalog entry")
         .def("GetFilterMatches", &FilterCatalogEntryGetMatches,
              (python::args("self", "mol")),
@@ -543,22 +543,22 @@ struct filtercat_wrapper {
              python::args("self"),
              "Returns the number of entries in the catalog")
         .def("GetEntryWithIdx", &FilterCatalog::getEntry,
-             ((python::arg("self"), python::arg("idx"))),
+             (python::arg("self"), python::arg("idx")),
              "Return the FilterCatalogEntry at the specified index")
         .def("GetEntry", &FilterCatalog::getEntry,
-             ((python::arg("self"), python::arg("idx"))),
+             (python::arg("self"), python::arg("idx")),
              "Return the FilterCatalogEntry at the specified index")
         .def("HasMatch", &FilterCatalog::hasMatch,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Returns True if the catalog has an entry that matches mol")
         .def("GetFirstMatch", &FilterCatalog::getFirstMatch,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Return the first catalog entry that matches mol")
         .def("GetMatches", &FilterCatalog::getMatches,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Return all catalog entries that match mol")
         .def("GetFilterMatches", &FilterCatalog::getFilterMatches,
-             ((python::arg("self"), python::arg("mol"))),
+             (python::arg("self"), python::arg("mol")),
              "Return every matching filter from all catalog entries that match "
              "mol")
         // enable pickle support

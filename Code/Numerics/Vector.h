@@ -228,7 +228,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the smallest value
   constexpr unsigned int smallestValId() const {
-    TYPE res = (TYPE)(1.e8);
+    TYPE res = (TYPE)1.e8;
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -246,7 +246,7 @@ class Vector {
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
     unsigned int i;
-    TYPE res = (TYPE)(0.0);
+    TYPE res = (TYPE)0.0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       res += (data[i] * oData[i]);

@@ -31,7 +31,7 @@ TEST_CASE("testPushAndPop") {
 
   REQUIRE(q->isEmpty());
 
-  delete (q);
+  delete q;
 }
 
 void produce(ConcurrentQueue<int> &q, const int numToProduce) {

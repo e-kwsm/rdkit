@@ -2153,7 +2153,7 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
           d4 = accumData.bondLengths[i];
           ang34 = accumData.bondAngles->getVal(bid3, i);
           unsigned long pathId =
-              static_cast<unsigned long>(bid2) * nb * nb + (bid3)*nb + i;
+              static_cast<unsigned long>(bid2) * nb * nb + bid3 * nb + i;
           if (type == 0) {
             if (accumData.cisPaths.find(pathId) != accumData.cisPaths.end()) {
               dl = _compute15DistsCisCis(d1, d2, d3, d4, ang12, ang23, ang34);

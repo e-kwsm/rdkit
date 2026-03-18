@@ -152,9 +152,9 @@ void controllingBondFromAtom(const ROMol &mol,
     if ((tBond->getBondType() == Bond::SINGLE ||
          tBond->getBondType() == Bond::AROMATIC) &&
         (tBond->getBondDir() == Bond::UNKNOWN ||
-         ((tBond->getPropIfPresent<int>(common_properties::_UnknownStereo,
-                                        explicit_unknown_stereo) &&
-           explicit_unknown_stereo)))) {
+         (tBond->getPropIfPresent<int>(common_properties::_UnknownStereo,
+                                       explicit_unknown_stereo) &&
+          explicit_unknown_stereo))) {
       squiggleBondSeen = true;
       break;
     }
