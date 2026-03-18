@@ -216,7 +216,7 @@ struct TautomerQuery_wrapper {
             (python::arg("self"), python::arg("target"), python::arg("params")))
         .def("PatternFingerprintTemplate",
              &TautomerQuery::patternFingerprintTemplate,
-             ((python::arg("self"), python::arg("fingerprintSize") = 2048)),
+             (python::arg("self"), python::arg("fingerprintSize") = 2048),
              python::return_value_policy<python::manage_new_object>())
         .def("GetTemplateMolecule", &TautomerQuery::getTemplateMolecule,
              python::return_internal_reference<>(), python::args("self"))
