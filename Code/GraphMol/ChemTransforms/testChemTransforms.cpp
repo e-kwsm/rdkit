@@ -2185,5 +2185,5 @@ int main() {
   testGithub4019();
   BOOST_LOG(rdInfoLog)
       << "*******************************************************\n";
-  return (0);
+  return 0;
 }

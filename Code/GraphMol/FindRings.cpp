@@ -924,7 +924,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
         for (auto aidi : curFrag) {
           unsigned int deg = atomDegrees[aidi];
           if (deg == 3) {
-            cand = (aidi);
+            cand = aidi;
             break;
           }
         }

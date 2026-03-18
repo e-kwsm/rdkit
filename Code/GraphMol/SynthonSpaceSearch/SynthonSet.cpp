@@ -256,7 +256,7 @@ std::vector<std::unique_ptr<ROMol>> buildSampleMolecules(
       }
       msg += "\n" + std::string(e.what()) + "\n";
       BOOST_LOG(rdErrorLog) << msg;
-      throw(e);
+      throw e;
     }
   }
   return sampleMolecules;

@@ -471,7 +471,7 @@ void test7() {
   featDefIt++;
   TEST_ASSERT(featDefIt == factory->endFeatureDefs());
 
-  delete (factory);
+  delete factory;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -653,7 +653,7 @@ void testIssue346() {
   featDefIt++;
   TEST_ASSERT(featDefIt == factory->endFeatureDefs());
 
-  delete (factory);
+  delete factory;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }

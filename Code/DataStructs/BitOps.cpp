@@ -462,7 +462,7 @@ double RogotGoldbergSimilarity(const T1 &bv1, const T2 &bv2) {
   } else if (denom1 == 0 || denom2 == 0) {
     return 0.0;
   } else {
-    return (x / (y + z) + (d) / (2 * l - y - z));
+    return (x / (y + z) + d / (2 * l - y - z));
   }
 }
 

@@ -56,7 +56,7 @@ void FreeChemicalFeature::initFromString(const std::string &pickle) {
       version = 2;
       break;
     default:
-      throw("Unknown version type for FreeChemicalFeature");
+      throw "Unknown version type for FreeChemicalFeature";
   }
 
   // read the id, but only if a later/newish version
