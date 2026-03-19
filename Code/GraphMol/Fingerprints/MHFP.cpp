@@ -50,11 +50,11 @@ MHFPEncoder::MHFPEncoder(unsigned int n_permutations, unsigned int seed)
     uint32_t a = dist_a(rand);
     uint32_t b = dist_b(rand);
 
-    while (std::find(perms_a_.begin(), perms_a_.end(), a) != perms_a_.end()) {
+    while (std::ranges::find(perms_a_, a) != perms_a_.end()) {
       a = dist_a(rand);
     }
 
-    while (std::find(perms_b_.begin(), perms_b_.end(), b) != perms_b_.end()) {
+    while (std::ranges::find(perms_b_, b) != perms_b_.end()) {
       b = dist_a(rand);
     }
 

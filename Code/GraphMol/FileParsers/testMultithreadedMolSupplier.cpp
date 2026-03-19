@@ -126,11 +126,9 @@ void testSmiProperties() {
     std::unique_ptr<ROMol> mol{sup.next()};
     if (mol != nullptr) {
       mol->getProp(common_properties::_Name, tempStr);
-      TEST_ASSERT(std::find(nameVector.begin(), nameVector.end(), tempStr) !=
-                  nameVector.end());
+      TEST_ASSERT(std::ranges::find(nameVector, tempStr) != nameVector.end());
       mol->getProp("TPSA", tempStr);
-      TEST_ASSERT(std::find(tpsaVector.begin(), tpsaVector.end(), tempStr) !=
-                  tpsaVector.end());
+      TEST_ASSERT(std::ranges::find(tpsaVector, tempStr) != tpsaVector.end());
     }
   }
 }
@@ -238,8 +236,7 @@ void testSDProperties() {
     std::unique_ptr<ROMol> mol{sup.next()};
     if (mol != nullptr) {
       mol->getProp(common_properties::_Name, tempStr);
-      TEST_ASSERT(std::find(nameVector.begin(), nameVector.end(), tempStr) !=
-                  nameVector.end());
+      TEST_ASSERT(std::ranges::find(nameVector, tempStr) != nameVector.end());
     }
   }
 }

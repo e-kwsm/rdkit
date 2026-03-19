@@ -24,6 +24,7 @@
 #include <DataStructs/ExplicitBitVect.h>
 #include <DataStructs/BitOps.h>
 #include <RDGeneral/RDLog.h>
+#include <algorithm>
 #include <string>
 #include <boost/version.hpp>
 
@@ -106,8 +107,7 @@ void test1() {
           RDKFingerprintMol(*m2, 4, 4, 1024, 1, 0, -1, 0, 1, 1, &vs2);
       IntVect iv;
       ((*fp2) ^ (*fp1)).getOnBits(iv);
-      std::copy(iv.begin(), iv.end(),
-                std::ostream_iterator<int>(std::cerr, ", "));
+      std::ranges::copy(iv, std::ostream_iterator<int>(std::cerr, ", "));
       std::cerr << std::endl;
 
       TEST_ASSERT((*fp1) == (*fp2));
@@ -139,8 +139,7 @@ void test1() {
 
     IntVect iv;
     ((*fp2) ^ ((*fp1) & (*fp2))).getOnBits(iv);
-    std::copy(iv.begin(), iv.end(),
-              std::ostream_iterator<int>(std::cerr, ", "));
+    std::ranges::copy(iv, std::ostream_iterator<int>(std::cerr, ", "));
     std::cerr << std::endl;
 
     TEST_ASSERT(((*fp1) & (*fp2)) == (*fp2));

@@ -985,12 +985,11 @@ void filter_sgroup_emptying_hydrogens(const ROMol &mol,
       return atomsToRemove[idx];
     };
 
-    auto no_atoms = atoms.empty() ||
-                    std::all_of(atoms.begin(), atoms.end(), would_remove_atom);
+    auto no_atoms =
+        atoms.empty() || std::ranges::all_of(atoms, would_remove_atom);
     if (no_atoms) {
       auto no_patoms =
-          patoms.empty() ||
-          std::all_of(patoms.begin(), patoms.end(), would_remove_atom);
+          patoms.empty() || std::ranges::all_of(patoms, would_remove_atom);
       if (no_patoms) {
         for (auto atom : atoms) {
           atomsToRemove.set(atom, false);

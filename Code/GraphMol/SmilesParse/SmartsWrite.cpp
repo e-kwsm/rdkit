@@ -852,7 +852,7 @@ std::string molToSmarts(const ROMol &inmol, const SmilesWriteParams &params,
   std::vector<unsigned int> bondOrdering;
 
   std::string res;
-  auto colorIt = std::find(colors.begin(), colors.end(), Canon::WHITE_NODE);
+  auto colorIt = std::ranges::find(colors, Canon::WHITE_NODE);
   while (colorIt != colors.end()) {
     unsigned int nextAtomIdx = 0;
     std::string subSmi;
@@ -885,7 +885,7 @@ std::string molToSmarts(const ROMol &inmol, const SmilesWriteParams &params,
                                      bondsInPlay);
     res += subSmi;
 
-    colorIt = std::find(colors.begin(), colors.end(), Canon::WHITE_NODE);
+    colorIt = std::ranges::find(colors, Canon::WHITE_NODE);
     if (colorIt != colors.end()) {
       res += ".";
     }

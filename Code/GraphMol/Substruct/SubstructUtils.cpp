@@ -50,21 +50,19 @@ class ScoreMatchesByDegreeOfCoreSubstitution {
   }
   const RDKit::MatchVectType &getMostSubstitutedCoreMatch() {
     if (d_minIdx == -1) {
-      d_minIdx = std::min_element(d_matchIdxVsScore.begin(),
-                                  d_matchIdxVsScore.end(), compare)
-                     ->first;
+      d_minIdx = std::ranges::min_element(d_matchIdxVsScore, compare)->first;
     }
     return d_matches.at(d_minIdx);
   }
   std::vector<MatchVectType> sortMatchesByDegreeOfCoreSubstitution() {
     if (!d_isSorted) {
-      std::sort(d_matchIdxVsScore.begin(), d_matchIdxVsScore.end(), compare);
+      std::ranges::sort(d_matchIdxVsScore, compare);
       d_isSorted = true;
       d_minIdx = d_matchIdxVsScore.front().first;
     }
     std::vector<MatchVectType> res(d_matches.size());
-    std::transform(
-        d_matchIdxVsScore.begin(), d_matchIdxVsScore.end(), res.begin(),
+    std::ranges::transform(
+        d_matchIdxVsScore, res.begin(),
         [this](const IdxScorePair &pair) { return d_matches.at(pair.first); });
     return res;
   }

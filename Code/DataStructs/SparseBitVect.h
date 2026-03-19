@@ -46,7 +46,7 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
     dp_bits = nullptr;
     _initForSize(other.getNumBits());
     IntSet *bv = other.dp_bits;
-    std::copy(bv->begin(), bv->end(), std::inserter(*dp_bits, dp_bits->end()));
+    std::ranges::copy(*bv, std::inserter(*dp_bits, dp_bits->end()));
   }
   //! construct from a string pickle
   SparseBitVect(const std::string &pkl);

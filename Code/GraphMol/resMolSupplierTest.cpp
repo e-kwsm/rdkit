@@ -601,7 +601,7 @@ void testSubstructMatchDMAP() {
   p = matchVect[1];
   TEST_ASSERT(p.size() == 1);
   v.push_back(p[0].second);
-  std::sort(v.begin(), v.end());
+  std::ranges::sort(v);
   TEST_ASSERT(v[0] == 2);
   TEST_ASSERT(v[1] == 6);
   delete mol;

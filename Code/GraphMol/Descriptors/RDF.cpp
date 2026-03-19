@@ -112,12 +112,12 @@ void getRDFDesc(double *DM, const ROMol &mol, const Conformer &conf,
     R7[i] = std::round(1000 * res7) / 1000;
   }
 
-  std::copy(R2.begin(), R2.end(), R1.begin() + 30);
-  std::copy(R3.begin(), R3.end(), R1.begin() + 60);
-  std::copy(R4.begin(), R4.end(), R1.begin() + 90);
-  std::copy(R5.begin(), R5.end(), R1.begin() + 120);
-  std::copy(R6.begin(), R6.end(), R1.begin() + 150);
-  std::copy(R7.begin(), R7.end(), R1.begin() + 180);
+  std::ranges::copy(R2, R1.begin() + 30);
+  std::ranges::copy(R3, R1.begin() + 60);
+  std::ranges::copy(R4, R1.begin() + 90);
+  std::ranges::copy(R5, R1.begin() + 120);
+  std::ranges::copy(R6, R1.begin() + 150);
+  std::ranges::copy(R7, R1.begin() + 180);
 
   res = R1;
 }

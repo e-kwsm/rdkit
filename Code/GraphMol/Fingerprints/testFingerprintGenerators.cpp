@@ -25,6 +25,8 @@
 #include <GraphMol/FileParsers/MolSupplier.h>
 #include <GraphMol/FileParsers/FileParsers.h>
 
+#include <algorithm>
+
 using namespace RDKit;
 
 std::string smis[] = {
@@ -273,26 +275,20 @@ void testAtomPairOutput() {
   auto c2 = AtomPair::getAtomCode(mol->getAtomWithIdx(1), 0, false);
   auto c3 = AtomPair::getAtomCode(mol->getAtomWithIdx(2), 0, false);
   auto v = additionalOutput.atomToBits->at(0);
-  TEST_ASSERT(std::find(v.begin(), v.end(),
-                        (AtomPair::getAtomPairCode(c1, c2, 1, false))) !=
-              v.end());
-  TEST_ASSERT(std::find(v.begin(), v.end(),
-                        (AtomPair::getAtomPairCode(c1, c3, 2, false))) !=
-              v.end());
+  TEST_ASSERT(std::ranges::find(
+                  v, (AtomPair::getAtomPairCode(c1, c2, 1, false))) != v.end());
+  TEST_ASSERT(std::ranges::find(
+                  v, (AtomPair::getAtomPairCode(c1, c3, 2, false))) != v.end());
   v = additionalOutput.atomToBits->at(1);
-  TEST_ASSERT(std::find(v.begin(), v.end(),
-                        (AtomPair::getAtomPairCode(c1, c2, 1, false))) !=
-              v.end());
-  TEST_ASSERT(std::find(v.begin(), v.end(),
-                        (AtomPair::getAtomPairCode(c2, c3, 1, false))) !=
-              v.end());
+  TEST_ASSERT(std::ranges::find(
+                  v, (AtomPair::getAtomPairCode(c1, c2, 1, false))) != v.end());
+  TEST_ASSERT(std::ranges::find(
+                  v, (AtomPair::getAtomPairCode(c2, c3, 1, false))) != v.end());
   v = additionalOutput.atomToBits->at(2);
-  TEST_ASSERT(std::find(v.begin(), v.end(),
-                        (AtomPair::getAtomPairCode(c1, c3, 2, false))) !=
-              v.end());
-  TEST_ASSERT(std::find(v.begin(), v.end(),
-                        (AtomPair::getAtomPairCode(c2, c3, 1, false))) !=
-              v.end());
+  TEST_ASSERT(std::ranges::find(
+                  v, (AtomPair::getAtomPairCode(c1, c3, 2, false))) != v.end());
+  TEST_ASSERT(std::ranges::find(
+                  v, (AtomPair::getAtomPairCode(c2, c3, 1, false))) != v.end());
   TEST_ASSERT(additionalOutput.atomCounts->at(0) == 2);
   TEST_ASSERT(additionalOutput.atomCounts->at(1) == 2);
   TEST_ASSERT(additionalOutput.atomCounts->at(2) == 2);
@@ -2442,13 +2438,11 @@ void testAtomPairFPDifference() {
   const auto &fpFromFreeFuncNonZero = fpFromFreeFunc->getNonzeroElements();
   std::vector<std::pair<std::uint32_t, int>> fpFromFreeFuncAsVectOfPairs(
       fpFromFreeFuncNonZero.begin(), fpFromFreeFuncNonZero.end());
-  std::sort(fpFromFreeFuncAsVectOfPairs.begin(),
-            fpFromFreeFuncAsVectOfPairs.end());
+  std::ranges::sort(fpFromFreeFuncAsVectOfPairs);
   const auto &fpFromGeneratorNonZero = fpFromGenerator->getNonzeroElements();
   std::vector<std::pair<std::uint32_t, int>> fpFromGeneratorAsVectOfPairs(
       fpFromGeneratorNonZero.begin(), fpFromGeneratorNonZero.end());
-  std::sort(fpFromGeneratorAsVectOfPairs.begin(),
-            fpFromGeneratorAsVectOfPairs.end());
+  std::ranges::sort(fpFromGeneratorAsVectOfPairs);
   if (fpFromFreeFuncAsVectOfPairs != fpFromGeneratorAsVectOfPairs) {
     for (auto i = 0u; i < fpFromFreeFuncAsVectOfPairs.size(); ++i) {
       const auto &fpFromFreeFuncPair = fpFromFreeFuncAsVectOfPairs.at(i);

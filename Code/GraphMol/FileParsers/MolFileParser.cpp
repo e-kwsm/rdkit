@@ -34,6 +34,7 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/LocaleSwitcher.h>
+#include <algorithm>
 #include <typeinfo>
 #include <exception>
 #include <charconv>
@@ -1484,8 +1485,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
   }
   std::unique_ptr<Atom> res(new Atom);
   bool isComplexQueryName =
-      std::find(complexQueries.begin(), complexQueries.end(), symb) !=
-      complexQueries.end();
+      std::ranges::find(complexQueries, symb) != complexQueries.end();
   if (isComplexQueryName || symb == "L" || symb == "*" || symb == "LP" ||
       symb == "R" || symb == "R#" ||
       (symb[0] == 'R' && symb >= "R0" && symb <= "R99")) {
@@ -2158,8 +2158,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
     // NOTE: "R" and "R0"-"R99" are not in the v3K CTAB spec, but we're going to
     // support them anyway
     bool isComplexQueryName =
-        std::find(complexQueries.begin(), complexQueries.end(), token) !=
-        complexQueries.end();
+        std::ranges::find(complexQueries, token) != complexQueries.end();
     if (isComplexQueryName || token == "R" ||
         (token[0] == 'R' && token >= "R0" && token <= "R99") || token == "R#" ||
         token == "*") {

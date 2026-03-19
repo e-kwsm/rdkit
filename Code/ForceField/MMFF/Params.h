@@ -154,8 +154,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFAromCollection {
     \return a pointer to the MMFFArom object, NULL on failure.
   */
   bool isMMFFAromatic(const unsigned int atomType) const {
-    return std::find(d_params.begin(), d_params.end(), atomType) !=
-           d_params.end();
+    return std::ranges::find(d_params, atomType) != d_params.end();
   }
 
   MMFFAromCollection(const std::vector<std::uint8_t> *mmffArom = nullptr);
@@ -199,8 +198,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFPropCollection {
     const auto res = d_params.find(atomType);
     return ((res != d_params.end()) ? &((*res).second) : NULL);
 #else
-    auto bounds =
-        std::equal_range(d_iAtomType.begin(), d_iAtomType.end(), atomType);
+    auto bounds = std::ranges::equal_range(d_iAtomType, atomType);
     return ((bounds.first != bounds.second)
                 ? &d_params[bounds.first - d_iAtomType.begin()]
                 : nullptr);
@@ -269,8 +267,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFChgCollection {
       }
     }
 #else
-    auto bounds =
-        std::equal_range(d_iAtomType.begin(), d_iAtomType.end(), canIAtomType);
+    auto bounds = std::ranges::equal_range(d_iAtomType, canIAtomType);
     if (bounds.first != bounds.second) {
       bounds = std::equal_range(
           d_jAtomType.begin() + (bounds.first - d_iAtomType.begin()),
@@ -337,8 +334,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFBondCollection {
       }
     }
 #else
-    auto bounds =
-        std::equal_range(d_iAtomType.begin(), d_iAtomType.end(), canAtomType);
+    auto bounds = std::ranges::equal_range(d_iAtomType, canAtomType);
     if (bounds.first != bounds.second) {
       bounds = std::equal_range(
           d_jAtomType.begin() + (bounds.first - d_iAtomType.begin()),
@@ -397,8 +393,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFBndkCollection {
       }
     }
 #else
-    auto bounds = std::equal_range(d_iAtomicNum.begin(), d_iAtomicNum.end(),
-                                   canAtomicNum);
+    auto bounds = std::ranges::equal_range(d_iAtomicNum, canAtomicNum);
     if (bounds.first != bounds.second) {
       bounds = std::equal_range(
           d_jAtomicNum.begin() + (bounds.first - d_iAtomicNum.begin()),
@@ -448,7 +443,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFHerschbachLaurieCollection {
       }
     }
 #else
-    auto bounds = std::equal_range(d_iRow.begin(), d_iRow.end(), canIRow);
+    auto bounds = std::ranges::equal_range(d_iRow, canIRow);
     if (bounds.first != bounds.second) {
       bounds = std::equal_range(
           d_jRow.begin() + (bounds.first - d_iRow.begin()),
@@ -486,8 +481,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFCovRadPauEleCollection {
     const auto res = d_params.find(atomicNum);
     return ((res != d_params.end()) ? &((*res).second) : NULL);
 #else
-    auto bounds =
-        std::equal_range(d_atomicNum.begin(), d_atomicNum.end(), atomicNum);
+    auto bounds = std::ranges::equal_range(d_atomicNum, atomicNum);
     return ((bounds.first != bounds.second)
                 ? &d_params[bounds.first - d_atomicNum.begin()]
                 : nullptr);
@@ -545,8 +539,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFAngleCollection {
       ++iter;
     }
 #else
-    auto jBounds =
-        std::equal_range(d_jAtomType.begin(), d_jAtomType.end(), jAtomType);
+    auto jBounds = std::ranges::equal_range(d_jAtomType, jAtomType);
     if (jBounds.first != jBounds.second) {
       while ((iter < 4) && (!mmffAngleParams)) {
         unsigned int canIAtomType = (*mmffDef)(iAtomType)->eqLevel[iter];
@@ -635,8 +628,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFStbnCollection {
       }
     }
 #else
-    auto jBounds =
-        std::equal_range(d_jAtomType.begin(), d_jAtomType.end(), jAtomType);
+    auto jBounds = std::ranges::equal_range(d_jAtomType, jAtomType);
     if (jBounds.first != jBounds.second) {
       auto bounds = std::equal_range(
           d_iAtomType.begin() + (jBounds.first - d_jAtomType.begin()),
@@ -761,14 +753,13 @@ class RDKIT_FORCEFIELD_EXPORT MMFFOopCollection {
       ++iter;
     }
 #else
-    auto jBounds =
-        std::equal_range(d_jAtomType.begin(), d_jAtomType.end(), jAtomType);
+    auto jBounds = std::ranges::equal_range(d_jAtomType, jAtomType);
     if (jBounds.first != jBounds.second) {
       while ((iter < 4) && (!mmffOopParams)) {
         canIKLAtomType[0] = (*mmffDef)(iAtomType)->eqLevel[iter];
         canIKLAtomType[1] = (*mmffDef)(kAtomType)->eqLevel[iter];
         canIKLAtomType[2] = (*mmffDef)(lAtomType)->eqLevel[iter];
-        std::sort(canIKLAtomType.begin(), canIKLAtomType.end());
+        std::ranges::sort(canIKLAtomType);
         auto bounds = std::equal_range(
             d_iAtomType.begin() + (jBounds.first - d_jAtomType.begin()),
             d_iAtomType.begin() + (jBounds.second - d_jAtomType.begin()),
@@ -897,8 +888,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFTorCollection {
         }
       }
 #else
-      auto jBounds = std::equal_range(d_jAtomType.begin(), d_jAtomType.end(),
-                                      canJAtomType);
+      auto jBounds = std::ranges::equal_range(d_jAtomType, canJAtomType);
       if (jBounds.first != jBounds.second) {
         auto bounds = std::equal_range(
             d_kAtomType.begin() + (jBounds.first - d_jAtomType.begin()),
@@ -974,8 +964,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFVdWCollection {
     const auto res = d_params.find(atomType);
     return (res != d_params.end() ? &((*res).second) : NULL);
 #else
-    auto bounds =
-        std::equal_range(d_atomType.begin(), d_atomType.end(), atomType);
+    auto bounds = std::ranges::equal_range(d_atomType, atomType);
     return ((bounds.first != bounds.second)
                 ? &d_params[bounds.first - d_atomType.begin()]
                 : nullptr);

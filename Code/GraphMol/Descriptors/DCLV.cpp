@@ -261,7 +261,7 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
   }
 
   positions = mol.getConformer(confId).getPositions();
-  maxRadius = *std::max_element(radii_.begin(), radii_.end());
+  maxRadius = *std::ranges::max_element(radii_);
 
   // total x,y,z centres
   Point3D cXYZ;

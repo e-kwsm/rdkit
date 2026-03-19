@@ -314,7 +314,7 @@ TEST_CASE("Issue 3231") {
     chiCents.push_back(getCIPLabels(*isomer));
   }
   std::ranges::sort(chiCents);
-  chiCents.erase(std::unique(chiCents.begin(), chiCents.end()), chiCents.end());
+  chiCents.erase(std::ranges::unique(chiCents), chiCents.end());
 
   std::vector<std::vector<std::pair<unsigned int, std::string>>> expCents{
       {{1, "R"}, {12, "R"}, {14, "R"}}, {{1, "R"}, {12, "R"}, {14, "S"}},
@@ -535,8 +535,8 @@ TEST_CASE("wiggly bonds and EnumerateStereoisomers") {
       got.push_back(MolToSmiles(*isomer));
     }
     CHECK(got.size() == 2);
-    CHECK(std::find(got.begin(), got.end(), "C/C=C/C") != got.end());
-    CHECK(std::find(got.begin(), got.end(), "C/C=C\\C") != got.end());
+    CHECK(std::ranges::find(got, "C/C=C/C") != got.end());
+    CHECK(std::ranges::find(got, "C/C=C\\C") != got.end());
   }
   SECTION("chiral centers") {
     auto m1 = "CC(F)(Cl)(Br) |w:1.0|"_smiles;
@@ -549,7 +549,7 @@ TEST_CASE("wiggly bonds and EnumerateStereoisomers") {
       got.push_back(MolToSmiles(*isomer));
     }
     CHECK(got.size() == 2);
-    CHECK(std::find(got.begin(), got.end(), "C[C@](F)(Cl)Br") != got.end());
-    CHECK(std::find(got.begin(), got.end(), "C[C@@](F)(Cl)Br") != got.end());
+    CHECK(std::ranges::find(got, "C[C@](F)(Cl)Br") != got.end());
+    CHECK(std::ranges::find(got, "C[C@@](F)(Cl)Br") != got.end());
   }
 }

@@ -1360,7 +1360,7 @@ void testGithub608() {
       if (useLegacy) {
         TEST_ASSERT(f->getAtomWithIdx(1)->getPropIfPresent(
             common_properties::_ringStereoAtoms, nAtoms));
-        TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 6) != nAtoms.end());
+        TEST_ASSERT(std::ranges::find(nAtoms, 6) != nAtoms.end());
       } else {
         unsigned int oatom = 0;
         TEST_ASSERT(f->getAtomWithIdx(1)->getPropIfPresent(
@@ -1372,7 +1372,7 @@ void testGithub608() {
       if (useLegacy) {
         TEST_ASSERT(m->getAtomWithIdx(4)->getPropIfPresent(
             common_properties::_ringStereoAtoms, nAtoms));
-        TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 9) != nAtoms.end());
+        TEST_ASSERT(std::ranges::find(nAtoms, 9) != nAtoms.end());
       } else {
         unsigned oatom = 0;
         TEST_ASSERT(m->getAtomWithIdx(4)->getPropIfPresent(
