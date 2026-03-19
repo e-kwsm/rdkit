@@ -80,7 +80,7 @@ std::string chemicalReactionTemplatesToString(
     vfragsmi.push_back(molToString(**begin, toSmiles, params));
   }
   if (params.canonical) {
-    std::sort(vfragsmi.begin(), vfragsmi.end());
+    std::ranges::sort(vfragsmi);
   }
   for (unsigned i = 0; i < vfragsmi.size(); ++i) {
     res += vfragsmi[i];

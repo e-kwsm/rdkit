@@ -363,7 +363,7 @@ int internalGetMatches(const Query &query, MolHolderBase &mols,
       // Find out out the max number of molecules that was screened by the
       // most productive thread and do the same in all other threads, unless
       // the max number of molecules was reached
-      maxEndIdx = *std::max_element(endIdxVect.begin(), endIdxVect.end());
+      maxEndIdx = *std::ranges::max_element(endIdxVect);
       for (thread_group_idx = 0; thread_group_idx < numThreads;
            ++thread_group_idx) {
         if (endIdxVect[thread_group_idx] >= maxEndIdx) {
@@ -408,12 +408,11 @@ int internalGetMatches(const Query &query, MolHolderBase &mols,
     if (!searchOrder.empty()) {
       std::transform(idxs->begin(), idxs->end(), idxs->begin(),
                      [searchOrder](unsigned int v) -> unsigned int {
-                       return std::find(searchOrder.begin(), searchOrder.end(),
-                                        v) -
+                       return std::ranges::find(searchOrder, v) -
                               searchOrder.begin();
                      });
     }
-    std::sort(idxs->begin(), idxs->end());
+    std::ranges::sort(idxs);
     // we may have actually accumulated more results than maxResults due
     // to the top up above, so trim the results down if that's the case
     if (maxResults > 0 &&

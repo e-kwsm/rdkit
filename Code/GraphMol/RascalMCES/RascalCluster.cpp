@@ -118,8 +118,7 @@ std::vector<std::vector<ClusNode>> buildProximityGraph(
       t.join();
     }
   } else {
-    std::transform(toDo.begin(), toDo.end(), molSims.begin(),
-                   calcMolMolSimilarity);
+    std::ranges::transform(toDo, molSims.begin(), calcMolMolSimilarity);
   }
 #else
   std::transform(toDo.begin(), toDo.end(), molSims.begin(),
@@ -139,7 +138,7 @@ std::vector<std::vector<unsigned int>> disconnectProximityGraphs(
     std::vector<std::vector<ClusNode>> &proxGraph) {
   std::vector<std::vector<unsigned int>> subGraphs;
   std::vector<bool> done(proxGraph.size(), false);
-  auto nextStart = std::find(done.begin(), done.end(), false);
+  auto nextStart = std::ranges::find(done, false);
   while (nextStart != done.end()) {
     std::list<unsigned int> nodes;
     std::list<unsigned int> toDo(1, std::distance(done.begin(), nextStart));
@@ -160,7 +159,7 @@ std::vector<std::vector<unsigned int>> disconnectProximityGraphs(
     }
     nodes.sort();
     subGraphs.push_back(std::vector(nodes.begin(), nodes.end()));
-    nextStart = std::find(done.begin(), done.end(), false);
+    nextStart = std::ranges::find(done, false);
   }
   return subGraphs;
 }
@@ -215,8 +214,7 @@ std::vector<std::vector<unsigned int>> makeSubClusters(
       }
     }
     tmpNbors.front() = nullptr;
-    tmpNbors.erase(std::remove(tmpNbors.begin(), tmpNbors.end(), nullptr),
-                   tmpNbors.end());
+    tmpNbors.erase(std::ranges::remove(tmpNbors, nullptr), tmpNbors.end());
     std::sort(subClusters.back().begin(), subClusters.back().end());
     subClusters.back().erase(
         std::unique(subClusters.back().begin(), subClusters.back().end()),
@@ -240,25 +238,25 @@ std::vector<std::vector<unsigned int>> formInitialClusters(
         nbors.push_back(proxGraph[i][j]);
       }
     }
-    std::sort(nbors.begin(), nbors.end(),
-              [](const ClusNode &c1, const ClusNode &c2) -> bool {
-                return c1.d_sim > c2.d_sim;
-              });
+    std::ranges::sort(nbors,
+                      [](const ClusNode &c1, const ClusNode &c2) -> bool {
+                        return c1.d_sim > c2.d_sim;
+                      });
     if (!nbors.empty()) {
       auto subClusters = makeSubClusters(nbors, clusOpts);
       clusters.insert(clusters.end(), subClusters.begin(), subClusters.end());
     }
   }
-  std::sort(clusters.begin(), clusters.end(),
-            [](const std::vector<unsigned int> &c1,
-               const std::vector<unsigned int> &c2) -> bool {
-              if (c1.size() == c2.size()) {
-                return c1.front() < c2.front();
-              } else {
-                return c1.size() > c2.size();
-              }
-            });
-  clusters.erase(std::unique(clusters.begin(), clusters.end()), clusters.end());
+  std::ranges::sort(clusters,
+                    [](const std::vector<unsigned int> &c1,
+                       const std::vector<unsigned int> &c2) -> bool {
+                      if (c1.size() == c2.size()) {
+                        return c1.front() < c2.front();
+                      } else {
+                        return c1.size() > c2.size();
+                      }
+                    });
+  clusters.erase(std::ranges::unique(clusters), clusters.end());
   return clusters;
 }
 
@@ -291,10 +289,10 @@ std::vector<std::vector<unsigned int>> mergeClusters(
       }
     }
     outClusters.erase(
-        std::remove_if(outClusters.begin(), outClusters.end(),
-                       [](const std::vector<unsigned int> &c) -> bool {
-                         return c.empty();
-                       }),
+        std::ranges::remove_if(outClusters,
+                               [](const std::vector<unsigned int> &c) -> bool {
+                                 return c.empty();
+                               }),
         outClusters.end());
   }
 
@@ -315,13 +313,13 @@ void sortClusterMembersByMeanSim(
       }
       clusSims.push_back({clus[i], totSim / (clus.size() - 1)});
     }
-    std::sort(clusSims.begin(), clusSims.end(),
-              [](const std::pair<unsigned int, double> &p1,
-                 const std::pair<unsigned int, double> &p2) -> bool {
-                return p1.second > p2.second;
-              });
-    std::transform(
-        clusSims.begin(), clusSims.end(), clus.begin(),
+    std::ranges::sort(clusSims,
+                      [](const std::pair<unsigned int, double> &p1,
+                         const std::pair<unsigned int, double> &p2) -> bool {
+                        return p1.second > p2.second;
+                      });
+    std::ranges::transform(
+        clusSims, clus.begin(),
         [](const std::pair<unsigned int, double> &p) -> unsigned int {
           return p.first;
         });
@@ -339,11 +337,11 @@ std::vector<std::vector<unsigned int>> makeClusters(
     clusters.insert(clusters.end(), mergedClusters.begin(),
                     mergedClusters.end());
   }
-  std::sort(clusters.begin(), clusters.end(),
-            [](const std::vector<unsigned int> &c1,
-               const std::vector<unsigned int> &c2) -> bool {
-              return c1.size() > c2.size();
-            });
+  std::ranges::sort(clusters,
+                    [](const std::vector<unsigned int> &c1,
+                       const std::vector<unsigned int> &c2) -> bool {
+                      return c1.size() > c2.size();
+                    });
   return clusters;
 }
 

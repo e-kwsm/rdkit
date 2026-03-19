@@ -85,7 +85,7 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
     d_length = sz;
     d_data.resize(sz);
   }
-  void setToVal(double val) { std::fill(d_data.begin(), d_data.end(), val); }
+  void setToVal(double val) { std::ranges::fill(d_data, val); }
 
   const std::vector<double> &getData() const { return d_data; }
   std::vector<double> &getData() { return d_data; }

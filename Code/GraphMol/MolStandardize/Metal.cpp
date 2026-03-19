@@ -18,6 +18,8 @@
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/Substruct/SubstructUtils.h>
 
+#include <algorithm>
+
 using namespace std;
 using namespace RDKit;
 namespace RDKit {
@@ -108,8 +110,7 @@ void MetalDisconnector::disconnect(RWMol &mol) {
       // later to adjust the metal charge
       auto &value = nonMetals[non_idx];
       value.cutBonds += order;
-      auto it = std::lower_bound(value.boundMetalIndices.begin(),
-                                 value.boundMetalIndices.end(), metal_idx);
+      auto it = std::ranges::lower_bound(value.boundMetalIndices, metal_idx);
       if (it == value.boundMetalIndices.end() || *it != metal_idx) {
         value.boundMetalIndices.insert(it, metal_idx);
       }
@@ -212,7 +213,7 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
         PeriodicTable::getTable()->getValenceList(a->getAtomicNum());
     // valens should have at least -1 in it, as the atom data is currently
     // configured, so max_element should never return valens.end().
-    auto max_valence = *std::max_element(valens.begin(), valens.end());
+    auto max_valence = *std::ranges::max_element(valens);
     // Don't go over the maximum real valence.
     if (max_valence != -1 && currentFc >= max_valence) {
       continue;
@@ -271,7 +272,7 @@ void MetalDisconnector::remove_haptic_dummies(RDKit::RWMol &mol) {
   }
   // The atom indices are recalculated after each atom removal, so take them
   // out in descending order. Bonds are taken out when the atom is removed.
-  std::sort(dummiesToGo.begin(), dummiesToGo.end(), std::greater{});
+  std::ranges::sort(dummiesToGo, std::greater{});
   mol.beginBatchEdit();
   for (auto a : dummiesToGo) {
     mol.removeAtom(a);

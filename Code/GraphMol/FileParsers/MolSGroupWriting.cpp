@@ -477,7 +477,7 @@ std::string BuildV3000BondsBlock(const SubstanceGroup &sgroup) {
   };
 
   auto bonds = sgroup.getBonds();
-  auto first_cbond = std::stable_partition(bonds.begin(), bonds.end(), isXBond);
+  auto first_cbond = std::ranges::stable_partition(bonds, isXBond);
 
   ret << BuildV3000IdxVectorDataBlock("XBONDS", bonds.begin(), first_cbond);
   ret << BuildV3000IdxVectorDataBlock("CBONDS", first_cbond, bonds.end());

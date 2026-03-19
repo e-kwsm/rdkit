@@ -71,8 +71,8 @@ const std::string &RGroupData::getMolLabel() {
 void RGroupData::add(const ROMOL_SPTR &newMol,
                      const std::vector<int> &rlabel_attachments) {
   // some fragments can be added multiple times if they are cyclic
-  if (std::any_of(mols.begin(), mols.end(),
-                  [&newMol](const auto &mol) { return newMol == mol; })) {
+  if (std::ranges::any_of(
+          mols, [&newMol](const auto &mol) { return newMol == mol; })) {
     return;
   }
 
@@ -92,8 +92,8 @@ void RGroupData::add(const ROMOL_SPTR &newMol,
   }
 
   labelled = false;
-  std::copy(rlabel_attachments.begin(), rlabel_attachments.end(),
-            std::inserter(attachments, attachments.end()));
+  std::ranges::copy(rlabel_attachments,
+                    std::inserter(attachments, attachments.end()));
 
   mols.push_back(newMol);
   static const std::regex remove_isotopes_regex("\\[\\d*\\*\\]");
@@ -132,14 +132,13 @@ std::string RGroupData::toString() const {
 }
 
 void RGroupData::computeIsHydrogen() {  // is the rgroup all Hs
-  is_hydrogen = std::all_of(mols.begin(), mols.end(), [](const auto &mol) {
-    return RGroupData::isMolHydrogen(*mol);
-  });
+  is_hydrogen = std::ranges::all_of(
+      mols, [](const auto &mol) { return RGroupData::isMolHydrogen(*mol); });
 }
 
 bool RGroupData::isMolHydrogen(const ROMol &mol) {
   auto atoms = mol.atoms();
-  return std::all_of(atoms.begin(), atoms.end(), [](const auto &atom) {
+  return std::ranges::all_of(atoms, [](const auto &atom) {
     return (atom->getAtomicNum() == 1 ||
             (atom->getAtomicNum() == 0 && atom->hasProp(SIDECHAIN_RLABELS)));
   });

@@ -35,9 +35,9 @@ void outputTagClasses(const t_obj *obj, std::ostream &d_os,
   if (obj->hasProp("_tagClass")) {
     std::string value;
     obj->getProp("_tagClass", value);
-    std::replace(value.begin(), value.end(), '\"', '_');
-    std::replace(value.begin(), value.end(), '\'', '_');
-    std::replace(value.begin(), value.end(), '.', '_');
+    std::ranges::replace(value, '\"', '_');
+    std::ranges::replace(value, '\'', '_');
+    std::ranges::replace(value, '.', '_');
     d_os << " " << value;
   }
 }

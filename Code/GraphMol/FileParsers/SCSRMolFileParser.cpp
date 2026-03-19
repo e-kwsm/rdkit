@@ -357,10 +357,9 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
                                    // in the atom is not found in the template
             for (const auto &attachOrd : attchOrds) {
               auto supAttachPoints = mainSUP->getAttachPoints();
-              if (std::find_if(supAttachPoints.begin(), supAttachPoints.end(),
-                               [&attachOrd](auto a) {
-                                 return a.id == attachOrd.second;
-                               }) == supAttachPoints.end()) {
+              if (std::ranges::find_if(supAttachPoints, [&attachOrd](auto a) {
+                    return a.id == attachOrd.second;
+                  }) == supAttachPoints.end()) {
                 templateFound = false;
                 break;
               }
@@ -1042,8 +1041,8 @@ class MolFromSCSRMolConverter {
               templateAtomClass == atomClass &&
               templateMol->getPropIfPresent<std::vector<std::string>>(
                   common_properties::templateNames, templateNames) &&
-              std::find(templateNames.begin(), templateNames.end(),
-                        dummyLabel) != templateNames.end()) {
+              std::ranges::find(templateNames, dummyLabel) !=
+                  templateNames.end()) {
             templateFound = true;
             switch (molFromSCSRParams.scsrTemplateNames) {
               case SCSRTemplateNames::UseFirstName:
@@ -1146,8 +1145,8 @@ class MolFromSCSRMolConverter {
                                                            lgSgroupAtomClass) &&
                     lgSgroupAtomClass == "LGRP") {
                   auto lgSgroupAtoms = lgSgroup.getAtoms();
-                  if (std::find(lgSgroupAtoms.begin(), lgSgroupAtoms.end(),
-                                attachPoint.lvIdx) != lgSgroupAtoms.end()) {
+                  if (std::ranges::find(lgSgroupAtoms, attachPoint.lvIdx) !=
+                      lgSgroupAtoms.end()) {
                     std::string sgroupName = dummyLabel;
                     if (seqId != 0) {
                       sgroupName += "_" + std::to_string(seqId);
@@ -1310,9 +1309,9 @@ class MolFromSCSRMolConverter {
         // if one atom of the bond is found and the other is not in the
         // sgroup, this is a Xbond
         auto sgAtoms = sg->getAtoms();
-        if ((std::find(sgAtoms.begin(), sgAtoms.end(),
-                       bond->getBeginAtomIdx()) == sgAtoms.end()) !=
-            (std::find(sgAtoms.begin(), sgAtoms.end(), bond->getEndAtomIdx()) ==
+        if ((std::ranges::find(sgAtoms, bond->getBeginAtomIdx()) ==
+             sgAtoms.end()) !=
+            (std::ranges::find(sgAtoms, bond->getEndAtomIdx()) ==
              sgAtoms.end())) {
           sg->addBondWithIdx(bond->getIdx());
         }

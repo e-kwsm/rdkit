@@ -82,10 +82,9 @@ static int augmentingPath(size_t nc, std::vector<int> &cost,
     remaining[it] = nc - it - 1;
   }
 
-  std::fill(SR.begin(), SR.end(), false);
-  std::fill(SC.begin(), SC.end(), false);
-  std::fill(shortestPathCosts.begin(), shortestPathCosts.end(),
-            std::numeric_limits<double>::max());
+  std::ranges::fill(SR, false);
+  std::ranges::fill(SC, false);
+  std::ranges::fill(shortestPathCosts, std::numeric_limits<double>::max());
 
   // find shortest augmenting path
   int sink = -1;

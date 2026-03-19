@@ -34,9 +34,8 @@ void parseMolzipParametersJSON(MolzipParams &params, const char *details_json) {
   if (atomSymbolsIt != pt.not_found()) {
     const auto &jsonVect = atomSymbolsIt->second;
     params.atomSymbols.resize(jsonVect.size());
-    std::transform(
-        jsonVect.begin(), jsonVect.end(), params.atomSymbols.begin(),
-        [](const auto &atomSymbolNode) {
+    std::ranges::transform(
+        jsonVect, params.atomSymbols.begin(), [](const auto &atomSymbolNode) {
           return atomSymbolNode.second.template get_value<std::string>();
         });
   }
