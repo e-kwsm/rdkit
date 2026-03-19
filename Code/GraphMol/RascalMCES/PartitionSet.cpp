@@ -86,10 +86,10 @@ PartitionSet::PartitionSet(const std::vector<boost::dynamic_bitset<>> &modProd,
                        d_parts[i].end());
     }
   }
-  d_parts.erase(std::remove_if(d_parts.begin(), d_parts.end(),
-                               [](const std::vector<unsigned int> &v) {
-                                 return v.empty();
-                               }),
+  d_parts.erase(std::ranges::remove_if(d_parts,
+                                       [](const std::vector<unsigned int> &v) {
+                                         return v.empty();
+                                       }),
                 d_parts.end());
   // Sort again, to make sure the large partitions are dealt with as late as
   // possible.
@@ -133,10 +133,10 @@ void PartitionSet::pruneVertices(unsigned int vtx_num) {
       }
     }
   }
-  d_parts.erase(std::remove_if(d_parts.begin(), d_parts.end(),
-                               [](const std::vector<unsigned int> &v) {
-                                 return v.empty();
-                               }),
+  d_parts.erase(std::ranges::remove_if(d_parts,
+                                       [](const std::vector<unsigned int> &v) {
+                                         return v.empty();
+                                       }),
                 d_parts.end());
   sortPartitions();
 }
@@ -151,15 +151,14 @@ void PartitionSet::sortPartitions() {
   // tie-breaker on the first value in vectors of the same size.  It
   // doesn't slow things down very much on average, and it makes things
   // tidier.
-  std::sort(d_parts.begin(), d_parts.end(),
-            [](const std::vector<unsigned int> &v1,
-               const std::vector<unsigned int> &v2) {
-              if (v1.size() == v2.size() && !v1.empty()) {
-                return v1.front() < v2.front();
-              } else {
-                return v1.size() > v2.size();
-              }
-            });
+  std::ranges::sort(d_parts, [](const std::vector<unsigned int> &v1,
+                                const std::vector<unsigned int> &v2) {
+    if (v1.size() == v2.size() && !v1.empty()) {
+      return v1.front() < v2.front();
+    } else {
+      return v1.size() > v2.size();
+    }
+  });
 }
 
 void PartitionSet::calcVtxTypeCounts() {

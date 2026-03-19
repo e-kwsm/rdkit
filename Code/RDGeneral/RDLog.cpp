@@ -41,8 +41,8 @@ LogStateSetter::LogStateSetter() {
 
 LogStateSetter::LogStateSetter(RDLoggerList toEnable) : LogStateSetter() {
   for (auto i = 0u; i < allLogs.size(); ++i) {
-    if (*allLogs[i] && std::find(toEnable.begin(), toEnable.end(),
-                                 *allLogs[i]) != toEnable.end()) {
+    if (*allLogs[i] &&
+        std::ranges::find(toEnable, *allLogs[i]) != toEnable.end()) {
       d_origState ^= 1 << i;
       (*allLogs[i])->df_enabled = true;
     }

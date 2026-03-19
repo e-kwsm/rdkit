@@ -102,8 +102,8 @@ void adjustConjugatedFiveRings(RWMol &mol) {
       const auto bond = mol.getBondWithIdx(bi);
       bond->getBeginAtom()->setProp(conjugatedOrAromatic, 1, true);
       bond->getEndAtom()->setProp(conjugatedOrAromatic, 1, true);
-      if (std::find(bondTypesToModify.begin(), bondTypesToModify.end(),
-                    bond->getBondType()) != bondTypesToModify.end()) {
+      if (std::ranges::find(bondTypesToModify, bond->getBondType()) !=
+          bondTypesToModify.end()) {
         if (bond->hasQuery()) {
           BOOST_LOG(rdWarningLog)
               << "adjustConjugatedFiveRings: replacing a bond "

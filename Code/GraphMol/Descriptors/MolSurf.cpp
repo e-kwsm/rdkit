@@ -366,8 +366,7 @@ void assignContribsToBins(const std::vector<double> &contribs,
   for (unsigned int i = 0; i < contribs.size(); ++i) {
     double cVal = contribs[i];
     double bVal = binProp[i];
-    unsigned int idx =
-        std::upper_bound(bins.begin(), bins.end(), bVal) - bins.begin();
+    unsigned int idx = std::ranges::upper_bound(bins, bVal) - bins.begin();
     res[idx] += cVal;
   }
 }
@@ -384,7 +383,7 @@ std::vector<double> calcSlogP_VSA(const ROMol &mol, std::vector<double> *bins,
     std::copy(blist, blist + 11, lbins.begin());
   } else {
     lbins.resize(bins->size());
-    std::copy(bins->begin(), bins->end(), lbins.begin());
+    std::ranges::copy(bins, lbins.begin());
   }
   std::vector<double> res(lbins.size() + 1, 0);
 
@@ -409,7 +408,7 @@ std::vector<double> calcSMR_VSA(const ROMol &mol, std::vector<double> *bins,
     std::copy(blist, blist + 9, lbins.begin());
   } else {
     lbins.resize(bins->size());
-    std::copy(bins->begin(), bins->end(), lbins.begin());
+    std::ranges::copy(bins, lbins.begin());
   }
   std::vector<double> res(lbins.size() + 1, 0);
 
@@ -435,7 +434,7 @@ std::vector<double> calcPEOE_VSA(const ROMol &mol, std::vector<double> *bins,
     std::copy(blist, blist + 13, lbins.begin());
   } else {
     lbins.resize(bins->size());
-    std::copy(bins->begin(), bins->end(), lbins.begin());
+    std::ranges::copy(bins, lbins.begin());
   }
   std::vector<double> res(lbins.size() + 1, 0);
 

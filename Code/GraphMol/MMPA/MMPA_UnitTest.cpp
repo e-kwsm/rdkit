@@ -723,11 +723,10 @@ void testGithub8569() {
   TEST_ASSERT(RDKit::MMPA::fragmentMol(*mol, res, 3));
   TEST_ASSERT(res.size() == 4);
   std::vector<std::pair<std::string, std::string>> resAsSmiles(res.size());
-  std::transform(
-      res.begin(), res.end(), resAsSmiles.begin(), [](const auto &pair) {
-        return std::make_pair(pair.first ? MolToSmiles(*pair.first) : "null",
-                              pair.second ? MolToSmiles(*pair.second) : "null");
-      });
+  std::ranges::transform(res, resAsSmiles.begin(), [](const auto &pair) {
+    return std::make_pair(pair.first ? MolToSmiles(*pair.first) : "null",
+                          pair.second ? MolToSmiles(*pair.second) : "null");
+  });
   std::vector<std::pair<std::string, std::string>> expected = {
       {"null", "C/C=C/C=C/[*:1].C[*:1]"},
       {"C(=C\\[*:2])/[*:1]", "C/C=C/[*:1].C[*:2]"},

@@ -128,7 +128,7 @@ void calcMoments(const std::vector<double> &dist,
     }
   }
   // add moments to descriptor
-  std::copy(moments.begin(), moments.end(), descriptor.begin() + idx);
+  std::ranges::copy(moments, descriptor.begin() + idx);
 }
 
 class ss_matcher {
@@ -246,7 +246,7 @@ void USRCAT(const ROMol &mol, std::vector<double> &descriptor,
   calcUSRDistributions(coords, distribs, points);
   std::vector<double> tmpDescriptor(12);
   calcUSRFromDistributions(distribs, tmpDescriptor);
-  std::copy(tmpDescriptor.begin(), tmpDescriptor.end(), descriptor.begin());
+  std::ranges::copy(tmpDescriptor, descriptor.begin());
 
   // loop over the atom selections
   unsigned int featIdx = 12;
@@ -259,8 +259,7 @@ void USRCAT(const ROMol &mol, std::vector<double> &descriptor,
     }
     calcUSRDistributionsFromPoints(reducedCoords, points, distribs);
     calcUSRFromDistributions(distribs, tmpDescriptor);
-    std::copy(tmpDescriptor.begin(), tmpDescriptor.end(),
-              descriptor.begin() + featIdx);
+    std::ranges::copy(tmpDescriptor, descriptor.begin() + featIdx);
     featIdx += 12;
   }
 }

@@ -46,8 +46,7 @@ void check_smarts_ok(const RDKit::ROMol &mol1, const RDKit::ROMol &mol2,
 void check_expected_bonds(
     const RascalResult &res,
     const std::vector<std::vector<std::pair<int, int>>> &exp_bond_matches) {
-  auto found_it = std::find(exp_bond_matches.begin(), exp_bond_matches.end(),
-                            res.getBondMatches());
+  auto found_it = std::ranges::find(exp_bond_matches, res.getBondMatches());
   CHECK(found_it != exp_bond_matches.end());
 }
 
@@ -282,7 +281,7 @@ TEST_CASE("testosterone vs estradiol", "[basics]") {
                               {20, 19},
                               {21, 20},
                               {22, 21}});
-  std::sort(exp_bond_matches.begin(), exp_bond_matches.end());
+  std::ranges::sort(exp_bond_matches);
   bool matched = false;
   for (const auto &ebm : exp_bond_matches) {
     if (ebm == res.front().getBondMatches()) {

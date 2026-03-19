@@ -68,14 +68,12 @@ bool testProducerConsumer(const int numProducerThreads,
     consumers[i] = std::thread(consume, std::ref(q), std::ref(results[i]));
   }
 
-  std::for_each(producers.begin(), producers.end(),
-                std::mem_fn(&std::thread::join));
+  std::ranges::for_each(producers, std::mem_fn(&std::thread::join));
 
   //! the producer is done producing
   q.setDone();
 
-  std::for_each(consumers.begin(), consumers.end(),
-                std::mem_fn(&std::thread::join));
+  std::ranges::for_each(consumers, std::mem_fn(&std::thread::join));
   REQUIRE(q.isEmpty());
 
   std::vector<int> frequency(numToProduce, 0);

@@ -122,7 +122,7 @@ void generic_nbr_helper(std::vector<MultiFPBReader::ResultTuple> &res, T func,
     res.reserve(res.size() + (*args.res).size());
     res.insert(res.end(), (*args.res)[i].begin(), (*args.res)[i].end());
   }
-  std::sort(res.begin(), res.end(), tplSorter);
+  std::ranges::sort(res, tplSorter);
 }
 void get_tani_nbrs(const std::vector<FPBReader *> &d_readers,
                    const std::uint8_t *bv, double threshold,
@@ -191,7 +191,7 @@ void get_containing_nbrs(
     }
   }
 
-  std::sort(res.begin(), res.end(), pairSorter);
+  std::ranges::sort(res, pairSorter);
 }
 
 }  // end of anonymous namespace

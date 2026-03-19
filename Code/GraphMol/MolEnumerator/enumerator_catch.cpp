@@ -497,7 +497,7 @@ M  END
     for (const auto &molp : bundle.getMols()) {
       auto smi = MolToSmiles(*molp);
       // std::cerr << smi << std::endl;
-      CHECK(std::find(tsmis.begin(), tsmis.end(), smi) != tsmis.end());
+      CHECK(std::ranges::find(tsmis, smi) != tsmis.end());
     }
   }
   SECTION("test2") {
@@ -505,7 +505,7 @@ M  END
     CHECK(bundle.size() == tsmis.size());
     for (const auto &molp : bundle.getMols()) {
       auto smi = MolToSmiles(*molp);
-      CHECK(std::find(tsmis.begin(), tsmis.end(), smi) != tsmis.end());
+      CHECK(std::ranges::find(tsmis, smi) != tsmis.end());
     }
   }
   SECTION("edges1") {
@@ -587,7 +587,7 @@ M  END
     for (const auto &molp : bundle.getMols()) {
       auto smi = MolToSmiles(*molp);
       // std::cerr << "\"" << smi << "\"," << std::endl;
-      CHECK(std::find(tsmis.begin(), tsmis.end(), smi) != tsmis.end());
+      CHECK(std::ranges::find(tsmis, smi) != tsmis.end());
     }
   }
 }
@@ -629,7 +629,7 @@ M  END
                                       "[#6]1-[#6]-[#7](=[#6]-[#7]-1)-[!#1]"};
     for (const auto &molp : bundle.getMols()) {
       auto smarts = MolToSmarts(*molp);
-      CHECK(std::find(tsmas.begin(), tsmas.end(), smarts) != tsmas.end());
+      CHECK(std::ranges::find(tsmas, smarts) != tsmas.end());
     }
   }
   SECTION("test1 reversed") {
@@ -667,7 +667,7 @@ M  END
                                       "[#6]1-[#6]-[#7](=[#6]-[#7]-1)-[!#1]"};
     for (const auto &molp : bundle.getMols()) {
       auto smarts = MolToSmarts(*molp);
-      CHECK(std::find(tsmas.begin(), tsmas.end(), smarts) != tsmas.end());
+      CHECK(std::ranges::find(tsmas, smarts) != tsmas.end());
     }
   }
 
@@ -705,7 +705,7 @@ M  END
                                       "[#6]1-[#6]-[#7](=[#6]-[#7]-1)-*"};
     for (const auto &molp : bundle.getMols()) {
       auto smarts = MolToSmarts(*molp);
-      CHECK(std::find(tsmas.begin(), tsmas.end(), smarts) != tsmas.end());
+      CHECK(std::ranges::find(tsmas, smarts) != tsmas.end());
     }
   }
 }
@@ -746,7 +746,7 @@ M  END
                                       "[#6]1:[#6]:[#7](:[#6]:[#7]:1)-[#6]"};
     for (const auto &molp : bundle.getMols()) {
       auto smarts = MolToSmarts(*molp);
-      CHECK(std::find(tsmas.begin(), tsmas.end(), smarts) != tsmas.end());
+      CHECK(std::ranges::find(tsmas, smarts) != tsmas.end());
     }
   }
 }
@@ -1227,8 +1227,7 @@ M  END)CTAB"_ctab;
     CHECK(bundle.size() == MolEnumerator::RepeatUnitOp::DEFAULT_REPEAT_COUNT);
     for (const auto &molp : bundle.getMols()) {
       auto smiles = MolToSmiles(*molp);
-      CHECK(std::find(expected.begin(), expected.end(), smiles) !=
-            expected.end());
+      CHECK(std::ranges::find(expected, smiles) != expected.end());
     }
   }
 }
@@ -1454,8 +1453,7 @@ M  END
     CHECK(bundle.size() == MolEnumerator::RepeatUnitOp::DEFAULT_REPEAT_COUNT);
     for (const auto &molp : bundle.getMols()) {
       auto smiles = MolToSmiles(*molp);
-      CHECK(std::find(expected.begin(), expected.end(), smiles) !=
-            expected.end());
+      CHECK(std::ranges::find(expected, smiles) != expected.end());
     }
   }
 }

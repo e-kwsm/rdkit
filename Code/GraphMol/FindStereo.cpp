@@ -312,7 +312,7 @@ StereoInfo getStereoInfo(const Atom *atom) {
     sinfo.controllingAtoms.push_back(bnd->getOtherAtomIdx(atom->getIdx()));
   }
   std::vector<unsigned> origNbrOrder = sinfo.controllingAtoms;
-  std::sort(sinfo.controllingAtoms.begin(), sinfo.controllingAtoms.end());
+  std::ranges::sort(sinfo.controllingAtoms);
 
   if (explicitUnknownStereo) {
     sinfo.specified = StereoSpecified::Unknown;
@@ -412,8 +412,7 @@ bool isBondPotentialStereoBond(const Bond *bond) {
     const auto ri = bond->getOwningMol().getRingInfo();
     for (const auto &bring : ri->bondRings()) {
       if (bring.size() < minRingSizeForDoubleBondStereo &&
-          std::find(bring.begin(), bring.end(), bond->getIdx()) !=
-              bring.end()) {
+          std::ranges::find(bring, bond->getIdx()) != bring.end()) {
         return false;
       }
     }
@@ -525,7 +524,7 @@ bool areStereobondControllingAtomsDupes(
     }
 
     for (auto bondEnd : {bond.getBeginAtomIdx(), bond.getEndAtomIdx()}) {
-      auto bondEndPosItr = std::find(ring.begin(), ring.end(), bondEnd);
+      auto bondEndPosItr = std::ranges::find(ring, bondEnd);
       if (bondEndPosItr != ring.end()) {
         auto bondEndPos = bondEndPosItr - ring.begin();
         auto oppositePos = (bondEndPos + ring.size() / 2) % ring.size();
@@ -542,8 +541,7 @@ bool areStereobondControllingAtomsDupes(
           for (const auto &nbr :
                mol.atomBonds(mol.getAtomWithIdx(oppositeIdx))) {
             auto outOtherAtom = nbr->getOtherAtomIdx(oppositeIdx);
-            auto bondOutPosItr =
-                std::find(ring.begin(), ring.end(), outOtherAtom);
+            auto bondOutPosItr = std::ranges::find(ring, outOtherAtom);
             if (bondOutPosItr == ring.end()) {
               if (possibleBonds[nbr->getIdx()] || knownBonds[nbr->getIdx()]) {
                 return false;
@@ -738,7 +736,7 @@ void flagRingStereo(ROMol &mol,
               auto bidx = bond->getIdx();
               if ((knownBonds[bidx] ||
                    (possibleBonds && possibleBonds->test(bidx))) &&
-                  std::find(bring.begin(), bring.end(), bidx) == bring.end()) {
+                  std::ranges::find(bring, bidx) == bring.end()) {
                 otherFoundByBondCount++;
                 break;
               }
@@ -834,7 +832,7 @@ bool updateAtoms(
         if (sinfo.type == StereoType::Atom_Tetrahedral) {
           for (auto nbrIdx : sinfo.controllingAtoms) {
             auto rnk = aranks[nbrIdx];
-            if (std::find(nbrs.begin(), nbrs.end(), rnk) != nbrs.end()) {
+            if (std::ranges::find(nbrs, rnk) != nbrs.end()) {
               // ok, we just hit a duplicate rank. If the atom we're
               // concerned about is a candidate for ring stereo and the bond
               // to the atom with the duplicate rank is a ring bond
@@ -857,7 +855,7 @@ bool updateAtoms(
           auto acs = atomCompareCodes[aidx];
           if (!possibleAtoms[aidx]) {
             auto sortednbrs = nbrs;
-            std::sort(sortednbrs.begin(), sortednbrs.end());
+            std::ranges::sort(sortednbrs);
             // FIX: only works for tetrahedral at the moment
             if (sinfo.type == Chirality::StereoType::Atom_Tetrahedral) {
               auto nSwaps = countSwapsToInterconvert(nbrs, sortednbrs);

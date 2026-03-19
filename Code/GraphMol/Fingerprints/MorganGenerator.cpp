@@ -20,6 +20,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <algorithm>
 #include <tuple>
 
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
@@ -360,7 +361,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
         ordering.emplace_back(0, i);
       }
     }
-    std::sort(ordering.begin(), ordering.end());
+    std::ranges::sort(ordering);
     for (unsigned int i = 0; i < nAtoms; ++i) {
       atomOrder[i] = ordering[i].second;
     }
@@ -416,7 +417,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
         }
 
         // sort the neighbor list:
-        std::sort(neighborhoodInvariants.begin(), neighborhoodInvariants.end());
+        std::ranges::sort(neighborhoodInvariants);
         // and now calculate the new invariant and test if the atom is newly
         // "chiral"
         std::uint32_t invar = layer;
@@ -466,8 +467,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
       }
     }
 
-    std::sort(allNeighborhoodsThisRound.begin(),
-              allNeighborhoodsThisRound.end());
+    std::ranges::sort(allNeighborhoodsThisRound);
     for (std::vector<AccumTuple>::const_iterator iter =
              allNeighborhoodsThisRound.begin();
          iter != allNeighborhoodsThisRound.end(); ++iter) {

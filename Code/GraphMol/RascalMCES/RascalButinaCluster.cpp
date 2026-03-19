@@ -40,29 +40,29 @@ std::vector<std::vector<unsigned int>> buildNborLists(
         }
       }
     }
-    std::sort(tmpList.begin(), tmpList.end(),
-              [](const std::pair<unsigned int, double> &p1,
-                 const std::pair<unsigned int, double> &p2) -> bool {
-                return p1.second > p2.second;
-              });
+    std::ranges::sort(tmpList,
+                      [](const std::pair<unsigned int, double> &p1,
+                         const std::pair<unsigned int, double> &p2) -> bool {
+                        return p1.second > p2.second;
+                      });
     std::vector<unsigned int> nborList(tmpList.size() + 1, 0);
     nborList[0] = i;
-    std::transform(
-        tmpList.begin(), tmpList.end(), nborList.begin() + 1,
+    std::ranges::transform(
+        tmpList, nborList.begin() + 1,
         [](const std::pair<unsigned int, double> &p) -> unsigned int {
           return p.first;
         });
     nborLists.push_back(nborList);
   }
-  std::sort(nborLists.begin(), nborLists.end(),
-            [](const std::vector<unsigned int> &nl1,
-               const std::vector<unsigned int> &nl2) -> bool {
-              if (nl1.size() == nl2.size()) {
-                return nl1 > nl2;
-              } else {
-                return nl1.size() > nl2.size();
-              }
-            });
+  std::ranges::sort(nborLists,
+                    [](const std::vector<unsigned int> &nl1,
+                       const std::vector<unsigned int> &nl2) -> bool {
+                      if (nl1.size() == nl2.size()) {
+                        return nl1 > nl2;
+                      } else {
+                        return nl1.size() > nl2.size();
+                      }
+                    });
   return nborLists;
 }
 
@@ -82,25 +82,25 @@ std::vector<std::vector<unsigned int>> formClusters(
           n = std::numeric_limits<unsigned int>::max();
         }
       }
-      nborList.erase(std::remove(nborList.begin(), nborList.end(),
-                                 std::numeric_limits<unsigned int>::max()),
+      nborList.erase(std::ranges::remove(
+                         nborList, std::numeric_limits<unsigned int>::max()),
                      nborList.end());
     }
     nborLists.erase(
-        std::remove_if(nborLists.begin(), nborLists.end(),
-                       [](const std::vector<unsigned int> &nl) -> bool {
-                         return nl.empty();
-                       }),
+        std::ranges::remove_if(nborLists,
+                               [](const std::vector<unsigned int> &nl) -> bool {
+                                 return nl.empty();
+                               }),
         nborLists.end());
-    std::sort(nborLists.begin(), nborLists.end(),
-              [](const std::vector<unsigned int> &nl1,
-                 const std::vector<unsigned int> &nl2) -> bool {
-                if (nl1.size() == nl2.size()) {
-                  return nl1 > nl2;
-                } else {
-                  return nl1.size() > nl2.size();
-                }
-              });
+    std::ranges::sort(nborLists,
+                      [](const std::vector<unsigned int> &nl1,
+                         const std::vector<unsigned int> &nl2) -> bool {
+                        if (nl1.size() == nl2.size()) {
+                          return nl1 > nl2;
+                        } else {
+                          return nl1.size() > nl2.size();
+                        }
+                      });
   }
   return clusters;
 }
