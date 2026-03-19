@@ -291,16 +291,15 @@ void metalBondCleanup(RWMol &mol, Atom *atom,
       }
     }
     if (!metals.empty()) {
-      std::sort(metals.begin(), metals.end(),
-                [&](const Atom *a1, const Atom *a2) -> bool {
-                  int nda1 = numDativeBonds(a1);
-                  int nda2 = numDativeBonds(a2);
-                  if (nda1 == nda2) {
-                    return ranks[a1->getIdx()] > ranks[a2->getIdx()];
-                  } else {
-                    return nda1 < nda2;
-                  }
-                });
+      std::ranges::sort(metals, [&](const Atom *a1, const Atom *a2) -> bool {
+        int nda1 = numDativeBonds(a1);
+        int nda2 = numDativeBonds(a2);
+        if (nda1 == nda2) {
+          return ranks[a1->getIdx()] > ranks[a2->getIdx()];
+        } else {
+          return nda1 < nda2;
+        }
+      });
       auto bond =
           mol.getBondBetweenAtoms(atom->getIdx(), metals.front()->getIdx());
       if (bond) {
@@ -362,10 +361,11 @@ void cleanUpOrganometallics(RWMol &mol) {
   for (size_t i = 0; i < ranks.size(); ++i) {
     atom_ranks.push_back(std::make_pair(i, ranks[i]));
   }
-  std::sort(atom_ranks.begin(), atom_ranks.end(),
-            [](const std::pair<int, int> &p1, std::pair<int, int> &p2) -> bool {
-              return p1.second < p2.second;
-            });
+  std::ranges::sort(
+      atom_ranks,
+      [](const std::pair<int, int> &p1, std::pair<int, int> &p2) -> bool {
+        return p1.second < p2.second;
+      });
   for (auto ar : atom_ranks) {
     auto atom = mol.getAtomWithIdx(ar.first);
     metalBondCleanup(mol, atom, ranks);

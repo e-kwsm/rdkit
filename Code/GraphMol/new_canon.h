@@ -260,7 +260,7 @@ unsigned int getChiralRank(const ROMol *dp_mol, canon_atom *dp_atoms,
   for (const auto nbr : dp_mol->atomNeighbors(dp_atoms[i].atom)) {
     auto rnk = dp_atoms[nbr->getIdx()].index;
     // make sure we don't have duplicate ranks
-    if (std::find(perm.begin(), perm.end(), rnk) != perm.end()) {
+    if (std::ranges::find(perm, rnk) != perm.end()) {
       break;
     } else {
       perm.push_back(rnk);
@@ -271,7 +271,7 @@ unsigned int getChiralRank(const ROMol *dp_mol, canon_atom *dp_atoms,
     if (ctag == Atom::ChiralType::CHI_TETRAHEDRAL_CW ||
         ctag == Atom::ChiralType::CHI_TETRAHEDRAL_CCW) {
       auto sortedPerm = perm;
-      std::sort(sortedPerm.begin(), sortedPerm.end());
+      std::ranges::sort(sortedPerm);
       auto nswaps = countSwapsToInterconvert(perm, sortedPerm);
       res = ctag == Atom::ChiralType::CHI_TETRAHEDRAL_CW ? 2 : 1;
       if (nswaps % 2) {
@@ -579,7 +579,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
       nbrs[j].nbrSymClass =
           nbr->getAtomicNum() * ATNUM_CLASS_OFFSET + dp_atoms[nbrIdx].index + 1;
     }
-    std::sort(nbrs.begin(), nbrs.end(), bondholder::greater);
+    std::ranges::sort(nbrs, bondholder::greater);
     // FIX: don't want to be doing this long-term
   }
 

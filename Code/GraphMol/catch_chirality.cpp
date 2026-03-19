@@ -566,14 +566,15 @@ TEST_CASE("para-stereocenters and assignStereochemistry", "[chirality]") {
     auto stereoInfo = Chirality::findPotentialStereo(*mol);
     CHECK(stereoInfo.size() == 7);
 
-    std::sort(stereoInfo.begin(), stereoInfo.end(),
-              [](const Chirality::StereoInfo &a,
-                 const Chirality::StereoInfo &b) -> bool {
-                return (a.type < b.type) && (a.centeredOn < b.centeredOn) &&
-                       (a.specified < b.specified) &&
-                       (a.descriptor < b.descriptor) &&
-                       (a.controllingAtoms < b.controllingAtoms);
-              });
+    std::ranges::sort(stereoInfo,
+                      [](const Chirality::StereoInfo &a,
+                         const Chirality::StereoInfo &b) -> bool {
+                        return (a.type < b.type) &&
+                               (a.centeredOn < b.centeredOn) &&
+                               (a.specified < b.specified) &&
+                               (a.descriptor < b.descriptor) &&
+                               (a.controllingAtoms < b.controllingAtoms);
+                      });
     REQUIRE(stereoInfo.size() == 7);
 
     CHECK(stereoInfo[6].type == Chirality::StereoType::Bond_Double);
@@ -5893,8 +5894,7 @@ M  END
   REQUIRE(at->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW);
 
   auto &pos = m->getConformer().getPositions();
-  std::for_each(pos.begin(), pos.end(),
-                [](RDGeom::Point3D &pos) { pos *= 6.0; });
+  std::ranges::for_each(pos, [](RDGeom::Point3D &pos) { pos *= 6.0; });
 
   // Reset chirality and the original bond direction
   // (it was stripped after parsing m for the first time)

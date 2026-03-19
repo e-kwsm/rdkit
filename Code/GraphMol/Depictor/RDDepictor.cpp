@@ -50,10 +50,9 @@ std::vector<const RDKit::Atom *> getRankedAtomNeighbors(
   for (auto nbr : mol.atomNeighbors(atom)) {
     nbrs.push_back(nbr);
   }
-  std::sort(nbrs.begin(), nbrs.end(),
-            [&atomRanks](const auto e1, const auto e2) {
-              return atomRanks[e1->getIdx()] < atomRanks[e2->getIdx()];
-            });
+  std::ranges::sort(nbrs, [&atomRanks](const auto e1, const auto e2) {
+    return atomRanks[e1->getIdx()] < atomRanks[e2->getIdx()];
+  });
   return nbrs;
 }
 
@@ -775,9 +774,9 @@ void generateDepictionMatching2DStructure(
                       p.useRingTemplates);
     }
     RDKit::MatchVectType atomMap(refMatchVect.size());
-    std::transform(
-        refMatchVect.begin(), refMatchVect.end(), atomMap.begin(),
-        [](auto &pair) { return std::make_pair(pair.second, pair.first); });
+    std::ranges::transform(refMatchVect, atomMap.begin(), [](auto &pair) {
+      return std::make_pair(pair.second, pair.first);
+    });
     RDKit::MolAlign::getAlignmentTransform(mol, reference, trans,
                                            p.existingConfId, confId, &atomMap);
     MolTransforms::transformConformer(mol.getConformer(p.existingConfId),
@@ -813,9 +812,8 @@ void generateDepictionMatching2DStructure(
         // has at least one atom which is not part of the scaffold, we cannot
         // preserve wedging information
         auto molBonds = mol.bonds();
-        shouldClearWedgingInfo = std::any_of(
-            molBonds.begin(), molBonds.end(),
-            [&molMatchingIndices](const auto b) {
+        shouldClearWedgingInfo =
+            std::ranges::any_of(molBonds, [&molMatchingIndices](const auto b) {
               return (
                   (b->hasProp(RDKit::common_properties::_MolFileBondStereo) ||
                    b->hasProp(RDKit::common_properties::_MolFileBondCfg)) &&
@@ -828,9 +826,8 @@ void generateDepictionMatching2DStructure(
         // happen when using CoordGen
         const auto &molPos = mol.getConformer(newConfId).getPositions();
         const auto &refPos = refConf.getPositions();
-        shouldClearWedgingInfo = std::any_of(
-            refMatchVect.begin(), refMatchVect.end(),
-            [&molPos, &refPos, MSD_THRESHOLD](const auto &pair) {
+        shouldClearWedgingInfo = std::ranges::any_of(
+            refMatchVect, [&molPos, &refPos, MSD_THRESHOLD](const auto &pair) {
               return (molPos.at(pair.second) - refPos.at(pair.first))
                          .lengthSq() > MSD_THRESHOLD;
             });
@@ -839,10 +836,10 @@ void generateDepictionMatching2DStructure(
       // has flipped to match the scaffold
       if (!shouldClearWedgingInfo) {
         RDKit::MatchVectType identityMatch(refMatchVect.size());
-        std::transform(refMatchVect.begin(), refMatchVect.end(),
-                       identityMatch.begin(), [](const auto &pair) {
-                         return std::make_pair(pair.second, pair.second);
-                       });
+        std::ranges::transform(
+            refMatchVect, identityMatch.begin(), [](const auto &pair) {
+              return std::make_pair(pair.second, pair.second);
+            });
         auto rmsd = RDKit::MolAlign::getAlignmentTransform(
             mol, mol, trans, newConfId, p.existingConfId, &identityMatch);
         // this should not happen as we checked that previously, but we are
@@ -1018,8 +1015,8 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
       // but getBestAlignmentTransform needs the reverse
       // while we do the swap, we also map pattern indices
       // back to reference indices
-      std::for_each(
-          matches.begin(), matches.end(), [&patternToRefMapping](auto &match) {
+      std::ranges::for_each(
+          matches, [&patternToRefMapping](auto &match) {
             std::for_each(match.begin(), match.end(),
                           [&patternToRefMapping](auto &pair) {
                             auto refIdx = patternToRefMapping.at(pair.first);
@@ -1046,8 +1043,8 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
                                                  matchVect, p.existingConfId,
                                                  confId, matches, MAX_MATCHES);
       // swap again as we want to return (reference atom idx, mol atom idx)
-      std::for_each(matchVect.begin(), matchVect.end(),
-                    [](auto &pair) { std::swap(pair.first, pair.second); });
+      std::ranges::for_each(
+          matchVect, [](auto &pair) { std::swap(pair.first, pair.second); });
       MolTransforms::transformConformer(mol.getConformer(p.existingConfId),
                                         trans);
       removeAllConformersButOne(mol, p.existingConfId);
@@ -1219,16 +1216,13 @@ void straightenDepiction(RDKit::ROMol &mol, int confId, bool minimizeRotation) {
     }
   }
   const auto &minRotationBin =
-      std::max_element(
-          thetaBins.begin(), thetaBins.end(),
-          [](const auto &a, const auto &b) {
-            const auto &aBin = a.second;
-            const auto &bBin = b.second;
-            return (aBin.thetaValues.size() < bBin.thetaValues.size() ||
-                    (aBin.thetaValues.size() == bBin.thetaValues.size() &&
-                     fabs(aBin.d_thetaAvg) > fabs(bBin.d_thetaAvg)));
-          })
-          ->second;
+      std::ranges::max_element(thetaBins, [](const auto &a, const auto &b) {
+        const auto &aBin = a.second;
+        const auto &bBin = b.second;
+        return (aBin.thetaValues.size() < bBin.thetaValues.size() ||
+                (aBin.thetaValues.size() == bBin.thetaValues.size() &&
+                 fabs(aBin.d_thetaAvg) > fabs(bBin.d_thetaAvg)));
+      })->second;
   double d_thetaMin = minRotationBin.d_thetaAvg;
   // unless we want to preserve as much as possible the initial orientation,
   // we try to orient the molecule such that the majority of bonds have

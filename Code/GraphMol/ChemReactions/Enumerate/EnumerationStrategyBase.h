@@ -150,7 +150,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
     m_permutation.resize(m_permutationSizes.size());
 
     m_numPermutations = computeNumProducts(m_permutationSizes);
-    std::fill(m_permutation.begin(), m_permutation.end(), 0);
+    std::ranges::fill(m_permutation, 0);
 
     initializeStrategy(reaction, building_blocks);
   }
@@ -203,7 +203,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
     m_permutation.resize(rgroups.size());
     m_permutationSizes = rgroups;
     m_numPermutations = computeNumProducts(m_permutationSizes);
-    std::fill(m_permutation.begin(), m_permutation.end(), 0);
+    std::ranges::fill(m_permutation, 0);
   }
 
  private:

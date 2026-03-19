@@ -151,7 +151,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
 
         updateMolProps(*static_cast<RWMol *>(p[0].get()));
         auto tsmi0 = MolToSmiles(*p[0]);
-        if (std::find(seen.begin(), seen.end(), tsmi0) == seen.end()) {
+        if (std::ranges::find(seen, tsmi0) == seen.end()) {
           stack.push_back(p[0]);
           seen.push_back(tsmi0);
         }
@@ -164,7 +164,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
           }
           updateMolProps(*static_cast<RWMol *>(p[1].get()));
           auto tsmi1 = MolToSmiles(*p[1]);
-          if (std::find(seen.begin(), seen.end(), tsmi1) == seen.end()) {
+          if (std::ranges::find(seen, tsmi1) == seen.end()) {
             stack.push_back(p[1]);
             seen.push_back(tsmi1);
           }

@@ -10,6 +10,7 @@
 
 // this file parses MRV file for molecules and reactions
 
+#include <algorithm>
 #include <string>
 #include <exception>
 #include <fstream>
@@ -523,12 +524,12 @@ class MarvinCMLReader {
           // see if the group already exists
 
           MarvinStereoGroup *marvinStereoGroup;
-          auto groupIter =
-              find_if(stereoGroups.begin(), stereoGroups.end(),
-                      [groupType, groupNumber](const MarvinStereoGroup *arg) {
-                        return arg->groupNumber == groupNumber &&
-                               arg->groupType == groupType;
-                      });
+          auto groupIter = std::ranges::find_if(
+              stereoGroups,
+              [groupType, groupNumber](const MarvinStereoGroup *arg) {
+                return arg->groupNumber == groupNumber &&
+                       arg->groupType == groupType;
+              });
           if (groupIter != stereoGroups.end()) {
             marvinStereoGroup = *groupIter;
           } else {

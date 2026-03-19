@@ -926,7 +926,7 @@ void dfsFindCycles(ROMol &mol, int atomIdx, int inBondIdx,
   //  Sort on ranks
   //
   // ---------------------
-  std::sort(possibles.begin(), possibles.end(), _possibleCompare);
+  std::ranges::sort(possibles, _possibleCompare);
   // if (possibles.size())
   //   std::cerr << " aIdx1: " << atomIdx
   //             << " first: " << possibles.front()std:std::get<0>() << " "
@@ -1080,7 +1080,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
   //  Sort on ranks
   //
   // ---------------------
-  std::sort(possibles.begin(), possibles.end(), _possibleCompare);
+  std::ranges::sort(possibles, _possibleCompare);
   // if (possibles.size())
   //   std::cerr << " aIdx2: " << atomIdx
   //             << " first: " << possibles.front()std:std::get<0>() << " "
@@ -1467,8 +1467,7 @@ RDKIT_GRAPHMOL_EXPORT void canonicalizeFragment(
             INT_LIST tOrder = trueOrder;
             for (const auto bnd : mol.atomBonds(atom)) {
               int bndIdx = bnd->getIdx();
-              if (std::find(trueOrder.begin(), trueOrder.end(), bndIdx) ==
-                  trueOrder.end()) {
+              if (std::ranges::find(trueOrder, bndIdx) == trueOrder.end()) {
                 tOrder.push_back(bndIdx);
               }
             }
@@ -1655,7 +1654,7 @@ void canonicalizeEnhancedStereo(ROMol &mol,
       return atomRanks->at(at1->getIdx()) < atomRanks->at(at2->getIdx());
     };
     auto sgAtoms = sg.getAtoms();
-    std::sort(sgAtoms.begin(), sgAtoms.end(), getAtomRank);
+    std::ranges::sort(sgAtoms, getAtomRank);
 
     // sort the bonds by atom rank:
     auto getBondRank = [&atomRanks](const Bond *bd1, const Bond *bd2) {
@@ -1675,7 +1674,7 @@ void canonicalizeEnhancedStereo(ROMol &mol,
       return bd1at2 < bd2at2;
     };
     auto sgBonds = sg.getBonds();
-    std::sort(sgBonds.begin(), sgBonds.end(), getBondRank);
+    std::ranges::sort(sgBonds, getBondRank);
 
     // find the reference (lowest-ranked) atom (or lowest-ranked bond)
 

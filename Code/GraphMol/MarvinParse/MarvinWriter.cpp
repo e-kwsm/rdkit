@@ -860,11 +860,11 @@ class MarvinCMLWriter {
     // sort the rows by X or Y, depending on vertical flag
 
     if (verticalFlag) {
-      std::sort(rectangleList.begin(), rectangleList.end(),
-                MarvinRectangle::compareRectanglesByYReverse);  // sort top down
+      std::ranges::sort(
+          rectangleList,
+          MarvinRectangle::compareRectanglesByYReverse);  // sort top down
     } else {
-      std::sort(rectangleList.begin(), rectangleList.end(),
-                MarvinRectangle::compareRectanglesByX);
+      std::ranges::sort(rectangleList, MarvinRectangle::compareRectanglesByX);
     }
 
     // find a  spot for the arrow between rectangles, if possible
@@ -935,13 +935,12 @@ class MarvinCMLWriter {
     // sort the members of each  row by X
 
     for (std::vector<MarvinRectangle> row : rowsOfRectangles) {
-      std::sort(row.begin(), row.end(), MarvinRectangle::compareRectanglesByX);
+      std::ranges::sort(row, MarvinRectangle::compareRectanglesByX);
     }
 
     // sort the rows by Y
 
-    std::sort(rowsOfRectangles.begin(), rowsOfRectangles.end(),
-              compareRowsOfRectanglesReverse);
+    std::ranges::sort(rowsOfRectangles, compareRowsOfRectanglesReverse);
 
     // make a plus between each rect on each row
 

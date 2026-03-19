@@ -513,10 +513,8 @@ ROMol *fragmentOnBonds(
 
       // restore stereo atoms
       for (auto &stereo_atoms : nbr_bond_stereo) {
-        std::replace(stereo_atoms.second.begin(), stereo_atoms.second.end(),
-                     bidx, idx1);
-        std::replace(stereo_atoms.second.begin(), stereo_atoms.second.end(),
-                     eidx, idx2);
+        std::ranges::replace(stereo_atoms.second, bidx, idx1);
+        std::ranges::replace(stereo_atoms.second, eidx, idx2);
         stereo_atoms.first->getStereoAtoms().swap(stereo_atoms.second);
         stereo_atoms.first->setStereo(
             stereo_atoms.first->getProp<Bond::BondStereo>(molfragSaveStereo));

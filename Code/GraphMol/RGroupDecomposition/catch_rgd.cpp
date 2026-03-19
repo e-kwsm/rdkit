@@ -1015,8 +1015,8 @@ TEST_CASE("includeTargetMolInResults") {
       "Cc1ccc2c(c3ccnc(Nc4ccc(Cl)c(c4)C(F)(F)F)n3)c(nn2n1)c5cccc(c5)C(F)(F)F"_smiles,
       "Cc1ccc2c(c3ccnc(Nc4ccc5OCCOc5c4)n3)c(nn2n1)c6cccc(c6)C(F)(F)F"_smiles,
   };
-  bool areMolsNonNull = std::all_of(mols.begin(), mols.end(),
-                                    [](const auto &mol) { return mol; });
+  bool areMolsNonNull =
+      std::ranges::all_of(mols, [](const auto &mol) { return mol; });
   REQUIRE(areMolsNonNull);
   RGroupDecompositionParameters ps;
   ps.includeTargetMolInResults = true;

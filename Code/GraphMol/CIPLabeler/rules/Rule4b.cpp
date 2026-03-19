@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <list>
+#include <ranges>
 
 #include <RDGeneral/Invariant.h>
 
@@ -85,8 +86,8 @@ int Rule4b::compare(const Edge *a, const Edge *b) const {
         fillPairs(bEnd, plist);
       }
 
-      std::sort(list1.rbegin(), list1.rend());
-      std::sort(list2.rbegin(), list2.rend());
+      std::ranges::sort(std::views::reverse(list1));
+      std::ranges::sort(std::views::reverse(list2));
 
       for (auto i = 0u; i < list1.size(); ++i) {
         int cmp = list1[i].compareTo(list2[i]);
@@ -281,7 +282,7 @@ int Rule4b::comparePairs(const Node *a, const Node *b, Descriptor refA,
 Sort Rule4b::getRefSorter(const SequenceRule *replacement_rule) const {
   const auto &rules = getSorter()->getRules();
 
-  CHECK_INVARIANT(std::find(rules.begin(), rules.end(), this) != rules.end(),
+  CHECK_INVARIANT(std::ranges::find(rules, this) != rules.end(),
                   "Rule4b instance not in rule set");
 
   std::vector<const SequenceRule *> new_rules;

@@ -18,6 +18,8 @@
 #include <GraphMol/SynthonSpaceSearch/SynthonSpaceSubstructureSearcher.h>
 #include <RDGeneral/ControlCHandler.h>
 
+#include <algorithm>
+
 namespace RDKit::SynthonSpaceSearch {
 
 namespace {
@@ -34,11 +36,10 @@ void reorderFragments(
   pattFPs.reserve(molFrags.size());
   for (const auto &frag : molFrags) {
     std::pair<void *, ExplicitBitVect *> tmp(frag.get(), nullptr);
-    const auto it =
-        std::lower_bound(allPattFPs.begin(), allPattFPs.end(), tmp,
-                         [](const auto &p1, const auto &p2) -> bool {
-                           return p1.first > p2.first;
-                         });
+    const auto it = std::ranges::lower_bound(
+        allPattFPs, tmp, [](const auto &p1, const auto &p2) -> bool {
+          return p1.first > p2.first;
+        });
     pattFPs.push_back(it->second);
   }
   // Sort by descending number of bits set.
@@ -46,11 +47,12 @@ void reorderFragments(
   for (size_t i = 0; i < pattFPs.size(); ++i) {
     fps[i] = std::make_pair(i, pattFPs[i]);
   }
-  std::sort(fps.begin(), fps.end(),
-            [](const std::pair<size_t, ExplicitBitVect *> &fp1,
-               const std::pair<size_t, ExplicitBitVect *> &fp2) -> bool {
-              return fp1.second->getNumOnBits() > fp2.second->getNumOnBits();
-            });
+  std::ranges::sort(
+      fps,
+      [](const std::pair<size_t, ExplicitBitVect *> &fp1,
+         const std::pair<size_t, ExplicitBitVect *> &fp2) -> bool {
+        return fp1.second->getNumOnBits() > fp2.second->getNumOnBits();
+      });
 
   // Now put orderedFrags in the same order.
   std::vector<std::unique_ptr<ROMol>> newFrags(molFrags.size());
@@ -68,11 +70,10 @@ std::vector<ExplicitBitVect *> gatherPatternFPs(
   pattFPs.reserve(molFrags.size());
   for (const auto &frag : molFrags) {
     std::pair<void *, ExplicitBitVect *> tmp(frag.get(), nullptr);
-    const auto it =
-        std::lower_bound(allPattFPs.begin(), allPattFPs.end(), tmp,
-                         [](const auto &p1, const auto &p2) -> bool {
-                           return p1.first > p2.first;
-                         });
+    const auto it = std::ranges::lower_bound(
+        allPattFPs, tmp, [](const auto &p1, const auto &p2) -> bool {
+          return p1.first > p2.first;
+        });
     pattFPs.push_back(it->second);
   }
   return pattFPs;
@@ -384,22 +385,18 @@ void SynthonSpaceSubstructureSearcher::extraSearchSetup(
     }
     ++fragNum;
   }
-  std::sort(d_pattFPs.begin(), d_pattFPs.end(),
-            [](const auto &p1, const auto &p2) -> bool {
-              return p1.first > p2.first;
-            });
-  std::sort(d_connRegs.begin(), d_connRegs.end(),
-            [](const auto &p1, const auto &p2) -> bool {
-              return p1.first > p2.first;
-            });
-  std::sort(d_connRegSmis.begin(), d_connRegSmis.end(),
-            [](const auto &p1, const auto &p2) -> bool {
-              return p1.first > p2.first;
-            });
-  std::sort(d_connRegFPs.begin(), d_connRegFPs.end(),
-            [](const auto &p1, const auto &p2) -> bool {
-              return p1.first > p2.first;
-            });
+  std::ranges::sort(d_pattFPs, [](const auto &p1, const auto &p2) -> bool {
+    return p1.first > p2.first;
+  });
+  std::ranges::sort(d_connRegs, [](const auto &p1, const auto &p2) -> bool {
+    return p1.first > p2.first;
+  });
+  std::ranges::sort(d_connRegSmis, [](const auto &p1, const auto &p2) -> bool {
+    return p1.first > p2.first;
+  });
+  std::ranges::sort(d_connRegFPs, [](const auto &p1, const auto &p2) -> bool {
+    return p1.first > p2.first;
+  });
 
   // Now apply the largest fragment heuristic to the fragments
   for (auto &fs : fragSets) {
@@ -462,8 +459,8 @@ SynthonSpaceSubstructureSearcher::searchFragSet(
     auto passedScreens = screenSynthonsWithFPs(pattFPs, reaction, so);
     // If none of the synthons passed the screens, move right along, nothing
     // to see.
-    const bool skip = std::all_of(
-        passedScreens.begin(), passedScreens.end(),
+    const bool skip = std::ranges::all_of(
+        passedScreens,
         [](const boost::dynamic_bitset<> &s) -> bool { return s.none(); });
     if (skip) {
       continue;
@@ -509,11 +506,10 @@ void SynthonSpaceSubstructureSearcher::getConnectorRegions(
     std::vector<std::vector<ExplicitBitVect *>> &connRegFPs) const {
   for (const auto &frag : molFrags) {
     std::pair<void *, void *> tmp(frag.get(), nullptr);
-    const auto it1 =
-        std::lower_bound(d_connRegs.begin(), d_connRegs.end(), tmp,
-                         [](const auto &p1, const auto &p2) -> bool {
-                           return p1.first > p2.first;
-                         });
+    const auto it1 = std::ranges::lower_bound(
+        d_connRegs, tmp, [](const auto &p1, const auto &p2) -> bool {
+          return p1.first > p2.first;
+        });
     if (it1->first == tmp.first && !it1->second->empty()) {
       connRegs.push_back(std::vector<ROMol *>());
       std::transform(it1->second->begin(), it1->second->end(),
@@ -521,11 +517,10 @@ void SynthonSpaceSubstructureSearcher::getConnectorRegions(
                      [](const auto &m) -> ROMol * { return m.get(); });
     }
 
-    const auto it2 =
-        std::lower_bound(d_connRegSmis.begin(), d_connRegSmis.end(), tmp,
-                         [](const auto &p1, const auto &p2) -> bool {
-                           return p1.first > p2.first;
-                         });
+    const auto it2 = std::ranges::lower_bound(
+        d_connRegSmis, tmp, [](const auto &p1, const auto &p2) -> bool {
+          return p1.first > p2.first;
+        });
     if (it2->first == tmp.first && !it2->second->empty()) {
       connRegSmis.push_back(std::vector<const std::string *>());
       std::transform(it2->second->begin(), it2->second->end(),
@@ -533,11 +528,10 @@ void SynthonSpaceSubstructureSearcher::getConnectorRegions(
                      [](const auto &s) -> const std::string * { return &s; });
     }
 
-    const auto it3 =
-        std::lower_bound(d_connRegFPs.begin(), d_connRegFPs.end(), tmp,
-                         [](const auto &p1, const auto &p2) -> bool {
-                           return p1.first > p2.first;
-                         });
+    const auto it3 = std::ranges::lower_bound(
+        d_connRegFPs, tmp, [](const auto &p1, const auto &p2) -> bool {
+          return p1.first > p2.first;
+        });
     if (it3->first == tmp.first && !it3->second->empty()) {
       connRegFPs.push_back(std::vector<ExplicitBitVect *>());
       std::transform(

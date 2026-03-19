@@ -360,7 +360,7 @@ class atomcomparefunctor3 {
       ++beg;
       ++nbridx;
     }
-    std::sort(nbrs.begin(), nbrs.end());
+    std::ranges::sort(nbrs);
     for (nbridx = 0; nbridx < at->getDegree(); ++nbridx) {
       res += (nbridx + 1) * 1000 + nbrs[nbridx];
     }

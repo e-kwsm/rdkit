@@ -9,6 +9,8 @@
 //  of the RDKit source tree.
 //
 #include "RGroupCore.h"
+
+#include <algorithm>
 #include "GraphMol/SmilesParse/SmilesWrite.h"
 #include "GraphMol/ChemTransforms/ChemTransforms.h"
 #include "GraphMol/Substruct/SubstructUtils.h"
@@ -28,7 +30,7 @@ static std::vector<std::vector<int>> cartesianProduct(
     for (const auto &x : s) {
       for (const auto y : u) {
         // check for duplicates
-        if (allowDuplicates || std::find(x.begin(), x.end(), y) == x.end()) {
+        if (allowDuplicates || std::ranges::find(x, y) == x.end()) {
           r.push_back(x);
           r.back().push_back(y);
         }
@@ -111,9 +113,8 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
       for (const auto targetNeighborAtom : targetNeighborAtoms) {
         ++neighborNumber;
         auto targetNeighborIndex = targetNeighborAtom->getIdx();
-        auto queryNeighborMapping = std::find_if(
-            match.begin(), match.end(),
-            [this, targetNeighborIndex, pair](const auto &p) {
+        auto queryNeighborMapping = std::ranges::find_if(
+            match, [this, targetNeighborIndex, pair](const auto &p) {
               return p.second == static_cast<int>(targetNeighborIndex) &&
                      core->getBondBetweenAtoms(pair.first, p.first);
             });
@@ -452,13 +453,12 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
     const SubstructMatchParameters &sssParams) const {
   // Transform match indexed by matching molecule atoms to a map
   // indexed by core atoms
-  std::transform(match.begin(), match.end(), match.begin(),
-                 [this](const std::pair<int, int> &mapping) {
-                   auto queryIdx =
-                       this->matchingIndexToCoreIndex(mapping.first);
-                   std::pair<int, int> newMapping(queryIdx, mapping.second);
-                   return newMapping;
-                 });
+  std::ranges::transform(
+      match, match.begin(), [this](const std::pair<int, int> &mapping) {
+        auto queryIdx = this->matchingIndexToCoreIndex(mapping.first);
+        std::pair<int, int> newMapping(queryIdx, mapping.second);
+        return newMapping;
+      });
   std::map<int, int> matchMap(match.cbegin(), match.cend());
 
   std::vector<MatchVectType> allMappings;
@@ -502,7 +502,7 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
 
     // Sort dummies based on user RLABEL (ascending) then unlabeled
     // (descending as they are negative)
-    std::sort(dummyIndexes.begin(), dummyIndexes.end(), [this](int a, int b) {
+    std::ranges::sort(dummyIndexes, [this](int a, int b) {
       auto dummy = core->getAtomWithIdx(a);
       auto otherDummy = core->getAtomWithIdx(b);
       auto l1 = dummy->getProp<int>(RLABEL);
@@ -534,18 +534,18 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
       }
 
       if (available.size() > 1) {
-        bool allHydrogens = std::all_of(
-            available.begin(), available.end(), [&target](const int idx) {
+        bool allHydrogens =
+            std::ranges::all_of(available, [&target](const int idx) {
               return target.getAtomWithIdx(idx)->getAtomicNum() == 1;
             });
         if (allHydrogens) {
           // If all neighbors are hydrogens we don't need to iterate through
           // them- just assign the first free hydrogen. Could extend to cover
           // symmetric groups in general
-          auto hydrogen = std::find_if(available.begin(), available.end(),
-                                       [&symmetricHydrogens](const int idx) {
-                                         return !symmetricHydrogens.test(idx);
-                                       });
+          auto hydrogen = std::ranges::find_if(
+              available, [&symmetricHydrogens](const int idx) {
+                return !symmetricHydrogens.test(idx);
+              });
           int singleHydrogen =
               hydrogen == available.end() ? *available.begin() : *hydrogen;
           available = std::vector<int>{singleHydrogen};
@@ -563,52 +563,50 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
     std::vector<std::vector<int>> neighborListsWithUnmapped(
         neighborDummyLists.size());
     int start = 0;
-    std::transform(neighborDummyLists.begin(), neighborDummyLists.end(),
-                   neighborListsWithUnmapped.begin(),
-                   [&start](std::vector<int> v) {
-                     v.push_back(--start);
-                     return v;
-                   });
+    std::ranges::transform(neighborDummyLists,
+                           neighborListsWithUnmapped.begin(),
+                           [&start](std::vector<int> v) {
+                             v.push_back(--start);
+                             return v;
+                           });
     // could optimize this product as depth search to return as soon as we
     // have a permutation of all positive numbers
     auto cp = cartesianProduct(neighborListsWithUnmapped, false);
     // now sort
     bool foundAll = false;
-    std::sort(cp.begin(), cp.end(),
-              [&foundAll](const std::vector<int> a, std::vector<int> b) {
-                auto isNegative = [](int v) -> bool { return v < 0; };
-                // firstly to minimize number of unmapped dummies
-                const int numUnmappedA =
-                    std::count_if(a.begin(), a.end(), isNegative);
-                const int numUnmappedB =
-                    std::count_if(b.begin(), b.end(), isNegative);
-                if (numUnmappedA < numUnmappedB) {
-                  return true;
-                }
-                if (numUnmappedB == 0 || numUnmappedA == 0) {
-                  foundAll = true;
-                }
-                if (!foundAll && numUnmappedA == numUnmappedB && numUnmappedA) {
-                  // in a tie prefer the permutation that excludes the r group
-                  // with the lowest label
-                  // don't need to sort these if we've found an all mapped
-                  // combination
-                  for (size_t i = 0; i < a.size(); ++i) {
-                    const int v1 = a[i];
-                    const int v2 = b[i];
-                    if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0)) {
-                      continue;
-                    }
-                    if (v1 > 0 && v2 < 0) {
-                      return true;
-                    }
-                    if (v1 < 0 && v2 > 0) {
-                      break;
-                    }
-                  }
-                }
-                return false;
-              });
+    std::ranges::sort(cp, [&foundAll](const std::vector<int> a,
+                                      std::vector<int> b) {
+      auto isNegative = [](int v) -> bool { return v < 0; };
+      // firstly to minimize number of unmapped dummies
+      const int numUnmappedA = std::count_if(a.begin(), a.end(), isNegative);
+      const int numUnmappedB = std::count_if(b.begin(), b.end(), isNegative);
+      if (numUnmappedA < numUnmappedB) {
+        return true;
+      }
+      if (numUnmappedB == 0 || numUnmappedA == 0) {
+        foundAll = true;
+      }
+      if (!foundAll && numUnmappedA == numUnmappedB && numUnmappedA) {
+        // in a tie prefer the permutation that excludes the r group
+        // with the lowest label
+        // don't need to sort these if we've found an all mapped
+        // combination
+        for (size_t i = 0; i < a.size(); ++i) {
+          const int v1 = a[i];
+          const int v2 = b[i];
+          if ((v1 > 0 && v2 > 0) || (v1 < 0 && v2 < 0)) {
+            continue;
+          }
+          if (v1 > 0 && v2 < 0) {
+            return true;
+          }
+          if (v1 < 0 && v2 > 0) {
+            break;
+          }
+        }
+      }
+      return false;
+    });
     auto best = cp[0];
     for (size_t i = 0; i < dummyIndexes.size(); i++) {
       auto dummyIdx = dummyIndexes[i];
@@ -647,10 +645,11 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
   // only allow duplicates if a target atom can be bonded to more than one query
   // atom
   const bool allowDuplicates =
-      std::find_if(targetAtomBondsToCoreCounts.begin(),
-                   targetAtomBondsToCoreCounts.end(),
-                   [](const std::pair<int, int> &p) { return p.second > 1; }) !=
-      targetAtomBondsToCoreCounts.end();
+      std::ranges::find_if(targetAtomBondsToCoreCounts,
+
+                           [](const std::pair<int, int> &p) {
+                             return p.second > 1;
+                           }) != targetAtomBondsToCoreCounts.end();
   const auto allAvailableMappings =
       cartesianProduct(availableMappingsForDummy, allowDuplicates);
   if (allAvailableMappings.empty()) {
@@ -673,8 +672,7 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
       atom->setProp(indexProp, atom->getIdx());
     }
     checkCore = std::make_unique<RWMol>(*core);
-    std::sort(missingDummies.begin(), missingDummies.end(),
-              std::greater<int>());
+    std::ranges::sort(missingDummies, std::greater<int>());
     for (int index : missingDummies) {
       auto [nbrIdx, endNbrs] =
           checkCore->getAtomNeighbors(checkCore->getAtomWithIdx(index));

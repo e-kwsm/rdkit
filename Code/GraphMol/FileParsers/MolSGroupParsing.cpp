@@ -1091,8 +1091,9 @@ void ParseV3000ParseLabel(const std::string &label,
     if (label == "XBHEAD" || label == "XBCORR") {
       std::vector<unsigned int> bvect = ParseV3000Array<unsigned int>(
           lineStream, mol->getNumBonds(), strictParsing);
-      std::transform(bvect.begin(), bvect.end(), bvect.begin(),
-                     [](unsigned int v) -> unsigned int { return v - 1; });
+      std::ranges::transform(
+          bvect, bvect.begin(),
+          [](unsigned int v) -> unsigned int { return v - 1; });
       sgroup.setProp(label, bvect);
     } else if (label == "ATOMS") {
       for (auto atomIdx : ParseV3000Array<unsigned int>(
@@ -1322,8 +1323,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
       if (label.empty()) {
         continue;
       }
-      if (std::find(parsedLabels.begin(), parsedLabels.end(), label) ==
-          parsedLabels.end()) {
+      if (std::ranges::find(parsedLabels, label) == parsedLabels.end()) {
         ParseV3000ParseLabel(label, lineStream, dataFields, defaultLineNum,
                              sgroup, nSgroups, mol, strictParsing);
       } else {

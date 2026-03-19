@@ -148,7 +148,7 @@ DiscrimTuple calcPathDiscriminators(const ROMol &mol, const PATH_TYPE &path,
   }
 
   // again, a sort for order independence:
-  std::sort(invars.begin(), invars.end());
+  std::ranges::sort(invars);
   uint32_t pathInvar = vectHasher(invars);
 
   // also include the path size (bond count) and number of atoms
@@ -167,8 +167,7 @@ PATH_LIST uniquifyPaths(const ROMol &mol, const PATH_LIST &allPaths,
   std::vector<DiscrimTuple> discrimsSeen;
   for (const auto &allPath : allPaths) {
     DiscrimTuple discrims = calcPathDiscriminators(mol, allPath, useBO);
-    if (std::find(discrimsSeen.begin(), discrimsSeen.end(), discrims) ==
-        discrimsSeen.end()) {
+    if (std::ranges::find(discrimsSeen, discrims) == discrimsSeen.end()) {
       discrimsSeen.push_back(discrims);
       res.push_back(allPath);
     }

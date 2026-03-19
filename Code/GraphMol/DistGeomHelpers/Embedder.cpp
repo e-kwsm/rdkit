@@ -1512,7 +1512,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
     std::lock_guard<std::mutex> lock(GetFailMutex());
 #endif
     params.failures.resize(EmbedFailureCauses::END_OF_ENUM);
-    std::fill(params.failures.begin(), params.failures.end(), 0);
+    std::ranges::fill(params.failures, 0);
   }
   if (!mol.getNumAtoms()) {
     throw ValueErrorException("molecule has no atoms");
@@ -1550,7 +1550,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
   } else {
     molFrags.push_back(ROMOL_SPTR(new ROMol(mol)));
     fragMapping.resize(mol.getNumAtoms());
-    std::fill(fragMapping.begin(), fragMapping.end(), 0);
+    std::ranges::fill(fragMapping, 0);
   }
   const std::map<int, RDGeom::Point3D> *coordMap = params.coordMap;
   if (molFrags.size() > 1 && coordMap) {

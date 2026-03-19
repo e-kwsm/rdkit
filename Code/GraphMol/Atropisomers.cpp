@@ -497,8 +497,7 @@ void cleanupAtropisomerStereoGroups(ROMol &mol) {
         if (bond->getStereo() == Bond::BondStereo::STEREOATROPCCW ||
             bond->getStereo() == Bond::BondStereo::STEREOATROPCW) {
           foundAtrop = true;
-          if (std::find(okbonds.begin(), okbonds.end(), bond) ==
-              okbonds.end()) {
+          if (std::ranges::find(okbonds, bond) == okbonds.end()) {
             okbonds.push_back(bond);
           }
         }
@@ -625,8 +624,7 @@ void getAllAtomIdsForStereoGroup(
             (wedgeBonds.find(atomBond->getIdx()) != wedgeBonds.end() &&
              (wedgeBonds.at(atomBond->getIdx())->getType()) ==
                  Chirality::WedgeInfoType::WedgeInfoTypeAtropisomer)) {
-          if (std::find(atomIds.begin(), atomIds.end(), atom->getIdx()) ==
-              atomIds.end()) {
+          if (std::ranges::find(atomIds, atom->getIdx()) == atomIds.end()) {
             atomIds.push_back(atom->getIdx());
           }
         }
