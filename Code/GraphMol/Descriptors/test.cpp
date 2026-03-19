@@ -1819,15 +1819,15 @@ void testSpiroAndBridgeheads() {
     unsigned int nSpiro = Descriptors::calcNumSpiroAtoms(*mol, &atoms);
     TEST_ASSERT(nSpiro == 1);
     TEST_ASSERT(atoms.size() == nSpiro);
-    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 3) != atoms.end());
+    TEST_ASSERT(std::ranges::find(atoms, 3) != atoms.end());
 
     atoms.clear();
     unsigned int nBridgehead =
         Descriptors::calcNumBridgeheadAtoms(*mol, &atoms);
     TEST_ASSERT(nBridgehead == 2);
     TEST_ASSERT(atoms.size() == nBridgehead);
-    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 9) != atoms.end());
-    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 6) != atoms.end());
+    TEST_ASSERT(std::ranges::find(atoms, 9) != atoms.end());
+    TEST_ASSERT(std::ranges::find(atoms, 6) != atoms.end());
 
     delete mol;
   }

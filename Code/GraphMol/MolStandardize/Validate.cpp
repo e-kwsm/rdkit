@@ -36,7 +36,7 @@ std::vector<ValidationErrorInfo> CompositeValidation::validate(
   for (const auto &method : validations) {
     auto partial = method->validate(mol, reportAllFailures);
     if (!partial.empty()) {
-      std::copy(partial.begin(), partial.end(), std::back_inserter(errors));
+      std::ranges::copy(partial, std::back_inserter(errors));
       if (!reportAllFailures) {
         break;
       }
@@ -118,9 +118,9 @@ std::vector<ValidationErrorInfo> FragmentValidation::validate(
       bool fpresent = false;
 
       for (auto &molfragidx : atom_mapping) {
-        std::sort(molfragidx.begin(), molfragidx.end());
+        std::ranges::sort(molfragidx);
         for (auto &substructidx : substructmap) {
-          std::sort(substructidx.begin(), substructidx.end());
+          std::ranges::sort(substructidx);
           //					// help to debug...
           //					std::cout << "molfragidx: "  <<
           // std::endl; 					for (const auto
@@ -465,7 +465,7 @@ double Layout2DValidation::squaredMedianBondLength(const ROMol &mol,
       }
     }
     if (!values.empty()) {
-      std::sort(values.begin(), values.end());
+      std::ranges::sort(values);
       numBonds = values.size();
       if (numBonds % 2) {
         median = values[numBonds / 2];

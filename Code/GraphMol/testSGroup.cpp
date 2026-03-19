@@ -21,6 +21,7 @@
 #include "GraphMol/FileParsers/MolSupplier.h"
 #include "GraphMol/FileParsers/MolWriters.h"
 
+#include <algorithm>
 #include <memory>
 #include <cstdlib>
 
@@ -185,7 +186,7 @@ void checkSampleMolecule(const RWMol &mol) {
     auto bonds = sg.getBonds();
 
     // bonds are not sorted in V3000; sort them here
-    std::sort(bonds.begin(), bonds.end());
+    std::ranges::sort(bonds);
 
     testIdxVector(bonds, bonds_reference);
 
@@ -236,7 +237,7 @@ void checkSampleMolecule(const RWMol &mol) {
     auto bonds = sg.getBonds();
 
     // bonds are not sorted in V3000; sort them here
-    std::sort(bonds.begin(), bonds.end());
+    std::ranges::sort(bonds);
 
     testIdxVector(bonds, bonds_reference);
     TEST_ASSERT(sg.getBondType(bonds[0]) == SubstanceGroup::BondType::XBOND);

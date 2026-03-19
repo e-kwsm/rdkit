@@ -12,6 +12,7 @@
 
 #include "RGroupScore.h"
 #include "RDGeneral/Invariant.h"
+#include <ranges>
 #include <vector>
 #include <map>
 #include <algorithm>
@@ -110,13 +111,12 @@ double RGroupScorer::matchScore(
       }
       std::vector<unsigned int> equivalentRGroupCount;
 
-      std::transform(matchSet.begin(), matchSet.end(),
-                     std::back_inserter(equivalentRGroupCount),
-                     [](const std::pair<std::string, unsigned int> &p) {
-                       return p.second;
-                     });
-      std::sort(equivalentRGroupCount.begin(), equivalentRGroupCount.end(),
-                std::greater<unsigned int>());
+      std::ranges::transform(matchSet,
+                             std::back_inserter(equivalentRGroupCount),
+                             [](const std::pair<std::string, unsigned int> &p) {
+                               return p.second;
+                             });
+      std::ranges::sort(equivalentRGroupCount, std::greater<unsigned int>());
 
       // score the sets from the largest to the smallest
       // each smaller set gets penalized (i+1) below
@@ -211,11 +211,11 @@ void RGroupScorer::breakTies(
   largestHeavyCounts.reserve(labels.size());
   std::vector<int> orderedLabels;
   orderedLabels.reserve(labels.size());
-  std::copy_if(labels.begin(), labels.end(), std::back_inserter(orderedLabels),
-               [](const int &i) { return !(i < 0); });
-  std::copy_if(labels.rbegin(), labels.rend(),
-               std::back_inserter(orderedLabels),
-               [](const int &i) { return (i < 0); });
+  std::ranges::copy_if(labels, std::back_inserter(orderedLabels),
+                       [](const int &i) { return !(i < 0); });
+  std::ranges::copy_if(std::views::reverse(labels),
+                       std::back_inserter(orderedLabels),
+                       [](const int &i) { return (i < 0); });
   // We only care about the sign of the ordered labels,
   // not about their value, so we convert the ordered map
   // into a vector for comparing with the tied permutations

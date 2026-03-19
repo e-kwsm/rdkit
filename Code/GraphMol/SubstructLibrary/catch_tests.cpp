@@ -10,6 +10,8 @@
 
 #include <catch2/catch_all.hpp>
 
+#include <algorithm>
+
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/MolBundle.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
@@ -43,7 +45,7 @@ TEST_CASE("querying with a molbundle") {
       CHECK(ssslib.hasMatch(bundle, params, numThreads));
       auto libMatches = ssslib.getMatches(bundle, params, numThreads);
       CHECK(libMatches.size() == 3);
-      std::sort(libMatches.begin(), libMatches.end());
+      std::ranges::sort(libMatches);
       CHECK(libMatches == std::vector<unsigned int>{0, 1, 2});
     }
   }
@@ -60,7 +62,7 @@ TEST_CASE("querying with a molbundle") {
       CHECK(ssslib.hasMatch(bundle, params, numThreads));
       auto libMatches = ssslib.getMatches(bundle, params, numThreads);
       CHECK(libMatches.size() == 2);
-      std::sort(libMatches.begin(), libMatches.end());
+      std::ranges::sort(libMatches);
       CHECK(libMatches == std::vector<unsigned int>{0, 2});
     }
   }
@@ -77,7 +79,7 @@ TEST_CASE("querying with a molbundle") {
       CHECK(ssslib.hasMatch(bundle, params, numThreads));
       auto libMatches = ssslib.getMatches(bundle, params, numThreads);
       CHECK(libMatches.size() == 3);
-      std::sort(libMatches.begin(), libMatches.end());
+      std::ranges::sort(libMatches);
       CHECK(libMatches == std::vector<unsigned int>{0, 1, 2});
     }
   }
@@ -100,7 +102,7 @@ TEST_CASE("using modified query parameters") {
       CHECK(ssslib.hasMatch(*qm, params));
       auto libMatches = ssslib.getMatches(*qm, params);
       CHECK(libMatches.size() == 3);
-      std::sort(libMatches.begin(), libMatches.end());
+      std::ranges::sort(libMatches);
       CHECK(libMatches == std::vector<unsigned int>{0, 1, 2});
     }
     {  // use stereo
@@ -110,7 +112,7 @@ TEST_CASE("using modified query parameters") {
       CHECK(ssslib.hasMatch(*qm, params));
       auto libMatches = ssslib.getMatches(*qm, params);
       CHECK(libMatches.size() == 1);
-      std::sort(libMatches.begin(), libMatches.end());
+      std::ranges::sort(libMatches);
       CHECK(libMatches == std::vector<unsigned int>{1});
     }
   }
@@ -205,11 +207,11 @@ void setSearchSmallestFirst(SubstructLibrary &ssslib) {
   const auto holder = ssslib.getMolHolder();
   std::vector<unsigned int> searchOrder(holder->size());
   std::iota(searchOrder.begin(), searchOrder.end(), 0);
-  std::stable_sort(searchOrder.begin(), searchOrder.end(),
-                   [holder](unsigned int i1, unsigned int i2) {
-                     return holder->getMol(i1)->getNumAtoms() <
-                            holder->getMol(i2)->getNumAtoms();
-                   });
+  std::ranges::stable_sort(searchOrder,
+                           [holder](unsigned int i1, unsigned int i2) {
+                             return holder->getMol(i1)->getNumAtoms() <
+                                    holder->getMol(i2)->getNumAtoms();
+                           });
   ssslib.setSearchOrder(searchOrder);
 }
 

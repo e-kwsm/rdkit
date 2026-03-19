@@ -208,7 +208,7 @@ std::string GetPDBBondLines(const Atom *atom, bool all, bool both, bool mult,
     return "";
   }
 
-  std::sort(v.begin(), v.end());
+  std::ranges::sort(v);
   std::stringstream ss;
   for (unsigned int i = 0; i < count; i++) {
     if ((i & 3) == 0) {

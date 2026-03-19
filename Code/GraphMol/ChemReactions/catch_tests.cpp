@@ -29,6 +29,8 @@
 #include <GraphMol/FileParsers/PNGParser.h>
 #include <GraphMol/FileParsers/FileParserUtils.h>
 
+#include <algorithm>
+
 using namespace RDKit;
 using std::unique_ptr;
 
@@ -294,11 +296,10 @@ TEST_CASE("reaction data in PNGs 1", "[Reaction][PNG]") {
     bool compressed = false;
     auto pngData = addMetadataToPNGFile(fname, metadata, compressed);
     metadata = PNGStringToMetadata(pngData);
-    auto iter =
-        std::find_if(metadata.begin(), metadata.end(),
-                     [](const std::pair<std::string, std::string> &val) {
-                       return val.first == PNGData::rxnSmartsTag;
-                     });
+    auto iter = std::ranges::find_if(
+        metadata, [](const std::pair<std::string, std::string> &val) {
+          return val.first == PNGData::rxnSmartsTag;
+        });
     REQUIRE(iter != metadata.end());
   }
   SECTION("read from file") {

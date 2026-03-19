@@ -1414,7 +1414,7 @@ M  END
         labels.push_back(cip);
       }
     }
-    std::sort(labels.begin(), labels.end());
+    std::ranges::sort(labels);
 
     return labels;
   };

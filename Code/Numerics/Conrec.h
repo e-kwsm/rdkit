@@ -248,8 +248,7 @@ connectLineSegments(const std::vector<ConrecSegment> &segments,
   auto isCandidate = [&segmentsDone](const auto &pr) {
     return !pr.second.empty() && !segmentsDone[pr.second.front()];
   };
-  auto singlePoint =
-      std::find_if(endPointHashes.begin(), endPointHashes.end(), isCandidate);
+  auto singlePoint = std::ranges::find_if(endPointHashes, isCandidate);
   while (singlePoint != endPointHashes.end()) {
     auto segId = singlePoint->second.front();
     auto currKey = singlePoint->first;
@@ -270,10 +269,10 @@ connectLineSegments(const std::vector<ConrecSegment> &segments,
       }
       // remove this segment from the two hash lists:
       auto &segs1 = endPointHashes[currKey];
-      segs1.erase(std::find(segs1.begin(), segs1.end(), segId));
+      segs1.erase(std::ranges::find(segs1, segId));
 
       auto &segs = endPointHashes[endPtKey];
-      segs.erase(std::find(segs.begin(), segs.end(), segId));
+      segs.erase(std::ranges::find(segs, segId));
       if (segs.empty()) {
         // we're at the end, push on the last point
         if (k1 == currKey) {

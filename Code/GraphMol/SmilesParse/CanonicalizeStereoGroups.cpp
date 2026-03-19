@@ -58,7 +58,7 @@ void buildTree(int atomIndexToAdd, const ROMol *mol,
   for (const auto nbr : mol->atomNeighbors(atomToAdd)) {
     nbrRanks.push_back(std::make_pair(ranks[nbr->getIdx()], nbr->getIdx()));
   }
-  std::sort(nbrRanks.begin(), nbrRanks.end());
+  std::ranges::sort(nbrRanks);
   for (const auto &pr : nbrRanks) {
     if (reverseOrder[pr.second] == -1) {
       buildTree(pr.second, mol, chosenOrder, reverseOrder, ranks);
@@ -76,8 +76,7 @@ class ChiralAtomItem {
   ChiralAtomItem(const RDKit::Atom *atomInit,
                  const std::vector<unsigned int> &atomsToInvert)
       : atomId(atomInit->getIdx()), chiralType(atomInit->getChiralTag()) {
-    if (std::find(atomsToInvert.begin(), atomsToInvert.end(), atomId) !=
-        atomsToInvert.end()) {
+    if (std::ranges::find(atomsToInvert, atomId) != atomsToInvert.end()) {
       if (chiralType == RDKit::Atom::CHI_TETRAHEDRAL_CW) {
         chiralType = RDKit::Atom::CHI_TETRAHEDRAL_CCW;
       } else if (chiralType == RDKit::Atom::CHI_TETRAHEDRAL_CCW) {
@@ -206,7 +205,7 @@ class RankedValue {
   const std::vector<ChiralBondItem> &getChiralBonds() const {
     if (!bondsSorted) {
       if (chiralBondItems.size() > 1) {
-        std::sort(chiralBondItems.begin(), chiralBondItems.end());
+        std::ranges::sort(chiralBondItems);
       }
       bondsSorted = true;
     }
@@ -771,14 +770,14 @@ void canonicalizeStereoGroups_internal(
         }
       }
 
-      std::sort(atomsToAdd.begin(), atomsToAdd.end(),
-                [](const RDKit::Atom *a, const RDKit::Atom *b) {
-                  return a->getIdx() < b->getIdx();
-                });
-      std::sort(bondsToAdd.begin(), bondsToAdd.end(),
-                [](const RDKit::Bond *a, const RDKit::Bond *b) {
-                  return a->getIdx() < b->getIdx();
-                });
+      std::ranges::sort(atomsToAdd,
+                        [](const RDKit::Atom *a, const RDKit::Atom *b) {
+                          return a->getIdx() < b->getIdx();
+                        });
+      std::ranges::sort(bondsToAdd,
+                        [](const RDKit::Bond *a, const RDKit::Bond *b) {
+                          return a->getIdx() < b->getIdx();
+                        });
       newGroups.emplace_back(stereoGroupType, atomsToAdd, bondsToAdd,
                              ++groupCount);
     }
@@ -824,10 +823,10 @@ void canonicalizeStereoGroups_internal(
         }
       }
 
-      std::sort(bondsToAdd.begin(), bondsToAdd.end(),
-                [](const RDKit::Bond *a, const RDKit::Bond *b) {
-                  return a->getIdx() < b->getIdx();
-                });
+      std::ranges::sort(bondsToAdd,
+                        [](const RDKit::Bond *a, const RDKit::Bond *b) {
+                          return a->getIdx() < b->getIdx();
+                        });
       std::vector<RDKit::Atom *> atomsToAdd;  // nothing added to this one here
       newGroups.emplace_back(stereoGroupType, atomsToAdd, bondsToAdd,
                              ++groupCount);
@@ -849,14 +848,14 @@ void canonicalizeStereoGroups_internal(
             RDKit::StereoGroupAbsOptions::OnlyIncludeWhenOtherGroupsExist &&
         !newGroups.empty())) &&
       (!absGroupAtoms.empty() || !absGroupBonds.empty())) {
-    std::sort(absGroupAtoms.begin(), absGroupAtoms.end(),
-              [](const RDKit::Atom *a, const RDKit::Atom *b) {
-                return a->getIdx() < b->getIdx();
-              });
-    std::sort(absGroupBonds.begin(), absGroupBonds.end(),
-              [](const RDKit::Bond *a, const RDKit::Bond *b) {
-                return a->getIdx() < b->getIdx();
-              });
+    std::ranges::sort(absGroupAtoms,
+                      [](const RDKit::Atom *a, const RDKit::Atom *b) {
+                        return a->getIdx() < b->getIdx();
+                      });
+    std::ranges::sort(absGroupBonds,
+                      [](const RDKit::Bond *a, const RDKit::Bond *b) {
+                        return a->getIdx() < b->getIdx();
+                      });
 
     newGroups.emplace_back(RDKit::StereoGroupType::STEREO_ABSOLUTE,
                            absGroupAtoms, absGroupBonds, 0);
@@ -911,7 +910,7 @@ void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
       for (auto &atom : mol->atoms()) {
         if ((atom->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CCW ||
              atom->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW) &&
-            std::find(sgats.begin(), sgats.end(), atom) == sgats.end()) {
+            std::ranges::find(sgats, atom) == sgats.end()) {
           isSimple = false;
           break;
         }
@@ -920,8 +919,7 @@ void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
         for (auto &bond : mol->bonds()) {
           if ((bond->getStereo() == Bond::BondStereo::STEREOATROPCW ||
                bond->getStereo() == Bond::BondStereo::STEREOATROPCCW) &&
-              std::find(sgBonds.begin(), sgBonds.end(), bond) ==
-                  sgBonds.end()) {
+              std::ranges::find(sgBonds, bond) == sgBonds.end()) {
             isSimple = false;
             break;
           }

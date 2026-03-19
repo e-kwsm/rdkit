@@ -394,7 +394,7 @@ bool FusedRingMatch(const ROMol &mol, const Atom &atom,
   std::set<int> ringAtoms;
   for (auto i = 0u; i < mol.getRingInfo()->numRings(); ++i) {
     const auto &ring = mol.getRingInfo()->atomRings()[i];
-    if (std::find(ring.begin(), ring.end(), atom.getIdx()) != ring.end()) {
+    if (std::ranges::find(ring, atom.getIdx()) != ring.end()) {
       if (!checkAtomRing(mol, atom, ignore, ring, atomMatcher,
                          atLeastOneAtomPerRing)) {
         return false;
@@ -416,9 +416,7 @@ bool FusedRingMatch(const ROMol &mol, const Atom &atom,
     // the new atoms we are adding all pass the test
     std::set<int> sring(ring.begin(), ring.end());
     std::vector<int> diff(sring.size());
-    auto dit =
-        std::set_difference(sring.begin(), sring.end(), ringAtoms.begin(),
-                            ringAtoms.end(), diff.begin());
+    auto dit = std::ranges::set_difference(sring, ringAtoms, diff.begin());
     auto numNewAtoms = dit - diff.begin();
     if (!numNewAtoms || sring.size() - numNewAtoms < 2) {
       // we don't overlap by at least two atoms
@@ -437,10 +435,10 @@ bool FusedRingMatch(const ROMol &mol, const Atom &atom,
   }
 
   if (atLeastOneAtom) {
-    return std::find_if(ringAtoms.begin(), ringAtoms.end(),
-                        [&mol, atLeastOneAtom](auto idx) -> bool {
-                          return atLeastOneAtom(*mol.getAtomWithIdx(idx));
-                        }) != ringAtoms.end();
+    return std::ranges::find_if(
+               ringAtoms, [&mol, atLeastOneAtom](auto idx) -> bool {
+                 return atLeastOneAtom(*mol.getAtomWithIdx(idx));
+               }) != ringAtoms.end();
   }
 
   return true;

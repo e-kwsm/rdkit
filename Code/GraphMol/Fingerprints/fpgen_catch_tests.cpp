@@ -176,7 +176,7 @@ TEST_CASE(
       // do this test backwards:
       for (const auto &pr : *ao.bitInfoMap) {
         INFO(pr.first);
-        CHECK(std::find(obl.begin(), obl.end(), (int)(pr.first)) != obl.end());
+        CHECK(std::ranges::find(obl, (int)(pr.first)) != obl.end());
       }
       // for (auto i = 0u; i < m->getNumAtoms(); ++i) {
       //   std::cerr << " {";

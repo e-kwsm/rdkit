@@ -82,8 +82,7 @@ void removeGroupsWithAtom(const Atom *atom, std::vector<StereoGroup> &groups) {
     return std::find(group.getAtoms().cbegin(), group.getAtoms().cend(),
                      atom) != group.getAtoms().cend();
   };
-  groups.erase(std::remove_if(groups.begin(), groups.end(), containsAtom),
-               groups.end());
+  groups.erase(std::ranges::remove_if(groups, containsAtom), groups.end());
 }
 
 void removeAtomFromGroups(const Atom *atom, std::vector<StereoGroup> &groups) {
@@ -97,11 +96,11 @@ void removeAtomFromGroups(const Atom *atom, std::vector<StereoGroup> &groups) {
     }
   }
   // now remove any empty groups:
-  groups.erase(std::remove_if(groups.begin(), groups.end(),
-                              [](const auto &gp) {
-                                return gp.getAtoms().empty() &&
-                                       gp.getBonds().empty();
-                              }),
+  groups.erase(std::ranges::remove_if(groups,
+                                      [](const auto &gp) {
+                                        return gp.getAtoms().empty() &&
+                                               gp.getBonds().empty();
+                                      }),
                groups.end());
 }
 
@@ -116,11 +115,11 @@ void removeBondFromGroups(const Bond *bond, std::vector<StereoGroup> &groups) {
     }
   }
   // now remove any empty groups:
-  groups.erase(std::remove_if(groups.begin(), groups.end(),
-                              [](const auto &gp) {
-                                return gp.getAtoms().empty() &&
-                                       gp.getBonds().empty();
-                              }),
+  groups.erase(std::ranges::remove_if(groups,
+                                      [](const auto &gp) {
+                                        return gp.getAtoms().empty() &&
+                                               gp.getBonds().empty();
+                                      }),
                groups.end());
 }
 
@@ -129,8 +128,7 @@ void removeGroupsWithBond(const Bond *bond, std::vector<StereoGroup> &groups) {
     return std::find(group.getBonds().cbegin(), group.getBonds().cend(),
                      bond) != group.getBonds().cend();
   };
-  groups.erase(std::remove_if(groups.begin(), groups.end(), containsBond),
-               groups.end());
+  groups.erase(std::ranges::remove_if(groups, containsBond), groups.end());
 }
 
 void removeGroupsWithAtoms(const std::vector<Atom *> &atoms,
@@ -144,8 +142,7 @@ void removeGroupsWithAtoms(const std::vector<Atom *> &atoms,
     }
     return false;
   };
-  groups.erase(std::remove_if(groups.begin(), groups.end(), containsAnyAtom),
-               groups.end());
+  groups.erase(std::ranges::remove_if(groups, containsAnyAtom), groups.end());
 }
 
 void removeGroupsWithBonds(const std::vector<Bond *> &bonds,
@@ -159,8 +156,7 @@ void removeGroupsWithBonds(const std::vector<Bond *> &bonds,
     }
     return false;
   };
-  groups.erase(std::remove_if(groups.begin(), groups.end(), containsAnyBond),
-               groups.end());
+  groups.erase(std::ranges::remove_if(groups, containsAnyBond), groups.end());
 }
 
 void assignStereoGroupIds(std::vector<StereoGroup> &groups) {

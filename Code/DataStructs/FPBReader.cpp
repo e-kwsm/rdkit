@@ -709,7 +709,7 @@ std::vector<std::pair<double, unsigned int>> FPBReader::getTanimotoNeighbors(
   PRECONDITION(df_init, "not initialized");
   std::vector<std::pair<double, unsigned int>> res;
   detail::tanimotoNeighbors(dp_impl, bv, threshold, res, usePopcountScreen);
-  std::sort(res.begin(), res.end(), Rankers::pairGreater);
+  std::ranges::sort(res, Rankers::pairGreater);
   return res;
 }
 
@@ -743,7 +743,7 @@ std::vector<std::pair<double, unsigned int>> FPBReader::getTverskyNeighbors(
   std::vector<std::pair<double, unsigned int>> res;
   detail::tverskyNeighbors(dp_impl, bv, ca, cb, threshold, res,
                            usePopcountScreen);
-  std::sort(res.begin(), res.end(), Rankers::pairGreater);
+  std::ranges::sort(res, Rankers::pairGreater);
   return res;
 }
 
@@ -762,7 +762,7 @@ std::vector<unsigned int> FPBReader::getContainingNeighbors(
   PRECONDITION(df_init, "not initialized");
   std::vector<unsigned int> res;
   detail::containingNeighbors(dp_impl, bv, res);
-  std::sort(res.begin(), res.end());
+  std::ranges::sort(res);
 
   return res;
 }

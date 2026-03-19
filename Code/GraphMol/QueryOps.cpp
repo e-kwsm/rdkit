@@ -608,9 +608,8 @@ RDKIT_GRAPHMOL_EXPORT bool hasBondTypeQuery(
   const auto dt = qry.getTypeLabel();
   // is this a bond order query?
   if (dt == "BondOrder" ||
-      (dt.empty() &&
-       std::find(bondOrderQueryFunctions.begin(), bondOrderQueryFunctions.end(),
-                 df) != bondOrderQueryFunctions.end())) {
+      (dt.empty() && std::ranges::find(bondOrderQueryFunctions, df) !=
+                         bondOrderQueryFunctions.end())) {
     return true;
   }
   for (const auto &child :
@@ -628,8 +627,8 @@ bool hasComplexBondTypeQueryHelper(
   const auto df = qry.getDescription();
   bool isBondOrder = (df == "BondOrder");
   // is this a bond order query?
-  if (std::find(bondOrderQueryFunctions.begin(), bondOrderQueryFunctions.end(),
-                df) != bondOrderQueryFunctions.end()) {
+  if (std::ranges::find(bondOrderQueryFunctions, df) !=
+      bondOrderQueryFunctions.end()) {
     if (seenBondOrder || !isBondOrder || qry.getNegation()) {
       return true;
     }

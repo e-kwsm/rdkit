@@ -2585,11 +2585,10 @@ TEST_CASE("read metadata from PNG", "[reader][PNG]") {
         rdbase + "/Code/GraphMol/FileParsers/test_data/colchicine.png";
     auto metadata = PNGFileToMetadata(fname);
 
-    auto iter =
-        std::find_if(metadata.begin(), metadata.end(),
-                     [](const std::pair<std::string, std::string> &val) {
-                       return boost::starts_with(val.first, PNGData::smilesTag);
-                     });
+    auto iter = std::ranges::find_if(
+        metadata, [](const std::pair<std::string, std::string> &val) {
+          return boost::starts_with(val.first, PNGData::smilesTag);
+        });
     REQUIRE(iter != metadata.end());
     CHECK(
         iter->second ==
@@ -2635,11 +2634,10 @@ TEST_CASE("read metadata from PNG", "[reader][PNG]") {
     std::string fname =
         rdbase + "/Code/GraphMol/FileParsers/test_data/colchicine.mrv.png";
     auto metadata = PNGFileToMetadata(fname);
-    auto iter =
-        std::find_if(metadata.begin(), metadata.end(),
-                     [](const std::pair<std::string, std::string> &val) {
-                       return val.first == "molSource";
-                     });
+    auto iter = std::ranges::find_if(
+        metadata, [](const std::pair<std::string, std::string> &val) {
+          return val.first == "molSource";
+        });
     REQUIRE(iter != metadata.end());
     CHECK(iter->second.find("<MChemicalStruct>") != std::string::npos);
   }
@@ -6200,11 +6198,10 @@ void check_roundtripped_properties(RDProps &original, RDProps &roundtrip) {
   // properties must be present
   REQUIRE(roundtripPropNames.size() >= originalPropNames.size());
 
-  std::sort(originalPropNames.begin(), originalPropNames.end());
-  std::sort(roundtripPropNames.begin(), roundtripPropNames.end());
+  std::ranges::sort(originalPropNames);
+  std::ranges::sort(roundtripPropNames);
 
-  REQUIRE(std::includes(roundtripPropNames.begin(), roundtripPropNames.end(),
-                        originalPropNames.begin(), originalPropNames.end()));
+  REQUIRE(std::ranges::includes(roundtripPropNames, originalPropNames));
 
   for (const auto &o : original.getDict()) {
     if (o.key == detail::computedPropName) {
