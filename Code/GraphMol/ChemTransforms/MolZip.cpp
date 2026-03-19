@@ -47,8 +47,7 @@ unsigned int get_label(const Atom *a, const MolzipParams &p) {
 
     case MolzipLabel::AtomType:
       idx = std::distance(p.atomSymbols.begin(),
-                          std::find(p.atomSymbols.begin(), p.atomSymbols.end(),
-                                    a->getSymbol()));
+                          std::ranges::find(p.atomSymbols, a->getSymbol()));
       if (idx == p.atomSymbols.size()) {
         idx = NOLABEL;
       }
@@ -690,8 +689,7 @@ std::unique_ptr<ROMol> molzip(std::vector<ROMOL_SPTR> &decomposition,
     for (size_t idx = 1; idx < decomposition.size(); ++idx) {
       auto &mol = decomposition[idx];
       auto smiles = MolToSmiles(*mol);
-      if (std::find(existing_smiles.begin(), existing_smiles.end(), smiles) ==
-          existing_smiles.end()) {
+      if (std::ranges::find(existing_smiles, smiles) == existing_smiles.end()) {
         mols.push_back(mol);
         existing_smiles.push_back(smiles);
       }
@@ -725,9 +723,8 @@ std::unique_ptr<ROMol> molzip(std::vector<ROMOL_SPTR> &decomposition,
           zippedIndex = (*attachment).second;
         }
         auto zipppedAtoms = zippedMol->atoms();
-        auto zippedAtom = std::find_if(
-            zipppedAtoms.begin(), zipppedAtoms.end(),
-            [zippedIndex](const Atom *zippedAtom) {
+        auto zippedAtom = std::ranges::find_if(
+            zipppedAtoms, [zippedIndex](const Atom *zippedAtom) {
               const auto index = zippedAtom->getProp<int>(indexPropName);
               return index == zippedIndex;
             });

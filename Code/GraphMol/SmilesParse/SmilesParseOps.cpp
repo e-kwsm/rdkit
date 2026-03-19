@@ -239,8 +239,8 @@ unsigned int GetBondOrdering(INT_LIST &bondOrdering, const RDKit::RWMol *mol,
   std::list<size_t> bondOrder;
   for (auto nbrIdx : boost::make_iterator_range(mol->getAtomNeighbors(atom))) {
     const Bond *nbrBond = mol->getBondBetweenAtoms(atom->getIdx(), nbrIdx);
-    if (std::find(ringClosures.begin(), ringClosures.end(),
-                  static_cast<int>(nbrBond->getIdx())) == ringClosures.end()) {
+    if (std::ranges::find(ringClosures, static_cast<int>(nbrBond->getIdx())) ==
+        ringClosures.end()) {
       neighbors.emplace_back(nbrIdx, nbrBond->getIdx());
     }
   }
@@ -602,16 +602,15 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
                 "somehow atom doesn't have _RingClosures property.");
             INT_VECT closures;
             atom1->getProp(common_properties::_RingClosures, closures);
-            auto closurePos = std::find(closures.begin(), closures.end(),
-                                        -(bookmark.first + 1));
+            auto closurePos =
+                std::ranges::find(closures, -(bookmark.first + 1));
             CHECK_INVARIANT(closurePos != closures.end(),
                             "could not find bookmark in atom _RingClosures");
             *closurePos = bondIdx - 1;
             atom1->setProp(common_properties::_RingClosures, closures);
 
             atom2->getProp(common_properties::_RingClosures, closures);
-            closurePos = std::find(closures.begin(), closures.end(),
-                                   -(bookmark.first + 1));
+            closurePos = std::ranges::find(closures, -(bookmark.first + 1));
             CHECK_INVARIANT(closurePos != closures.end(),
                             "could not find bookmark in atom _RingClosures");
             *closurePos = bondIdx - 1;

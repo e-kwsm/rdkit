@@ -223,7 +223,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
       featureMatchers.push_back(matcher);
     }
   }
-  std::fill(invars.begin(), invars.end(), 0);
+  std::ranges::fill(invars, 0);
   auto &queries = (useLocalPatterns ? featureMatchers : *patterns);
   for (unsigned int i = 0; i < queries.size(); ++i) {
     unsigned int mask = 1 << i;

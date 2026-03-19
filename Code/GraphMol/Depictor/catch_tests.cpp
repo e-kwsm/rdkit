@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 
+#include <algorithm>
 #include <ranges>
 #include <catch2/catch_all.hpp>
 #include <GraphMol/MolAlign/AlignMolecules.h>
@@ -659,14 +660,14 @@ M  END
       auto res = RDDepict::generateDepictionMatching2DStructure(
           *mol, *template_ref, -1, nullptr, p);
       std::vector<int> expectedMolIndices{11, 10, 7, 8, 9, 6};
-      auto sameIndices = std::all_of(
-          res.begin(), res.end(), [&expectedMolIndices](const auto &pair) {
+      auto sameIndices =
+          std::ranges::all_of(res, [&expectedMolIndices](const auto &pair) {
             return pair.second == expectedMolIndices.at(pair.first);
           });
       CHECK(sameIndices);
       CHECK(MolToSmiles(*mol) == "C1CC2CCC1N2C1CNC1N1C2CCC1CC2");
-      auto samePositions = std::all_of(
-          res.begin(), res.end(), [&mol, &template_ref](const auto &pair) {
+      auto samePositions =
+          std::ranges::all_of(res, [&mol, &template_ref](const auto &pair) {
             return (mol->getConformer().getAtomPos(pair.second) -
                     template_ref->getConformer().getAtomPos(pair.first))
                        .lengthSq() < 1.e-4;

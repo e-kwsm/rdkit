@@ -39,6 +39,7 @@
 #include <boost/serialization/shared_ptr.hpp>
 #endif
 
+#include <algorithm>
 #include <climits>  // to get CHAR_BIT # bits in a char
 
 namespace RDKit {
@@ -178,7 +179,7 @@ bool FilterCatalog::removeEntry(unsigned int idx) {
 }
 
 bool FilterCatalog::removeEntry(FilterCatalog::CONST_SENTRY entry) {
-  auto it = std::find(d_entries.begin(), d_entries.end(), entry);
+  auto it = std::ranges::find(d_entries, entry);
   if (it != d_entries.end()) {
     d_entries.erase(it);
     return true;

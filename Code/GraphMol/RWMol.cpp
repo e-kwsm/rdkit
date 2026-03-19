@@ -90,28 +90,25 @@ void insertSubstanceGroups(RWMol &mol, const RWMol &other,
 
     // update the sgroup's atom and bond indices
     auto atom_indices = sgroup.getAtoms();
-    std::transform(atom_indices.begin(), atom_indices.end(),
-                   atom_indices.begin(),
-                   [&origNumAtoms](unsigned int old_index) {
-                     return origNumAtoms + old_index;
-                   });
+    std::ranges::transform(atom_indices, atom_indices.begin(),
+                           [&origNumAtoms](unsigned int old_index) {
+                             return origNumAtoms + old_index;
+                           });
     sgroup.setAtoms(atom_indices);
 
     auto bond_indices = sgroup.getBonds();
-    std::transform(bond_indices.begin(), bond_indices.end(),
-                   bond_indices.begin(),
-                   [&origNumBonds](unsigned int old_index) {
-                     return origNumBonds + old_index;
-                   });
+    std::ranges::transform(bond_indices, bond_indices.begin(),
+                           [&origNumBonds](unsigned int old_index) {
+                             return origNumBonds + old_index;
+                           });
     sgroup.setBonds(bond_indices);
 
     // patoms
     auto patom_indices = sgroup.getParentAtoms();
-    std::transform(patom_indices.begin(), patom_indices.end(),
-                   patom_indices.begin(),
-                   [&origNumAtoms](unsigned int old_index) {
-                     return origNumAtoms + old_index;
-                   });
+    std::ranges::transform(patom_indices, patom_indices.begin(),
+                           [&origNumAtoms](unsigned int old_index) {
+                             return origNumAtoms + old_index;
+                           });
     sgroup.setParentAtoms(patom_indices);
 
     // cstates (these are references, can be updated in place)
@@ -263,7 +260,7 @@ void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
     auto groupId = group.getReadId();
     auto atoms = group.getAtoms();
     auto bonds = group.getBonds();
-    auto aiter = std::find(atoms.begin(), atoms.end(), orig_p);
+    auto aiter = std::ranges::find(atoms, orig_p);
     while (aiter != atoms.end()) {
       *aiter = atom_p;
       ++aiter;
@@ -382,7 +379,7 @@ void RWMol::removeAtom(Atom *atom, bool clearProps) {
     // it.
     auto tmpI = markI;
     ++markI;
-    if (std::find(atoms.begin(), atoms.end(), atom) != atoms.end()) {
+    if (std::ranges::find(atoms, atom) != atoms.end()) {
       clearAtomBookmark(tmpI->first, atom);
     }
   }
@@ -434,7 +431,7 @@ void RWMol::removeAtom(Atom *atom, bool clearProps) {
         std::transform(beg, tokens.end(), std::back_inserter(oats),
                        [](const std::string &a) { return std::stod(a); });
 
-        auto idx_pos = std::find(oats.begin(), oats.end(), idx + 1);
+        auto idx_pos = std::ranges::find(oats, idx + 1);
         if (idx_pos != oats.end()) {
           oats.erase(idx_pos);
           --num_ats;
@@ -578,7 +575,7 @@ void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
     // it.
     auto tmpI = markI;
     ++markI;
-    if (std::find(bonds.begin(), bonds.end(), bnd) != bonds.end()) {
+    if (std::ranges::find(bonds, bnd) != bonds.end()) {
       clearBondBookmark(tmpI->first, bnd);
     }
   }
@@ -711,7 +708,7 @@ void RWMol::batchRemoveBonds() {
       // it.
       auto tmpI = markI;
       ++markI;
-      if (std::find(bonds.begin(), bonds.end(), bnd) != bonds.end()) {
+      if (std::ranges::find(bonds, bnd) != bonds.end()) {
         clearBondBookmark(tmpI->first, bnd);
       }
     }
@@ -797,7 +794,7 @@ void RWMol::batchRemoveAtoms() {
       // it.
       auto tmpI = markI;
       ++markI;
-      if (std::find(atoms.begin(), atoms.end(), atom) != atoms.end()) {
+      if (std::ranges::find(atoms, atom) != atoms.end()) {
         clearAtomBookmark(tmpI->first, atom);
       }
     }
@@ -831,7 +828,7 @@ void RWMol::batchRemoveAtoms() {
           std::transform(beg, tokens.end(), std::back_inserter(oats),
                          [](const std::string &a) { return std::stod(a); });
 
-          auto idx_pos = std::find(oats.begin(), oats.end(), idx + 1);
+          auto idx_pos = std::ranges::find(oats, idx + 1);
           if (idx_pos != oats.end()) {
             oats.erase(idx_pos);
             --num_ats;

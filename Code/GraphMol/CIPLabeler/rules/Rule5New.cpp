@@ -90,7 +90,7 @@ void Rule5New::fillPairs(const Node *beg, PairList &plist) const {
 Sort Rule5New::getRefSorter(const SequenceRule *replacement_rule) const {
   const auto &rules = getSorter()->getRules();
 
-  CHECK_INVARIANT(std::find(rules.begin(), rules.end(), this) != rules.end(),
+  CHECK_INVARIANT(std::ranges::find(rules, this) != rules.end(),
                   "Rule5New instance not in rule set");
 
   std::vector<const SequenceRule *> new_rules;

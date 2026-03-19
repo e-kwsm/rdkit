@@ -380,11 +380,11 @@ void MolDraw2D::drawTriangle(const Point2D &cds1, const Point2D &cds2,
     double scl = rawCoords ? 1.0 : scale_;
     auto lpts =
         MolDraw2D_detail::handdrawnLine(cds1, cds2, scl, false, false, 4, dev);
-    std::move(lpts.begin(), lpts.end(), std::back_inserter(pts));
+    std::ranges::move(lpts, std::back_inserter(pts));
     lpts = MolDraw2D_detail::handdrawnLine(cds2, cds3, scale_);
-    std::move(lpts.begin(), lpts.end(), std::back_inserter(pts));
+    std::ranges::move(lpts, std::back_inserter(pts));
     lpts = MolDraw2D_detail::handdrawnLine(cds3, cds1, scale_);
-    std::move(lpts.begin(), lpts.end(), std::back_inserter(pts));
+    std::ranges::move(lpts, std::back_inserter(pts));
   }
   drawPolygon(pts, rawCoords);
 };
@@ -1041,12 +1041,11 @@ void MolDraw2D::calcReactionOffsets(
   int totWidth = reactionWidth(reagents, products, agents, drawOptions(),
                                arrowMult, plusWidth);
   for (int i = 0; i < 5; ++i) {
-    auto maxWidthIt =
-        std::max_element(drawMols_.begin(), drawMols_.end(),
-                         [&](std::shared_ptr<MolDraw2D_detail::DrawMol> &lhs,
-                             std::shared_ptr<MolDraw2D_detail::DrawMol> &rhs) {
-                           return lhs->width_ < rhs->width_;
-                         });
+    auto maxWidthIt = std::ranges::max_element(
+        drawMols_, [&](std::shared_ptr<MolDraw2D_detail::DrawMol> &lhs,
+                       std::shared_ptr<MolDraw2D_detail::DrawMol> &rhs) {
+          return lhs->width_ < rhs->width_;
+        });
     plusWidth = (*maxWidthIt)->width_ / 4;
     plusWidth = plusWidth > widthToUse / 20 ? widthToUse / 20 : plusWidth;
     auto oldTotWidth = totWidth;

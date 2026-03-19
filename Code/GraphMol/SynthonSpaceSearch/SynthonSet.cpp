@@ -15,6 +15,7 @@
 // for example, it uses a different fingerprint for the initial synthon
 // screening.
 
+#include <algorithm>
 #include <cmath>
 #include <random>
 #include <regex>
@@ -335,9 +336,11 @@ void SynthonSet::makeSynthonSearchMols() {
 
 void SynthonSet::removeEmptySynthonSets() {
   d_synthons.erase(
-      std::remove_if(d_synthons.begin(), d_synthons.end(),
-                     [](const std::vector<std::pair<std::string, Synthon *>> &r)
-                         -> bool { return r.empty(); }),
+      std::ranges::remove_if(
+          d_synthons,
+          [](const std::vector<std::pair<std::string, Synthon *>> &r) -> bool {
+            return r.empty();
+          }),
       d_synthons.end());
 }
 
@@ -458,19 +461,20 @@ void SynthonSet::buildAddAndSubtractFPs(
     for (size_t j = 0; j < d_synthons[i].size(); ++j) {
       sortedSynthons[j] = std::make_pair(j, d_synthons[i][j]);
     }
-    std::sort(sortedSynthons.begin(), sortedSynthons.end(),
-              [](const std::pair<size_t, std::pair<std::string, Synthon *>> &a,
-                 const std::pair<size_t, std::pair<std::string, Synthon *>> &b)
-                  -> bool {
-                auto as = a.second.second;
-                auto bs = b.second.second;
-                if (as->getOrigMol()->getNumAtoms() ==
-                    bs->getOrigMol()->getNumAtoms()) {
-                  return a.second.first < b.second.first;
-                }
-                return as->getOrigMol()->getNumAtoms() <
-                       bs->getOrigMol()->getNumAtoms();
-              });
+    std::ranges::sort(
+        sortedSynthons,
+        [](const std::pair<size_t, std::pair<std::string, Synthon *>> &a,
+           const std::pair<size_t, std::pair<std::string, Synthon *>> &b)
+            -> bool {
+          auto as = a.second.second;
+          auto bs = b.second.second;
+          if (as->getOrigMol()->getNumAtoms() ==
+              bs->getOrigMol()->getNumAtoms()) {
+            return a.second.first < b.second.first;
+          }
+          return as->getOrigMol()->getNumAtoms() <
+                 bs->getOrigMol()->getNumAtoms();
+        });
     size_t stride = d_synthons[i].size() / 40;
     if (!stride) {
       stride = 1;

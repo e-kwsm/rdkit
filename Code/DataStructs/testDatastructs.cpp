@@ -10,6 +10,7 @@
 #include <catch2/catch_all.hpp>
 
 #include <RDGeneral/test.h>
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
@@ -53,8 +54,7 @@ void Test(T arg) {
 
   IntVect onBits;
   t1.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   T t2(t1);
@@ -75,42 +75,36 @@ void Test(T arg) {
 
   std::cout << "t1: ";
   t1.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   std::cout << "t2: ";
   t2.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   std::cout << "t1|t2: ";
   T t3 = t1 | t2;
   t3.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   std::cout << "t1&t2: ";
   t3 = t1 & t2;
   t3.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   std::cout << "t1^t2: ";
   t3 = t1 ^ t2;
   t3.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   std::cout << "~t1: ";
   t3 = ~t1;
   t3.getOnBits(onBits);
-  std::copy(onBits.begin(), onBits.end(),
-            std::ostream_iterator<int>(std::cout, ", "));
+  std::ranges::copy(onBits, std::ostream_iterator<int>(std::cout, ", "));
   std::cout << std::endl;
 
   try {
