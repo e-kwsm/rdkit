@@ -307,7 +307,7 @@ bool isHinHBondDonor(const Atom *atom, const ROMol &mol) {
     return false;
   }
   auto nbrs = mol.atomNeighbors(atom);
-  return std::any_of(nbrs.begin(), nbrs.end(), [](const Atom *nbr) {
+  return std::ranges::any_of(nbrs, [](const Atom *nbr) {
     return nbr->getAtomicNum() == 7 || nbr->getAtomicNum() == 8;
   });
 }
@@ -446,7 +446,7 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   double angle;
 
   auto atomRings = rinfo->atomRings();
-  std::sort(atomRings.begin(), atomRings.end(), lessVector);
+  std::ranges::sort(atomRings, lessVector);
   // sort the rings based on the ring size
   INT_VECT visited(npt, 0);
 
@@ -752,8 +752,8 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
       if (mol.getRingInfo()->numBondRings(bid1) == 1 &&
           mol.getRingInfo()->numBondRings(bid3) == 1) {
         for (const auto &br : mol.getRingInfo()->bondRings()) {
-          if (std::find(br.begin(), br.end(), bid1) != br.end()) {
-            if (std::find(br.begin(), br.end(), bid3) != br.end()) {
+          if (std::ranges::find(br, bid1) != br.end()) {
+            if (std::ranges::find(br, bid3) != br.end()) {
               preferCis = true;
             }
             break;

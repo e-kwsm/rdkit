@@ -152,7 +152,7 @@ void _MolToSDStream(std::ostream *dp_ostream, const ROMol &mol, int confId,
       }
 
       // check if this property is not computed
-      if (std::find(compLst.begin(), compLst.end(), (*pi)) == compLst.end()) {
+      if (std::ranges::find(compLst, (*pi)) == compLst.end()) {
         _writePropToStream(dp_ostream, mol, (*pi), d_molid);
       }
     }

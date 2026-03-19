@@ -269,9 +269,8 @@ void ROMol::clearAtomBookmark(int mark, const Atom *atom) {
   if (lu != d_atomBookmarks.end()) {
     auto &marks = lu->second;
     unsigned int tgtIdx = atom->getIdx();
-    auto entry = std::find_if(marks.begin(), marks.end(), [&tgtIdx](auto ptr) {
-      return ptr->getIdx() == tgtIdx;
-    });
+    auto entry = std::ranges::find_if(
+        marks, [&tgtIdx](auto ptr) { return ptr->getIdx() == tgtIdx; });
     if (entry != marks.end()) {
       marks.erase(entry);
     }
@@ -288,9 +287,8 @@ void ROMol::clearBondBookmark(int mark, const Bond *bond) {
   if (lu != d_bondBookmarks.end()) {
     auto &marks = lu->second;
     unsigned int tgtIdx = bond->getIdx();
-    auto entry = std::find_if(marks.begin(), marks.end(), [&tgtIdx](auto ptr) {
-      return ptr->getIdx() == tgtIdx;
-    });
+    auto entry = std::ranges::find_if(
+        marks, [&tgtIdx](auto ptr) { return ptr->getIdx() == tgtIdx; });
     if (entry != marks.end()) {
       marks.erase(entry);
     }

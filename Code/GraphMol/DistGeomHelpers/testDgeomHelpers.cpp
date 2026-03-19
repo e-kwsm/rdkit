@@ -891,7 +891,7 @@ void testIssue1989539() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
   {
@@ -902,7 +902,7 @@ void testIssue1989539() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
 }
@@ -984,7 +984,7 @@ void testIssue2091864() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
   {
@@ -994,7 +994,7 @@ void testIssue2091864() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
   boost::logging::enable_logs("rdApp.warning");
@@ -1031,7 +1031,7 @@ void testIssue2835784() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
   {
@@ -1043,7 +1043,7 @@ void testIssue2835784() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m2, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m2;
   }
   {
@@ -1053,7 +1053,7 @@ void testIssue2835784() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
   {
@@ -1065,7 +1065,7 @@ void testIssue2835784() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m2, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m2;
   }
   boost::logging::enable_logs("rdApp.warning");
@@ -1080,7 +1080,7 @@ void testIssue3019283() {
     TEST_ASSERT(cid >= 0);
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(*m, 10);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
 }
@@ -1171,7 +1171,7 @@ void testIssue3483968() {
     std::vector<int> cids = DGeomHelpers::EmbedMultipleConfs(
         *m, 10, 30, 1, true, false, 2.0, true, 1, -1.0, nullptr, 1e-3, true);
     TEST_ASSERT(cids.size() == 10);
-    TEST_ASSERT(std::find(cids.begin(), cids.end(), -1) == cids.end());
+    TEST_ASSERT(std::ranges::find(cids, -1) == cids.end());
     delete m;
   }
   boost::logging::enable_logs("rdApp.warning");

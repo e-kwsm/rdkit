@@ -22,6 +22,8 @@
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 
+#include <algorithm>
+
 namespace RDKit::SynthonSpaceSearch {
 
 Synthon::Synthon(const std::string &smi) : d_smiles(smi) {
@@ -78,9 +80,8 @@ Synthon &Synthon::operator=(const Synthon &other) {
   }
   if (!other.d_connRegions.empty()) {
     d_connRegions.clear();
-    std::transform(
-        other.d_connRegions.begin(), other.d_connRegions.end(),
-        std::back_inserter(d_connRegions),
+    std::ranges::transform(
+        other.d_connRegions, std::back_inserter(d_connRegions),
         [](const std::shared_ptr<ROMol> &m) -> std::shared_ptr<ROMol> {
           return std::make_shared<ROMol>(*m);
         });

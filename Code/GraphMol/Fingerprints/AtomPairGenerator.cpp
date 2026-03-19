@@ -19,6 +19,8 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
+#include <algorithm>
+
 namespace RDKit {
 namespace AtomPair {
 using namespace AtomPairs;
@@ -203,24 +205,21 @@ AtomPairEnvGenerator<OutputType>::getEnvironments(
   for (ROMol::ConstAtomIterator atomItI = mol.beginAtoms();
        atomItI != mol.endAtoms(); ++atomItI) {
     unsigned int i = (*atomItI)->getIdx();
-    if (ignoreAtoms && std::find(ignoreAtoms->begin(), ignoreAtoms->end(), i) !=
-                           ignoreAtoms->end()) {
+    if (ignoreAtoms &&
+        std::ranges::find(ignoreAtoms, i) != ignoreAtoms->end()) {
       continue;
     }
 
     for (ROMol::ConstAtomIterator atomItJ = atomItI + 1;
          atomItJ != mol.endAtoms(); ++atomItJ) {
       unsigned int j = (*atomItJ)->getIdx();
-      if (ignoreAtoms && std::find(ignoreAtoms->begin(), ignoreAtoms->end(),
-                                   j) != ignoreAtoms->end()) {
+      if (ignoreAtoms &&
+          std::ranges::find(ignoreAtoms, j) != ignoreAtoms->end()) {
         continue;
       }
 
-      if (fromAtoms &&
-          (std::find(fromAtoms->begin(), fromAtoms->end(), i) ==
-           fromAtoms->end()) &&
-          (std::find(fromAtoms->begin(), fromAtoms->end(), j) ==
-           fromAtoms->end())) {
+      if (fromAtoms && (std::ranges::find(fromAtoms, i) == fromAtoms->end()) &&
+          (std::ranges::find(fromAtoms, j) == fromAtoms->end())) {
         continue;
       }
       auto distance =

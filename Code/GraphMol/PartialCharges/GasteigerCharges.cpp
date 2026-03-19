@@ -13,6 +13,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/MolOps.h>
+
 #include "GasteigerParams.h"
 
 namespace Gasteiger {
@@ -113,7 +114,7 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
   std::vector<DOUBLE_VECT> atmPs;
   atmPs.reserve(natms);
 
-  std::fill(charges.begin(), charges.end(), 0.0);
+  std::ranges::fill(charges, 0.0);
 
   DOUBLE_VECT
   hChrg;  // total charge on the implicit hydrogen on each heavy atom

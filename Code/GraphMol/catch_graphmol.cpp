@@ -2058,7 +2058,7 @@ TEST_CASE("github #4071: StereoGroups not preserved by RenumberAtoms()",
 
     std::vector<unsigned int> aindices(mol->getNumAtoms());
     std::iota(aindices.begin(), aindices.end(), 0);
-    std::reverse(aindices.begin(), aindices.end());
+    std::ranges::reverse(aindices);
     std::unique_ptr<ROMol> nmol(MolOps::renumberAtoms(*mol, aindices));
     REQUIRE(nmol);
     CHECK(nmol->getStereoGroups().size() == 4);
@@ -2683,33 +2683,30 @@ TEST_CASE("Iterators") {
   REQUIRE(m);
   SECTION("Atom Iterator") {
     auto atoms = m->atoms();
-    auto n_atom = std::find_if(atoms.begin(), atoms.end(), [](const auto &a) {
-      return a->getAtomicNum() == 7;
-    });
+    auto n_atom = std::ranges::find_if(
+        atoms, [](const auto &a) { return a->getAtomicNum() == 7; });
     REQUIRE(n_atom != atoms.end());
     CHECK((*n_atom)->getIdx() == 7);
   }
   SECTION("Atom Neighbor Iterator") {
     auto nbrs = m->atomNeighbors(m->getAtomWithIdx(6));
-    auto n_atom = std::find_if(nbrs.begin(), nbrs.end(), [](const auto &a) {
-      return a->getAtomicNum() == 7;
-    });
+    auto n_atom = std::ranges::find_if(
+        nbrs, [](const auto &a) { return a->getAtomicNum() == 7; });
     REQUIRE(n_atom != nbrs.end());
     CHECK((*n_atom)->getIdx() == 7);
   }
   SECTION("Bond Iterator") {
     auto bonds = m->bonds();
-    auto dbl_bnd = std::find_if(bonds.begin(), bonds.end(), [](const auto &b) {
-      return b->getBondType() == Bond::DOUBLE;
-    });
+    auto dbl_bnd = std::ranges::find_if(
+        bonds, [](const auto &b) { return b->getBondType() == Bond::DOUBLE; });
     REQUIRE(dbl_bnd != bonds.end());
     CHECK((*dbl_bnd)->getIdx() == 6);
   }
   SECTION("Atom Bond Iterator") {
     auto nbr_bonds = m->atomBonds(m->getAtomWithIdx(6));
-    auto dbl_bnd = std::find_if(
-        nbr_bonds.begin(), nbr_bonds.end(),
-        [](const auto &b) { return b->getBondType() == Bond::DOUBLE; });
+    auto dbl_bnd = std::ranges::find_if(nbr_bonds, [](const auto &b) {
+      return b->getBondType() == Bond::DOUBLE;
+    });
     REQUIRE(dbl_bnd != nbr_bonds.end());
     CHECK((*dbl_bnd)->getIdx() == 6);
   }

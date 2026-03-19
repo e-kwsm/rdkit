@@ -28,7 +28,7 @@ void Union(const INT_VECT &r1, const INT_VECT &r2, INT_VECT &res) {
   res = r1;
   INT_VECT_CI ri;
   for (ri = r2.begin(); ri != r2.end(); ri++) {
-    if (std::find(res.begin(), res.end(), (*ri)) == res.end()) {
+    if (std::ranges::find(res, (*ri)) == res.end()) {
       res.push_back(*ri);
     }
   }
@@ -38,7 +38,7 @@ void Intersect(const INT_VECT &r1, const INT_VECT &r2, INT_VECT &res) {
   res.resize(0);
   INT_VECT_CI ri;
   for (ri = r1.begin(); ri != r1.end(); ri++) {
-    if (std::find(r2.begin(), r2.end(), (*ri)) != r2.end()) {
+    if (std::ranges::find(r2, (*ri)) != r2.end()) {
       res.push_back(*ri);
     }
   }
@@ -53,14 +53,13 @@ void Union(const VECT_INT_VECT &rings, INT_VECT &res, const INT_VECT *exclude) {
 
   for (id = 0; id < nrings; id++) {
     if (exclude) {
-      if (std::find(exclude->begin(), exclude->end(), static_cast<int>(id)) !=
-          exclude->end()) {
+      if (std::ranges::find(*exclude, static_cast<int>(id)) != exclude->end()) {
         continue;
       }
     }
     ring = rings[id];
     for (ri = ring.begin(); ri != ring.end(); ri++) {
-      if (std::find(res.begin(), res.end(), (*ri)) == res.end()) {
+      if (std::ranges::find(res, (*ri)) == res.end()) {
         res.push_back(*ri);
       }
     }

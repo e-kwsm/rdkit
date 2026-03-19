@@ -34,8 +34,8 @@ void InfoBitRanker::setBiasList(RDKit::INT_VECT &classList) {
   URANGE_CHECK(classList.size(), d_classes);
   d_biasList = classList;
   // make sure we don't have any duplicates
-  std::sort(d_biasList.begin(), d_biasList.end());
-  RDKit::INT_VECT_CI bi = std::unique(d_biasList.begin(), d_biasList.end());
+  std::ranges::sort(d_biasList);
+  RDKit::INT_VECT_CI bi = std::ranges::unique(d_biasList);
   CHECK_INVARIANT(bi == d_biasList.end(),
                   "There are duplicates in the class bias list");
 
@@ -71,8 +71,7 @@ bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
     } else {
       fracs[i] = 0.0;
     }
-    if (std::find(d_biasList.begin(), d_biasList.end(), i) ==
-        d_biasList.end()) {
+    if (std::ranges::find(d_biasList, i) == d_biasList.end()) {
       // if not in the biasList
       if (fracs[i] > maxCor) {
         // if this is fraction is greater than the previously known maximum

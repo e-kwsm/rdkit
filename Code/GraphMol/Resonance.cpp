@@ -1112,7 +1112,7 @@ CEVect2::CEVect2(const CEMap &ceMap) {
   for (CEMap::const_iterator it = ceMap.begin(); it != ceMap.end(); ++it) {
     d_ceVect.push_back(it->second);
   }
-  std::sort(d_ceVect.begin(), d_ceVect.end(), resonanceStructureCompare);
+  std::ranges::sort(d_ceVect, resonanceStructureCompare);
   bool first = true;
   std::size_t hashPrev;
   for (CEVect::const_iterator it = d_ceVect.begin(); it != d_ceVect.end();
@@ -1337,7 +1337,7 @@ void ResonanceMolSupplier::prepEnumIdxVect() {
     cePermVect[i]->idx = i;
     idxToCEPerm(i, cePermVect[i]->v);
   }
-  std::sort(cePermVect.begin(), cePermVect.end(), cePermCompare);
+  std::ranges::sort(cePermVect, cePermCompare);
   for (unsigned int i = 0; i < d_length; ++i) {
     d_enumIdx[i] = cePermVect[i]->idx;
     delete cePermVect[i];

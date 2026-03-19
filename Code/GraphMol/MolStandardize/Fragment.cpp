@@ -106,8 +106,8 @@ void FragmentRemover::removeInPlace(RWMol &mol) {
     }
     auto tfrags = frags;
     // remove any fragments that this
-    frags.erase(std::remove_if(
-                    frags.begin(), frags.end(),
+    frags.erase(std::ranges::remove_if(
+                    frags,
                     [&fgci](const std::pair<boost::shared_ptr<ROMol>,
                                             unsigned int> &frag) -> bool {
                       return fgci->getNumAtoms() == frag.first->getNumAtoms() &&

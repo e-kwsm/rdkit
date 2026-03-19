@@ -66,7 +66,7 @@ void DrawMolMCHLasso::extractAtomColourLists(
   std::vector<boost::dynamic_bitset<>> inColourAtoms;
   for (const auto &cm : mcHighlightAtomMap_) {
     for (const auto &col : cm.second) {
-      auto cpos = std::find(colours.begin(), colours.end(), col);
+      auto cpos = std::ranges::find(colours, col);
       if (cpos == colours.end()) {
         colours.push_back(col);
         colourAtoms.push_back(std::vector<int>(1, cm.first));
@@ -125,11 +125,11 @@ void DrawMolMCHLasso::extractAtomColourLists(
         break;
       }
     }
-    colourLists.erase(std::remove_if(colourLists.begin(), colourLists.end(),
-                                     [](const std::vector<int> &v) -> bool {
-                                       return v.empty();
-                                     }),
-                      colourLists.end());
+    colourLists.erase(
+        std::ranges::remove_if(
+            colourLists,
+            [](const std::vector<int> &v) -> bool { return v.empty(); }),
+        colourLists.end());
   }
 }
 
@@ -409,11 +409,11 @@ void addExistingArcs(size_t i,
       arc.reset();
     }
   }
-  currArcs.erase(std::remove_if(currArcs.begin(), currArcs.end(),
-                                [](const std::unique_ptr<DrawShapeArc> &arc) {
-                                  return !arc;
-                                }),
-                 currArcs.end());
+  currArcs.erase(
+      std::ranges::remove_if(
+          currArcs,
+          [](const std::unique_ptr<DrawShapeArc> &arc) { return !arc; }),
+      currArcs.end());
 }
 }  // namespace
 
@@ -447,7 +447,7 @@ void DrawMolMCHLasso::makeIntersectingArcs(
         arcAngs.push_back(ang2);
         bangs.push_back(std::make_pair(bang, bangs.size()));
       }
-      std::sort(bangs.begin(), bangs.end());
+      std::ranges::sort(bangs);
       std::vector<double> sortedArcAngs;
       for (auto &b : bangs) {
         sortedArcAngs.push_back(arcAngs[2 * b.second]);
@@ -699,11 +699,11 @@ void DrawMolMCHLasso::orderAtomLines(
         std::swap(atomLines[i][j].line1, atomLines[i][j].line2);
       }
     }
-    std::for_each(bondAngles.begin(), bondAngles.end(),
-                  [&](std::pair<double, size_t> &ba) -> void {
-                    ba.first -= minBondAngle;
-                  });
-    std::sort(bondAngles.begin(), bondAngles.end());
+    std::ranges::for_each(bondAngles,
+                          [&](std::pair<double, size_t> &ba) -> void {
+                            ba.first -= minBondAngle;
+                          });
+    std::ranges::sort(bondAngles);
     std::vector<LinePair> newAtomLine;
     for (auto &ba : bondAngles) {
       newAtomLine.push_back(atomLines[i][ba.second]);
