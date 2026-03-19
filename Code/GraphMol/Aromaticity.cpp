@@ -93,7 +93,7 @@ bool checkFused(const INT_VECT &rids, INT_INT_VECT_MAP &ringNeighs) {
   // mark all rings in the system other than those in rids as done
   for (const auto &nci : ringNeighs) {
     rid = nci.first;
-    if (std::find(rids.begin(), rids.end(), rid) == rids.end()) {
+    if (std::ranges::find(rids, rid) == rids.end()) {
       done[rid] = 1;
     }
   }
@@ -396,8 +396,8 @@ void applyHuckelToFused(
     }
 
     curRs.clear();
-    std::transform(comb.begin(), comb.end(), std::back_inserter(curRs),
-                   [&fused](const int i) { return fused[i]; });
+    std::ranges::transform(comb, std::back_inserter(curRs),
+                           [&fused](const int i) { return fused[i]; });
 
     // check if the picked subsystem is fused
     if (ringNeighs.size() && !RingUtils::checkFused(curRs, ringNeighs)) {
@@ -427,8 +427,7 @@ void applyHuckelToFused(
 
       // add the ring IDs to the aromatic rings found so far
       // avoid duplicates
-      std::copy(curRs.begin(), curRs.end(),
-                std::inserter(aromRings, aromRings.begin()));
+      std::ranges::copy(curRs, std::inserter(aromRings, aromRings.begin()));
     }  // end check huckel rule
   }    // end while(1)
   narom += rdcast<int>(aromRings.size());

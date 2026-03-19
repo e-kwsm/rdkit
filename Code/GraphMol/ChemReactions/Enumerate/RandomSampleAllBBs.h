@@ -91,8 +91,7 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleAllBBsStrategy
     m_distributions.clear();
     m_permutation.resize(m_permutationSizes.size());
     m_offset = 0;
-    m_maxoffset =
-        *std::max_element(m_permutationSizes.begin(), m_permutationSizes.end());
+    m_maxoffset = *std::ranges::max_element(m_permutationSizes);
     for (size_t i = 0; i < m_permutationSizes.size(); ++i) {
       m_distributions.emplace_back(0, m_permutationSizes[i] - 1);
     }

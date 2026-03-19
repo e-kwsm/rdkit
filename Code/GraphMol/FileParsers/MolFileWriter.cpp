@@ -515,7 +515,7 @@ unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
     vs.emplace_back(idx, v);
     ++nbrIdx;
   }
-  std::sort(vs.begin(), vs.end(), Rankers::pairLess);
+  std::ranges::sort(vs, Rankers::pairLess);
   double vol;
   if (vs.size() == 4) {
     vol = vs[0].second.crossProduct(vs[1].second).dotProduct(vs[3].second);

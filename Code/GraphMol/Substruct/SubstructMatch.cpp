@@ -129,9 +129,8 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *q,
 bool insertIfNeeded(std::set<MatchVectType> &matches, const MatchVectType &m) {
   bool shouldInsert = true;
   std::unordered_set<int> matchAsSet;
-  std::transform(m.begin(), m.end(),
-                 std::inserter(matchAsSet, matchAsSet.begin()),
-                 [](const std::pair<int, int> &p) { return p.second; });
+  std::ranges::transform(m, std::inserter(matchAsSet, matchAsSet.begin()),
+                         [](const std::pair<int, int> &p) { return p.second; });
   for (auto it = matches.begin(); it != matches.end(); ++it) {
     std::unordered_set<int> existingMatchAsSet;
     std::transform(
@@ -272,7 +271,7 @@ bool MolMatchFinalCheckFunctor::operator()(const std::uint32_t q_c[],
     INT_LIST moOrder;
     for (const auto &bond : d_mol.atomBonds(mAt)) {
       const int dbidx = bond->getIdx();
-      if (std::find(mOrder.begin(), mOrder.end(), dbidx) != mOrder.end()) {
+      if (std::ranges::find(mOrder, dbidx) != mOrder.end()) {
         moOrder.push_back(dbidx);
       } else {
         moOrder.push_back(-1);

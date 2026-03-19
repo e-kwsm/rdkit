@@ -60,8 +60,8 @@ const std::shared_ptr<SynthonSet> SynthonSpace::getReaction(
     std::string reactionName) {
   std::pair<std::string, std::shared_ptr<SynthonSet>> tmp =
       std::make_pair(reactionName, std::shared_ptr<SynthonSet>());
-  if (const auto &it = std::lower_bound(
-          d_reactions.begin(), d_reactions.end(), tmp,
+  if (const auto &it = std::ranges::lower_bound(
+          d_reactions, tmp,
           [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
              const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
               -> bool { return p1.first < p2.first; });
@@ -553,13 +553,13 @@ void SynthonSpace::readDBFile(const std::string &inFilename,
   readSynthons(0, numSynthons, fileMap.d_mappedMemory, synthonPos,
                d_fileMajorVersion, d_synthonPool);
 #endif
-  if (!std::is_sorted(
-          d_synthonPool.begin(), d_synthonPool.end(),
+  if (!std::ranges::is_sorted(
+          d_synthonPool,
           [](const std::pair<std::string, std::unique_ptr<Synthon>> &p1,
              const std::pair<std::string, std::unique_ptr<Synthon>> &p2)
               -> bool { return p1.first < p2.first; })) {
-    std::sort(
-        d_synthonPool.begin(), d_synthonPool.end(),
+    std::ranges::sort(
+        d_synthonPool,
         [](const std::pair<std::string, std::unique_ptr<Synthon>> &p1,
            const std::pair<std::string, std::unique_ptr<Synthon>> &p2) -> bool {
           return p1.first < p2.first;
@@ -578,15 +578,16 @@ void SynthonSpace::readDBFile(const std::string &inFilename,
   readReactions(0, numReactions, fileMap.d_mappedMemory, reactionPos, *this,
                 d_fileMajorVersion, d_reactions);
 #endif
-  if (!std::is_sorted(
-          d_reactions.begin(), d_reactions.end(),
+  if (!std::ranges::is_sorted(
+          d_reactions,
           [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
              const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
               -> bool { return p1.first < p2.first; })) {
-    std::sort(d_reactions.begin(), d_reactions.end(),
-              [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
-                 const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
-                  -> bool { return p1.first < p2.first; });
+    std::ranges::sort(
+        d_reactions,
+        [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
+           const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
+            -> bool { return p1.first < p2.first; });
   }
   for (const auto &[id, reaction] : d_reactions) {
     reaction->assessRingFormers();
@@ -688,8 +689,8 @@ Synthon *SynthonSpace::addSynthonToPool(const std::string &smiles) {
   // except when reading a Text file which should only be done
   // occasionally, when converting a new database to binary.
   auto tmp = std::make_pair(smiles, std::unique_ptr<Synthon>());
-  if (auto it = std::lower_bound(
-          d_synthonPool.begin(), d_synthonPool.end(), tmp,
+  if (auto it = std::ranges::lower_bound(
+          d_synthonPool, tmp,
           [](const std::pair<std::string, std::unique_ptr<Synthon>> &p1,
              const std::pair<std::string, std::unique_ptr<Synthon>> &p2)
               -> bool { return p1.first < p2.first; });
@@ -707,8 +708,8 @@ std::shared_ptr<SynthonSet> SynthonSpace::addReactionToPool(
     const std::string &reactionName) {
   std::pair<std::string, std::shared_ptr<SynthonSet>> tmp =
       std::make_pair(reactionName, std::shared_ptr<SynthonSet>());
-  if (const auto &it = std::lower_bound(
-          d_reactions.begin(), d_reactions.end(), tmp,
+  if (const auto &it = std::ranges::lower_bound(
+          d_reactions, tmp,
           [](const std::pair<std::string, std::shared_ptr<SynthonSet>> &p1,
              const std::pair<std::string, std::shared_ptr<SynthonSet>> &p2)
               -> bool { return p1.first < p2.first; });
@@ -723,8 +724,8 @@ std::shared_ptr<SynthonSet> SynthonSpace::addReactionToPool(
 
 Synthon *SynthonSpace::getSynthonFromPool(const std::string &smiles) const {
   auto tmp = std::make_pair(smiles, std::unique_ptr<Synthon>());
-  if (auto it = std::lower_bound(
-          d_synthonPool.begin(), d_synthonPool.end(), tmp,
+  if (auto it = std::ranges::lower_bound(
+          d_synthonPool, tmp,
           [](const std::pair<std::string, std::unique_ptr<Synthon>> &p1,
              const std::pair<std::string, std::unique_ptr<Synthon>> &p2)
               -> bool { return p1.first < p2.first; });

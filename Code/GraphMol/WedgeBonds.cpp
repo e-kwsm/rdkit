@@ -351,7 +351,7 @@ int pickBondToWedge(
   if (nbrScores.empty()) {
     return -1;
   }
-  auto minPr = std::min_element(nbrScores.begin(), nbrScores.end());
+  auto minPr = std::ranges::min_element(nbrScores);
   return minPr->second;
 }
 
@@ -381,10 +381,9 @@ std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
   static int noNbrs = 100;
   auto [chiNbrs, nChiralNbrs] = detail::countChiralNbrs(mol, noNbrs);
   if (chiNbrs) {
-    std::sort(indices.begin(), indices.end(),
-              [&nChiralNbrs = nChiralNbrs](auto i1, auto i2) {
-                return nChiralNbrs[i1] < nChiralNbrs[i2];
-              });
+    std::ranges::sort(indices, [&nChiralNbrs = nChiralNbrs](auto i1, auto i2) {
+      return nChiralNbrs[i1] < nChiralNbrs[i2];
+    });
   }
   std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> wedgeInfo;
   for (auto idx : indices) {

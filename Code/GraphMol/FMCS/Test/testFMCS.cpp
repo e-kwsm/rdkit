@@ -276,8 +276,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
   for (std::list<std::vector<std::string>>::const_iterator tc =
            testCase.begin();
        tc != testCase.end(); tc++, n++) {
-    if (!test_N.empty() &&
-        test_N.end() == std::find(test_N.begin(), test_N.end(), n + 1)) {
+    if (!test_N.empty() && test_N.end() == std::ranges::find(test_N, n + 1)) {
       continue;
     }
 

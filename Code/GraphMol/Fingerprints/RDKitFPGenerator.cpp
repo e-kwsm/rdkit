@@ -135,7 +135,7 @@ void RDKitFPAtomEnv<OutputType>::updateAdditionalOutput(
         }
         if (additionalOutput->atomToBits) {
           auto &alist = additionalOutput->atomToBits->at(i);
-          if (std::find(alist.begin(), alist.end(), bitId) == alist.end()) {
+          if (std::ranges::find(alist, bitId) == alist.end()) {
             alist.push_back(bitId);
           }
         }
@@ -221,7 +221,7 @@ RDKitFPEnvGenerator<OutputType>::getEnvironments(
       // hash the path to generate a seed:
       unsigned long seed;
       if (path.size() > 1) {
-        std::sort(bondHashes.begin(), bondHashes.end());
+        std::ranges::sort(bondHashes);
 
         // finally, we will add the number of distinct atoms in the path at the
         // end

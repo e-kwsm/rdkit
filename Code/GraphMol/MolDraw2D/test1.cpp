@@ -359,9 +359,8 @@ std::hash_result_t hash_file(const std::string &filename) {
   std::string file_contents(std::istreambuf_iterator<char>{ifs}, {});
   if (filename.substr(filename.length() - 4) == ".svg") {
     // deal with MSDOS newlines.
-    file_contents.erase(
-        remove(file_contents.begin(), file_contents.end(), '\r'),
-        file_contents.end());
+    file_contents.erase(std::ranges::remove(file_contents, '\r'),
+                        file_contents.end());
   }
   return gboost::hash_range(file_contents.begin(), file_contents.end());
 }

@@ -483,10 +483,10 @@ bool checkIfRingsAreClosed(const Seed &fs, bool noLoneRingAtoms) {
       auto ai = atom->getIdx();
       const auto &ringIndices = ri->atomMembers(ai);
       if (!ringIndices.empty() &&
-          !std::any_of(ringIndices.begin(), ringIndices.end(),
-                       [&mcsNonFusedRings](const auto &ringIdx) {
-                         return mcsNonFusedRings.test(ringIdx);
-                       })) {
+          !std::ranges::any_of(ringIndices,
+                               [&mcsNonFusedRings](const auto &ringIdx) {
+                                 return mcsNonFusedRings.test(ringIdx);
+                               })) {
         return false;
       }
     }
@@ -507,9 +507,9 @@ bool checkIfRingsAreClosed(const Seed &fs, bool noLoneRingAtoms) {
         continue;
       }
       const auto &ringBondIndices = ri->bondRings().at(ringIdx);
-      if (std::all_of(
-              ringBondIndices.begin(), ringBondIndices.end(),
-              [&mcsBonds](const auto &bi) { return mcsBonds.test(bi); })) {
+      if (std::ranges::all_of(ringBondIndices, [&mcsBonds](const auto &bi) {
+            return mcsBonds.test(bi);
+          })) {
         return true;
       }
     }
@@ -646,10 +646,10 @@ bool MaximumCommonSubgraph::growSeeds() {
               DegenerateMcsMap.clear();
             }
             std::vector<unsigned int> key(McsIdx.Bonds.size());
-            std::transform(McsIdx.Bonds.begin(), McsIdx.Bonds.end(),
-                           key.begin(),
-                           [](const auto bond) { return bond->getIdx(); });
-            std::sort(key.begin(), key.end());
+            std::ranges::transform(
+                McsIdx.Bonds, key.begin(),
+                [](const auto bond) { return bond->getIdx(); });
+            std::ranges::sort(key);
             MCS value(McsIdx);
             value.QueryMolecule = QueryMolecule;
             value.Targets = Targets;
@@ -960,7 +960,7 @@ MCSResult MaximumCommonSubgraph::find(const std::vector<ROMOL_SPTR> &src_mols) {
 
   // sort source set of molecules by their 'size' and assume the smallest
   // molecule as a query
-  std::stable_sort(Molecules.begin(), Molecules.end(), molPtr_NumBondLess);
+  std::ranges::stable_sort(Molecules, molPtr_NumBondLess);
   size_t startIdx = 0;
   size_t endIdx = Molecules.size() - ThresholdCount;
   while (startIdx < endIdx && !Molecules.at(startIdx)->getNumAtoms()) {
@@ -1037,12 +1037,13 @@ MCSResult MaximumCommonSubgraph::find(const std::vector<ROMOL_SPTR> &src_mols) {
       res.SmartsString = std::move(smartsQueryMolPair.first);
       res.QueryMol = std::move(smartsQueryMolPair.second);
     } else {
-      std::transform(DegenerateMcsMap.begin(), DegenerateMcsMap.end(),
-                     std::inserter(res.DegenerateSmartsQueryMolDict,
-                                   res.DegenerateSmartsQueryMolDict.end()),
-                     [this](const auto &pair) {
-                       return generateResultSMARTSAndQueryMol(pair.second);
-                     });
+      std::ranges::transform(
+          DegenerateMcsMap,
+          std::inserter(res.DegenerateSmartsQueryMolDict,
+                        res.DegenerateSmartsQueryMolDict.end()),
+          [this](const auto &pair) {
+            return generateResultSMARTSAndQueryMol(pair.second);
+          });
     }
   }
 
