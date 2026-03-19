@@ -402,7 +402,7 @@ bool SDMolSupplier::atEnd() {
 void SDMolSupplier::setStreamIndices(const std::vector<std::streampos> &locs) {
   d_molpos.clear();
   d_molpos.resize(locs.size());
-  std::copy(locs.begin(), locs.end(), d_molpos.begin());
+  std::ranges::copy(locs, d_molpos.begin());
   this->reset();
   d_len = rdcast<int>(d_molpos.size());
 }

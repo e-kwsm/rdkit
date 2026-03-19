@@ -528,8 +528,7 @@ void testJnk1LigandsDistance() {
   std::list<int> forbidden2 = {19};
   for (auto &matchVect : mvt1) {
     for (auto &matchPair : matchVect) {
-      auto isPresent =
-          std::find(forbidden1.begin(), forbidden1.end(), matchPair.second);
+      auto isPresent = std::ranges::find(forbidden1, matchPair.second);
       if (isPresent != forbidden1.end()) {
         std::cerr << "mol1 index forbidden: " << matchPair.second << std::endl;
         TEST_ASSERT(isPresent == forbidden1.end());
@@ -538,8 +537,7 @@ void testJnk1LigandsDistance() {
   }
   for (auto &matchVect : mvt2) {
     for (auto &matchPair : matchVect) {
-      auto isPresent =
-          std::find(forbidden2.begin(), forbidden2.end(), matchPair.second);
+      auto isPresent = std::ranges::find(forbidden2, matchPair.second);
       if (isPresent != forbidden2.end()) {
         std::cerr << "mol2 index forbidden: " << matchPair.second << std::endl;
         TEST_ASSERT(isPresent == forbidden2.end());
@@ -2557,15 +2555,15 @@ void testCustomShouldAcceptMCS() {
         }
       }
       boost::dynamic_bitset<> queryAtomIndices(query.getNumAtoms());
-      std::for_each(atomIdxMatch.begin(), atomIdxMatch.end(),
-                    [&queryAtomIndices](const auto &pair) {
-                      queryAtomIndices.set(pair.first);
-                    });
+      std::ranges::for_each(atomIdxMatch,
+                            [&queryAtomIndices](const auto &pair) {
+                              queryAtomIndices.set(pair.first);
+                            });
       boost::dynamic_bitset<> targetAtomIndices(target.getNumAtoms());
-      std::for_each(atomIdxMatch.begin(), atomIdxMatch.end(),
-                    [&targetAtomIndices](const auto &pair) {
-                      targetAtomIndices.set(pair.second);
-                    });
+      std::ranges::for_each(atomIdxMatch,
+                            [&targetAtomIndices](const auto &pair) {
+                              targetAtomIndices.set(pair.second);
+                            });
       for (const auto &bondIdxPair : bondIdxMatch) {
         const auto queryBond = query.getBondWithIdx(bondIdxPair.first);
         const auto targetBond = target.getBondWithIdx(bondIdxPair.second);
@@ -2663,15 +2661,15 @@ void testDegenerateMCS() {
       return MolToSmiles(*ROMOL_SPTR(SmartsToMol(pair.first)));
     };
     std::set<std::string> degSmiles1;
-    std::transform(mcs1.DegenerateSmartsQueryMolDict.begin(),
-                   mcs1.DegenerateSmartsQueryMolDict.end(),
-                   std::inserter(degSmiles1, degSmiles1.end()),
-                   smartsToCanonicalSmiles);
+    std::ranges::transform(mcs1.DegenerateSmartsQueryMolDict,
+
+                           std::inserter(degSmiles1, degSmiles1.end()),
+                           smartsToCanonicalSmiles);
     std::set<std::string> degSmiles2;
-    std::transform(mcs2.DegenerateSmartsQueryMolDict.begin(),
-                   mcs2.DegenerateSmartsQueryMolDict.end(),
-                   std::inserter(degSmiles2, degSmiles2.end()),
-                   smartsToCanonicalSmiles);
+    std::ranges::transform(mcs2.DegenerateSmartsQueryMolDict,
+
+                           std::inserter(degSmiles2, degSmiles2.end()),
+                           smartsToCanonicalSmiles);
     TEST_ASSERT(degSmiles1.size() == 2);
     TEST_ASSERT(degSmiles1 == degSmiles2);
   }

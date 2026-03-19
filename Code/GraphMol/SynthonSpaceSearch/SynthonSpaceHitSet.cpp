@@ -10,6 +10,8 @@
 
 #include <GraphMol/SynthonSpaceSearch/SynthonSpaceHitSet.h>
 
+#include <algorithm>
+
 namespace RDKit::SynthonSpaceSearch {
 SynthonSpaceHitSet::SynthonSpaceHitSet(
     const SynthonSet &reaction, const std::vector<std::vector<size_t>> &stu,
@@ -26,8 +28,8 @@ SynthonSpaceHitSet::SynthonSpaceHitSet(
   }
 
   frags.reserve(fragSet.size());
-  std::transform(
-      fragSet.begin(), fragSet.end(), std::back_inserter(frags),
+  std::ranges::transform(
+      fragSet, std::back_inserter(frags),
       [](const std::unique_ptr<ROMol> &f) -> ROMol * { return f.get(); });
 
   numHits = std::accumulate(

@@ -768,7 +768,7 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
       for (const auto &nbri :
            boost::make_iterator_range(mol1.getAtomBonds(a1))) {
         int dbidx = mol1[nbri]->getIdx();
-        if (std::find(qOrder.begin(), qOrder.end(), dbidx) != qOrder.end()) {
+        if (std::ranges::find(qOrder, dbidx) != qOrder.end()) {
           qmoOrder.push_back(dbidx);
         }
         //            else
@@ -793,7 +793,7 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
     INT_LIST moOrder;
     for (const auto &nbri : boost::make_iterator_range(mol2.getAtomBonds(a2))) {
       int dbidx = mol2[nbri]->getIdx();
-      if (std::find(mOrder.begin(), mOrder.end(), dbidx) != mOrder.end()) {
+      if (std::ranges::find(mOrder, dbidx) != mOrder.end()) {
         moOrder.push_back(dbidx);
       } else {
         moOrder.push_back(-1);

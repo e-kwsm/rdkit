@@ -83,12 +83,12 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
   free(crit);
 
   // sort removed so that looping will be easier later
-  std::sort(removed.begin(), removed.end());
+  std::ranges::sort(removed);
 
   // some error checking here, uniqueify removed and the vector should not
   // changed
   // REVIEW can we put this inside a #ifdef DEBUG?
-  RDKit::INT_VECT_CI nEnd = std::unique(removed.begin(), removed.end());
+  RDKit::INT_VECT_CI nEnd = std::ranges::unique(removed);
   CHECK_INVARIANT(
       nEnd == removed.end(),
       "Somehow there are duplicates in the list of removed clusters");

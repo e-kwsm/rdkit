@@ -160,8 +160,8 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
 
       mrvAtom->radical = v.second.get<std::string>("<xmlattr>.radical", "");
       if (mrvAtom->radical != "") {
-        if (std::find(marvinRadicalVals.begin(), marvinRadicalVals.end(),
-                      mrvAtom->radical) == marvinRadicalVals.end()) {
+        if (std::ranges::find(marvinRadicalVals, mrvAtom->radical) ==
+            marvinRadicalVals.end()) {
           std::ostringstream err;
           err << "The value for radical must be one of "
               << boost::algorithm::join(marvinRadicalVals, ", ")
@@ -393,8 +393,8 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
 
       if (radical != "" && radicals.size() > i && radicals[i] != "0") {
         mrvAtom->radical = radicals[i];
-        if (std::find(marvinRadicalVals.begin(), marvinRadicalVals.end(),
-                      mrvAtom->radical) == marvinRadicalVals.end()) {
+        if (std::ranges::find(marvinRadicalVals, mrvAtom->radical) ==
+            marvinRadicalVals.end()) {
           std::ostringstream err;
           err << "The value for radical must be one of "
               << boost::algorithm::join(marvinRadicalVals, ", ")
@@ -479,11 +479,11 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
       mrvBond->atomRefs2[0] = atomRefs2s[0];
       mrvBond->atomRefs2[1] = atomRefs2s[1];
       if (atomRefs2s.size() != 2 ||
-          std::find_if(atoms.begin(), atoms.end(),
-                       [mrvBond](auto a) {
-                         return a->id == mrvBond->atomRefs2[0];
-                       }) == atoms.end() ||
-          std::find_if(atoms.begin(), atoms.end(), [mrvBond](auto a) {
+          std::ranges::find_if(atoms,
+                               [mrvBond](auto a) {
+                                 return a->id == mrvBond->atomRefs2[0];
+                               }) == atoms.end() ||
+          std::ranges::find_if(atoms, [mrvBond](auto a) {
             return a->id == mrvBond->atomRefs2[1];
           }) == atoms.end()) {
         throw FileParseException(
@@ -492,8 +492,8 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
 
       mrvBond->order = v.second.get<std::string>("<xmlattr>.order", "");
       if (mrvBond->order != "") {
-        if (std::find(marvinBondOrders.begin(), marvinBondOrders.end(),
-                      mrvBond->order) == marvinBondOrders.end()) {
+        if (std::ranges::find(marvinBondOrders, mrvBond->order) ==
+            marvinBondOrders.end()) {
           std::ostringstream err;
           err << "Expected one of  "
               << boost::algorithm::join(marvinBondOrders, ", ")
@@ -504,9 +504,10 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
 
       mrvBond->queryType = v.second.get<std::string>("<xmlattr>.queryType", "");
       if (mrvBond->queryType != "") {
-        if (std::find(marvinQueryBondsTypes.begin(),
-                      marvinQueryBondsTypes.end(),
-                      mrvBond->queryType) == marvinQueryBondsTypes.end()) {
+        if (std::ranges::find(marvinQueryBondsTypes,
+
+                              mrvBond->queryType) ==
+            marvinQueryBondsTypes.end()) {
           std::ostringstream err;
           err << "Expected one of  "
               << boost::algorithm::join(marvinQueryBondsTypes, ", ")
@@ -518,9 +519,10 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
       mrvBond->convention =
           v.second.get<std::string>("<xmlattr>.convention", "");
       if (mrvBond->convention != "") {
-        if (std::find(marvinConventionTypes.begin(),
-                      marvinConventionTypes.end(),
-                      mrvBond->convention) == marvinConventionTypes.end()) {
+        if (std::ranges::find(marvinConventionTypes,
+
+                              mrvBond->convention) ==
+            marvinConventionTypes.end()) {
           std::ostringstream err;
           err << "Expected one of  "
               << boost::algorithm::join(marvinConventionTypes, ", ")
@@ -562,9 +564,9 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
             }
             mrvBond->bondStereo.conventionValue =
                 ww.second.get<std::string>("<xmlattr>.conventionValue", "");
-            if (std::find(marvinStereoConventionTypes.begin(),
-                          marvinStereoConventionTypes.end(),
-                          mrvBond->bondStereo.conventionValue) ==
+            if (std::ranges::find(marvinStereoConventionTypes,
+
+                                  mrvBond->bondStereo.conventionValue) ==
                 marvinStereoConventionTypes.end()) {
               std::ostringstream err;
               err << "Expected one of  "
@@ -578,9 +580,9 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
               ww.second.get<std::string>("<xmlattr>.dictRef", "");
           if (mrvBond->bondStereo.dictRef != "") {
             bondStereoDeclCount++;
-            if (std::find(marvinStereoDictRefTypes.begin(),
-                          marvinStereoDictRefTypes.end(),
-                          mrvBond->bondStereo.dictRef) ==
+            if (std::ranges::find(marvinStereoDictRefTypes,
+
+                                  mrvBond->bondStereo.dictRef) ==
                 marvinStereoDictRefTypes.end()) {
               std::ostringstream err;
               err << "Expected one of  "
@@ -1070,9 +1072,8 @@ ptree MarvinBond::toPtree() const {
 MarvinMolBase::~MarvinMolBase() {}
 
 int MarvinMolBase::getAtomIndex(std::string id) const {
-  auto atomIter =
-      find_if(atoms.begin(), atoms.end(),
-              [id](const MarvinAtom *arg) { return arg->id == id; });
+  auto atomIter = std::ranges::find_if(
+      atoms, [id](const MarvinAtom *arg) { return arg->id == id; });
   if (atomIter != atoms.end()) {
     return atomIter - atoms.begin();
   } else {
@@ -1103,9 +1104,8 @@ void MarvinMolBase::removeOwnedBond(MarvinBond *bond) {
 }
 
 int MarvinMolBase::getBondIndex(std::string id) const {
-  auto bondIter =
-      find_if(bonds.begin(), bonds.end(),
-              [id](const MarvinBond *arg) { return arg->id == id; });
+  auto bondIter = std::ranges::find_if(
+      bonds, [id](const MarvinBond *arg) { return arg->id == id; });
   if (bondIter != bonds.end()) {
     return bondIter - bonds.begin();
   } else {
@@ -1114,9 +1114,9 @@ int MarvinMolBase::getBondIndex(std::string id) const {
 }
 
 MarvinAtom *MarvinMolBase::findAtomByRef(std::string atomId) {
-  auto atomIter =
-      find_if(this->atoms.begin(), this->atoms.end(),
-              [atomId](const MarvinAtom *arg) { return arg->id == atomId; });
+  auto atomIter = std::ranges::find_if(
+      this->atoms,
+      [atomId](const MarvinAtom *arg) { return arg->id == atomId; });
   if (atomIter != this->atoms.end()) {
     return *atomIter;
   }
@@ -1131,9 +1131,9 @@ MarvinAtom *MarvinMolBase::findAtomByRef(std::string atomId) {
 }
 
 MarvinBond *MarvinMolBase::findBondByRef(std::string bondId) {
-  auto bondIter =
-      find_if(this->bonds.begin(), this->bonds.end(),
-              [bondId](const MarvinBond *arg) { return arg->id == bondId; });
+  auto bondIter = std::ranges::find_if(
+      this->bonds,
+      [bondId](const MarvinBond *arg) { return arg->id == bondId; });
   if (bondIter != this->bonds.end()) {
     return *bondIter;
   }
@@ -1330,8 +1330,8 @@ MarvinSruCoModSgroup::MarvinSruCoModSgroup(MarvinMolBase *parentInit,
   if (this->connect == "") {
     this->connect = "ht";
   }
-  if (std::find(sruSgroupConnectChoices.begin(), sruSgroupConnectChoices.end(),
-                this->connect) == sruSgroupConnectChoices.end()) {
+  if (std::ranges::find(sruSgroupConnectChoices, this->connect) ==
+      sruSgroupConnectChoices.end()) {
     std::ostringstream err;
     err << "Expected a connect  string of \""
         << boost::algorithm::join(sruSgroupConnectChoices, ", ")
@@ -2225,10 +2225,9 @@ MarvinSuperatomSgroup::MarvinSuperatomSgroup(MarvinMolBase *parentInit,
         throw FileParseException(
             "Expected atom, order and bond, for an AttachmentPoint definition in MRV file");
       }
-      if (std::find_if(atoms.begin(), atoms.end(),
-                       [&marvinAttachmentPoint](auto a) {
-                         return a->id == marvinAttachmentPoint->atom;
-                       }) == atoms.end()) {
+      if (std::ranges::find_if(atoms, [&marvinAttachmentPoint](auto a) {
+            return a->id == marvinAttachmentPoint->atom;
+          }) == atoms.end()) {
         throw FileParseException(
             "Atom specification for an AttachmentPoint definition must be in the parent's atom array in MRV file");
       }
@@ -2463,12 +2462,12 @@ void MarvinMolBase::cleanUpNumbering(
 bool MarvinMolBase::AnyOverLappingAtoms(const MarvinMolBase *otherMol) const {
   PRECONDITION(otherMol != nullptr, "otherMol cannot be null");
   std::vector<std::string> firstList = getAtomList();
-  std::sort(firstList.begin(), firstList.end());
+  std::ranges::sort(firstList);
   std::vector<std::string> secondList = otherMol->getAtomList();
-  std::sort(secondList.begin(), secondList.end());
+  std::ranges::sort(secondList);
   std::vector<std::string> intersection;
-  std::set_intersection(firstList.begin(), firstList.end(), secondList.begin(),
-                        secondList.end(), back_inserter(intersection));
+  std::ranges::set_intersection(firstList, secondList,
+                                back_inserter(intersection));
 
   return intersection.size() > 0;
 }
@@ -2692,12 +2691,12 @@ void moveSgroup(MarvinMolBase *sgroupToMove, MarvinMolBase *newParent,
 
   MarvinMolBase *parent = sgroupToMove->parent;
   PRECONDITION(parent, "bad sgroupToMove parent pointer");
-  auto moveUniqIter =
-      find_if(sgroupToMove->parent->sgroups.begin(),
-              sgroupToMove->parent->sgroups.end(),
-              [sgroupToMove](std::unique_ptr<MarvinMolBase> &sgptr) {
-                return sgptr->id == sgroupToMove->id;
-              });
+  auto moveUniqIter = std::ranges::find_if(
+      sgroupToMove->parent->sgroups,
+
+      [sgroupToMove](std::unique_ptr<MarvinMolBase> &sgptr) {
+        return sgptr->id == sgroupToMove->id;
+      });
 
   if (moveUniqIter == sgroupToMove->parent->sgroups.end()) {
     throw FileParseException(
@@ -2758,15 +2757,13 @@ void MarvinMultipleSgroup::expandOneMultipleSgroup() {
   auto actualParent = getActualParent(this);
 
   for (MarvinBond *bondPtr : actualParent->bonds) {
-    bool atom1InSet =
-        (std::find_if(atoms.begin(), atoms.end(), [&bondPtr](auto a) {
-           return a->id == bondPtr->atomRefs2[0];
-         }) != atoms.end());
+    bool atom1InSet = (std::ranges::find_if(atoms, [&bondPtr](auto a) {
+                         return a->id == bondPtr->atomRefs2[0];
+                       }) != atoms.end());
 
-    bool atom2InSet =
-        (std::find_if(atoms.begin(), atoms.end(), [&bondPtr](auto a) {
-           return a->id == bondPtr->atomRefs2[1];
-         }) != atoms.end());
+    bool atom2InSet = (std::ranges::find_if(atoms, [&bondPtr](auto a) {
+                         return a->id == bondPtr->atomRefs2[1];
+                       }) != atoms.end());
 
     if (atom1InSet && atom2InSet) {
       bondsInGroup.push_back(bondPtr);
@@ -2832,8 +2829,8 @@ void MarvinMultipleSgroup::expandOneMultipleSgroup() {
 
       for (auto thisParent = this->parent;; thisParent = thisParent->parent) {
         TEST_ASSERT(thisParent != nullptr);
-        auto insertItr = find(thisParent->atoms.begin(),
-                              thisParent->atoms.end(), lastAtomInGroupPtr);
+        auto insertItr =
+            std::ranges::find(thisParent->atoms, lastAtomInGroupPtr);
         if (insertItr != thisParent->atoms.end()) {
           ++insertItr;  // insert after the last one
         }
@@ -2844,9 +2841,8 @@ void MarvinMultipleSgroup::expandOneMultipleSgroup() {
 
         if (thisParent->role() == "MultipleSgroup") {
           auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
-          insertItr =
-              find(thisMultipleParent->parentAtoms.begin(),
-                   thisMultipleParent->parentAtoms.end(), lastAtomInGroupPtr);
+          insertItr = std::ranges::find(thisMultipleParent->parentAtoms,
+                                        lastAtomInGroupPtr);
           if (insertItr != thisMultipleParent->parentAtoms.end()) {
             ++insertItr;  // insert after the last one
           }
@@ -2966,8 +2962,8 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
     //  remove and delete the dummy atom from the parent.
 
     bool coordExist = this->has2dCoords();
-    auto dummyAtomIter = find_if(
-        actualParent->atoms.begin(), actualParent->atoms.end(),
+    auto dummyAtomIter = std::ranges::find_if(
+        actualParent->atoms,
         [this](const MarvinAtom *arg) { return arg->sgroupRef == this->id; });
     if (dummyAtomIter == actualParent->atoms.end()) {
       throw FileParseException(
@@ -3015,8 +3011,8 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
       }
 
       if (attachedAtomId != "") {
-        auto attachmentPoint = find_if(
-            this->attachmentPoints.begin(), this->attachmentPoints.end(),
+        auto attachmentPoint = std::ranges::find_if(
+            this->attachmentPoints,
             [orphanedBond](const std::unique_ptr<MarvinAttachmentPoint> &arg) {
               return arg->bond == orphanedBond->id;
             });
@@ -3069,11 +3065,10 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
 
     for (auto thisParent = parent;; thisParent = thisParent->parent) {
       TEST_ASSERT(thisParent != nullptr);
-      auto dummyInParent =
-          find_if(thisParent->atoms.begin(), thisParent->atoms.end(),
-                  [dummyAtomPtr](const MarvinAtom *arg) {
-                    return arg == dummyAtomPtr;
-                  });
+      auto dummyInParent = std::ranges::find_if(
+          thisParent->atoms, [dummyAtomPtr](const MarvinAtom *arg) {
+            return arg == dummyAtomPtr;
+          });
       TEST_ASSERT(dummyInParent != thisParent->atoms.end());
       thisParent->atoms.erase(dummyInParent);  // get rid of the atoms pointer
                                                // to the old dummy atom
@@ -3085,8 +3080,7 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
         auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
 
         auto deleteIter =
-            find(thisMultipleParent->parentAtoms.begin(),
-                 thisMultipleParent->parentAtoms.end(), dummyAtomPtr);
+            std::ranges::find(thisMultipleParent->parentAtoms, dummyAtomPtr);
         TEST_ASSERT(deleteIter != thisMultipleParent->parentAtoms.end());
         thisMultipleParent->parentAtoms.erase(deleteIter);
       }
@@ -3131,11 +3125,10 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
     for (auto &attachmentPoint : this->attachmentPoints) {
       // find the bond in the parent
 
-      auto bondIter =
-          find_if(actualParent->bonds.begin(), actualParent->bonds.end(),
-                  [&attachmentPoint](const MarvinBond *arg) {
-                    return arg->id == attachmentPoint->bond;
-                  });
+      auto bondIter = std::ranges::find_if(
+          actualParent->bonds, [&attachmentPoint](const MarvinBond *arg) {
+            return arg->id == attachmentPoint->bond;
+          });
       if (bondIter == actualParent->bonds.end()) {
         throw FileParseException(
             "Bond specification for an AttachmentPoint definition was not found in the bond array in MRV file");
@@ -3148,10 +3141,10 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
 
       int atomIndex;
       for (atomIndex = 0; atomIndex < 2; ++atomIndex) {
-        if (std::find_if(actualParent->atoms.begin(), actualParent->atoms.end(),
-                         [&, bondIter, atomIndex](auto a) {
-                           return a->id == (*bondIter)->atomRefs2[atomIndex];
-                         }) == actualParent->atoms.end()) {
+        if (std::ranges::find_if(
+                actualParent->atoms, [&, bondIter, atomIndex](auto a) {
+                  return a->id == (*bondIter)->atomRefs2[atomIndex];
+                }) == actualParent->atoms.end()) {
           (*bondIter)->atomRefs2[atomIndex] =
               attachmentPoint->atom;  // the attach atom
           break;
@@ -3176,11 +3169,10 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
       moveSgroup(childSgroup.get(), actualParent, false);
     }
     this->sgroups.clear();
-    auto sgroupItr =
-        std::find_if(parent->sgroups.begin(), parent->sgroups.end(),
-                     [this](std::unique_ptr<MarvinMolBase> &sgptr) {
-                       return sgptr->id == this->id;
-                     });
+    auto sgroupItr = std::ranges::find_if(
+        parent->sgroups, [this](std::unique_ptr<MarvinMolBase> &sgptr) {
+          return sgptr->id == this->id;
+        });
     TEST_ASSERT(sgroupItr != parent->sgroups.end());
 
     parent->sgroups.erase(sgroupItr);
@@ -3202,15 +3194,14 @@ void MarvinMulticenterSgroup::processOneMulticenterSgroup() {
     }
   }
   for (auto orphanedBond : orphanedBonds) {
-    auto orphanedBondIter = std::find(actualParent->bonds.begin(),
-                                      actualParent->bonds.end(), orphanedBond);
+    auto orphanedBondIter =
+        std::ranges::find(actualParent->bonds, orphanedBond);
     TEST_ASSERT(orphanedBondIter != actualParent->bonds.end());
     actualParent->bonds.erase(orphanedBondIter);
     actualParent->removeOwnedBond(orphanedBond);
   }
 
-  auto centerIter = std::find(actualParent->atoms.begin(),
-                              actualParent->atoms.end(), this->center);
+  auto centerIter = std::ranges::find(actualParent->atoms, this->center);
   if (centerIter !=
       actualParent->atoms.end())  // it might already have been deleted by
                                   // another multicenter group
@@ -3218,8 +3209,8 @@ void MarvinMulticenterSgroup::processOneMulticenterSgroup() {
     auto centerPtr = *centerIter;
     for (auto thisParent = parent;; thisParent = thisParent->parent) {
       TEST_ASSERT(thisParent != nullptr);
-      auto parentAtomIter = find(
-          thisParent->atoms.begin(), thisParent->atoms.end(),
+      auto parentAtomIter = std::ranges::find(
+          thisParent->atoms,
           centerPtr);  // get rid of the atoms pointer to the old dummy atom
       TEST_ASSERT(parentAtomIter != thisParent->atoms.end());
       thisParent->atoms.erase(parentAtomIter);  // get rid of the atoms pointer
@@ -3228,8 +3219,7 @@ void MarvinMulticenterSgroup::processOneMulticenterSgroup() {
       if (thisParent->role() == "MultipleSgroup") {
         auto thisMultipleParent = (MarvinMultipleSgroup *)thisParent;
         auto deleteIter =
-            find(thisMultipleParent->parentAtoms.begin(),
-                 thisMultipleParent->parentAtoms.end(), centerPtr);
+            std::ranges::find(thisMultipleParent->parentAtoms, centerPtr);
         TEST_ASSERT(deleteIter != thisMultipleParent->parentAtoms.end());
         thisMultipleParent->parentAtoms.erase(deleteIter);
       }
@@ -3246,11 +3236,10 @@ void MarvinMulticenterSgroup::processOneMulticenterSgroup() {
 
   for (auto thisParent = parent;; thisParent = thisParent->parent) {
     TEST_ASSERT(thisParent != nullptr);
-    auto sgrupIter =
-        std::find_if(thisParent->sgroups.begin(), thisParent->sgroups.end(),
-                     [this](std::unique_ptr<MarvinMolBase> &sgptr) {
-                       return sgptr->id == this->id;
-                     });
+    auto sgrupIter = std::ranges::find_if(
+        thisParent->sgroups, [this](std::unique_ptr<MarvinMolBase> &sgptr) {
+          return sgptr->id == this->id;
+        });
     TEST_ASSERT(sgrupIter != thisParent->sgroups.end());
     thisParent->sgroups.erase(sgrupIter);
     if (thisParent == actualParent) {
@@ -3273,8 +3262,8 @@ void MarvinMolBase::prepSgroupsForRDKit() {
   {
     allDone = true;  // until it is not true in the loop below
     for (auto &childSgroup : this->sgroups) {
-      if (std::find(sgroupsMolIdsDone.begin(), sgroupsMolIdsDone.end(),
-                    childSgroup->molID) == sgroupsMolIdsDone.end()) {
+      if (std::ranges::find(sgroupsMolIdsDone, childSgroup->molID) ==
+          sgroupsMolIdsDone.end()) {
         sgroupsMolIdsDone.push_back(childSgroup->molID);
         childSgroup->prepSgroupsForRDKit();
         allDone = false;
@@ -3419,15 +3408,14 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
          thisParent = thisParent->parent)  // do all parents and grandparents
                                            // ... to to the actual parent
     {
-      auto deleteIter =
-          find(thisParent->atoms.begin(), thisParent->atoms.end(), atom);
+      auto deleteIter = std::ranges::find(thisParent->atoms, atom);
       TEST_ASSERT(deleteIter != thisParent->atoms.end());
       thisParent->atoms.erase(deleteIter);
 
       if (thisParent->role() == "MultipleSgroup") {
         auto marvinMultipleSgroup = (MarvinMultipleSgroup *)thisParent;
-        auto sgroupIter = find(marvinMultipleSgroup->parentAtoms.begin(),
-                               marvinMultipleSgroup->parentAtoms.end(), atom);
+        auto sgroupIter =
+            std::ranges::find(marvinMultipleSgroup->parentAtoms, atom);
         TEST_ASSERT(sgroupIter != marvinMultipleSgroup->parentAtoms.end());
         marvinMultipleSgroup->parentAtoms.erase(sgroupIter);
       }
@@ -3453,15 +3441,13 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
 
   for (auto bond : actualParent->bonds) {
     bool atom1InGroup =
-        (std::find_if(marvinSuperatomSgroup->atoms.begin(),
-                      marvinSuperatomSgroup->atoms.end(), [&bond](auto a) {
-                        return a->id == (bond)->atomRefs2[0];
-                      }) != marvinSuperatomSgroup->atoms.end());
+        (std::ranges::find_if(marvinSuperatomSgroup->atoms, [&bond](auto a) {
+           return a->id == (bond)->atomRefs2[0];
+         }) != marvinSuperatomSgroup->atoms.end());
     bool atom2InGroup =
-        (std::find_if(marvinSuperatomSgroup->atoms.begin(),
-                      marvinSuperatomSgroup->atoms.end(), [&bond](auto a) {
-                        return a->id == (bond)->atomRefs2[1];
-                      }) != marvinSuperatomSgroup->atoms.end());
+        (std::ranges::find_if(marvinSuperatomSgroup->atoms, [&bond](auto a) {
+           return a->id == (bond)->atomRefs2[1];
+         }) != marvinSuperatomSgroup->atoms.end());
 
     if (atom1InGroup && atom2InGroup) {  // both are in, so copy the bond
       marvinSuperatomSgroup->bonds.push_back(bond);
@@ -3542,10 +3528,10 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
   this->sgroups.clear();
 
   // remove the old expanded superatom sgroup
-  auto sgroupIter = std::find_if(parent->sgroups.begin(), parent->sgroups.end(),
-                                 [this](std::unique_ptr<MarvinMolBase> &sgptr) {
-                                   return sgptr->id == this->id;
-                                 });
+  auto sgroupIter = std::ranges::find_if(
+      parent->sgroups, [this](std::unique_ptr<MarvinMolBase> &sgptr) {
+        return sgptr->id == this->id;
+      });
   TEST_ASSERT(sgroupIter != parent->sgroups.end());
   parent->sgroups.erase(sgroupIter);
 
@@ -3608,8 +3594,7 @@ int MarvinMultipleSgroup::getMatchedOrphanBondIndex(
       continue;  // bond does not have the atomId
     }
 
-    auto testBondIter =
-        find(orphanedBonds.begin(), orphanedBonds.end(), *testBond);
+    auto testBondIter = std::ranges::find(orphanedBonds, *testBond);
     if (testBondIter != orphanedBonds.end()) {
       return testBondIter - orphanedBonds.begin();
     }
@@ -3656,25 +3641,23 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
 
   for (MarvinAtom *atomPtr : this->atoms) {
     // Atoms in the group but NOT in the parent part are to be deleted
-    if (std::find_if(parentAtoms.begin(), parentAtoms.end(),
-                     [&, atomPtr](auto a) { return a->id == atomPtr->id; }) ==
-        parentAtoms.end()) {
+    if (std::ranges::find_if(parentAtoms, [&, atomPtr](auto a) {
+          return a->id == atomPtr->id;
+        }) == parentAtoms.end()) {
       atomsToDelete.push_back(atomPtr);
     }
   }
 
   for (MarvinBond *bondPtr : actualParent->bonds) {
     bool atom1ToBeDeleted =
-        (std::find_if(atomsToDelete.begin(), atomsToDelete.end(),
-                      [&bondPtr](auto a) {
-                        return a->id == (bondPtr)->atomRefs2[0];
-                      }) != atomsToDelete.end());
+        (std::ranges::find_if(atomsToDelete, [&bondPtr](auto a) {
+           return a->id == (bondPtr)->atomRefs2[0];
+         }) != atomsToDelete.end());
 
     bool atom2ToBeDeleted =
-        (std::find_if(atomsToDelete.begin(), atomsToDelete.end(),
-                      [&bondPtr](auto a) {
-                        return a->id == (bondPtr)->atomRefs2[1];
-                      }) != atomsToDelete.end());
+        (std::ranges::find_if(atomsToDelete, [&bondPtr](auto a) {
+           return a->id == (bondPtr)->atomRefs2[1];
+         }) != atomsToDelete.end());
 
     if (atom1ToBeDeleted && atom2ToBeDeleted) {
       bondsToDelete.push_back(bondPtr);
@@ -3730,8 +3713,7 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
     {
       std::vector<MarvinBond *> bondsToTry =
           bondsToDelete;  // copy of bonds to delete
-      auto deleteIter =
-          find(bondsToTry.begin(), bondsToTry.end(), orphanedBondToFix);
+      auto deleteIter = std::ranges::find(bondsToTry, orphanedBondToFix);
       TEST_ASSERT(deleteIter != bondsToTry.end());
       bondsToTry.erase(deleteIter);
 
@@ -3756,8 +3738,7 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
     // undelete the bond which has been fixed (really remove it from the
     // list of bonds to be delete)
 
-    auto undeleteIter =
-        find(bondsToDelete.begin(), bondsToDelete.end(), orphanedBondToFix);
+    auto undeleteIter = std::ranges::find(bondsToDelete, orphanedBondToFix);
     TEST_ASSERT(undeleteIter != bondsToDelete.end());
     bondsToDelete.erase(undeleteIter);
 
@@ -3794,11 +3775,10 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
   // make them
 
   for (auto childSgroup : sgroupsToDelete) {
-    auto sgroupIter =
-        std::find_if(sgroups.begin(), sgroups.end(),
-                     [childSgroup](std::unique_ptr<MarvinMolBase> &sgptr) {
-                       return sgptr->id == childSgroup->id;
-                     });
+    auto sgroupIter = std::ranges::find_if(
+        sgroups, [childSgroup](std::unique_ptr<MarvinMolBase> &sgptr) {
+          return sgptr->id == childSgroup->id;
+        });
     TEST_ASSERT(sgroupIter != sgroups.end());
     sgroups.erase(sgroupIter);
   }
@@ -3810,8 +3790,7 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
          thisParent = thisParent->parent) {  // do all parents and grandparents
                                              // ... to to the actual parent
 
-      auto deleteIter = std::find(thisParent->atoms.begin(),
-                                  thisParent->atoms.end(), atomPtr);
+      auto deleteIter = std::ranges::find(thisParent->atoms, atomPtr);
       TEST_ASSERT(deleteIter != thisParent->atoms.end());
       thisParent->atoms.erase(deleteIter);
 
@@ -3839,8 +3818,7 @@ void MarvinMultipleSgroup::contractOneMultipleSgroup() {
   // remove the bonds
 
   for (MarvinBond *bondPtr : bondsToDelete) {
-    auto deleteIter = std::find(actualParent->bonds.begin(),
-                                actualParent->bonds.end(), bondPtr);
+    auto deleteIter = std::ranges::find(actualParent->bonds, bondPtr);
     TEST_ASSERT(deleteIter != actualParent->bonds.end());
     actualParent->bonds.erase(deleteIter);
     actualParent->removeOwnedBond(bondPtr);
@@ -3858,9 +3836,9 @@ IsSgroupInAtomSetResult MarvinMolBase::isSgroupInSetOfAtoms(
   bool isInGroup = false;
   bool isNotInGroup = false;
   for (auto oneAtom : this->atoms) {
-    if (std::find_if(setOfAtoms.begin(), setOfAtoms.end(),
-                     [&, oneAtom](auto a) { return a->id == oneAtom->id; }) !=
-        setOfAtoms.end()) {
+    if (std::ranges::find_if(setOfAtoms, [&, oneAtom](auto a) {
+          return a->id == oneAtom->id;
+        }) != setOfAtoms.end()) {
       isInGroup = true;
     } else {
       isNotInGroup = true;
@@ -3883,17 +3861,16 @@ IsSgroupInAtomSetResult MarvinSuperatomSgroup::isSgroupInSetOfAtoms(
   // superatom sgroups are different - they are in the set if one of the
   // condensed atom in the parent is in group
 
-  auto dummyAtomIter = find_if(
-      parent->atoms.begin(), parent->atoms.end(),
+  auto dummyAtomIter = std::ranges::find_if(
+      parent->atoms,
       [this](const MarvinAtom *arg) { return arg->sgroupRef == this->id; });
   if (dummyAtomIter == parent->atoms.end()) {
     throw FileParseException("No contracted atom found for a superatomSgroup");
   }
 
-  if (std::find_if(setOfAtoms.begin(), setOfAtoms.end(),
-                   [&, dummyAtomIter](auto a) {
-                     return a->id == (*dummyAtomIter)->id;
-                   }) != setOfAtoms.end()) {
+  if (std::ranges::find_if(setOfAtoms, [&, dummyAtomIter](auto a) {
+        return a->id == (*dummyAtomIter)->id;
+      }) != setOfAtoms.end()) {
     return SgroupInAtomSet;
   }
   return SgroupNotInAtomSet;
@@ -3922,8 +3899,8 @@ void MarvinMolBase::processSgroupsFromRDKit() {
       // child can add sgroups to this level
       allDone = true;  // until it is not true in the loop below
       for (auto &sibling : this->parent->sgroups) {
-        if (std::find(sgroupsMolIdsDone.begin(), sgroupsMolIdsDone.end(),
-                      sibling->molID) != sgroupsMolIdsDone.end()) {
+        if (std::ranges::find(sgroupsMolIdsDone, sibling->molID) !=
+            sgroupsMolIdsDone.end()) {
           continue;  // look at the next one to see if it is done
         }
 
@@ -3961,11 +3938,11 @@ void MarvinMolBase::processSgroupsFromRDKit() {
             << e.what() << std::endl
             << "The multiple sgroup will be ignored" << std::endl;
 
-        auto sgroupIter = std::find_if(
-            this->parent->sgroups.begin(), this->parent->sgroups.end(),
-            [this](std::unique_ptr<MarvinMolBase> &sgptr) {
-              return sgptr->id == this->id;
-            });
+        auto sgroupIter =
+            std::ranges::find_if(this->parent->sgroups,
+                                 [this](std::unique_ptr<MarvinMolBase> &sgptr) {
+                                   return sgptr->id == this->id;
+                                 });
         TEST_ASSERT(sgroupIter != this->parent->sgroups.end());
         this->parent->sgroups.erase(sgroupIter);
         return;
@@ -3982,9 +3959,10 @@ void MarvinMolBase::processSgroupsFromRDKit() {
   {
     allDone = true;  // until it is not true in the loop below
     for (auto &childSgroup : molToProcess->sgroups) {
-      if (std::find(childrenSgroupsMolIdsDone.begin(),
-                    childrenSgroupsMolIdsDone.end(),
-                    childSgroup->molID) != childrenSgroupsMolIdsDone.end()) {
+      if (std::ranges::find(childrenSgroupsMolIdsDone,
+
+                            childSgroup->molID) !=
+          childrenSgroupsMolIdsDone.end()) {
         continue;  // this one is done, look at the next one
       }
 

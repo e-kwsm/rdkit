@@ -534,7 +534,7 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
           locV.push_back(bond->getIdx());
           invar.set(bond->getIdx());
         }
-        if (std::find(invars.begin(), invars.end(), invar) == invars.end()) {
+        if (std::ranges::find(invars, invar) == invars.end()) {
           invars.push_back(invar);
           if (useBonds) {
             res[i - 1].push_back(locV);

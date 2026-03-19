@@ -10,6 +10,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include <algorithm>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
@@ -639,7 +640,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
           continue;
         }
 
-        if (std::find(bq.begin(), bq.end(), nbrBond) == bq.end()) {
+        if (std::ranges::find(bq, nbrBond) == bq.end()) {
 #ifdef VERBOSE_HASH
           std::cerr << "    push " << nbrBond->getIdx() << " "
                     << nbrBond->getBeginAtomIdx() << "-"
@@ -690,7 +691,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
         }
         for (auto nbrBnd : mol->atomBonds(atm)) {
           if (bondsConsidered[nbrBnd->getIdx()] ||
-              std::find(bq.begin(), bq.end(), nbrBnd) != bq.end()) {
+              std::ranges::find(bq, nbrBnd) != bq.end()) {
             continue;
           }
           auto oatom = nbrBnd->getOtherAtom(atm);

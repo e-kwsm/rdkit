@@ -16,6 +16,7 @@
 #include <GraphMol/MolPickler.h>
 #include <GraphMol/Subgraphs/SubgraphUtils.h>
 #include <GraphMol/Subgraphs/Subgraphs.h>
+#include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <cstdint>
@@ -161,7 +162,7 @@ Subgraphs::DiscrimTuple FragCatalogEntry::getDiscrims() const {
       auto mapPos = d_aToFmap.find(aid);
       if (mapPos != d_aToFmap.end()) {
         INT_VECT fGroups = mapPos->second;
-        std::sort(fGroups.begin(), fGroups.end());
+        std::ranges::sort(fGroups);
         invar = vectHasher(fGroups);
       }
       funcGpInvars.push_back(invar);

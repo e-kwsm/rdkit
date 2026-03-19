@@ -135,7 +135,7 @@ bool labelAux(std::vector<std::unique_ptr<Configuration>> &configs,
   auto farthest = [](const Node_Cfg_Pair &a, const Node_Cfg_Pair &b) {
     return a.first->getDistance() > b.first->getDistance();
   };
-  std::sort(aux.begin(), aux.end(), farthest);
+  std::ranges::sort(aux, farthest);
 
   // Using a boost::unordered_map because it is more performant
   // than the STL version.

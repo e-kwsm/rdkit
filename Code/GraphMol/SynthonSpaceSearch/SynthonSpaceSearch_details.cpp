@@ -58,7 +58,7 @@ std::vector<std::vector<unsigned int>> combMFromN(const unsigned int m,
         combs.back().push_back(i);
       }
     }
-  } while (std::prev_permutation(allN.begin(), allN.end()));
+  } while (std::ranges::prev_permutation(allN));
   return combs;
 }
 
@@ -69,7 +69,7 @@ std::vector<std::vector<unsigned int>> permMFromN(const unsigned int m,
   for (auto &c : combs) {
     do {
       perms.push_back(c);
-    } while (std::next_permutation(c.begin(), c.end()));
+    } while (std::ranges::next_permutation(c));
   }
 
   return perms;
@@ -512,9 +512,8 @@ void buildSplitBonds(
         nextSplits.push_back(bondPairs[c].first);
         nextSplits.push_back(bondPairs[c].second);
       }
-      std::sort(nextSplits.begin(), nextSplits.end());
-      nextSplits.erase(std::unique(nextSplits.begin(), nextSplits.end()),
-                       nextSplits.end());
+      std::ranges::sort(nextSplits);
+      nextSplits.erase(std::ranges::unique(nextSplits), nextSplits.end());
       // Each split will need a connector num, so any split set that will
       // produce one higher than the SynthonSpace has been set up for is
       // a bust.  Splitting 3 rings each once will produce 4 fragments
@@ -526,9 +525,8 @@ void buildSplitBonds(
       splitBonds.push_back(nextSplits);
     }
   }
-  std::sort(splitBonds.begin(), splitBonds.end());
-  splitBonds.erase(std::unique(splitBonds.begin(), splitBonds.end()),
-                   splitBonds.end());
+  std::ranges::sort(splitBonds);
+  splitBonds.erase(std::ranges::unique(splitBonds), splitBonds.end());
 }
 }  // namespace
 
@@ -573,15 +571,15 @@ std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
   }
 
   // Keep unique SMILES only
-  std::sort(tmpFrags.begin(), tmpFrags.end(),
-            [](const auto &lhs, const auto &rhs) -> bool {
-              return lhs.first < rhs.first;
-            });
-  tmpFrags.erase(std::unique(tmpFrags.begin(), tmpFrags.end(),
-                             [](const auto &lhs, const auto &rhs) -> bool {
-                               return lhs.first == rhs.first;
-                             }),
-                 tmpFrags.end());
+  std::ranges::sort(tmpFrags, [](const auto &lhs, const auto &rhs) -> bool {
+    return lhs.first < rhs.first;
+  });
+  tmpFrags.erase(
+      std::ranges::unique(tmpFrags,
+                          [](const auto &lhs, const auto &rhs) -> bool {
+                            return lhs.first == rhs.first;
+                          }),
+      tmpFrags.end());
   if (tmpFrags.size() > maxNumFragSets) {
     tmpFrags.erase(tmpFrags.begin() + maxNumFragSets, tmpFrags.end());
   }
@@ -597,8 +595,8 @@ std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
                        fragments);
 
   fragments.erase(
-      std::remove_if(fragments.begin(), fragments.end(),
-                     [](const auto &fs) -> bool { return fs.empty(); }),
+      std::ranges::remove_if(fragments,
+                             [](const auto &fs) -> bool { return fs.empty(); }),
       fragments.end());
   return fragments;
 }
@@ -714,8 +712,8 @@ std::vector<std::vector<boost::dynamic_bitset<>>> getConnectorPermutations(
 }
 
 void expandBitSet(std::vector<boost::dynamic_bitset<>> &bitSets) {
-  const bool someSet = std::any_of(
-      bitSets.begin(), bitSets.end(),
+  const bool someSet = std::ranges::any_of(
+      bitSets,
       [](const boost::dynamic_bitset<> &bs) -> bool { return bs.any(); });
   if (someSet) {
     for (auto &bs : bitSets) {

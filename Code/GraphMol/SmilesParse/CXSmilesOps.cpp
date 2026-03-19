@@ -94,7 +94,7 @@ void processCXSmilesLabels(RWMol &mol) {
         addquery(makeMAtomQuery(), symb, mol, atom->getIdx());
       } else if (symb == "MH_p") {
         addquery(makeMHAtomQuery(), symb, mol, atom->getIdx());
-      } else if (std::find(pseudoatoms_p.begin(), pseudoatoms_p.end(), symb) !=
+      } else if (std::ranges::find(pseudoatoms_p, symb) !=
                  pseudoatoms_p.end()) {
         // strip off the "_p":
         atom->setProp(common_properties::dummyLabel,
@@ -209,8 +209,7 @@ void setupUnmarkedPolymerSGroup(RWMol &mol, SubstanceGroup &sgroup,
   const auto firstAtom = mol.getAtomWithIdx(atoms.front());
   for (auto nbr : boost::make_iterator_range(mol.getAtomNeighbors(firstAtom))) {
     const auto nbrAtom = mol[nbr];
-    if (std::find(atoms.begin(), atoms.end(), nbrAtom->getIdx()) ==
-        atoms.end()) {
+    if (std::ranges::find(atoms, nbrAtom->getIdx()) == atoms.end()) {
       // in most cases we just add this to the set of headCrossings.
       // The exception occurs when there's only one atom in the SGroup and
       //  we already have a headCrossing, in which case we may put this one
@@ -238,8 +237,7 @@ void setupUnmarkedPolymerSGroup(RWMol &mol, SubstanceGroup &sgroup,
     for (auto nbr :
          boost::make_iterator_range(mol.getAtomNeighbors(lastAtom))) {
       const auto nbrAtom = mol[nbr];
-      if (std::find(atoms.begin(), atoms.end(), nbrAtom->getIdx()) ==
-          atoms.end()) {
+      if (std::ranges::find(atoms, nbrAtom->getIdx()) == atoms.end()) {
         tailCrossings.push_back(
             mol.getBondBetweenAtoms(lastAtom->getIdx(), nbrAtom->getIdx())
                 ->getIdx());
@@ -812,7 +810,7 @@ bool parse_data_sgroup(Iterator &first, Iterator last, RDKit::RWMol &mol,
 namespace {
 std::vector<RDKit::SubstanceGroup>::iterator find_matching_sgroup(
     std::vector<RDKit::SubstanceGroup> &sgs, unsigned int targetId) {
-  return std::find_if(sgs.begin(), sgs.end(), [targetId](const auto &sg) {
+  return std::ranges::find_if(sgs, [targetId](const auto &sg) {
     unsigned int pval;
     if (sg.getPropIfPresent(cxsmilesindex, pval)) {
       if (pval == targetId) {
@@ -1384,7 +1382,7 @@ bool parse_enhanced_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
     std::vector<StereoGroup> mol_stereo_groups(mol.getStereoGroups());
     TEST_ASSERT(mol_stereo_groups.size() == sgTracker.size());
 
-    auto iter = std::find(sgTracker.begin(), sgTracker.end(), group_hash);
+    auto iter = std::ranges::find(sgTracker, group_hash);
     if (iter != sgTracker.end()) {
       auto index = iter - sgTracker.begin();
       auto gAtoms = mol_stereo_groups[index].getAtoms();
@@ -1563,7 +1561,7 @@ std::vector<unsigned> getSortedMappedIndexes(
   for (auto atomId : atomIds) {
     res.push_back(revOrder[atomId]);
   }
-  std::sort(res.begin(), res.end());
+  std::ranges::sort(res);
   return res;
 }
 
@@ -1589,18 +1587,18 @@ getSortedStereoGroupsAndIndices(
   }
 
   // sort by 1) StereoGroup type; 2) StereoGroup id; 3) atom indexes
-  std::sort(sortingGroups.begin(), sortingGroups.end(),
-            [](const StGrpIdxPair &a, const StGrpIdxPair &b) {
-              const auto &[sgA, idxsA] = a;
-              const auto &[sgB, idxsB] = b;
-              if (sgA.getGroupType() == sgB.getGroupType()) {
-                if (sgA.getWriteId() == sgB.getWriteId()) {
-                  return idxsA < idxsB;
-                }
-                return sgA.getWriteId() < sgB.getWriteId();
-              }
-              return sgA.getGroupType() < sgB.getGroupType();
-            });
+  std::ranges::sort(sortingGroups,
+                    [](const StGrpIdxPair &a, const StGrpIdxPair &b) {
+                      const auto &[sgA, idxsA] = a;
+                      const auto &[sgB, idxsB] = b;
+                      if (sgA.getGroupType() == sgB.getGroupType()) {
+                        if (sgA.getWriteId() == sgB.getWriteId()) {
+                          return idxsA < idxsB;
+                        }
+                        return sgA.getWriteId() < sgB.getWriteId();
+                      }
+                      return sgA.getGroupType() < sgB.getGroupType();
+                    });
 
   std::vector<StereoGroup> sgs;
   std::vector<std::vector<unsigned>> sgAtomIdxs;
@@ -1922,9 +1920,9 @@ std::string get_atomlabel_block(const ROMol &mol,
       res += quote_string(lbl + "_p");
     } else if (!atom->getAtomicNum() &&
                atom->getPropIfPresent(common_properties::dummyLabel, lbl) &&
-               std::find(SmilesParseOps::pseudoatoms.begin(),
-                         SmilesParseOps::pseudoatoms.end(),
-                         lbl) != SmilesParseOps::pseudoatoms.end()) {
+               std::ranges::find(SmilesParseOps::pseudoatoms,
+
+                                 lbl) != SmilesParseOps::pseudoatoms.end()) {
       res += quote_string(lbl + "_p");
     } else if (!atom->getAtomicNum() &&
                atom->getPropIfPresent(common_properties::_fromAttachPoint,
@@ -1936,8 +1934,8 @@ std::string get_atomlabel_block(const ROMol &mol,
     }
   }
   // if we didn't find anything return an empty string
-  if (std::find_if_not(res.begin(), res.end(),
-                       [](const auto c) { return c == ';'; }) == res.end()) {
+  if (std::ranges::find_if_not(res, [](const auto c) { return c == ';'; }) ==
+      res.end()) {
     res.clear();
   }
   return res;
@@ -2040,13 +2038,13 @@ std::string get_atom_props_block(const ROMol &mol,
                              atom->hasProp(common_properties::_fromAttachPoint);
     bool includePrivate = false, includeComputed = false;
     for (const auto &pn : atom->getPropList(includePrivate, includeComputed)) {
-      if (std::find(skip.begin(), skip.end(), pn) == skip.end()) {
+      if (std::ranges::find(skip, pn) == skip.end()) {
         std::string pv = atom->getProp<std::string>(pn);
         if (pn == "dummyLabel" &&
             (isAttachmentPoint || pv == "*" ||
-             std::find(SmilesParseOps::pseudoatoms.begin(),
-                       SmilesParseOps::pseudoatoms.end(),
-                       pv) != SmilesParseOps::pseudoatoms.end())) {
+             std::ranges::find(SmilesParseOps::pseudoatoms,
+
+                               pv) != SmilesParseOps::pseudoatoms.end())) {
           // it's a pseudoatom or attachment point, skip it
           continue;
         }
@@ -2118,12 +2116,12 @@ std::string get_bond_config_block(
               unsigned int swaps = 0;
 
               unsigned int firstReorderedIdx =
-                  std::find(atomOrder.begin(), atomOrder.end(),
-                            bondNbr->getBeginAtom()->getIdx()) -
+                  std::ranges::find(atomOrder,
+                                    bondNbr->getBeginAtom()->getIdx()) -
                   atomOrder.begin();
               unsigned int secondReorderedIdx =
-                  std::find(atomOrder.begin(), atomOrder.end(),
-                            bondNbr->getEndAtom()->getIdx()) -
+                  std::ranges::find(atomOrder,
+                                    bondNbr->getEndAtom()->getIdx()) -
                   atomOrder.begin();
               if (firstReorderedIdx > secondReorderedIdx) {
                 ++swaps;
@@ -2148,12 +2146,10 @@ std::string get_bond_config_block(
                           ->getIdx();
 
                   unsigned int firstReorderedAtomIdx =
-                      std::find(atomOrder.begin(), atomOrder.end(),
-                                firstOtherAtomIdx) -
+                      std::ranges::find(atomOrder, firstOtherAtomIdx) -
                       atomOrder.begin();
                   unsigned int secondReorderedAtomIdx =
-                      std::find(atomOrder.begin(), atomOrder.end(),
-                                secondOtherAtomIdx) -
+                      std::ranges::find(atomOrder, secondOtherAtomIdx) -
                       atomOrder.begin();
 
                   if (firstReorderedAtomIdx > secondReorderedAtomIdx) {
@@ -2227,8 +2223,7 @@ std::string get_bond_config_block(
     }
 
     auto begAtomOrder =
-        std::find(atomOrder.begin(), atomOrder.end(), wedgeStartAtomIdx) -
-        atomOrder.begin();
+        std::ranges::find(atomOrder, wedgeStartAtomIdx) - atomOrder.begin();
 
     std::string wType = "";
     if (bd == Bond::BondDir::UNKNOWN) {
@@ -2274,9 +2269,8 @@ std::string get_coord_or_hydrogen_bonds_block(
     if (bond->getBondType() != bondType) {
       continue;
     }
-    auto begAtomOrder =
-        std::find(atomOrder.begin(), atomOrder.end(), bond->getBeginAtomIdx()) -
-        atomOrder.begin();
+    auto begAtomOrder = std::ranges::find(atomOrder, bond->getBeginAtomIdx()) -
+                        atomOrder.begin();
     if (!res.empty()) {
       res += ",";
     } else {
@@ -2450,13 +2444,12 @@ void checkCXFeatures(const ROMol &mol) {
         << std::endl;
   }
   const auto &sgs = getSubstanceGroups(mol);
-  auto parent_check =
-      std::any_of(sgs.cbegin(), sgs.cend(), [&](const SubstanceGroup &sg) {
-        if (sg.hasProp("PARENT")) {
-          return true;
-        }
-        return false;
-      });
+  auto parent_check = std::ranges::any_of(sgs, [&](const SubstanceGroup &sg) {
+    if (sg.hasProp("PARENT")) {
+      return true;
+    }
+    return false;
+  });
   if (parent_check) {
     BOOST_LOG(rdWarningLog)
         << "CX Extensions: Substance group hierarchy is not always preserved."

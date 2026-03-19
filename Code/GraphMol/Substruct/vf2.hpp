@@ -120,7 +120,7 @@ node_id *SortNodesByFrequency(const Graph *g) {
     vect.push_back(t);
     ++bNode;
   }
-  std::sort(vect.begin(), vect.end(), nodeInfoComp1);
+  std::ranges::sort(vect, nodeInfoComp1);
 
   unsigned int run = 1;
   for (unsigned int i = 0; i < vect.size(); i += run) {
@@ -134,7 +134,7 @@ node_id *SortNodesByFrequency(const Graph *g) {
       vect[i + j].out = run;
     }
   }
-  std::sort(vect.begin(), vect.end(), nodeInfoComp2);
+  std::ranges::sort(vect, nodeInfoComp2);
 
   node_id *nodes = new node_id[vect.size()];
   for (unsigned int i = 0; i < vect.size(); ++i) {

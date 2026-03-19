@@ -179,7 +179,7 @@ std::vector<double> clusterArray(std::vector<double> data, double precision) {
   std::vector<double> Store;
 
   // sort the input data
-  std::sort(data.begin(), data.end());
+  std::ranges::sort(data);
 
   // find the difference between each number and its predecessor
   std::vector<double> diffs;
@@ -217,7 +217,7 @@ std::vector<double> clusterArray2(std::vector<double> data,
   std::vector<double> Store;
 
   // sort the input data descend order!
-  std::sort(data.begin(), data.end(), std::greater<double>());
+  std::ranges::sort(data, std::greater<double>());
   std::deque<double> B(data.begin(), data.end());
 
   int count = 0;

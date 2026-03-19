@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 
+#include <algorithm>
 #include <regex>
 #include <set>
 
@@ -133,14 +134,14 @@ void RascalResult::largestFragsOnly(unsigned int numFrags) {
   if (numFrags < 1 || frags.size() < numFrags) {
     return;
   }
-  std::sort(frags.begin(), frags.end(),
-            [](const boost::shared_ptr<ROMol> &f1,
-               const boost::shared_ptr<ROMol> &f2) -> bool {
-              if (f1->getNumAtoms() == f2->getNumAtoms()) {
-                return f1->getNumBonds() > f2->getNumBonds();
-              }
-              return f1->getNumAtoms() > f2->getNumAtoms();
-            });
+  std::ranges::sort(frags,
+                    [](const boost::shared_ptr<ROMol> &f1,
+                       const boost::shared_ptr<ROMol> &f2) -> bool {
+                      if (f1->getNumAtoms() == f2->getNumAtoms()) {
+                        return f1->getNumBonds() > f2->getNumBonds();
+                      }
+                      return f1->getNumAtoms() > f2->getNumAtoms();
+                    });
   frags.erase(frags.begin() + numFrags, frags.end());
   rebuildFromFrags(frags);
 }
@@ -149,11 +150,12 @@ void RascalResult::trimSmallFrags(unsigned int minFragSize) {
   std::unique_ptr<RDKit::ROMol> mol1_frags(makeMolFrags(1));
   // getMolFrags() returns boost::shared_ptr.  Ho-hum.
   auto frags = RDKit::MolOps::getMolFrags(*mol1_frags, false);
-  frags.erase(std::remove_if(frags.begin(), frags.end(),
+  frags.erase(
+      std::ranges::remove_if(frags,
                              [&](const boost::shared_ptr<ROMol> &f) -> bool {
                                return f->getNumAtoms() < minFragSize;
                              }),
-              frags.end());
+      frags.end());
   rebuildFromFrags(frags);
 }
 
@@ -756,7 +758,7 @@ void extractClique(const std::vector<unsigned int> &clique,
       bondMatches.push_back(vtxPairs[mem]);
     }
   }
-  std::sort(bondMatches.begin(), bondMatches.end());
+  std::ranges::sort(bondMatches);
 }
 
 void cleanSmarts(std::string &smarts, const std::string &equivalentAtoms) {

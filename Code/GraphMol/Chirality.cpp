@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <optional>
+#include <ranges>
 #include <set>
 #include <sstream>
 #include <utility>
@@ -662,7 +663,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
         auto dp0i = bondVects[order[0]].dotProduct(bondVects[order[i]]);
         orderedBonds[i - 1] = std::make_tuple(sgn, sgn * dp0i, order[i]);
       }
-      std::sort(orderedBonds.rbegin(), orderedBonds.rend());
+      std::ranges::sort(std::views::reverse(orderedBonds));
 
       // update the order array and figure out whether or not we've done a
       // cyclic permutation
@@ -1212,7 +1213,7 @@ void iterateCIPRanks(const ROMol &mol, const DOUBLE_VECT &invars,
     cipEntries[i].push_back(static_cast<int>(invars[i]));
   }
   unsigned int numRanks;
-  std::sort(sortableEntries.begin(), sortableEntries.end());
+  std::ranges::sort(sortableEntries);
   std::vector<std::pair<int, int>> needsSorting;
   findSegmentsToResort(sortableEntries, needsSorting, numRanks);
   recomputeRanks(sortableEntries, ranks);
@@ -1782,7 +1783,7 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
         --unassignedAtoms;
 
         // sort the list of neighbors by their CIP ranks:
-        std::sort(nbrs.begin(), nbrs.end(), Rankers::pairLess);
+        std::ranges::sort(nbrs, Rankers::pairLess);
 
         // collect the list of neighbor indices:
         std::list<int> nbrIndices;
@@ -2646,8 +2647,7 @@ bool canBeStereoBond(const Bond *bond) {
           }
         }
         if (rank >= 0) {
-          if (std::find(nbrRanks.begin(), nbrRanks.end(), rank) !=
-              nbrRanks.end()) {
+          if (std::ranges::find(nbrRanks, rank) != nbrRanks.end()) {
             return false;
           } else {
             nbrRanks.push_back(rank);
@@ -3649,7 +3649,7 @@ void setDoubleBondNeighborDirections(ROMol &mol, const Conformer *conf) {
     }
     orderedBondsInPlay.push_back(std::make_pair(countHere, dblBond));
   }
-  std::sort(orderedBondsInPlay.begin(), orderedBondsInPlay.end());
+  std::ranges::sort(orderedBondsInPlay);
 
   // oof, now loop over the double bonds in that order and
   // update their neighbor directionalities:

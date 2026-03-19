@@ -656,7 +656,7 @@ bool Atom::hasValenceViolation() const {
   auto bonds = getOwningMol().atomBonds(this);
   auto is_query = [](auto b) { return b->hasQuery(); };
   if (getAtomicNum() == 0 || hasQuery() ||
-      std::any_of(bonds.begin(), bonds.end(), is_query)) {
+      std::ranges::any_of(bonds, is_query)) {
     return false;
   }
 

@@ -152,7 +152,7 @@ void TDTWriter::write(const ROMol &mol, int confId) {
       }
 
       // check if this property is not computed
-      if (std::find(compLst.begin(), compLst.end(), (*pi)) == compLst.end()) {
+      if (std::ranges::find(compLst, (*pi)) == compLst.end()) {
         writeProperty(mol, (*pi));
       }
     }

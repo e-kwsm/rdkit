@@ -45,10 +45,10 @@ inline std::vector<LinkNode> getMolLinkNodes(
     tokenizer tokens(linknodetext, spacesep);
     std::vector<unsigned int> data;
     try {
-      std::transform(tokens.begin(), tokens.end(), std::back_inserter(data),
-                     [](const std::string &token) -> unsigned int {
-                       return boost::lexical_cast<unsigned int>(token);
-                     });
+      std::ranges::transform(tokens, std::back_inserter(data),
+                             [](const std::string &token) -> unsigned int {
+                               return boost::lexical_cast<unsigned int>(token);
+                             });
     } catch (boost::bad_lexical_cast &) {
       std::ostringstream errout;
       errout << "Cannot convert values in LINKNODE '" << linknodetext

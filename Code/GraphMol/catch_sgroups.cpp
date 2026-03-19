@@ -194,7 +194,7 @@ TEST_CASE("Build and test sample molecule", "[Sgroups]") {
     auto bonds = sg.getBonds();
 
     // bonds are not sorted in V3000; sort them here
-    std::sort(bonds.begin(), bonds.end());
+    std::ranges::sort(bonds);
 
     testIdxVector(bonds, bonds_reference);
 
@@ -246,7 +246,7 @@ TEST_CASE("Build and test sample molecule", "[Sgroups]") {
     auto bonds = sg.getBonds();
 
     // bonds are not sorted in V3000; sort them here
-    std::sort(bonds.begin(), bonds.end());
+    std::ranges::sort(bonds);
 
     testIdxVector(bonds, bonds_reference);
     CHECK(sg.getBondType(bonds[0]) == SubstanceGroup::BondType::XBOND);

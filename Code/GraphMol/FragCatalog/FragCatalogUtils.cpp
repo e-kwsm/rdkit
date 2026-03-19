@@ -155,7 +155,7 @@ MatchVectType findFuncGroupsOnMol(const ROMol &mol, const FragCatParams *params,
       // come in decreasing order of size.
       bool allDone = true;
       for (bi = bondIds.begin(); bi != bondIds.end(); bi++) {
-        if (std::find(fgBonds.begin(), fgBonds.end(), (*bi)) == fgBonds.end()) {
+        if (std::ranges::find(fgBonds, (*bi)) == fgBonds.end()) {
           allDone = false;
           fgBonds.push_back(*bi);
         }
@@ -188,7 +188,7 @@ ROMol *prepareMol(const ROMol &mol, const FragCatParams *fparams,
   int bid, nbds = mol.getNumBonds();
 
   for (bid = 0; bid < nbds; bid++) {
-    if (std::find(fgBonds.begin(), fgBonds.end(), bid) == fgBonds.end()) {
+    if (std::ranges::find(fgBonds, bid) == fgBonds.end()) {
       cBonds.push_back(bid);
     }
   }

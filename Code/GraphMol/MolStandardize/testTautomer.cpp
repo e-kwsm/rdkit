@@ -47,8 +47,8 @@ void testEnumerator() {
           tautSmiles.push_back(MolToSmiles(*res[i]));
         }
         std::vector<std::string> ansSmiles = ans;
-        std::sort(tautSmiles.begin(), tautSmiles.end());
-        std::sort(ansSmiles.begin(), ansSmiles.end());
+        std::ranges::sort(tautSmiles);
+        std::ranges::sort(ansSmiles);
         if (tautSmiles != ansSmiles) {
           std::cerr << "Tautomer mismatch for input: " << smi << std::endl;
           std::cerr << "  expected(" << ansSmiles.size() << "):";
@@ -344,8 +344,8 @@ void testEnumerator() {
     sm66.push_back(MolToSmiles(*r));
   }
   // sort both for alphabetical order
-  std::sort(sm66.begin(), sm66.end());
-  std::sort(ans66.begin(), ans66.end());
+  std::ranges::sort(sm66);
+  std::ranges::sort(ans66);
   TEST_ASSERT(sm66 == ans66);
 
   // Guanine tautomers
@@ -368,8 +368,8 @@ void testEnumerator() {
     sm67.push_back(MolToSmiles(*r));
   }
   // sort both by alphabetical order
-  std::sort(sm67.begin(), sm67.end());
-  std::sort(ans67.begin(), ans67.end());
+  std::ranges::sort(sm67);
+  std::ranges::sort(ans67);
   TEST_ASSERT(sm67 == ans67);
 
   // Test a structure with hundreds of tautomers.
@@ -1292,22 +1292,20 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     static ROMOL_SPTR get(const TautomerEnumeratorResult &res) {
       std::vector<int> scores;
       scores.reserve(res.size());
-      std::transform(res.begin(), res.end(), std::back_inserter(scores),
-                     [](const ROMOL_SPTR &m) {
-                       return TautomerScoringFunctions::scoreTautomer(*m);
-                     });
+      std::ranges::transform(
+          res, std::back_inserter(scores), [](const ROMOL_SPTR &m) {
+            return TautomerScoringFunctions::scoreTautomer(*m);
+          });
       std::vector<size_t> indices(res.size());
       std::iota(indices.begin(), indices.end(), 0);
-      int bestIdx =
-          *std::max_element(indices.begin(), indices.end(),
-                            [scores](const size_t &a, const size_t &b) {
-                              if (scores.at(a) != scores.at(b)) {
-                                return (scores.at(a) < scores.at(b));
-                              }
-                              return (a < b);
-                            });
-      TEST_ASSERT(*std::max_element(scores.begin(), scores.end()) ==
-                  scores.at(bestIdx));
+      int bestIdx = *std::ranges::max_element(
+          indices, [scores](const size_t &a, const size_t &b) {
+            if (scores.at(a) != scores.at(b)) {
+              return (scores.at(a) < scores.at(b));
+            }
+            return (a < b);
+          });
+      TEST_ASSERT(*std::ranges::max_element(scores) == scores.at(bestIdx));
       return res.at(bestIdx);
     }
   };
@@ -1624,12 +1622,12 @@ void testGithub3430() {
     auto res = te.enumerate(*mol);
     std::vector<int> scores;
     scores.reserve(res.size());
-    std::transform(res.begin(), res.end(), std::back_inserter(scores),
-                   [](const ROMOL_SPTR &m) {
-                     return TautomerScoringFunctions::scoreTautomer(*m);
-                   });
+    std::ranges::transform(res, std::back_inserter(scores),
+                           [](const ROMOL_SPTR &m) {
+                             return TautomerScoringFunctions::scoreTautomer(*m);
+                           });
 
-    std::sort(scores.begin(), scores.end(), std::greater<int>());
+    std::ranges::sort(scores, std::greater<int>());
     TEST_ASSERT(scores[1] < scores[0]);
   }
 }

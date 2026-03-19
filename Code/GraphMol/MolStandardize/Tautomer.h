@@ -195,8 +195,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
   std::vector<ROMOL_SPTR> tautomers() const {
     std::vector<ROMOL_SPTR> tautomerVec;
     tautomerVec.reserve(d_tautomers.size());
-    std::transform(
-        d_tautomers.begin(), d_tautomers.end(), std::back_inserter(tautomerVec),
+    std::ranges::transform(
+        d_tautomers, std::back_inserter(tautomerVec),
         [](const SmilesTautomerPair &t) { return t.second.tautomer; });
     return tautomerVec;
   }
@@ -204,9 +204,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
   std::vector<std::string> smiles() const {
     std::vector<std::string> smilesVec;
     smilesVec.reserve(d_tautomers.size());
-    std::transform(d_tautomers.begin(), d_tautomers.end(),
-                   std::back_inserter(smilesVec),
-                   [](const SmilesTautomerPair &t) { return t.first; });
+    std::ranges::transform(d_tautomers, std::back_inserter(smilesVec),
+                           [](const SmilesTautomerPair &t) { return t.first; });
     return smilesVec;
   }
   const SmilesTautomerMap &smilesTautomerMap() const { return d_tautomers; }

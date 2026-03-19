@@ -77,7 +77,7 @@ SparseBitVect &SparseBitVect::operator=(const SparseBitVect &other) {
   delete dp_bits;
   d_size = other.getNumBits();
   dp_bits = new IntSet;
-  std::copy(bv->begin(), bv->end(), std::inserter(*dp_bits, dp_bits->end()));
+  std::ranges::copy(*bv, std::inserter(*dp_bits, dp_bits->end()));
 
   return *this;
 }
@@ -90,9 +90,8 @@ SparseBitVect &SparseBitVect::operator=(const SparseBitVect &other) {
 // -------------------------------------------------------
 SparseBitVect SparseBitVect::operator|(const SparseBitVect &other) const {
   SparseBitVect ans(d_size);
-  std::set_union(dp_bits->begin(), dp_bits->end(), other.dp_bits->begin(),
-                 other.dp_bits->end(),
-                 std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
+  std::ranges::set_union(*dp_bits, *other.dp_bits,
+                         std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
   return ans;
 }
 
@@ -104,9 +103,9 @@ SparseBitVect SparseBitVect::operator|(const SparseBitVect &other) const {
 // """ -------------------------------------------------------
 SparseBitVect SparseBitVect::operator&(const SparseBitVect &other) const {
   SparseBitVect ans(d_size);
-  std::set_intersection(dp_bits->begin(), dp_bits->end(),
-                        other.dp_bits->begin(), other.dp_bits->end(),
-                        std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
+  std::ranges::set_intersection(
+      *dp_bits, *other.dp_bits,
+      std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
   return ans;
 }
 
@@ -118,9 +117,9 @@ SparseBitVect SparseBitVect::operator&(const SparseBitVect &other) const {
 // """ -------------------------------------------------------
 SparseBitVect SparseBitVect::operator^(const SparseBitVect &other) const {
   SparseBitVect ans(d_size);
-  std::set_symmetric_difference(
-      dp_bits->begin(), dp_bits->end(), other.dp_bits->begin(),
-      other.dp_bits->end(), std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
+  std::ranges::set_symmetric_difference(
+      *dp_bits, *other.dp_bits,
+      std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
   return (ans);
 }
 
@@ -259,7 +258,7 @@ void SparseBitVect::getOnBits(IntVect &v) const {
   }
   v.reserve(nOn);
   v.resize(nOn);
-  std::copy(dp_bits->begin(), dp_bits->end(), v.begin());
+  std::ranges::copy(*dp_bits, v.begin());
 };
 
 // """ -------------------------------------------------------

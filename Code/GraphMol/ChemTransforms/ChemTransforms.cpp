@@ -133,9 +133,9 @@ ROMol *deleteSubstructs(const ROMol &mol, const ROMol &query, bool onlyFrags,
     VECT_INT_VECT frags;
     MolOps::getMolFrags(*res, frags);
     for (auto &fi : frags) {
-      std::sort(fi.begin(), fi.end());
+      std::ranges::sort(fi);
       for (auto &mxi : matches) {
-        std::sort(mxi.begin(), mxi.end());
+        std::ranges::sort(mxi);
         if (fi == mxi) {
           INT_VECT tmp;
           Union(mxi, delList, tmp);
@@ -211,7 +211,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     }
 
     INT_VECT sortMatch = match;
-    std::sort(sortMatch.begin(), sortMatch.end());
+    std::ranges::sort(sortMatch);
 
     if (!replaceAll || !res.size()) {
       res.push_back(ROMOL_SPTR(new ROMol(mol, false)));
@@ -232,8 +232,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     boost::tie(nbrIdx, endNbrs) = newMol->getAtomNeighbors(origAtom);
     while (nbrIdx != endNbrs) {
       // we don't want to duplicate any "intra-match" bonds:
-      if (!std::binary_search(sortMatch.begin(), sortMatch.end(),
-                              int(*nbrIdx))) {
+      if (!std::ranges::binary_search(sortMatch, int(*nbrIdx))) {
         Bond *oBond = newMol->getBondBetweenAtoms(match[0], *nbrIdx);
         CHECK_INVARIANT(oBond, "required bond not found");
         newMol->addBond(numOrigAtoms + replacementConnectionPoint, *nbrIdx,
@@ -395,8 +394,7 @@ int findNbrBond(RWMol &mol, Bond *bond, Atom *bondAtom, const INT_VECT &bring,
     if (nbrBond != bond &&
         (nbrBond->hasProp(replaceCoreDummyBond) ||
          (!removedAtoms[nbrBond->getOtherAtomIdx(bondAtom->getIdx())] &&
-          std::find(bring.begin(), bring.end(), nbrBond->getIdx()) !=
-              bring.end()))) {
+          std::ranges::find(bring, nbrBond->getIdx()) != bring.end()))) {
       res = nbrBond->getOtherAtomIdx(bondAtom->getIdx());
       break;
     }
@@ -411,12 +409,11 @@ void setSubMolBrokenRingStereo(RWMol &mol,
 
   for (const auto &bring : mol.getRingInfo()->bondRings()) {
     // check whether or not this bond ring is affected by the removal
-    if (std::find_if(bring.begin(), bring.end(),
-                     [&mol, &removedAtoms](auto idx) {
-                       const auto bond = mol.getBondWithIdx(idx);
-                       return removedAtoms[bond->getBeginAtomIdx()] ||
-                              removedAtoms[bond->getEndAtomIdx()];
-                     }) != bring.end()) {
+    if (std::ranges::find_if(bring, [&mol, &removedAtoms](auto idx) {
+          const auto bond = mol.getBondWithIdx(idx);
+          return removedAtoms[bond->getBeginAtomIdx()] ||
+                 removedAtoms[bond->getEndAtomIdx()];
+        }) != bring.end()) {
       for (auto bidx : bring) {
         const auto bond = mol.getBondWithIdx(bidx);
         // is this a bond we can reasonably set cis/trans for and where neither
@@ -496,11 +493,10 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
         auto coreNeighborIdx =
             core[*core.getAtomNeighbors(coreAtom).first]->getIdx();
         auto molNeighborIdx =
-            std::find_if(matchV.cbegin(), matchV.cend(),
-                         [coreNeighborIdx](std::pair<int, int> p) {
-                           return p.first == static_cast<int>(coreNeighborIdx);
-                         })
-                ->second;
+            std::ranges::find_if(matchV, [coreNeighborIdx](
+                                             std::pair<int, int> p) {
+              return p.first == static_cast<int>(coreNeighborIdx);
+            })->second;
         if (molNeighborIdx > -1) {
           auto connectingBond =
               mol.getBondBetweenAtoms(mappingInfo.molIndex, molNeighborIdx);
@@ -526,14 +522,13 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
     }
   }
 
-  std::sort(matches.begin(), matches.end(),
-            [](const std::pair<int, SideChainMapping> &p1,
-               const std::pair<int, SideChainMapping> &p2) {
-              if (p1.second.coreIndex == p2.second.coreIndex) {
-                return p1.first < p2.first;
-              }
-              return p1.second.coreIndex < p2.second.coreIndex;
-            });
+  std::ranges::sort(matches, [](const std::pair<int, SideChainMapping> &p1,
+                                const std::pair<int, SideChainMapping> &p2) {
+    if (p1.second.coreIndex == p2.second.coreIndex) {
+      return p1.first < p2.first;
+    }
+    return p1.second.coreIndex < p2.second.coreIndex;
+  });
   std::vector<std::pair<int, Atom *>> dummies;
 
   std::list<Bond *> allNewBonds;
@@ -697,7 +692,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
 
   if (!labelByIndex) {
     // sort the mapping indices, but label from 1..N
-    std::stable_sort(dummies.begin(), dummies.end());
+    std::ranges::stable_sort(dummies);
     for (size_t nDummy = 0; nDummy < dummies.size(); ++nDummy) {
       dummies[nDummy].second->setIsotope(nDummy + 1);
     }
@@ -713,7 +708,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
   bool removedRingAtom = false;
   newMol->beginBatchEdit();
   for (const auto at : newMol->atoms()) {
-    if (std::find(keepList.begin(), keepList.end(), at) == keepList.end()) {
+    if (std::ranges::find(keepList, at) == keepList.end()) {
       newMol->removeAtom(at);
       removedAtoms.set(at->getIdx());
       if (!removedRingAtom && mol.getRingInfo() &&

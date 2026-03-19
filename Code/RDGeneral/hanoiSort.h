@@ -165,7 +165,7 @@ void hanoisort(std::span<int> &base, std::vector<int> &count,
   std::vector<int> tempVec(base.size());
   if (detail::hanoi(base.data(), base.size(), tempVec.data(), count.data(),
                     changed.data(), compar)) {
-    std::copy(tempVec.begin(), tempVec.end(), base.begin());
+    std::ranges::copy(tempVec, base.begin());
   }
 }
 }  // namespace RDKit

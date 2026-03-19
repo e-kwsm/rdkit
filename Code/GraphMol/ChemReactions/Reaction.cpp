@@ -113,8 +113,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
       if ((*atomIt)->getPropIfPresent(common_properties::molAtomMapNumber,
                                       mapNum)) {
         thisMolMapped = true;
-        if (std::find(mapNumbersSeen.begin(), mapNumbersSeen.end(), mapNum) !=
-            mapNumbersSeen.end()) {
+        if (std::ranges::find(mapNumbersSeen, mapNum) != mapNumbersSeen.end()) {
           if (!silent) {
             BOOST_LOG(rdErrorLog) << "reactant atom-mapping number " << mapNum
                                   << " found multiple times.\n";
@@ -165,9 +164,8 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
       if ((*atomIt)->getPropIfPresent(common_properties::molAtomMapNumber,
                                       mapNum)) {
         thisMolMapped = true;
-        bool seenAlready =
-            std::find(productNumbersSeen.begin(), productNumbersSeen.end(),
-                      mapNum) != productNumbersSeen.end();
+        bool seenAlready = std::ranges::find(productNumbersSeen, mapNum) !=
+                           productNumbersSeen.end();
         if (seenAlready) {
           if (!silent) {
             BOOST_LOG(rdWarningLog) << "product atom-mapping number " << mapNum
@@ -187,8 +185,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
         } else {
           productNumbersSeen.push_back(mapNum);
         }
-        auto ivIt =
-            std::find(mapNumbersSeen.begin(), mapNumbersSeen.end(), mapNum);
+        auto ivIt = std::ranges::find(mapNumbersSeen, mapNum);
         if (ivIt == mapNumbersSeen.end()) {
           if (!seenAlready) {
             if (!silent) {

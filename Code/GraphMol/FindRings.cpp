@@ -13,6 +13,7 @@
 #include <RDGeneral/Exceptions.h>
 
 #include <RDGeneral/utils.h>
+#include <ranges>
 #include <vector>
 #include <set>
 #include <algorithm>
@@ -200,7 +201,7 @@ int smallestRingsBfs(const ROMol &mol, int root, VECT_INT_VECT &rings,
         parent = parents[curr];
         while (parent != -1) {
           // Is the least common ancestor not the root?
-          if (std::find(ring.begin(), ring.end(), parent) != ring.end()) {
+          if (std::ranges::find(ring, parent) != ring.end()) {
             ring.clear();
             break;
           }
@@ -333,7 +334,7 @@ auto compRingSize = [](const auto &v1, const auto &v2) {
 
 void removeExtraRings(VECT_INT_VECT &res, unsigned int, const ROMol &mol) {
   // sort on size
-  std::sort(res.begin(), res.end(), compRingSize);
+  std::ranges::sort(res, compRingSize);
 
   // change the rings from atom IDs to bondIds
   VECT_INT_VECT brings;
@@ -714,12 +715,12 @@ bool _atomSearchBFS(const ROMol &tMol, unsigned int startAtomIdx,
           if (invars.find(invr) == invars.end()) {
             // we're done!
             res.resize(nv.size());
-            std::copy(nv.begin(), nv.end(), res.begin());
+            std::ranges::copy(nv, res.begin());
             return true;
           }
         }
       } else if (ringAtoms[nbrIdx] &&
-                 std::find(tv.begin(), tv.end(), nbrIdx) == tv.end()) {
+                 std::ranges::find(tv, nbrIdx) == tv.end()) {
         INT_VECT nv(tv);
         nv.push_back(rdcast<unsigned int>(nbrIdx));
 
@@ -1066,7 +1067,7 @@ int symmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
       for (auto &bondID : ring) {
         const int bondCount = bondCounts[bondID];
         if (bondCount == 1 || !shareBond) {
-          auto position = find(extraRing.begin(), extraRing.end(), bondID);
+          auto position = std::ranges::find(extraRing, bondID);
           if (position != extraRing.end()) {
             shareBond = true;
           } else if (bondCount == 1) {
@@ -1113,7 +1114,7 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
       if (fromAtom && nbrIdx != fromAtom->getIdx()) {
         INT_VECT cycle;
         auto lastElem =
-            std::find(traversalOrder.rbegin(), traversalOrder.rend(), atom);
+            std::ranges::find(std::views::reverse(traversalOrder), atom);
         for (auto rIt = lastElem;  // traversalOrder.rbegin();
              rIt != traversalOrder.rend() && (*rIt)->getIdx() != nbrIdx;
              ++rIt) {

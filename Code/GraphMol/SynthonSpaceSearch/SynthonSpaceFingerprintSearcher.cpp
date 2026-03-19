@@ -151,10 +151,9 @@ void SynthonSpaceFingerprintSearcher::extraSearchSetup(
     }
     ++fragNum;
   }
-  std::sort(d_fragFPs.begin(), d_fragFPs.end(),
-            [](const auto &p1, const auto &p2) -> bool {
-              return p1.first > p2.first;
-            });
+  std::ranges::sort(d_fragFPs, [](const auto &p1, const auto &p2) -> bool {
+    return p1.first > p2.first;
+  });
 }
 
 std::vector<std::unique_ptr<SynthonSpaceHitSet>>
@@ -176,11 +175,10 @@ SynthonSpaceFingerprintSearcher::searchFragSet(
   fragFPs.reserve(fragSet.size());
   for (auto &frag : fragSet) {
     std::pair<void *, ExplicitBitVect *> tmp{frag.get(), nullptr};
-    const auto it =
-        std::lower_bound(d_fragFPs.begin(), d_fragFPs.end(), tmp,
-                         [](const auto &p1, const auto &p2) -> bool {
-                           return p1.first > p2.first;
-                         });
+    const auto it = std::ranges::lower_bound(
+        d_fragFPs, tmp, [](const auto &p1, const auto &p2) -> bool {
+          return p1.first > p2.first;
+        });
     fragFPs.push_back(it->second);
   }
 
