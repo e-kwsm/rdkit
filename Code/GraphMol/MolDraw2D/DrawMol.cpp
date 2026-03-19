@@ -844,7 +844,7 @@ void DrawMol::extractBrackets() {
           continue;
         }
         // draw the lowercase type if there's no label to go there.
-        std::transform(label.begin(), label.end(), label.begin(), ::tolower);
+        std::ranges::transform(label, label.begin(), ::tolower);
         auto da = drawBottomLabel(label, *postShapes_[labelBrk], drawOptions_,
                                   textDrawer_, horizontal);
         annotations_.emplace_back(da);
@@ -1456,8 +1456,8 @@ const std::map<std::string, std::string> &getComplexQuerySymbolMap() {
 std::set<std::string> createComplexQuerySymbolSet() {
   std::set<std::string> complexQuerySymbolSet;
   const auto &querySymbolMap = getComplexQuerySymbolMap();
-  std::transform(
-      querySymbolMap.begin(), querySymbolMap.end(),
+  std::ranges::transform(
+      querySymbolMap,
       std::inserter(complexQuerySymbolSet, complexQuerySymbolSet.begin()),
       [](const auto &pair) { return pair.second; });
   return complexQuerySymbolSet;
@@ -1703,8 +1703,8 @@ OrientType DrawMol::getAtomOrientation(const RDKit::Atom &atom) const {
     std::vector<int> HsListedFirst(
         HsListedFirstSrc,
         HsListedFirstSrc + sizeof(HsListedFirstSrc) / sizeof(int));
-    if (std::find(HsListedFirst.begin(), HsListedFirst.end(),
-                  atom.getAtomicNum()) != HsListedFirst.end()) {
+    if (std::ranges::find(HsListedFirst, atom.getAtomicNum()) !=
+        HsListedFirst.end()) {
       orient = OrientType::W;
     } else {
       orient = OrientType::E;
@@ -2513,8 +2513,7 @@ void DrawMol::newBondLine(const Point2D &pt1, const Point2D &pt2,
   bool scaleWidth = drawOptions_.scaleBondWidth;
   double lineWidth = drawOptions_.bondLineWidth;
   if (!drawOptions_.continuousHighlight &&
-      std::find(highlightBonds_.begin(), highlightBonds_.end(), bondIdx) !=
-          highlightBonds_.end()) {
+      std::ranges::find(highlightBonds_, bondIdx) != highlightBonds_.end()) {
     scaleWidth = drawOptions_.scaleHighlightBondWidth;
     lineWidth = getHighlightBondWidth(drawOptions_, bondIdx, nullptr) / 4;
   }
@@ -2560,8 +2559,8 @@ std::pair<DrawColour, DrawColour> DrawMol::getBondColours(Bond *bond) {
   DrawColour col1, col2;
 
   bool highlight_bond = false;
-  if (std::find(highlightBonds_.begin(), highlightBonds_.end(),
-                bond->getIdx()) != highlightBonds_.end()) {
+  if (std::ranges::find(highlightBonds_, bond->getIdx()) !=
+      highlightBonds_.end()) {
     highlight_bond = true;
   }
 
@@ -2607,8 +2606,7 @@ void DrawMol::makeAtomCircleHighlights() {
   DrawColour col;
   for (const auto &at : drawMol_->atoms()) {
     unsigned int thisIdx = at->getIdx();
-    if (std::find(highlightAtoms_.begin(), highlightAtoms_.end(), thisIdx) !=
-        highlightAtoms_.end()) {
+    if (std::ranges::find(highlightAtoms_, thisIdx) != highlightAtoms_.end()) {
       if (highlightAtomMap_.find(thisIdx) != highlightAtomMap_.end()) {
         col = highlightAtomMap_.find(thisIdx)->second;
       } else {
@@ -2635,8 +2633,7 @@ void DrawMol::makeAtomEllipseHighlights(double lineWidth) {
   }
   for (const auto &atom : drawMol_->atoms()) {
     unsigned int thisIdx = atom->getIdx();
-    if (std::find(highlightAtoms_.begin(), highlightAtoms_.end(), thisIdx) !=
-        highlightAtoms_.end()) {
+    if (std::ranges::find(highlightAtoms_, thisIdx) != highlightAtoms_.end()) {
       DrawColour col = drawOptions_.highlightColour;
       if (highlightAtomMap_.find(thisIdx) != highlightAtomMap_.end()) {
         col = highlightAtomMap_.find(thisIdx)->second;
@@ -2680,8 +2677,8 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
       if (nbr == otherAtom) {
         continue;
       }
-      if (std::find(highlightBonds_.begin(), highlightBonds_.end(),
-                    bond->getIdx()) != highlightBonds_.end()) {
+      if (std::ranges::find(highlightBonds_, bond->getIdx()) !=
+          highlightBonds_.end()) {
         highNbrs.push_back(nbr);
       }
     }
@@ -2703,8 +2700,8 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
       unsigned int nbrIdx = bond->getOtherAtomIdx(thisIdx);
       if (nbrIdx < static_cast<unsigned int>(atCds_.size()) &&
           nbrIdx > thisIdx) {
-        if (std::find(highlightBonds_.begin(), highlightBonds_.end(),
-                      bond->getIdx()) != highlightBonds_.end()) {
+        if (std::ranges::find(highlightBonds_, bond->getIdx()) !=
+            highlightBonds_.end()) {
           // This bond is to be highlighted by drawing a 4-6-sided
           // polygon underneath it.  If it is an isolated highlight, it
           // will be a rectangle underneath the bond.  If it joins
@@ -2738,15 +2735,14 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
           // occur in practice.
           // Sort so the lowest y point is first, with lowest x as
           // tie-breaker.
-          std::sort(points.begin(), points.end(),
-                    [](Point2D &p1, Point2D &p2) -> bool {
-                      if (p1.y < p2.y) {
-                        return true;
-                      } else if (p1.y == p2.y) {
-                        return p1.x < p2.x;
-                      }
-                      return false;
-                    });
+          std::ranges::sort(points, [](Point2D &p1, Point2D &p2) -> bool {
+            if (p1.y < p2.y) {
+              return true;
+            } else if (p1.y == p2.y) {
+              return p1.x < p2.x;
+            }
+            return false;
+          });
           // Now sort points 1 -> end so they are all anti-clockwise
           // around points[0] by checking cross products.
           std::sort(points.begin() + 1, points.end(),
@@ -3410,8 +3406,7 @@ void DrawMol::bondInsideRing(const Bond &bond, double offset, Point2D &l2s,
       if (bond2->getIdx() == bond.getIdx()) {
         continue;
       }
-      if (find(ringBonds.begin(), ringBonds.end(), bond2->getIdx()) !=
-          ringBonds.end()) {
+      if (std::ranges::find(ringBonds, bond2->getIdx()) != ringBonds.end()) {
         return bond2->getOtherAtomIdx(bondAtom);
       }
     }
@@ -3954,15 +3949,15 @@ void DrawMol::makeHighlightEnd(const Atom *end1, const Atom *end2,
       auto ang = bvec.signedAngleTo(ovec);
       angs.push_back(std::make_pair(i, ang));
     }
-    std::sort(angs.begin(), angs.end(),
-              [](const std::pair<int, double> &a1,
-                 const std::pair<int, double> &a2) -> bool {
-                return a1.second < a2.second;
-              });
+    std::ranges::sort(angs,
+                      [](const std::pair<int, double> &a1,
+                         const std::pair<int, double> &a2) -> bool {
+                        return a1.second < a2.second;
+                      });
     // if both angles are on the same side as end1->end2, they need to
     // be the other way round.
     if (angs.front().second > M_PI && angs.back().second > M_PI) {
-      std::reverse(angs.begin(), angs.end());
+      std::ranges::reverse(angs);
     }
     auto end3Cds = atCds_[end1HighNbrs[angs.front().first]->getIdx()];
     auto ins1 = innerPoint(end1Cds, end2Cds, end3Cds, 1.0);
@@ -3988,8 +3983,7 @@ DrawColour DrawMol::getColour(int atom_idx) const {
 
   DrawColour retval = getColourByAtomicNum(atomicNums_[atom_idx], drawOptions_);
   bool highlightedAtom =
-      highlightAtoms_.end() !=
-      find(highlightAtoms_.begin(), highlightAtoms_.end(), atom_idx);
+      highlightAtoms_.end() != std::ranges::find(highlightAtoms_, atom_idx);
   if (!drawOptions_.circleAtoms && !drawOptions_.continuousHighlight) {
     if (highlightedAtom) {
       retval = drawOptions_.highlightColour;
@@ -4012,8 +4006,8 @@ DrawColour DrawMol::getColour(int atom_idx) const {
            boost::make_iterator_range(drawMol_->getAtomBonds(atomPtr))) {
         ++numBonds;
         const auto &nbr = (*drawMol_)[nbri];
-        if (std::find(highlightBonds_.begin(), highlightBonds_.end(),
-                      nbr->getIdx()) != highlightBonds_.end() ||
+        if (std::ranges::find(highlightBonds_, nbr->getIdx()) !=
+                highlightBonds_.end() ||
             highlightBondMap_.find(nbr->getIdx()) != highlightBondMap_.end()) {
           auto hc = getHighlightBondColour(nbr, drawOptions_, highlightBonds_,
                                            highlightBondMap_, highlightAtoms_,
@@ -4117,7 +4111,7 @@ DrawColour getHighlightBondColour(
   RDUNUSED_PARAM(highlightAtoms);
 
   DrawColour col(0.0, 0.0, 0.0);
-  if (std::find(highlightBonds.begin(), highlightBonds.end(), bond->getIdx()) !=
+  if (std::ranges::find(highlightBonds, bond->getIdx()) !=
       highlightBonds.end()) {
     col = drawOptions.highlightColour;
     if (highlightBondMap.find(bond->getIdx()) != highlightBondMap.end()) {

@@ -498,7 +498,7 @@ unsigned reactProdMapAnchorIdx(Atom *atom, const RDKit::UINT_VECT &pMatches) {
     return pMol.getBondBetweenAtoms(atomIdx, pAnchor) != nullptr;
   };
 
-  auto match = std::find_if(pMatches.begin(), pMatches.end(), areAtomsBonded);
+  auto match = std::ranges::find_if(pMatches, areAtomsBonded);
 
   CHECK_INVARIANT(match != pMatches.end(), "match not found");
   return *match;
@@ -1126,8 +1126,7 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
         int unmatchedBond = -1;
 
         for (const auto rBond : reactant.atomBonds(&reactantAtom)) {
-          if (std::find(pOrder.begin(), pOrder.end(), rBond->getIdx()) ==
-              pOrder.end()) {
+          if (std::ranges::find(pOrder, rBond->getIdx()) == pOrder.end()) {
             unmatchedBond = rBond->getIdx();
             break;
           }
@@ -1135,23 +1134,21 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
         // what must be true at this point:
         //  1) there's a -1 in pOrder that we'll substitute for
         //  2) unmatchedBond contains the index of the substitution
-        auto bPos = std::find(pOrder.begin(), pOrder.end(), -1);
+        auto bPos = std::ranges::find(pOrder, -1);
         if (unmatchedBond >= 0 && bPos != pOrder.end()) {
           *bPos = unmatchedBond;
         }
         nUnknown = 0;
-        CHECK_INVARIANT(
-            std::find(pOrder.begin(), pOrder.end(), -1) == pOrder.end(),
-            "extra unmapped atom");
+        CHECK_INVARIANT(std::ranges::find(pOrder, -1) == pOrder.end(),
+                        "extra unmapped atom");
       } else if (productAtom->getDegree() > reactantAtom.getDegree()) {
         // the product has an extra bond. we can just remove the -1 from the
         // list:
-        auto bPos = std::find(pOrder.begin(), pOrder.end(), -1);
+        auto bPos = std::ranges::find(pOrder, -1);
         pOrder.erase(bPos);
         nUnknown = 0;
-        CHECK_INVARIANT(
-            std::find(pOrder.begin(), pOrder.end(), -1) == pOrder.end(),
-            "extra unmapped atom");
+        CHECK_INVARIANT(std::ranges::find(pOrder, -1) == pOrder.end(),
+                        "extra unmapped atom");
       }
     }
     if (!nUnknown) {
@@ -1162,8 +1159,7 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
         while (rOrderIter != rOrder.end() && rOrder.size() > pOrder.size()) {
           // we may invalidate the iterator so keep track of what comes next:
           auto thisOne = rOrderIter++;
-          if (std::find(pOrder.begin(), pOrder.end(), *thisOne) ==
-              pOrder.end()) {
+          if (std::ranges::find(pOrder, *thisOne) == pOrder.end()) {
             // not in the products:
             rOrder.erase(thisOne);
           }
@@ -1711,10 +1707,9 @@ bool updateAtomsModifiedByReaction(
             std::vector<int> aorder;
             for (auto aidx :
                  boost::make_iterator_range(reactant.getAtomNeighbors(atom))) {
-              auto miter = std::find_if(
-                  match.begin(), match.end(), [aidx](const auto &pr) {
-                    return static_cast<unsigned int>(pr.second) == aidx;
-                  });
+              auto miter = std::ranges::find_if(match, [aidx](const auto &pr) {
+                return static_cast<unsigned int>(pr.second) == aidx;
+              });
               if (miter != match.end()) {
                 auto rNbr = reactantTemplate->getAtomWithIdx(miter->first);
                 if (rNbr->getAtomMapNum()) {

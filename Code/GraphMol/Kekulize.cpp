@@ -15,6 +15,7 @@
 #include <RDGeneral/RDLog.h>
 #include <boost/dynamic_bitset.hpp>
 #include <numeric>
+#include <ranges>
 #include <utility>
 
 namespace RDKit {
@@ -27,11 +28,11 @@ void backTrack(RWMol &mol, INT_INT_DEQ_MAP &, int lastOpt, INT_VECT &done,
   // so we made a wrong turn at the lastOpt
   // remove on done list that comes after the lastOpt including itself
 
-  auto ei = std::find(done.begin(), done.end(), lastOpt);
+  auto ei = std::ranges::find(done, lastOpt);
   INT_VECT tdone;
   tdone.insert(tdone.end(), done.begin(), ei);
 
-  INT_VECT_CRI eri = std::find(done.rbegin(), done.rend(), lastOpt);
+  INT_VECT_CRI eri = std::ranges::find(std::views::reverse(done), lastOpt);
   ++eri;
   // and push them back onto the stack
   for (INT_VECT_CRI ri = done.rbegin(); ri != eri; ++ri) {
@@ -48,8 +49,8 @@ void backTrack(RWMol &mol, INT_INT_DEQ_MAP &, int lastOpt, INT_VECT &done,
       int aid2 = bnd->getEndAtomIdx();
       // if one of these atoms has been dealt with before lastOpt
       // we don't have to change the double bond addition
-      if ((std::find(tdone.begin(), tdone.end(), aid1) == tdone.end()) &&
-          (std::find(tdone.begin(), tdone.end(), aid2) == tdone.end())) {
+      if ((std::ranges::find(tdone, aid1) == tdone.end()) &&
+          (std::ranges::find(tdone, aid2) == tdone.end())) {
         // otherwise strip the double bond and set it back to single
         // and add the atoms to candidate for double bonds
         dBndAdds[bi] = 0;
@@ -72,7 +73,7 @@ void markDbondCands(RWMol &mol, const INT_VECT &allAtms,
   // - marks atoms that can take a double bond
 
   bool hasAromaticOrDummyAtom =
-      std::any_of(allAtms.begin(), allAtms.end(), [&mol](int allAtm) {
+      std::ranges::any_of(allAtms, [&mol](int allAtm) {
         return (!mol.getAtomWithIdx(allAtm)->getAtomicNum() ||
                 isAromaticAtom(*mol.getAtomWithIdx(allAtm)));
       });
@@ -259,15 +260,14 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
   // Pre-sort allAtms: wedge-end atoms first, then by canonical rank.
   // This way the first not-yet-done atom is always the best starting point.
   INT_VECT sortedAtms(allAtms);
-  std::sort(sortedAtms.begin(), sortedAtms.end(),
-            [&wedgeEndAtoms, &lessByRank](int a, int b) {
-              const bool wa = wedgeEndAtoms.test(a);
-              const bool wb = wedgeEndAtoms.test(b);
-              if (wa != wb) {
-                return wa;  // wedge-end atoms come first
-              }
-              return lessByRank(a, b);
-            });
+  std::ranges::sort(sortedAtms, [&wedgeEndAtoms, &lessByRank](int a, int b) {
+    const bool wa = wedgeEndAtoms.test(a);
+    const bool wb = wedgeEndAtoms.test(b);
+    if (wa != wb) {
+      return wa;  // wedge-end atoms come first
+    }
+    return lessByRank(a, b);
+  });
 
   // ok the algorithm goes something like this
   // - start with an atom that has been marked aromatic before
@@ -296,7 +296,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
     } else {
       curr = -1;
       for (int allAtm : sortedAtms) {
-        if (std::find(done.begin(), done.end(), allAtm) == done.end()) {
+        if (std::ranges::find(done, allAtm) == done.end()) {
           curr = allAtm;
           break;
         }
@@ -329,19 +329,19 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
           continue;
         }
         // ignore if the neighbor has already been dealt with before
-        if (std::find(done.begin(), done.end(), nbrIdx) != done.end()) {
+        if (std::ranges::find(done, nbrIdx) != done.end()) {
           continue;
         }
         nbrs.push_back(nbrIdx);
       }
 
-      std::sort(nbrs.begin(), nbrs.end(), lessByRank);
+      std::ranges::sort(nbrs, lessByRank);
 
       for (int nbrIdx : nbrs) {
         auto nbrBond = mol.getBondBetweenAtoms(curr, nbrIdx);
 
         // if the neighbor is not on the stack add it
-        if (std::find(astack.begin(), astack.end(), nbrIdx) == astack.end()) {
+        if (std::ranges::find(astack, nbrIdx) == astack.end()) {
           lstack.push_back(nbrIdx);
         }
 
@@ -702,9 +702,8 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
     VECT_INT_VECT brings;
     brings.reserve(allbrings.size());
     auto copyBondRingsWithinFragment = [&bondsToUse](const INT_VECT &ring) {
-      return std::all_of(ring.begin(), ring.end(), [&bondsToUse](const int bi) {
-        return bondsToUse[bi];
-      });
+      return std::ranges::all_of(
+          ring, [&bondsToUse](const int bi) { return bondsToUse[bi]; });
     };
     VECT_INT_VECT aringsRemaining;
     aringsRemaining.reserve(arings.size());
@@ -730,8 +729,8 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
       INT_VECT fused;
       RingUtils::pickFusedRings(curr, neighMap, fused, fusDone);
       VECT_INT_VECT frings(fused.size());
-      std::transform(fused.begin(), fused.end(), frings.begin(),
-                     [&arings](const int ri) { return arings[ri]; });
+      std::ranges::transform(fused, frings.begin(),
+                             [&arings](const int ri) { return arings[ri]; });
       kekulizeFused(mol, frings, atomRanks, maxBackTracks);
       int rix;
       for (rix = 0; rix < cnrs; ++rix) {

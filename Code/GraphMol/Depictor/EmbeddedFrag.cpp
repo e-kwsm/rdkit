@@ -278,8 +278,8 @@ void EmbeddedFrag::updateNewNeighs(
   }
 
   if (d_eatoms[aid].neighs.size() > 0) {
-    if (std::find(d_attachPts.begin(), d_attachPts.end(),
-                  static_cast<int>(aid)) == d_attachPts.end()) {
+    if (std::ranges::find(d_attachPts, static_cast<int>(aid)) ==
+        d_attachPts.end()) {
       d_attachPts.push_back(aid);
     }
   }
@@ -317,8 +317,8 @@ void EmbeddedFrag::setupAttachmentPoints() {
     const auto &enbrs = d_eatoms[dai].neighs;
     for (const auto nbrAtom :
          dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(dai))) {
-      if (std::find(enbrs.begin(), enbrs.end(),
-                    static_cast<int>(nbrAtom->getIdx())) == enbrs.end()) {
+      if (std::ranges::find(enbrs, static_cast<int>(nbrAtom->getIdx())) ==
+          enbrs.end()) {
         // we found a neighbor that is part of this embedded system
         doneNbrs.push_back(nbrAtom->getIdx());
       }
@@ -576,10 +576,8 @@ static void mirrorTransRingAtoms(const RDKit::ROMol &mol,
     if (neighbors.size() != 2) {
       continue;
     }
-    const auto leftIsIn =
-        std::find(ring.begin(), ring.end(), neighbors[0]) != ring.end();
-    const auto rightIsIn =
-        std::find(ring.begin(), ring.end(), neighbors[1]) != ring.end();
+    const auto leftIsIn = std::ranges::find(ring, neighbors[0]) != ring.end();
+    const auto rightIsIn = std::ranges::find(ring, neighbors[1]) != ring.end();
     bool isTrans = false;
     if (stype == RDKit::Bond::STEREOTRANS || stype == RDKit::Bond::STEREOE) {
       if (leftIsIn == rightIsIn) {
@@ -902,8 +900,7 @@ void EmbeddedFrag::mergeRing(const EmbeddedFrag &embRing, unsigned int nCommon,
       // transform to merge the and only if the two are the only common atoms
       // i.e. we are doing bridged systems we will leave the nbrs untouched
       if (nCommon <= 2) {
-        if (std::find(pinAtoms.begin(), pinAtoms.end(), aid) !=
-            pinAtoms.end()) {
+        if (std::ranges::find(pinAtoms, aid) != pinAtoms.end()) {
           d_eatoms[aid].angle += ori.second.angle;
           if (d_eatoms[aid].nbr1 == ori.second.nbr1) {
             d_eatoms[aid].nbr1 = ori.second.nbr2;
@@ -1225,13 +1222,12 @@ void EmbeddedFrag::mergeWithCommon(EmbeddedFrag &embObj,
   // copy the eatoms in embObj to this fragment
   for (const auto &ori : oatoms) {
     auto aid = ori.first;
-    if (std::find(commAtms.begin(), commAtms.end(), aid) == commAtms.end()) {
+    if (std::ranges::find(commAtms, aid) == commAtms.end()) {
       d_eatoms[aid] = ori.second;
       // also if any of these atoms have unattached neighbors add them to the
       // queue
       if (!ori.second.neighs.empty()) {
-        if (std::find(d_attachPts.begin(), d_attachPts.end(), aid) ==
-            d_attachPts.end()) {
+        if (std::ranges::find(d_attachPts, aid) == d_attachPts.end()) {
           d_attachPts.push_back(aid);
         }
       }
@@ -1279,10 +1275,8 @@ void EmbeddedFrag::mergeFragsWithComm(std::list<EmbeddedFrag> &efrags) {
     this->mergeWithCommon((*nfri), commAtms);  //, mol);
     for (auto cai : commAtms) {
       if (d_eatoms.at(cai).neighs.empty() &&
-          (std::find(d_attachPts.begin(), d_attachPts.end(), cai) !=
-           d_attachPts.end())) {
-        d_attachPts.erase(
-            std::remove(d_attachPts.begin(), d_attachPts.end(), cai));
+          (std::ranges::find(d_attachPts, cai) != d_attachPts.end())) {
+        d_attachPts.erase(std::ranges::remove(d_attachPts, cai));
       }
     }
     efrags.erase(nfri);
@@ -1302,7 +1296,7 @@ void EmbeddedFrag::expandEfrag(RDKit::INT_LIST &nratms,
     auto nbrs = d_eatoms[aid].neighs;
     CHECK_INVARIANT(!nbrs.empty(), "");
     for (auto nbri : nbrs) {
-      auto nratmi = std::find(nratms.begin(), nratms.end(), nbri);
+      auto nratmi = std::ranges::find(nratms, nbri);
       if (nratmi != nratms.end()) {
         // the neighbor we have to add is a non ring atoms
         this->addNonRingAtom(nbri, aid);  //, mol);
@@ -1325,10 +1319,8 @@ void EmbeddedFrag::expandEfrag(RDKit::INT_LIST &nratms,
         if (nfri != efrags.end()) {
           this->mergeNoCommon((*nfri), aid, nbri);  //, mol);
           if (d_eatoms.at(nbri).neighs.empty() &&
-              (std::find(d_attachPts.begin(), d_attachPts.end(), nbri) !=
-               d_attachPts.end())) {
-            d_attachPts.erase(
-                std::remove(d_attachPts.begin(), d_attachPts.end(), nbri));
+              (std::ranges::find(d_attachPts, nbri) != d_attachPts.end())) {
+            d_attachPts.erase(std::ranges::remove(d_attachPts, nbri));
           }
           // remove this fragment from the list of embedded fragments
           efrags.erase(nfri);
@@ -1435,8 +1427,8 @@ void _recurseAtomOneSide(unsigned int endAid, unsigned int begAid,
   flipAids.push_back(endAid);
   for (auto nbr : mol->atomNeighbors(mol->getAtomWithIdx(endAid))) {
     if (nbr->getIdx() != begAid &&
-        (std::find(flipAids.begin(), flipAids.end(),
-                   static_cast<int>(nbr->getIdx())) == flipAids.end())) {
+        (std::ranges::find(flipAids, static_cast<int>(nbr->getIdx())) ==
+         flipAids.end())) {
       _recurseAtomOneSide(nbr->getIdx(), begAid, mol, flipAids);
     }
   }
@@ -1781,7 +1773,7 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
     rPath.push_back(aid);
     nbrMap[aid] = nbrs;
     for (auto nbr : nbrs) {
-      if (std::find(rPath.begin(), rPath.end(), nbr) == rPath.end()) {
+      if (std::ranges::find(rPath, nbr) == rPath.end()) {
         _recurseDegTwoRingAtoms(nbr, mol, rPath, nbrMap);
       }
     }
@@ -1862,8 +1854,8 @@ void EmbeddedFrag::flipAboutBond(unsigned int bondId, bool flipEnd) {
     }
   }
   for (auto &d_eatom : d_eatoms) {
-    const auto fii = std::find(endSideAids.begin(), endSideAids.end(),
-                               static_cast<int>(d_eatom.first));
+    const auto fii =
+        std::ranges::find(endSideAids, static_cast<int>(d_eatom.first));
     if (endSideFlip ^ (fii == endSideAids.end())) {
       d_eatom.second.Reflect(begLoc, endLoc);
     }

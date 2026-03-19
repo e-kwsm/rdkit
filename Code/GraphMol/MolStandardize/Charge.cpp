@@ -192,7 +192,7 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
         }
 
         std::vector<unsigned int> key = {poccur.back(), ioccur.back()};
-        std::sort(key.begin(), key.end());
+        std::ranges::sort(key);
         const bool is_in = already_moved.find(key) != already_moved.end();
         if (is_in) {
           BOOST_LOG(rdInfoLog)
@@ -230,8 +230,8 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
         const PeriodicTable *table = PeriodicTable::getTable();
         INT_VECT valence_list = table->getValenceList(iatom->getAtomicNum());
         bool found =
-            (std::find(valence_list.begin(), valence_list.end(),
-                       iatom->getTotalValence()) != valence_list.end());
+            (std::ranges::find(valence_list, iatom->getTotalValence()) !=
+             valence_list.end());
         if (iatom->getNoImplicit() ||
             ((patom->getAtomicNum() == 7 || patom->getAtomicNum() == 15) &&
              patom->getIsAromatic()) ||
@@ -419,15 +419,15 @@ void Uncharger::unchargeInPlace(RWMol &mol) {
   };
   std::vector<std::pair<int, int>> n_atoms;
   n_atoms.reserve(n_matches.size());
-  std::transform(n_matches.begin(), n_matches.end(),
-                 std::back_inserter(n_atoms), getRankIdxPair);
+  std::ranges::transform(n_matches, std::back_inserter(n_atoms),
+                         getRankIdxPair);
   std::vector<std::pair<int, int>> a_atoms;
   a_atoms.reserve(a_matches.size());
-  std::transform(a_matches.begin(), a_matches.end(),
-                 std::back_inserter(a_atoms), getRankIdxPair);
+  std::ranges::transform(a_matches, std::back_inserter(a_atoms),
+                         getRankIdxPair);
   if (df_canonicalOrdering) {
-    std::sort(n_atoms.begin(), n_atoms.end());
-    std::sort(a_atoms.begin(), a_atoms.end());
+    std::ranges::sort(n_atoms);
+    std::ranges::sort(a_atoms);
   }
 
   // merge n_atoms and a_atoms into one single list of

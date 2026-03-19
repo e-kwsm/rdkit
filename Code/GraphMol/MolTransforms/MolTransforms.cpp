@@ -284,11 +284,11 @@ RDGeom::Transform3D *computeCanonicalTransform(const Conformer &conf,
       for (unsigned int i = 0; i < DIM; ++i) {
         eigValsSorted.emplace_back(i, eigVals(i));
       }
-      std::sort(eigValsSorted.begin(), eigValsSorted.end(),
-                [](const std::pair<unsigned int, double> &a,
-                   const std::pair<unsigned int, double> &b) {
-                  return (a.second > b.second);
-                });
+      std::ranges::sort(eigValsSorted,
+                        [](const std::pair<unsigned int, double> &a,
+                           const std::pair<unsigned int, double> &b) {
+                          return (a.second > b.second);
+                        });
       for (unsigned int col = 0; col < DIM; ++col) {
         unsigned int colSorted = eigValsSorted.at(col).first;
         if (eigenValues) {

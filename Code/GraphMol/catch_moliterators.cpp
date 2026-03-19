@@ -31,9 +31,8 @@ TEST_CASE("mol.atoms()") {
   }
   CHECK(ccount == 4);
   auto atoms = m->atoms();
-  auto hasCarbon = std::any_of(atoms.begin(), atoms.end(), [](const auto atom) {
-    return atom->getAtomicNum() == 6;
-  });
+  auto hasCarbon = std::ranges::any_of(
+      atoms, [](const auto atom) { return atom->getAtomicNum() == 6; });
   CHECK(hasCarbon);
   ccount = std::count_if(atoms.begin(), atoms.end(), [](const auto atom) {
     return atom->getAtomicNum() == 6;
@@ -60,9 +59,9 @@ TEST_CASE("mol.bonds()") {
   }
   CHECK(doubleBondCount == 2);
   auto bonds = m->bonds();
-  auto hasDoubleBond = std::any_of(
-      bonds.begin(), bonds.end(),
-      [](const auto bond) { return bond->getBondType() == Bond::DOUBLE; });
+  auto hasDoubleBond = std::ranges::any_of(bonds, [](const auto bond) {
+    return bond->getBondType() == Bond::DOUBLE;
+  });
   CHECK(hasDoubleBond);
   doubleBondCount = std::count_if(
       bonds.begin(), bonds.end(),

@@ -4537,11 +4537,11 @@ TEST_CASE(
     MolOps::assignStereochemistry(*m);
     INT_VECT &sas = m->getBondWithIdx(2)->getStereoAtoms();
     REQUIRE(sas.size() == 2);
-    REQUIRE(std::find(sas.begin(), sas.end(), 1) != sas.end());
+    REQUIRE(std::ranges::find(sas, 1) != sas.end());
     m->removeAtom((unsigned int)0);
     REQUIRE(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
-    REQUIRE(std::find(sas.begin(), sas.end(), 0) != sas.end());
-    REQUIRE(std::find(sas.begin(), sas.end(), 1) == sas.end());
+    REQUIRE(std::ranges::find(sas, 0) != sas.end());
+    REQUIRE(std::ranges::find(sas, 1) == sas.end());
     delete m;
   }
   {
@@ -4551,12 +4551,12 @@ TEST_CASE(
     MolOps::assignStereochemistry(*m);
     INT_VECT &sas = m->getBondWithIdx(1)->getStereoAtoms();
     REQUIRE(sas.size() == 2);
-    REQUIRE(std::find(sas.begin(), sas.end(), 0) != sas.end());
-    REQUIRE(std::find(sas.begin(), sas.end(), 3) != sas.end());
+    REQUIRE(std::ranges::find(sas, 0) != sas.end());
+    REQUIRE(std::ranges::find(sas, 3) != sas.end());
     m->removeAtom((unsigned int)4);
     REQUIRE(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
-    REQUIRE(std::find(sas.begin(), sas.end(), 0) != sas.end());
-    REQUIRE(std::find(sas.begin(), sas.end(), 3) != sas.end());
+    REQUIRE(std::ranges::find(sas, 0) != sas.end());
+    REQUIRE(std::ranges::find(sas, 3) != sas.end());
     delete m;
   }
 }

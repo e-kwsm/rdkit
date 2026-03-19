@@ -145,8 +145,8 @@ void copyProperties(
 
     // Also skip the property if we have a list of properties we want to export
     // and this one is not one of them.
-    if (!propNames.empty() && (std::find(propNames.begin(), propNames.end(),
-                                         prop.key) == propNames.end())) {
+    if (!propNames.empty() &&
+        (std::ranges::find(propNames, prop.key) == propNames.end())) {
       continue;
     }
 
@@ -277,7 +277,7 @@ static void copyAtomNumChirality(const ROMol &mol, mae::Block &stBlock) {
       neighbors.push_back(nb->getIdx());
     }
 
-    std::sort(neighbors.begin(), neighbors.end());
+    std::ranges::sort(neighbors);
     for (const auto nb : neighbors) {
       propVal += "_" + std::to_string(nb + 1);
     }

@@ -48,7 +48,7 @@ unsigned int SubstanceGroup::getIndexInMol() const {
                   "No SubstanceGroups found on owning molecule");
 
   auto match_sgroup = [&](const SubstanceGroup &sg) { return this == &sg; };
-  auto sgroupItr = std::find_if(sgroups.begin(), sgroups.end(), match_sgroup);
+  auto sgroupItr = std::ranges::find_if(sgroups, match_sgroup);
 
   if (sgroupItr == sgroups.end()) {
     std::ostringstream errout;
@@ -117,7 +117,7 @@ void SubstanceGroup::addParentAtomWithIdx(unsigned int idx) {
   if (idx >= dp_mol->getNumAtoms()) {
     throw ValueErrorException("Atom index out of range");
   }
-  if (std::find(d_atoms.begin(), d_atoms.end(), idx) == d_atoms.end()) {
+  if (std::ranges::find(d_atoms, idx) == d_atoms.end()) {
     std::ostringstream errout;
     errout << "Atom " << idx << " is not a member of current SubstanceGroup";
     throw SubstanceGroupException(errout.str());
@@ -131,7 +131,7 @@ void SubstanceGroup::addParentAtomWithBookmark(int mark) {
 
   Atom *atom = dp_mol->getUniqueAtomWithBookmark(mark);
   unsigned int idx = atom->getIdx();
-  if (std::find(d_atoms.begin(), d_atoms.end(), idx) == d_atoms.end()) {
+  if (std::ranges::find(d_atoms, idx) == d_atoms.end()) {
     std::ostringstream errout;
     errout << "Atom with bookmark " << mark
            << " is not a member of current SubstanceGroup ";
@@ -197,16 +197,14 @@ void SubstanceGroup::addAttachPoint(unsigned int aIdx, int lvIdx,
 //! check if the bond is SubstanceGroup XBOND or CBOND
 SubstanceGroup::BondType SubstanceGroup::getBondType(
     unsigned int bondIdx) const {
-  PRECONDITION(
-      std::find(d_bonds.begin(), d_bonds.end(), bondIdx) != d_bonds.end(),
-      "bond is not part of the SubstanceGroup")
+  PRECONDITION(std::ranges::find(d_bonds, bondIdx) != d_bonds.end(),
+               "bond is not part of the SubstanceGroup")
 
   auto bond = dp_mol->getBondWithIdx(bondIdx);
   bool begin_atom_in_sgroup =
-      std::find(d_atoms.begin(), d_atoms.end(), bond->getBeginAtomIdx()) !=
-      d_atoms.end();
-  bool end_atom_in_sgroup = std::find(d_atoms.begin(), d_atoms.end(),
-                                      bond->getEndAtomIdx()) != d_atoms.end();
+      std::ranges::find(d_atoms, bond->getBeginAtomIdx()) != d_atoms.end();
+  bool end_atom_in_sgroup =
+      std::ranges::find(d_atoms, bond->getEndAtomIdx()) != d_atoms.end();
 
   if (begin_atom_in_sgroup && end_atom_in_sgroup) {
     return SubstanceGroup::BondType::CBOND;
@@ -291,10 +289,10 @@ bool SubstanceGroup::adjustToRemovedBond(unsigned int bondIdx) {
 }
 
 bool SubstanceGroup::includesAtom(unsigned int atomIdx) const {
-  if (std::find(d_atoms.begin(), d_atoms.end(), atomIdx) != d_atoms.end()) {
+  if (std::ranges::find(d_atoms, atomIdx) != d_atoms.end()) {
     return true;
   }
-  if (std::find(d_patoms.begin(), d_patoms.end(), atomIdx) != d_patoms.end()) {
+  if (std::ranges::find(d_patoms, atomIdx) != d_patoms.end()) {
     return true;
   }
   for (const auto &ap : d_saps) {
@@ -306,7 +304,7 @@ bool SubstanceGroup::includesAtom(unsigned int atomIdx) const {
 }
 
 bool SubstanceGroup::includesBond(unsigned int bondIdx) const {
-  if (std::find(d_bonds.begin(), d_bonds.end(), bondIdx) != d_bonds.end()) {
+  if (std::ranges::find(d_bonds, bondIdx) != d_bonds.end()) {
     return true;
   }
   for (const auto &cs : d_cstates) {
@@ -318,27 +316,29 @@ bool SubstanceGroup::includesBond(unsigned int bondIdx) const {
 }
 
 bool SubstanceGroupChecks::isValidType(const std::string &type) {
-  return std::find(SubstanceGroupChecks::sGroupTypes.begin(),
-                   SubstanceGroupChecks::sGroupTypes.end(),
-                   type) != SubstanceGroupChecks::sGroupTypes.end();
+  return std::ranges::find(SubstanceGroupChecks::sGroupTypes,
+
+                           type) != SubstanceGroupChecks::sGroupTypes.end();
 }
 
 bool SubstanceGroupChecks::isValidSubType(const std::string &type) {
-  return std::find(SubstanceGroupChecks::sGroupSubtypes.begin(),
-                   SubstanceGroupChecks::sGroupSubtypes.end(),
-                   type) != SubstanceGroupChecks::sGroupSubtypes.end();
+  return std::ranges::find(SubstanceGroupChecks::sGroupSubtypes,
+
+                           type) != SubstanceGroupChecks::sGroupSubtypes.end();
 }
 
 bool SubstanceGroupChecks::isValidConnectType(const std::string &type) {
-  return std::find(SubstanceGroupChecks::sGroupConnectTypes.begin(),
-                   SubstanceGroupChecks::sGroupConnectTypes.end(),
-                   type) != SubstanceGroupChecks::sGroupConnectTypes.end();
+  return std::ranges::find(SubstanceGroupChecks::sGroupConnectTypes,
+
+                           type) !=
+         SubstanceGroupChecks::sGroupConnectTypes.end();
 }
 
 bool SubstanceGroupChecks::isValidClass(const std::string &sgroupClass) {
-  return std::find(SubstanceGroupChecks::sGroupClasses.begin(),
-                   SubstanceGroupChecks::sGroupClasses.end(),
-                   sgroupClass) != SubstanceGroupChecks::sGroupClasses.end();
+  return std::ranges::find(SubstanceGroupChecks::sGroupClasses,
+
+                           sgroupClass) !=
+         SubstanceGroupChecks::sGroupClasses.end();
 }
 
 bool SubstanceGroupChecks::isSubstanceGroupIdFree(const ROMol &mol,
@@ -349,8 +349,7 @@ bool SubstanceGroupChecks::isSubstanceGroupIdFree(const ROMol &mol,
   };
 
   const auto &sgroups = getSubstanceGroups(mol);
-  return std::find_if(sgroups.begin(), sgroups.end(), match_sgroup) ==
-         sgroups.end();
+  return std::ranges::find_if(sgroups, match_sgroup) == sgroups.end();
 }
 
 std::vector<SubstanceGroup> &getSubstanceGroups(ROMol &mol) {

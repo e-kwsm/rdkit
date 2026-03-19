@@ -251,11 +251,12 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
   }
 
   for (auto bond : bonds) {
-    i = rdcast<int>(std::find(activeAtoms.begin(), activeAtoms.end(),
-                              static_cast<int>(bond->getBeginAtomIdx())) -
-                    activeAtoms.begin());
-    j = rdcast<int>(std::find(activeAtoms.begin(), activeAtoms.end(),
-                              static_cast<int>(bond->getEndAtomIdx())) -
+    i = rdcast<int>(
+        std::ranges::find(activeAtoms,
+                          static_cast<int>(bond->getBeginAtomIdx())) -
+        activeAtoms.begin());
+    j = rdcast<int>(std::ranges::find(activeAtoms,
+                                      static_cast<int>(bond->getEndAtomIdx())) -
                     activeAtoms.begin());
     double contrib;
     if (useBO) {

@@ -27,11 +27,11 @@ class DuplicatedSeedCache {
     size_t getNumBonds() const { return BondIdx.size(); }
 
     void addAtom(unsigned int i) {
-      auto it = std::lower_bound(AtomIdx.begin(), AtomIdx.end(), i);
+      auto it = std::ranges::lower_bound(AtomIdx, i);
       AtomIdx.insert(it, i);
     }
     void addBond(unsigned int i) {
-      auto it = std::lower_bound(BondIdx.begin(), BondIdx.end(), i);
+      auto it = std::ranges::lower_bound(BondIdx, i);
       BondIdx.insert(it, i);
     }
 

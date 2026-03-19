@@ -65,8 +65,8 @@ RDGeom::INT_POINT2D_MAP embedRing(const RDKit::INT_VECT &ring) {
 
 void transformPoints(RDGeom::INT_POINT2D_MAP &nringCor,
                      const RDGeom::Transform2D &trans) {
-  std::for_each(nringCor.begin(), nringCor.end(),
-                [&trans](auto &elem) { trans.TransformPoint(elem.second); });
+  std::ranges::for_each(
+      nringCor, [&trans](auto &elem) { trans.TransformPoint(elem.second); });
 }
 
 RDGeom::Point2D computeBisectPoint(const RDGeom::Point2D &rcr, double ang,
@@ -110,7 +110,7 @@ RDGeom::Point2D reflectPoint(const RDGeom::Point2D &point,
 
 void reflectPoints(RDGeom::INT_POINT2D_MAP &coordMap,
                    const RDGeom::Point2D &loc1, const RDGeom::Point2D &loc2) {
-  std::for_each(coordMap.begin(), coordMap.end(), [&loc1, &loc2](auto &elem) {
+  std::ranges::for_each(coordMap, [&loc1, &loc2](auto &elem) {
     reflectPoint(elem.second, loc1, loc2);
   });
 }
@@ -125,7 +125,7 @@ RDKit::INT_VECT setNbrOrder(unsigned int aid, const RDKit::INT_VECT &nbrs,
   // increasing degree
   for (auto anbr : mol.atomNeighbors(mol.getAtomWithIdx(aid))) {
     // We used to use degree here instead we will start using the CIP rank here
-    if (std::find(nbrs.begin(), nbrs.end(), static_cast<int>(anbr->getIdx())) ==
+    if (std::ranges::find(nbrs, static_cast<int>(anbr->getIdx())) ==
         nbrs.end()) {
       ref = anbr->getIdx();
     }
@@ -150,7 +150,7 @@ RDKit::INT_VECT setNbrOrder(unsigned int aid, const RDKit::INT_VECT &nbrs,
   // list
   RDKit::INT_VECT res;
   res.reserve(thold.size());
-  auto pos = std::find(thold.begin(), thold.end(), ref);
+  auto pos = std::ranges::find(thold, ref);
   if (pos != thold.end()) {
     res.insert(res.end(), pos + 1, thold.end());
   }
@@ -278,7 +278,7 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
 
   RDKit::INT_VECT commonAtoms, res, doneAtoms, notDone;
   for (int i = 0; i < rdcast<int>(fusedRings.size()); i++) {
-    if (std::find(doneRings.begin(), doneRings.end(), i) == doneRings.end()) {
+    if (std::ranges::find(doneRings, i) == doneRings.end()) {
       notDone.push_back(i);
     }
   }
@@ -289,16 +289,14 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
 
   int currRingId = 0;
   for (const auto &fusedRing : fusedRings) {
-    if (std::find(doneRings.begin(), doneRings.end(), currRingId) !=
-        doneRings.end()) {
+    if (std::ranges::find(doneRings, currRingId) != doneRings.end()) {
       currRingId++;
       continue;
     }
     commonAtoms.clear();
     int numCommonAtoms = 0;
     for (auto rii : fusedRing) {
-      if (std::find(doneAtoms.begin(), doneAtoms.end(), (rii)) !=
-          doneAtoms.end()) {
+      if (std::ranges::find(doneAtoms, (rii)) != doneAtoms.end()) {
         commonAtoms.push_back(rii);
         numCommonAtoms++;
       }
@@ -534,8 +532,7 @@ bool hasTerminalRGroupOrQueryHydrogen(const RDKit::ROMol &mol) {
   // we do not need the allowRGroups logic if there are no
   // terminal dummy atoms
   auto atoms = mol.atoms();
-  return std::any_of(atoms.begin(), atoms.end(),
-                     RDKit::isAtomTerminalRGroupOrQueryHydrogen);
+  return std::ranges::any_of(atoms, RDKit::isAtomTerminalRGroupOrQueryHydrogen);
 }
 
 std::unique_ptr<RDKit::RWMol> prepareTemplateForRGroups(
@@ -620,7 +617,7 @@ void reducedToFullMatches(const RDKit::RWMol &reducedQuery,
     }
     auto matchSize = match.size();
     match.resize(matchSize + newMatch.size());
-    std::move(newMatch.begin(), newMatch.end(), match.begin() + matchSize);
+    std::ranges::move(newMatch, match.begin() + matchSize);
   }
 }
 

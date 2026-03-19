@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 
+#include <algorithm>
 #include <random>
 #include <thread>
 #include <boost/random/discrete_distribution.hpp>
@@ -55,13 +56,12 @@ void SynthonSpaceSearcher::search(const SearchResultCallback &cb) {
   const TimePoint *endTime = nullptr;
   std::uint64_t totHits = 0;
   auto allHits = assembleHitSets(endTime, timedOut, totHits);
-  std::sort(allHits.begin(), allHits.end(),
-            [](const auto &hs1, const auto &hs2) -> bool {
-              if (hs1->d_reaction->getId() == hs2->d_reaction->getId()) {
-                return hs1->numHits < hs2->numHits;
-              }
-              return hs1->d_reaction->getId() < hs2->d_reaction->getId();
-            });
+  std::ranges::sort(allHits, [](const auto &hs1, const auto &hs2) -> bool {
+    if (hs1->d_reaction->getId() == hs2->d_reaction->getId()) {
+      return hs1->numHits < hs2->numHits;
+    }
+    return hs1->d_reaction->getId() < hs2->d_reaction->getId();
+  });
 
   // from buildAllhits
   std::vector<std::pair<const SynthonSpaceHitSet *, std::vector<size_t>>> toTry;
@@ -364,16 +364,15 @@ bool SynthonSpaceSearcher::verifyHit(ROMol &mol) const {
 namespace {
 void sortHits(std::vector<std::unique_ptr<ROMol>> &hits) {
   if (!hits.empty() && hits.front()->hasProp("Similarity")) {
-    std::sort(hits.begin(), hits.end(),
-              [](const std::unique_ptr<ROMol> &lhs,
-                 const std::unique_ptr<ROMol> &rhs) {
-                const auto lsim = lhs->getProp<double>("Similarity");
-                const auto rsim = rhs->getProp<double>("Similarity");
-                if (lsim == rsim) {
-                  return lhs->getNumAtoms() < rhs->getNumAtoms();
-                }
-                return lsim > rsim;
-              });
+    std::ranges::sort(hits, [](const std::unique_ptr<ROMol> &lhs,
+                               const std::unique_ptr<ROMol> &rhs) {
+      const auto lsim = lhs->getProp<double>("Similarity");
+      const auto rsim = rhs->getProp<double>("Similarity");
+      if (lsim == rsim) {
+        return lhs->getNumAtoms() < rhs->getNumAtoms();
+      }
+      return lsim > rsim;
+    });
   }
 }
 
@@ -386,20 +385,19 @@ void sortAndUniquifyToTry(
     tmp.emplace_back(
         i, details::buildProductName(toTry[i].first, toTry[i].second));
   }
-  std::sort(tmp.begin(), tmp.end(),
-            [](const auto &lhs, const auto &rhs) -> bool {
-              return lhs.second < rhs.second;
-            });
-  tmp.erase(std::unique(tmp.begin(), tmp.end(),
-                        [](const auto &lhs, const auto &rhs) -> bool {
-                          return lhs.second == rhs.second;
-                        }),
+  std::ranges::sort(tmp, [](const auto &lhs, const auto &rhs) -> bool {
+    return lhs.second < rhs.second;
+  });
+  tmp.erase(std::ranges::unique(tmp,
+                                [](const auto &lhs, const auto &rhs) -> bool {
+                                  return lhs.second == rhs.second;
+                                }),
             tmp.end());
   std::vector<std::pair<const SynthonSpaceHitSet *, std::vector<size_t>>>
       newToTry;
   newToTry.reserve(tmp.size());
-  std::transform(tmp.begin(), tmp.end(), back_inserter(newToTry),
-                 [&](const auto &p) -> auto { return toTry[p.first]; });
+  std::ranges::transform(tmp, back_inserter(newToTry),
+                         [&](const auto &p) -> auto { return toTry[p.first]; });
   toTry = newToTry;
 }
 
@@ -434,13 +432,12 @@ void SynthonSpaceSearcher::buildHits(
   if (d_params.randomSample) {
     std::shuffle(hitsets.begin(), hitsets.end(), *d_randGen);
   } else {
-    std::sort(hitsets.begin(), hitsets.end(),
-              [](const auto &hs1, const auto &hs2) -> bool {
-                if (hs1->d_reaction->getId() == hs2->d_reaction->getId()) {
-                  return hs1->numHits < hs2->numHits;
-                }
-                return hs1->d_reaction->getId() < hs2->d_reaction->getId();
-              });
+    std::ranges::sort(hitsets, [](const auto &hs1, const auto &hs2) -> bool {
+      if (hs1->d_reaction->getId() == hs2->d_reaction->getId()) {
+        return hs1->numHits < hs2->numHits;
+      }
+      return hs1->d_reaction->getId() < hs2->d_reaction->getId();
+    });
   }
   buildAllHits(hitsets, endTime, timedOut, results);
 }
@@ -516,10 +513,10 @@ void SynthonSpaceSearcher::buildAllHits(
     if (d_params.hitStart < static_cast<std::int64_t>(results.size())) {
       std::for_each(results.begin(), results.begin() + d_params.hitStart,
                     [](std::unique_ptr<ROMol> &m) { m.reset(); });
-      results.erase(std::remove_if(results.begin(), results.end(),
-                                   [](const std::unique_ptr<ROMol> &r) {
-                                     return !static_cast<bool>(r);
-                                   }),
+      results.erase(std::ranges::remove_if(results,
+                                           [](const std::unique_ptr<ROMol> &r) {
+                                             return !static_cast<bool>(r);
+                                           }),
                     results.end());
     } else {
       results.clear();
@@ -603,10 +600,10 @@ void SynthonSpaceSearcher::makeHitsFromToTry(
 #endif
 
   // Take out any gaps in the results set, where products didn't make the grade.
-  results.erase(std::remove_if(results.begin(), results.end(),
-                               [](const std::unique_ptr<ROMol> &r) {
-                                 return !static_cast<bool>(r);
-                               }),
+  results.erase(std::ranges::remove_if(results,
+                                       [](const std::unique_ptr<ROMol> &r) {
+                                         return !static_cast<bool>(r);
+                                       }),
                 results.end());
 }
 

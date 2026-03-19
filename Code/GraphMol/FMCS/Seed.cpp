@@ -375,8 +375,8 @@ void Seed::computeRemainingSize(const ROMol &qmol) {
   auto visitedBonds = ExcludedBonds;
   boost::dynamic_bitset<> visitedAtoms(qmol.getNumAtoms());
 
-  std::for_each(
-      MoleculeFragment.Atoms.begin(), MoleculeFragment.Atoms.end(),
+  std::ranges::for_each(
+      MoleculeFragment.Atoms,
       [&visitedAtoms](const auto &atom) { visitedAtoms.set(atom->getIdx()); });
 
   // SDF all paths

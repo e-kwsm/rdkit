@@ -713,7 +713,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
                                 allBondOrdering[ti]);
     }
 
-    std::sort(tmp.begin(), tmp.end());
+    std::ranges::sort(tmp);
 
     for (unsigned int ti = 0; ti < vfragsmi.size(); ++ti) {
       result += std::get<0>(tmp[ti]);
@@ -862,8 +862,8 @@ std::string MolFragmentToSmiles(const ROMol &mol,
           static_cast<unsigned int>(params.rootedAtAtom) < mol.getNumAtoms(),
       "rootedAtomAtom must be less than the number of atoms");
   PRECONDITION(params.rootedAtAtom < 0 ||
-                   std::find(atomsToUse.begin(), atomsToUse.end(),
-                             params.rootedAtAtom) != atomsToUse.end(),
+                   std::ranges::find(atomsToUse, params.rootedAtAtom) !=
+                       atomsToUse.end(),
                "rootedAtAtom not found in atomsToUse");
   PRECONDITION(!atomSymbols || atomSymbols->size() >= mol.getNumAtoms(),
                "bad atomSymbols vector");
@@ -1017,7 +1017,7 @@ std::string MolFragmentToSmiles(const ROMol &mol,
         &atomsInPlay, &bondsInPlay, atomSymbols, bondSymbols);
 
     res += subSmi;
-    colorIt = std::find(colors.begin(), colors.end(), Canon::WHITE_NODE);
+    colorIt = std::ranges::find(colors, Canon::WHITE_NODE);
     if (colorIt != colors.end()) {
       res += ".";
     }

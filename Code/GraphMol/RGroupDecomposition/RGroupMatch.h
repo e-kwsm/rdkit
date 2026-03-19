@@ -9,6 +9,7 @@
 //
 #ifndef RGROUP_MATCH_DATA
 #define RGROUP_MATCH_DATA
+
 #include "RGroupData.h"
 
 namespace RDKit {
@@ -71,28 +72,26 @@ struct RGroupMatch {
     // we use atom map numbers to track original atom indices
     // ahead of removing Hs, so we store existing values to be able
     // to restore them afterwards
-    std::transform(atoms.begin(), atoms.end(), storedAtomMapNums.begin(),
-                   [](auto atom) {
-                     auto res = atom->getAtomMapNum();
-                     atom->setAtomMapNum(0);
-                     return res;
-                   });
+    std::ranges::transform(atoms, storedAtomMapNums.begin(), [](auto atom) {
+      auto res = atom->getAtomMapNum();
+      atom->setAtomMapNum(0);
+      return res;
+    });
     for (const auto &pair : rgroups) {
       auto &combinedMol = pair.second->combinedMol;
       std::vector<int> bondIndices;
       if (combinedMol->getPropIfPresent(common_properties::_rgroupTargetBonds,
                                         bondIndices)) {
-        std::for_each(bondIndices.begin(), bondIndices.end(),
-                      [this, &oldBondEnds](const auto &bondIdx) {
-                        const auto bond =
-                            targetMolForHighlights->getBondWithIdx(bondIdx);
-                        const auto beginAtom = bond->getBeginAtom();
-                        const auto endAtom = bond->getEndAtom();
-                        oldBondEnds[bondIdx].first = beginAtom->getIdx();
-                        oldBondEnds[bondIdx].second = endAtom->getIdx();
-                        beginAtom->setAtomMapNum(beginAtom->getIdx() + 1);
-                        endAtom->setAtomMapNum(endAtom->getIdx() + 1);
-                      });
+        std::ranges::for_each(
+            bondIndices, [this, &oldBondEnds](const auto &bondIdx) {
+              const auto bond = targetMolForHighlights->getBondWithIdx(bondIdx);
+              const auto beginAtom = bond->getBeginAtom();
+              const auto endAtom = bond->getEndAtom();
+              oldBondEnds[bondIdx].first = beginAtom->getIdx();
+              oldBondEnds[bondIdx].second = endAtom->getIdx();
+              beginAtom->setAtomMapNum(beginAtom->getIdx() + 1);
+              endAtom->setAtomMapNum(endAtom->getIdx() + 1);
+            });
       }
     }
     // remove Hs except those involved in R groups
@@ -114,8 +113,8 @@ struct RGroupMatch {
       std::vector<int> atomIndices;
       if (combinedMol->getPropIfPresent(common_properties::_rgroupTargetAtoms,
                                         atomIndices)) {
-        std::transform(
-            atomIndices.begin(), atomIndices.end(), atomIndices.begin(),
+        std::ranges::transform(
+            atomIndices, atomIndices.begin(),
             [&oldToNewAtomIndices](auto &atomIdx) {
               auto newAtomIdx = oldToNewAtomIndices.at(atomIdx);
               CHECK_INVARIANT(newAtomIdx != -1, "newAtomIdx must be >=0");
@@ -126,8 +125,8 @@ struct RGroupMatch {
       std::vector<int> bondIndices;
       if (combinedMol->getPropIfPresent(common_properties::_rgroupTargetBonds,
                                         bondIndices)) {
-        std::transform(
-            bondIndices.begin(), bondIndices.end(), bondIndices.begin(),
+        std::ranges::transform(
+            bondIndices, bondIndices.begin(),
             [this, &oldBondEnds, &oldToNewAtomIndices](auto &bondIdx) {
               const auto &oldPair = oldBondEnds.at(bondIdx);
               CHECK_INVARIANT(oldPair.first != -1 && oldPair.second != -1,
