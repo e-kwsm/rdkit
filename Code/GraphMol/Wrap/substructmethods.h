@@ -54,7 +54,7 @@ class pyMatchFunctor : public pyFunctor {
 
 inline PyObject *convertMatches(const MatchVectType &matches) {
   PyObject *res = PyTuple_New(matches.size());
-  std::for_each(matches.begin(), matches.end(), [res](const auto &pair) {
+  std::ranges::for_each(matches, [res](const auto &pair) {
     PyTuple_SetItem(res, pair.first, PyInt_FromLong(pair.second));
   });
   return res;
@@ -62,13 +62,12 @@ inline PyObject *convertMatches(const MatchVectType &matches) {
 
 inline PyObject *convertMatchesToTupleOfPairs(const MatchVectType &matches) {
   PyObject *res = PyTuple_New(matches.size());
-  std::for_each(matches.begin(), matches.end(),
-                [res, &matches](const auto &pair) {
-                  PyObject *pyPair = PyTuple_New(2);
-                  PyTuple_SetItem(pyPair, 0, PyInt_FromLong(pair.first));
-                  PyTuple_SetItem(pyPair, 1, PyInt_FromLong(pair.second));
-                  PyTuple_SetItem(res, &pair - &matches.front(), pyPair);
-                });
+  std::ranges::for_each(matches, [res, &matches](const auto &pair) {
+    PyObject *pyPair = PyTuple_New(2);
+    PyTuple_SetItem(pyPair, 0, PyInt_FromLong(pair.first));
+    PyTuple_SetItem(pyPair, 1, PyInt_FromLong(pair.second));
+    PyTuple_SetItem(res, &pair - &matches.front(), pyPair);
+  });
   return res;
 }
 

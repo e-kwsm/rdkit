@@ -15,6 +15,7 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/FMCS/FMCS.h>
 #include <GraphMol/QueryBond.h>
+#include <algorithm>
 #include <set>
 
 namespace RDKit {
@@ -347,7 +348,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
 
       const auto &valances =
           PeriodicTable::getTable()->getValenceList(atom->getAtomicNum());
-      auto valence = *std::max_element(valances.begin(), valances.end());
+      auto valence = *std::ranges::max_element(valances);
       // round up aromatic contributions
       dummiesToAdd = valence - (int)(bondOrder + .51);
       dummiesToAdd = std::min(dummiesToAdd, maxNumDummies);

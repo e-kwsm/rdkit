@@ -112,9 +112,11 @@ void sortedDegreeSeqs(
         std::make_pair(a->getDegree(), a->getIdx()));
   }
   for (auto &it : degSeqs) {
-    std::sort(it.second.begin(), it.second.end(),
-              [](const std::pair<int, int> &p1, const std::pair<int, int> &p2)
-                  -> bool { return p1.first > p2.first; });
+    std::ranges::sort(it.second,
+                      [](const std::pair<int, int> &p1,
+                         const std::pair<int, int> &p2) -> bool {
+                        return p1.first > p2.first;
+                      });
   }
 }
 
@@ -654,12 +656,10 @@ bool deltaYInClique(const std::vector<unsigned int> &clique, const ROMol &mol1,
     cliqueDegs2[b2->getBeginAtomIdx()]++;
     cliqueDegs2[b2->getEndAtomIdx()]++;
   }
-  cliqueDegs1.erase(std::remove(cliqueDegs1.begin(), cliqueDegs1.end(), 0),
-                    cliqueDegs1.end());
-  std::sort(cliqueDegs1.begin(), cliqueDegs1.end());
-  cliqueDegs2.erase(std::remove(cliqueDegs2.begin(), cliqueDegs2.end(), 0),
-                    cliqueDegs2.end());
-  std::sort(cliqueDegs2.begin(), cliqueDegs2.end());
+  cliqueDegs1.erase(std::ranges::remove(cliqueDegs1, 0), cliqueDegs1.end());
+  std::ranges::sort(cliqueDegs1);
+  cliqueDegs2.erase(std::ranges::remove(cliqueDegs2, 0), cliqueDegs2.end());
+  std::ranges::sort(cliqueDegs2);
   return cliqueDegs1 != cliqueDegs2;
 }
 
@@ -1134,9 +1134,8 @@ std::vector<RascalResult> findMCES(RascalStartPoint &starter,
                      opts.equivalentAtoms, opts.ignoreBondOrders));
   }
   if (opts.singleLargestFrag) {
-    std::sort(
-        results.begin(), results.end(),
-        [](const RascalResult &r1, const RascalResult &r2) -> bool {
+    std::ranges::sort(
+        results, [](const RascalResult &r1, const RascalResult &r2) -> bool {
           if (r1.getAtomMatches().size() == r2.getAtomMatches().size()) {
             if (r1.getBondMatches().size() == r2.getBondMatches().size()) {
               if (r1.getAtomMatches() == r2.getAtomMatches()) {
@@ -1152,11 +1151,12 @@ std::vector<RascalResult> findMCES(RascalStartPoint &starter,
     // the singleLargestFrag method throws bits of solutions out, so there may
     // now be duplicates and results that are different sizes.
     results.erase(
-        std::unique(results.begin(), results.end(),
-                    [](const RascalResult &r1, const RascalResult &r2) -> bool {
-                      return (r1.getAtomMatches() == r2.getAtomMatches() &&
-                              r1.getBondMatches() == r2.getBondMatches());
-                    }),
+        std::ranges::unique(
+            results,
+            [](const RascalResult &r1, const RascalResult &r2) -> bool {
+              return (r1.getAtomMatches() == r2.getAtomMatches() &&
+                      r1.getBondMatches() == r2.getBondMatches());
+            }),
         results.end());
     boost::dynamic_bitset<> want(results.size());
     want.set();
@@ -1180,7 +1180,7 @@ std::vector<RascalResult> findMCES(RascalStartPoint &starter,
   } else {
     // If 2 cliques are the same size, this sort puts the one with the smaller
     // number of fragments first, which may have fewer atoms.
-    std::sort(results.begin(), results.end(), details::resultCompare);
+    std::ranges::sort(results, details::resultCompare);
   }
   return results;
 }

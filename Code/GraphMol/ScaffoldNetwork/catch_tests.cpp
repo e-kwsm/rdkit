@@ -156,7 +156,7 @@ TEST_CASE("getMolFragments", "[unittest][scaffolds]") {
     for (const auto &frag : frags) {
       res.push_back(std::make_pair(frag.first, MolToSmiles(*frag.second)));
     }
-    std::sort(res.begin(), res.end());
+    std::ranges::sort(res);
     CHECK(res[0].first == "*CC1CCCC(=O)N1");
     CHECK(res[0].second == "*C*");
     CHECK(res[1].first == "*CC1CCCC(=O)N1");
@@ -267,8 +267,8 @@ TEST_CASE("addMolToNetwork", "[unittest][scaffolds]") {
     // std::copy(net.nodes.begin(), net.nodes.end(),
     //           std::ostream_iterator<std::string>(std::cerr, " "));
     // std::cerr << std::endl;
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(),
-                    "*1**1**1:*:*:*:*:*:1") != net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "*1**1**1:*:*:*:*:*:1") !=
+          net.nodes.end());
   }
   SECTION("includes names") {
     auto m = "CC(=O)Oc1ccccc1C(=O)O aspirin"_smiles;
@@ -450,10 +450,8 @@ TEST_CASE("no attachment points", "[unittest][scaffolds]") {
     // std::copy(net.nodes.begin(), net.nodes.end(),
     //           std::ostream_iterator<std::string>(std::cerr, " "));
     // std::cerr << std::endl;
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(), "*1**1**1*****1") !=
-          net.nodes.end());
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(), "**1*****1") !=
-          net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "*1**1**1*****1") != net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "**1*****1") != net.nodes.end());
   }
   SECTION("generic bonds 2") {
     // this tests a very particular case where the generic bond scaffold is the
@@ -521,10 +519,8 @@ TEST_CASE("no attachment points", "[unittest][scaffolds]") {
     // std::copy(net.nodes.begin(), net.nodes.end(),
     //           std::ostream_iterator<std::string>(std::cerr, " "));
     // std::cerr << std::endl;
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(), "c1ccccc1") !=
-          net.nodes.end());
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(), "*1:*:*:*:*:*:1") !=
-          net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "c1ccccc1") != net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "*1:*:*:*:*:*:1") != net.nodes.end());
   }
 }
 
@@ -637,10 +633,10 @@ TEST_CASE("larger multi-mol test", "[regression][scaffold]") {
       "Cc1onc(-c2ccccc2)c1C(=O)N[C@@H]1C(=O)N2[C@@H](C(=O)O)C(C)(C)S[C@H]12"};
   std::vector<std::shared_ptr<ROMol>> ms;
   ms.reserve(smiles.size());
-  std::transform(smiles.cbegin(), smiles.cend(), std::back_inserter(ms),
-                 [](const std::string &smi) {
-                   return std::shared_ptr<ROMol>(SmilesToMol(smi));
-                 });
+  std::ranges::transform(smiles, std::back_inserter(ms),
+                         [](const std::string &smi) {
+                           return std::shared_ptr<ROMol>(SmilesToMol(smi));
+                         });
 
   SECTION("basics") {
     ScaffoldNetwork::ScaffoldNetworkParams ps;
@@ -661,7 +657,7 @@ TEST_CASE("larger multi-mol test", "[regression][scaffold]") {
                                  ScaffoldNetwork::EdgeType::Initialize;
                         }) == 4);
     auto snodes = net.nodes;
-    std::sort(snodes.begin(), snodes.end());
+    std::ranges::sort(snodes);
     std::vector<std::string> tgt{
         "*C1C(=O)N2CCSC12",
         "*c1ccccc1",
@@ -699,7 +695,7 @@ TEST_CASE("larger multi-mol test", "[regression][scaffold]") {
                           return e.type == ScaffoldNetwork::EdgeType::Generic;
                         }) == 7);
     auto snodes = net.nodes;
-    std::sort(snodes.begin(), snodes.end());
+    std::ranges::sort(snodes);
     // std::copy(snodes.begin(), snodes.end(),
     //           std::ostream_iterator<std::string>(std::cerr, " "));
     // std::cerr << std::endl;
@@ -792,8 +788,7 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
     ScaffoldNetwork::ScaffoldNetwork net =
         ScaffoldNetwork::createScaffoldNetwork(ms, ps);
     CHECK(net.nodes.size() == 9);
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(), "O=c1cccccc1") !=
-          net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "O=c1cccccc1") != net.nodes.end());
     CHECK(net.counts.size() == net.nodes.size());
     CHECK(net.edges.size() == 8);
   }
@@ -810,8 +805,7 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
         ScaffoldNetwork::createScaffoldNetwork(ms, ps);
 
     CHECK(net.nodes.size() == 3);
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(), "c1cc[nH]c1") !=
-          net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "c1cc[nH]c1") != net.nodes.end());
     CHECK(net.counts.size() == net.nodes.size());
     CHECK(net.edges.size() == 2);
   }
@@ -826,8 +820,8 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
     ScaffoldNetwork::ScaffoldNetworkParams ps;
     ScaffoldNetwork::ScaffoldNetwork net =
         ScaffoldNetwork::createScaffoldNetwork(ms, ps);
-    CHECK(std::find(net.nodes.begin(), net.nodes.end(),
-                    "C1=CCC(Cc2ccc[cH+]cc2)=C1") != net.nodes.end());
+    CHECK(std::ranges::find(net.nodes, "C1=CCC(Cc2ccc[cH+]cc2)=C1") !=
+          net.nodes.end());
     CHECK(net.nodes.size() == 11);
     CHECK(net.counts.size() == net.nodes.size());
     CHECK(net.edges.size() == 10);
@@ -908,7 +902,7 @@ TEST_CASE("molCounts", "[scaffolds]") {
         {"*C1CCCC1", 1u},
         {"*C1C(*)C1*", 2u}};
     for (const auto &endp : endps) {
-      auto loc = std::find(net.nodes.begin(), net.nodes.end(), endp.first);
+      auto loc = std::ranges::find(net.nodes, endp.first);
       CHECK(loc != net.nodes.end());
       auto idx = loc - net.nodes.begin();
       CHECK(net.molCounts[idx] == endp.second);

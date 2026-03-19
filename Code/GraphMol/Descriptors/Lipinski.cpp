@@ -22,6 +22,7 @@
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
+#include <algorithm>
 #include <vector>
 #include <string>
 
@@ -456,7 +457,7 @@ unsigned int calcNumSpiroAtoms(const ROMol &mol,
         }
       }
       if (inter.size() == 1) {
-        if (std::find(atoms->begin(), atoms->end(), inter[0]) == atoms->end()) {
+        if (std::ranges::find(atoms, inter[0]) == atoms->end()) {
           atoms->push_back(inter[0]);
         }
       }
@@ -498,7 +499,7 @@ unsigned int calcNumBridgeheadAtoms(const ROMol &mol,
         }
         for (unsigned int ti = 0; ti < atomCounts.size(); ++ti) {
           if (atomCounts[ti] == 1) {
-            if (std::find(atoms->begin(), atoms->end(), ti) == atoms->end()) {
+            if (std::ranges::find(atoms, ti) == atoms->end()) {
               atoms->push_back(ti);
             }
           }

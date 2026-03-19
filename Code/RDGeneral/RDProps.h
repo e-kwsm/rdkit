@@ -7,6 +7,7 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+
 #ifndef RDKIT_RDPROPS_H
 #define RDKIT_RDPROPS_H
 #include "Dict.h"
@@ -57,7 +58,7 @@ class RDProps {
     auto pos = tmp.begin();
     while (pos != tmp.end()) {
       if ((includePrivate || (*pos)[0] != '_') &&
-          std::find(computed.begin(), computed.end(), *pos) == computed.end()) {
+          std::ranges::find(computed, *pos) == computed.end()) {
         res.push_back(*pos);
       }
       ++pos;
@@ -84,7 +85,7 @@ class RDProps {
     if (computed) {
       STR_VECT compLst;
       getPropIfPresent(RDKit::detail::computedPropName, compLst);
-      if (std::find(compLst.begin(), compLst.end(), key) == compLst.end()) {
+      if (std::ranges::find(compLst, key) == compLst.end()) {
         compLst.emplace_back(key);
         d_props.setVal(RDKit::detail::computedPropName, compLst);
       }
@@ -142,7 +143,7 @@ class RDProps {
   void clearProp(const std::string_view key) const {
     STR_VECT compLst;
     if (getPropIfPresent(RDKit::detail::computedPropName, compLst)) {
-      auto svi = std::find(compLst.begin(), compLst.end(), key);
+      auto svi = std::ranges::find(compLst, key);
       if (svi != compLst.end()) {
         compLst.erase(svi);
         d_props.setVal(RDKit::detail::computedPropName, compLst);

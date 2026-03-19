@@ -73,10 +73,10 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
         for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(pr.second))) {
           // if this neighbor isn't in the match:
           auto nbrIdx = bond->getOtherAtomIdx(pr.second);
-          if (!std::any_of(amatch.match.begin(), amatch.match.end(),
-                           [nbrIdx](const std::pair<int, int> &tpr) {
-                             return tpr.second == rdcast<int>(nbrIdx);
-                           })) {
+          if (!std::ranges::any_of(amatch.match,
+                                   [nbrIdx](const std::pair<int, int> &tpr) {
+                                     return tpr.second == rdcast<int>(nbrIdx);
+                                   })) {
             mol.addBond(nbrIdx, connectIdx, Bond::BondType::SINGLE);
             addedBonds.push_back(hasPrevMapping
                                      ? prevBondMapping.at(bond->getIdx())
@@ -267,11 +267,10 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
           unsigned int mAt;  // sgroup atom in the match
           unsigned int oAt;  // add the first attachment point to the beginning
                              // of the atom list
-          if (std::find(ats.begin(), ats.end(), bnd->getBeginAtomIdx()) !=
-              ats.end()) {
+          if (std::ranges::find(ats, bnd->getBeginAtomIdx()) != ats.end()) {
             oAt = bnd->getEndAtomIdx();
             mAt = bnd->getBeginAtomIdx();
-          } else if (std::find(ats.begin(), ats.end(), bnd->getEndAtomIdx()) !=
+          } else if (std::ranges::find(ats, bnd->getEndAtomIdx()) !=
                      ats.end()) {
             oAt = bnd->getBeginAtomIdx();
             mAt = bnd->getEndAtomIdx();
@@ -286,7 +285,7 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
             // make sure the atom connected to the first attachment point
             // is the first one in the match
             if (*ats.begin() != mAt) {
-              ats.erase(std::find(ats.begin(), ats.end(), mAt));
+              ats.erase(std::ranges::find(ats, mAt));
               ats.insert(ats.begin(), mAt);
             }
             ats.insert(ats.begin(), oAt);

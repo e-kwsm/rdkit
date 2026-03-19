@@ -13,6 +13,7 @@
 #include <DataStructs/SparseBitVect.h>
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <RDGeneral/hash/hash.hpp>
+#include <algorithm>
 #include <cstdint>
 
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
@@ -134,12 +135,11 @@ namespace {
 void reinitAdditionalOutput(AdditionalOutput &ao, size_t numAtoms) {
   if (ao.atomCounts) {
     ao.atomCounts->resize(numAtoms);
-    std::fill(ao.atomCounts->begin(), ao.atomCounts->end(), 0);
+    std::ranges::fill(ao.atomCounts, 0);
   }
   if (ao.atomToBits) {
     ao.atomToBits->resize(numAtoms);
-    std::fill(ao.atomToBits->begin(), ao.atomToBits->end(),
-              std::vector<std::uint64_t>());
+    std::ranges::fill(ao.atomToBits, std::vector<std::uint64_t>());
   }
   if (ao.bitInfoMap) {
     ao.bitInfoMap->clear();

@@ -210,11 +210,11 @@ bool checkOrderOverlap(std::vector<int> &order, unsigned int nUnmapped,
   bool allFound = true;
   for (auto elem : refOrder) {
     if (elem >= 0) {
-      if (std::find(order.begin(), order.end(), elem) == order.end()) {
+      if (std::ranges::find(order, elem) == order.end()) {
         // this one was not there, is there an unmapped slot for
         // it (i.e. a -1 value in the order)?
         if (nUnmapped) {
-          auto negOne = std::find(order.begin(), order.end(), -1);
+          auto negOne = std::ranges::find(order, -1);
           if (negOne != order.end()) {
             *negOne = elem;
           } else {

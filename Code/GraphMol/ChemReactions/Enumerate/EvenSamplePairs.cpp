@@ -46,7 +46,7 @@ void EvenSamplePairsStrategy::initializeStrategy(const ChemicalReaction &,
 
   boost::uint64_t npos = bbs.size();
   used_count.resize(npos);
-  std::fill(used_count.begin(), used_count.end(), 0);
+  std::ranges::fill(used_count, 0);
 
   var_used.resize(npos);
   for (boost::uint64_t i = 0; i < npos; ++i) {
