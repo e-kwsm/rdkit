@@ -38,13 +38,13 @@ namespace {
 
 
 void
-yysmiles_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                RDKit::Atom* &,
-                RDKit::Bond* &,
-                unsigned int &, unsigned int &,
-                std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *, int, unsigned int bad_token_position, const char *msg )
+yysmiles_error(const char *input,
+               std::vector<RDKit::RWMol *> *ms,
+               RDKit::Atom* &,
+               RDKit::Bond* &,
+               unsigned int &, unsigned int &,
+               std::vector<std::pair<unsigned int, unsigned int>>&,
+               void *, int, unsigned int bad_token_position, const char *msg)
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -54,10 +54,10 @@ yysmiles_error( const char *input,
 }
 
 void
-yysmiles_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *, int, unsigned int bad_token_position, const char *msg )
+yysmiles_error(const char *input,
+               std::vector<RDKit::RWMol *> *ms,
+               std::vector<std::pair<unsigned int, unsigned int>>&,
+               void *, int, unsigned int bad_token_position, const char *msg)
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -67,9 +67,9 @@ yysmiles_error( const char *input,
 }
 
 void
-yysmiles_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                unsigned int bad_token_position, const char *msg )
+yysmiles_error(const char *input,
+               std::vector<RDKit::RWMol *> *ms,
+               unsigned int bad_token_position, const char *msg)
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -189,7 +189,7 @@ ATOM_OPEN_TOKEN bad_atom_def
 // FIX: mol MINUS DIGIT
 mol: atomd {
   int sz     = molList->size();
-  molList->resize( sz + 1);
+  molList->resize(sz + 1);
   (*molList)[sz] = new RWMol();
   RDKit::RWMol *curMol = (*molList)[sz];
   $1->setProp(RDKit::common_properties::_SmilesStart, 1);
@@ -213,11 +213,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
-  if ( $2->getBondType() == Bond::DATIVER ) {
+  if ($2->getBondType() == Bond::DATIVER) {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
     $2->setBondType(Bond::DATIVE);
-  } else if ( $2->getBondType() == Bond::DATIVEL ) {
+  } else if ($2->getBondType() == Bond::DATIVEL) {
     $2->setBeginAtomIdx(atomIdx2);
     $2->setEndAtomIdx(atomIdx1);
     $2->setBondType(Bond::DATIVE);
@@ -323,11 +323,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($4, true, true);
-  if ( $3->getBondType() == Bond::DATIVER ) {
+  if ($3->getBondType() == Bond::DATIVER) {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
-  } else if ( $3->getBondType() == Bond::DATIVEL ) {
+  } else if ($3->getBondType() == Bond::DATIVEL) {
     $3->setBeginAtomIdx(atomIdx2);
     $3->setEndAtomIdx(atomIdx1);
     $3->setBondType(Bond::DATIVE);
@@ -426,9 +426,9 @@ chiral_element:	 element
 
 /* --------------------------------------------------------------- */
 element:	simple_atom
-		|	number simple_atom { $2->setIsotope( $1 ); $$ = $2; }
+		|	number simple_atom { $2->setIsotope($1); $$ = $2; }
 		|	ATOM_TOKEN
-		|	number ATOM_TOKEN	   { $2->setIsotope( $1 ); $$ = $2; }
+		|	number ATOM_TOKEN	   { $2->setIsotope($1); $$ = $2; }
 		|	HASH_TOKEN	number   { $$ = new Atom($2); }
 		|	number HASH_TOKEN	number   { $$ = new Atom($3); $$->setIsotope($1); }
 		;
@@ -457,7 +457,7 @@ number:  ZERO_TOKEN
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
   if ($1 >= std::numeric_limits<std::int32_t>::max() / 10 ||
-      $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ) {
+      $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2) {
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "number too large");
      yyErrorCleanup(molList);
      YYABORT;

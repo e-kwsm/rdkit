@@ -408,7 +408,7 @@ void sln_lexer_error(const char *msg) {
 \@              { return AT_TOKEN; }
 \*              { return ASTERIX_TOKEN; }
 
-[0-9]+  { yylval->ival_T = atoi( yytext ); return DIGIT_TOKEN; }
+[0-9]+  { yylval->ival_T = atoi(yytext); return DIGIT_TOKEN; }
 
 
 \n		return 0;
@@ -418,7 +418,7 @@ void sln_lexer_error(const char *msg) {
 %%
 
 #undef yysln_wrap
-int yysln_wrap( void ) { return 1; }
+int yysln_wrap(void) { return 1; }
 
 
 
