@@ -35,7 +35,6 @@ using namespace RDKit;
 #undef YY_USER_ACTION
 #define YY_USER_ACTION current_token_position += yyleng;
 
-
 #define YY_FATAL_ERROR(msg) smarts_lexer_error(msg)
 
 void smarts_lexer_error(const char *msg) {
@@ -70,7 +69,6 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
   n = _yybytes_len + 2;
   memcpy(buf, yybytes + start, _yybytes_len);
 
-
   buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmarts__scan_buffer(buf, n, yyscanner);
@@ -82,7 +80,6 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
    * away when we're done.
    */
   b->yy_is_our_buffer = 1;
-
 
   POSTCONDITION(b, "invalid buffer");
   return start;
@@ -111,7 +108,6 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
 @[' ']*OH { yylval->chiraltype = Atom::ChiralType::CHI_OCTAHEDRAL; return CHI_CLASS_TOKEN; }
 
 @		{ return AT_TOKEN; }
-
 
 <IN_ATOM_STATE>He |
 <IN_ATOM_STATE>Li |
@@ -286,7 +282,6 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
 }
 H			{  return H_TOKEN; }
 
-
 B			{  yylval->ival = 5; return ORGANIC_ATOM_TOKEN; }
 
 C			{  yylval->ival = 6; return ORGANIC_ATOM_TOKEN; }
@@ -306,7 +301,6 @@ Cl			{  yylval->ival = 17; return ORGANIC_ATOM_TOKEN; }
 Br			{  yylval->ival = 35; return ORGANIC_ATOM_TOKEN; }
 
 I			{  yylval->ival = 53; return ORGANIC_ATOM_TOKEN; }
-
 
 b			{  yylval->ival = 5; return AROMATIC_ATOM_TOKEN; }
 
@@ -328,8 +322,6 @@ s			{  yylval->ival = 16; return AROMATIC_ATOM_TOKEN; }
 
 <IN_ATOM_STATE>te	{  yylval->ival = 52; return AROMATIC_ATOM_TOKEN; }
 
-
-
 \*			{
 	yylval->atom = new QueryAtom();
 	yylval->atom->setQuery(makeAtomNullQuery());
@@ -348,7 +340,6 @@ A			{
 	yylval->atom->setQuery(makeAtomAliphaticQuery());
 	return SIMPLE_ATOM_QUERY_TOKEN;
 }
-
 
 \: 			{ return COLON_TOKEN; }
 
@@ -399,8 +390,6 @@ A			{
 
 \{       	{ return RANGE_OPEN_TOKEN; }
 \}       	{ return RANGE_CLOSE_TOKEN; }
-
-
 
 \[			{ yy_push_state(IN_ATOM_STATE, yyscanner); return ATOM_OPEN_TOKEN; }
 <IN_ATOM_STATE>\]	{ yy_pop_state(yyscanner); return ATOM_CLOSE_TOKEN; }
