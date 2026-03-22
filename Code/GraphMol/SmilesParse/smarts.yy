@@ -116,7 +116,6 @@ yysmarts_error(const char *input,
                                                   "SMARTS");
 }
 
-
 %}
 
 %define api.pure full
@@ -378,7 +377,6 @@ mol: atomd {
 
 }
 
-
 | mol GROUP_CLOSE_TOKEN {
   if (branchPoints.empty()) {
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "extra close parentheses");
@@ -405,7 +403,6 @@ atomd:	simple_atom
   $$->setProp(RDKit::common_properties::molAtomMapNumber, $4);
 }
 ;
-
 
 /* --------------------------------------------------------------- */
 /*
@@ -815,7 +812,6 @@ simple_atom: 	ORGANIC_ATOM_TOKEN {
 | SIMPLE_ATOM_QUERY_TOKEN
 ;
 
-
 /* --------------------------------------------------------------- */
 bond_expr:bond_expr AND_TOKEN bond_expr {
   $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
@@ -892,7 +888,6 @@ ring_number:  digit
 | PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3 * 1000 + $4 * 100 + $5 * 10 + $6; }
 | PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3 * 10000 + $4 * 1000 + $5 * 100 + $6 * 10 + $7; }
 ;
-
 
 /* --------------------------------------------------------------- */
 number:  ZERO_TOKEN

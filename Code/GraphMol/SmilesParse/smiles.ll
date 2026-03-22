@@ -35,7 +35,6 @@ using namespace RDKit;
 #undef YY_USER_ACTION
 #define YY_USER_ACTION current_token_position += yyleng;
 
-
 #define YY_FATAL_ERROR(msg) smiles_lexer_error(msg)
 
 void smiles_lexer_error(const char *msg) {
@@ -70,7 +69,6 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
   n = _yybytes_len + 2;
   memcpy(buf, yybytes + start, _yybytes_len);
 
-
   buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmiles__scan_buffer(buf, n, yyscanner);
@@ -82,7 +80,6 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
    * away when we're done.
    */
   b->yy_is_our_buffer = 1;
-
 
   POSTCONDITION(b, "invalid buffer");
   return start;
@@ -108,7 +105,6 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
 @[' ']*OH { yylval->chiraltype = Atom::ChiralType::CHI_OCTAHEDRAL; return CHI_CLASS_TOKEN; }
 
 @		{ return AT_TOKEN; }
-
 
 <IN_ATOM_STATE>He	{ yylval->atom = new Atom(2); return ATOM_TOKEN; }
 <IN_ATOM_STATE>Li	{ yylval->atom = new Atom(3); return ATOM_TOKEN; }
@@ -297,7 +293,6 @@ s		    {	yylval->atom = new Atom(16);
 
 <IN_ATOM_STATE>\# 	{ return HASH_TOKEN; }
 
-
 %{
   // The next block is a workaround for a pathlogy in the SMILES produced
   // by some Biovia tools
@@ -352,7 +347,6 @@ s		    {	yylval->atom = new Atom(16);
 \(       	{ return GROUP_OPEN_TOKEN; }
 \)       	{ return GROUP_CLOSE_TOKEN; }
 
-
 \[			{ BEGIN IN_ATOM_STATE; return ATOM_OPEN_TOKEN; }
 <IN_ATOM_STATE>\]	{ BEGIN INITIAL; return ATOM_CLOSE_TOKEN; }
 
@@ -362,8 +356,6 @@ s		    {	yylval->atom = new Atom(16);
 
 [0]		{ yylval->ival = 0; return ZERO_TOKEN; }
 [1-9]		{ yylval->ival = yytext[0] - '0'; return NONZERO_DIGIT_TOKEN; }
-
-
 
 \n		return 0;
 
