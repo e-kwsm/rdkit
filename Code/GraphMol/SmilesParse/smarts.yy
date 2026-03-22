@@ -643,27 +643,30 @@ atom_query:	simple_atom
 | RINGSIZE_ATOM_QUERY_TOKEN RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN {
   int lv = -1;
   int uv = $4;
-  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>(uv, [lv, uv](Atom const *at) {
-            return queryAtomIsInRingOfSize(at, lv, uv);
-          }, std::string("greater_AtomRingSize"));
+  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>(
+      uv,
+      [lv, uv](Atom const *at) { return queryAtomIsInRingOfSize(at, lv, uv); },
+      std::string("greater_AtomRingSize"));
   $1->setQuery(nq);
   $$ = $1;
 }
 | RINGSIZE_ATOM_QUERY_TOKEN RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN {
   int lv = $3;
   int uv = -1;
-  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(lv, [lv, uv](Atom const *at) {
-            return queryAtomIsInRingOfSize(at, lv, uv);
-          }, std::string("less_AtomRingSize"));
+  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
+      lv,
+      [lv, uv](Atom const *at) { return queryAtomIsInRingOfSize(at, lv, uv); },
+      std::string("less_AtomRingSize"));
   $1->setQuery(nq);
   $$ = $1;
 }
 | RINGSIZE_ATOM_QUERY_TOKEN RANGE_OPEN_TOKEN number MINUS_TOKEN number RANGE_CLOSE_TOKEN {
   int lv = $3;
   int uv = $5;
-  ATOM_RANGE_QUERY *nq = makeAtomRangeQuery(lv, uv, false, false, [lv, uv](Atom const *at) {
-            return queryAtomIsInRingOfSize(at, lv, uv);
-          }, std::string("range_AtomRingSize"));
+  ATOM_RANGE_QUERY *nq = makeAtomRangeQuery(
+      lv, uv, false, false,
+      [lv, uv](Atom const *at) { return queryAtomIsInRingOfSize(at, lv, uv); },
+      std::string("range_AtomRingSize"));
   $1->setQuery(nq);
   $$ = $1;
 }
