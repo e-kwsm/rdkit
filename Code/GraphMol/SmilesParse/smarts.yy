@@ -247,9 +247,9 @@ ATOM_OPEN_TOKEN bad_atom_def
 mol: atomd {
   int sz     = molList->size();
   molList->resize( sz + 1);
-  (*molList)[ sz ] = new RWMol();
+  (*molList)[sz] = new RWMol();
   $1->setProp(RDKit::common_properties::_SmilesStart, 1);
-  (*molList)[ sz ]->addAtom($1, true, true);
+  (*molList)[sz]->addAtom($1, true, true);
   //delete $1;
   $$ = sz;
 }
