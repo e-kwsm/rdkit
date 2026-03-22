@@ -72,52 +72,31 @@ void atom_expr_and_point_query(QueryAtom *atom_expr, QueryAtom *point_query) {
 }
 
 }  // namespace
-void
-yysmarts_error(const char *input,
-               std::vector<RDKit::RWMol *> *ms,
-               RDKit::Atom* &,
-               RDKit::Bond* &,
-               unsigned int &,
-               unsigned int &,
-               std::vector<std::pair<unsigned int, unsigned int>>&,
-               void *,
-               int,
-               unsigned int bad_token_position,
-               const char *msg)
-{
+void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    RDKit::Atom *&, RDKit::Bond *&, unsigned int &,
+                    unsigned int &,
+                    std::vector<std::pair<unsigned int, unsigned int>> &,
+                    void *, int, unsigned int bad_token_position,
+                    const char *msg) {
   yyErrorCleanup(ms);
-  SmilesParseOps::detail::printSyntaxErrorMessage(input,
-                                                  msg,
-                                                  bad_token_position,
-                                                  "SMARTS");
+  SmilesParseOps::detail::printSyntaxErrorMessage(input, msg,
+                                                  bad_token_position, "SMARTS");
 }
 
-void
-yysmarts_error(const char *input,
-               std::vector<RDKit::RWMol *> *ms,
-               std::vector<std::pair<unsigned int, unsigned int>>&,
-               void *,
-               int,
-               unsigned int bad_token_position,
-               const char *msg)
-{
+void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    std::vector<std::pair<unsigned int, unsigned int>> &,
+                    void *, int, unsigned int bad_token_position,
+                    const char *msg) {
   yyErrorCleanup(ms);
-  SmilesParseOps::detail::printSyntaxErrorMessage(input,
-                                                  msg,
-                                                  bad_token_position,
-                                                  "SMARTS");
+  SmilesParseOps::detail::printSyntaxErrorMessage(input, msg,
+                                                  bad_token_position, "SMARTS");
 }
 
-void
-yysmarts_error(const char *input,
-               std::vector<RDKit::RWMol *> *ms,
-               unsigned int bad_token_position, const char *msg)
-{
+void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    unsigned int bad_token_position, const char *msg) {
   yyErrorCleanup(ms);
-  SmilesParseOps::detail::printSyntaxErrorMessage(input,
-                                                  msg,
-                                                  bad_token_position,
-                                                  "SMARTS");
+  SmilesParseOps::detail::printSyntaxErrorMessage(input, msg,
+                                                  bad_token_position, "SMARTS");
 }
 
 %}
