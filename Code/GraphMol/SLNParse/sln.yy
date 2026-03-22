@@ -103,8 +103,6 @@ yyprint (FILE *file, int type, YYSTYPE value)
   RDKit::SLNParse::AttribListType   *attriblist_T;
 }
 
-
-
 %type <atom_T> atom primatom hatom
 %type <bond_T> bond primbond onebond
 %type <attriblist_T> attriblist ctabattriblist
@@ -139,7 +137,6 @@ yyprint (FILE *file, int type, YYSTYPE value)
 %destructor { delete $$; } <text_T>
 %destructor { delete $$; } <attrib_T>
 %destructor { delete $$; } <attriblist_T>
-
 
 %%
 
@@ -358,7 +355,6 @@ hatom: H_ASTERIX_TOKEN {
   delete $2;
 }
 
-
 primatom: ATOM_TOKEN
 | primatom ASTERIX_TOKEN{
   $$->setProp(RDKit::common_properties::_starred, 1, true);
@@ -379,7 +375,6 @@ primatom: ATOM_TOKEN
   $$ = $1;
 }
 ;
-
 
 bond: primbond
 | primbond OPEN_BRACKET_TOKEN attriblist CLOSE_BRACKET_TOKEN {
@@ -455,7 +450,6 @@ onebond: MINUS_TOKEN {
   $$ = bond;
 }
 ;
-
 
 attriblist: attriblist AND_TOKEN attrib{
   $$->push_back(std::make_pair(SLNParse::AttribAnd,
@@ -588,7 +582,6 @@ recursivequery: RECURSE_TOKEN cmpd {
 }
 ;
 
-
 ctabattrib: TEXT_BLOCK {
   $$ = new SLNParse::AttribType();
   $$->first = *$1;
@@ -633,5 +626,4 @@ number:  DIGIT_TOKEN
 | number DIGIT_TOKEN { $$ = $1 * 10 + $2; }
 ;
 %%
-
 
