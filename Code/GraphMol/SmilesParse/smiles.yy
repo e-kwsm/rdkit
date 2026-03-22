@@ -414,7 +414,7 @@ chiral_element:	 element
 | element AT_TOKEN { $1->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW); }
 | element AT_TOKEN AT_TOKEN { $1->setChiralTag(Atom::CHI_TETRAHEDRAL_CW); }
 | element CHI_CLASS_TOKEN { $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, 0); }
-| element CHI_CLASS_TOKEN number { 
+| element CHI_CLASS_TOKEN number {
     if ($3 == 0) {
       yyerror(input, molList, branchPoints, scanner, start_token, current_token_position,
             "chiral permutation cannot be zero");
@@ -422,7 +422,7 @@ chiral_element:	 element
       delete $1;
       YYABORT;
     }
-    $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, $3); 
+    $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, $3);
 };
 
 /* --------------------------------------------------------------- */
