@@ -52,9 +52,9 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmarts_alloc(n, yyscanner );
-  if ( !buf ) {
-    smarts_lexer_error( "out of dynamic memory in yysmarts__scan_bytes()" );
+  buf = (char *) yysmarts_alloc(n, yyscanner);
+  if (!buf) {
+    smarts_lexer_error("out of dynamic memory in yysmarts__scan_bytes()");
   }
 
   // ltrim
@@ -74,8 +74,8 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
   buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmarts__scan_buffer(buf, n, yyscanner);
-  if ( !b ) {
-    smarts_lexer_error( "bad buffer in yysmarts__scan_bytes()" );
+  if (!b) {
+    smarts_lexer_error("bad buffer in yysmarts__scan_bytes()");
   }
 
   /* It's okay to grow etc. this buffer, and we should throw it
@@ -217,7 +217,7 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
 <IN_ATOM_STATE>Uut |
 <IN_ATOM_STATE>Fl |
 <IN_ATOM_STATE>Uup |
-<IN_ATOM_STATE>Lv	{   yylval->atom = new QueryAtom( PeriodicTable::getTable()->getAtomicNumber( yytext ) );
+<IN_ATOM_STATE>Lv	{   yylval->atom = new QueryAtom(PeriodicTable::getTable()->getAtomicNumber(yytext));
 				return ATOM_TOKEN;
 			}
 <IN_ATOM_STATE>D {
@@ -469,4 +469,4 @@ A			{
 %%
 
 #undef yysmarts_wrap
-int yysmarts_wrap( void ) { return 1; }
+int yysmarts_wrap(void) { return 1; }
