@@ -108,7 +108,7 @@ class RDKIT_ENUMERATESTEREOISOMERS_EXPORT StereoisomerEnumerator {
 
   void buildFlippers();
   std::unique_ptr<ROMol> generateRandomIsomer();
-  bool embeddable(ROMol &isomer);
+  static bool embeddable(ROMol &isomer);
 };
 }  // namespace EnumerateStereoisomers
 }  // namespace RDKit
