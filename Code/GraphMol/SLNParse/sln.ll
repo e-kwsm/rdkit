@@ -71,7 +71,6 @@ void sln_lexer_error(const char *msg) {
      throw ValueErrorException(msg);
 }
 
-
 %}
 
 %option stack
@@ -270,7 +269,6 @@ void sln_lexer_error(const char *msg) {
 <IN_SLN_PARAM_STATE>nOT\= |
 <IN_SLN_PARAM_STATE>NOT\= { yy_push_state(IN_RECURSE_STATE, yyscanner); return NEG_RECURSE_TOKEN; }
 
-
 \-                      { return MINUS_TOKEN; }
 
 \+                      { return PLUS_TOKEN; }
@@ -311,8 +309,6 @@ void sln_lexer_error(const char *msg) {
 <INITIAL,IN_RECURSE_STATE>\= {
  return EQUALS_TOKEN;
 }
-
-
 
 <IN_RECURSE_STATE>\; {
   yy_pop_state(yyscanner);
@@ -361,7 +357,6 @@ void sln_lexer_error(const char *msg) {
   return NOT_TOKEN;
 }
 
-
 \[                      { yy_push_state(IN_SLN_PARAM_STATE, yyscanner); return OPEN_BRACKET_TOKEN; }
 
 <IN_RECURSE_STATE>\]           {
@@ -400,7 +395,6 @@ void sln_lexer_error(const char *msg) {
   return CLOSE_ANGLE_TOKEN;
 }
 
-
 \.              { return SEPARATOR_TOKEN; }
 <IN_RECURSE_STATE>\, {
   return COMMA_TOKEN;
@@ -411,7 +405,6 @@ void sln_lexer_error(const char *msg) {
 
 [0-9]+  { yylval->ival_T = atoi(yytext); return DIGIT_TOKEN; }
 
-
 \n		return 0;
 <<EOF>>         { return EOS_TOKEN; }
 .               return yytext[0];
@@ -420,7 +413,4 @@ void sln_lexer_error(const char *msg) {
 
 #undef yysln_wrap
 int yysln_wrap(void) { return 1; }
-
-
-
 
