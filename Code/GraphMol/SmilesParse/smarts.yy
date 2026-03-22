@@ -434,14 +434,16 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
   newQ->getFlags() |= SMARTS_CHARGE_MASK;
-  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND,
+                    true);
   $$ = newQ;
 }
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
   newQ->getFlags() |= SMARTS_CHARGE_MASK;
-  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND,
+                    true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber, $5);
 
   $$ = newQ;
@@ -736,8 +738,8 @@ atom_query:	simple_atom
 }
 | CHI_CLASS_TOKEN number {
   if ($2 == 0) {
-    yyerror(input, molList, branchPoints, scanner, start_token, current_token_position,
-            "chiral permutation cannot be zero");
+    yyerror(input, molList, branchPoints, scanner, start_token,
+            current_token_position, "chiral permutation cannot be zero");
     yyErrorCleanup(molList);
     YYABORT;
   }
