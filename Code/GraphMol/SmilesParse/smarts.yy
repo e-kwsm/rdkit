@@ -703,7 +703,7 @@ atom_query:	simple_atom
   newQ->setNoImplicit(true);
   newQ->getFlags() |= SMARTS_H_MASK;
   $$ = newQ;
-  
+
 }
 | H_TOKEN {
   QueryAtom *newQ = new QueryAtom();
