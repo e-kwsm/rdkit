@@ -52,9 +52,9 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmiles_alloc(n, yyscanner );
-  if ( !buf ) {
-    smiles_lexer_error( "out of dynamic memory in yysmiles__scan_bytes()" );
+  buf = (char *) yysmiles_alloc(n, yyscanner);
+  if (!buf) {
+    smiles_lexer_error("out of dynamic memory in yysmiles__scan_bytes()");
   }
 
   // ltrim
@@ -74,8 +74,8 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
   buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmiles__scan_buffer(buf, n, yyscanner);
-  if ( !b ) {
-    smiles_lexer_error( "bad buffer in yysmiles__scan_bytes()" );
+  if (!b) {
+    smiles_lexer_error("bad buffer in yysmiles__scan_bytes()");
   }
 
   /* It's okay to grow etc. this buffer, and we should throw it
@@ -243,49 +243,49 @@ H			{
 				return H_TOKEN;
 			}
 
-b		    {	yylval->atom = new Atom ( 5 );
+b		    {	yylval->atom = new Atom (5);
 			yylval->atom->setIsAromatic(true);
 				return AROMATIC_ATOM_TOKEN;
 			}
-c		    {	yylval->atom = new Atom ( 6 );
+c		    {	yylval->atom = new Atom (6);
 			yylval->atom->setIsAromatic(true);
 				return AROMATIC_ATOM_TOKEN;
 			}
-n		    {	yylval->atom = new Atom( 7 );
+n		    {	yylval->atom = new Atom(7);
 			yylval->atom->setIsAromatic(true);
 				return AROMATIC_ATOM_TOKEN;
 			}
-o		    {	yylval->atom = new Atom( 8 );
+o		    {	yylval->atom = new Atom(8);
 			yylval->atom->setIsAromatic(true);
 				return AROMATIC_ATOM_TOKEN;
 			}
-p		    {	yylval->atom = new Atom( 15 );
+p		    {	yylval->atom = new Atom(15);
 			yylval->atom->setIsAromatic(true);
 				return AROMATIC_ATOM_TOKEN;
 			}
-s		    {	yylval->atom = new Atom( 16 );
-			yylval->atom->setIsAromatic(true);
-				return AROMATIC_ATOM_TOKEN;
-			}
-
-<IN_ATOM_STATE>si   {	yylval->atom = new Atom( 14 );
-			yylval->atom->setIsAromatic(true);
-				return AROMATIC_ATOM_TOKEN;
-			}
-<IN_ATOM_STATE>as   {	yylval->atom = new Atom( 33 );
-			yylval->atom->setIsAromatic(true);
-				return AROMATIC_ATOM_TOKEN;
-			}
-<IN_ATOM_STATE>se   {	yylval->atom = new Atom( 34 );
-			yylval->atom->setIsAromatic(true);
-				return AROMATIC_ATOM_TOKEN;
-			}
-<IN_ATOM_STATE>te   {	yylval->atom = new Atom( 52 );
+s		    {	yylval->atom = new Atom(16);
 			yylval->atom->setIsAromatic(true);
 				return AROMATIC_ATOM_TOKEN;
 			}
 
-\* 	            {   yylval->atom = new Atom( 0 );
+<IN_ATOM_STATE>si   {	yylval->atom = new Atom(14);
+			yylval->atom->setIsAromatic(true);
+				return AROMATIC_ATOM_TOKEN;
+			}
+<IN_ATOM_STATE>as   {	yylval->atom = new Atom(33);
+			yylval->atom->setIsAromatic(true);
+				return AROMATIC_ATOM_TOKEN;
+			}
+<IN_ATOM_STATE>se   {	yylval->atom = new Atom(34);
+			yylval->atom->setIsAromatic(true);
+				return AROMATIC_ATOM_TOKEN;
+			}
+<IN_ATOM_STATE>te   {	yylval->atom = new Atom(52);
+			yylval->atom->setIsAromatic(true);
+				return AROMATIC_ATOM_TOKEN;
+			}
+
+\* 	            {   yylval->atom = new Atom(0);
 		            yylval->atom->setProp(common_properties::dummyLabel,
                                                         std::string("*"));
                                 // must be ORGANIC_ATOM_TOKEN because
@@ -373,4 +373,4 @@ s		    {	yylval->atom = new Atom( 16 );
 %%
 
 #undef yysmiles_wrap
-int yysmiles_wrap( void ) { return 1; }
+int yysmiles_wrap(void) { return 1; }
