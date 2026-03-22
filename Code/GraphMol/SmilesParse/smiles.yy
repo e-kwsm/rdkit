@@ -37,7 +37,6 @@ namespace {
  }
 }  // namespace
 
-
 void
 yysmiles_error(const char *input,
                std::vector<RDKit::RWMol *> *ms,
@@ -476,6 +475,5 @@ digit: NONZERO_DIGIT_TOKEN
 	| AT_TOKEN
         ;
 */
-
 
 %%
