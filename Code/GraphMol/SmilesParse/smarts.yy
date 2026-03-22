@@ -37,36 +37,39 @@ void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList) {
 const std::uint64_t SMARTS_H_MASK = 0x1;
 const std::uint64_t SMARTS_CHARGE_MASK = 0x2;
 
-  void atom_expr_and_point_query(QueryAtom *atom_expr, QueryAtom *point_query) {
-    atom_expr->expandQuery(point_query->getQuery()->copy(), Queries::COMPOSITE_AND, true);
-    if (atom_expr->getChiralTag() == Atom::CHI_UNSPECIFIED) {
-      atom_expr->setChiralTag(point_query->getChiralTag());
-      int perm;
-      if (point_query->getPropIfPresent(common_properties::_chiralPermutation, perm)) {
-        atom_expr->setProp(common_properties::_chiralPermutation, perm);
-      }
-    }
-    if (point_query->getFlags() & SMARTS_H_MASK) {
-      if (!(atom_expr->getFlags() & SMARTS_H_MASK)) {
-        atom_expr->setNumExplicitHs(point_query->getNumExplicitHs());
-        atom_expr->setNoImplicit(true);
-        atom_expr->getFlags() |= SMARTS_H_MASK;
-      } else if (atom_expr->getNumExplicitHs() != point_query->getNumExplicitHs()) {
-        // conflicting queries...
-        atom_expr->setNumExplicitHs(0);
-        atom_expr->setNoImplicit(true);
-      }
-    }
-    if (point_query->getFlags() & SMARTS_CHARGE_MASK) {
-      if (!(atom_expr->getFlags() & SMARTS_CHARGE_MASK)) {
-        atom_expr->setFormalCharge(point_query->getFormalCharge());
-        atom_expr->getFlags() |= SMARTS_CHARGE_MASK;
-      } else if (atom_expr->getFormalCharge() != point_query->getFormalCharge()) {
-        // conflicting queries...
-        atom_expr->setFormalCharge(0);
-      }
+void atom_expr_and_point_query(QueryAtom *atom_expr, QueryAtom *point_query) {
+  atom_expr->expandQuery(point_query->getQuery()->copy(),
+                         Queries::COMPOSITE_AND, true);
+  if (atom_expr->getChiralTag() == Atom::CHI_UNSPECIFIED) {
+    atom_expr->setChiralTag(point_query->getChiralTag());
+    int perm;
+    if (point_query->getPropIfPresent(common_properties::_chiralPermutation,
+                                      perm)) {
+      atom_expr->setProp(common_properties::_chiralPermutation, perm);
     }
   }
+  if (point_query->getFlags() & SMARTS_H_MASK) {
+    if (!(atom_expr->getFlags() & SMARTS_H_MASK)) {
+      atom_expr->setNumExplicitHs(point_query->getNumExplicitHs());
+      atom_expr->setNoImplicit(true);
+      atom_expr->getFlags() |= SMARTS_H_MASK;
+    } else if (atom_expr->getNumExplicitHs() !=
+               point_query->getNumExplicitHs()) {
+      // conflicting queries...
+      atom_expr->setNumExplicitHs(0);
+      atom_expr->setNoImplicit(true);
+    }
+  }
+  if (point_query->getFlags() & SMARTS_CHARGE_MASK) {
+    if (!(atom_expr->getFlags() & SMARTS_CHARGE_MASK)) {
+      atom_expr->setFormalCharge(point_query->getFormalCharge());
+      atom_expr->getFlags() |= SMARTS_CHARGE_MASK;
+    } else if (atom_expr->getFormalCharge() != point_query->getFormalCharge()) {
+      // conflicting queries...
+      atom_expr->setFormalCharge(0);
+    }
+  }
+}
 
 }  // namespace
 void
