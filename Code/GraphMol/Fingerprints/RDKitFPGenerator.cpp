@@ -100,12 +100,11 @@ void RDKitFPArguments::fromJSON(const boost::property_tree::ptree &pt) {
   FingerprintArguments::fromJSON(pt);
 }
 
-RDKitFPArguments::RDKitFPArguments(unsigned int minPath, unsigned int maxPath,
-                                   bool useHs, bool branchedPaths,
-                                   bool useBondOrder, bool countSimulation,
-                                   const std::vector<std::uint32_t> countBounds,
-                                   std::uint32_t fpSize,
-                                   std::uint32_t numBitsPerFeature)
+RDKitFPArguments::RDKitFPArguments(
+    unsigned int minPath, unsigned int maxPath, bool useHs, bool branchedPaths,
+    bool useBondOrder, bool countSimulation,
+    const std::vector<std::uint32_t> &countBounds, std::uint32_t fpSize,
+    std::uint32_t numBitsPerFeature)
     : FingerprintArguments(countSimulation, countBounds, fpSize,
                            numBitsPerFeature),
       d_minPath(minPath),
@@ -261,7 +260,7 @@ template <typename OutputType>
 FingerprintGenerator<OutputType> *getRDKitFPGenerator(
     unsigned int minPath, unsigned int maxPath, bool useHs, bool branchedPaths,
     bool useBondOrder, AtomInvariantsGenerator *atomInvariantsGenerator,
-    bool countSimulation, const std::vector<std::uint32_t> countBounds,
+    bool countSimulation, const std::vector<std::uint32_t> &countBounds,
     std::uint32_t fpSize, std::uint32_t numBitsPerFeature,
     bool ownsAtomInvGen) {
   RDKitFPArguments arguments(minPath, maxPath, useHs, branchedPaths,
