@@ -15,6 +15,7 @@
 #pragma warning(disable : 4800)  // warning: converting things to bool
 #endif
 
+#include <utility>
 #include <vector>
 #include <string>
 #include <functional>
@@ -89,7 +90,7 @@ class RDKIT_QUERY_EXPORT Query {
 
   //! sets our match function
   void setMatchFunc(std::function<bool(MatchFuncArgType)> what) {
-    this->d_matchFunc = what;
+    this->d_matchFunc = std::move(what);
   }
   //! returns our match function:
   std::function<bool(MatchFuncArgType)> getMatchFunc() const {
@@ -97,7 +98,7 @@ class RDKIT_QUERY_EXPORT Query {
   }
   //! sets our data function
   void setDataFunc(std::function<MatchFuncArgType(DataFuncArgType)> what) {
-    this->d_dataFunc = what;
+    this->d_dataFunc = std::move(what);
   }
   //! returns our data function:
   std::function<MatchFuncArgType(DataFuncArgType)> getDataFunc() const {
