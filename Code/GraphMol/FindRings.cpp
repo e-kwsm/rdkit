@@ -457,7 +457,7 @@ void findRingsD2nodes(const ROMol &tMol, VECT_INT_VECT &res,
       // check if this ring is duplicate with something else
       auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
       auto &duplicateInvars = dupD2Cands[invr];
-      if (invars.find(invr) == invars.end()) {
+      if (!invars.contains(invr)) {
         // Not a duplicate. Store it.
         res.push_back(nring);
         invars.insert(invr);
