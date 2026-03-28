@@ -25,6 +25,8 @@
 #include <GraphMol/FileParsers/MolSupplier.h>
 #include <GraphMol/test_fixtures.h>
 
+#include <algorithm>
+
 #include "vf2.hpp"
 
 using namespace RDKit;
@@ -1559,19 +1561,20 @@ TEST_CASE("testMostSubstitutedCoreMatch", "[substruct][core]") {
     auto bestMatch = getMostSubstitutedCoreMatch(mol, coreRef, matches);
     CHECK(numHsMatchingDummies::get(mol, coreRef, bestMatch) == res);
     std::vector<unsigned int> ctrlCounts(matches.size());
-    std::transform(matches.begin(), matches.end(), ctrlCounts.begin(),
-                   [&mol, &coreRef](const MatchVectType &match) {
-                     return numHsMatchingDummies::get(mol, coreRef, match);
-                   });
-    std::sort(ctrlCounts.begin(), ctrlCounts.end());
+    std::ranges::transform(matches, ctrlCounts.begin(),
+                           [&mol, &coreRef](const MatchVectType &match) {
+                             return numHsMatchingDummies::get(mol, coreRef,
+                                                              match);
+                           });
+    std::ranges::sort(ctrlCounts);
     std::vector<unsigned int> sortedCounts(matches.size());
     auto sortedMatches =
         sortMatchesByDegreeOfCoreSubstitution(mol, coreRef, matches);
-    std::transform(sortedMatches.begin(), sortedMatches.end(),
-                   sortedCounts.begin(),
-                   [&mol, &coreRef](const MatchVectType &match) {
-                     return numHsMatchingDummies::get(mol, coreRef, match);
-                   });
+    std::ranges::transform(sortedMatches, sortedCounts.begin(),
+                           [&mol, &coreRef](const MatchVectType &match) {
+                             return numHsMatchingDummies::get(mol, coreRef,
+                                                              match);
+                           });
     CHECK(ctrlCounts == sortedCounts);
   }
   std::vector<MatchVectType> emptyMatches;
