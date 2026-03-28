@@ -1598,10 +1598,9 @@ TEST_CASE("Github #9143: ETKDGv3 generating twisted amides") {
           {17, 18, 20, 24}, {31, 30, 28, 27}, {0, 1, 2, 3}};
       for (const auto &et : expectedTorsions) {
         INFO(et[0] << " " << et[1] << " " << et[2] << " " << et[3]);
-        CHECK(std::find_if(details.expTorsionAtoms.begin(),
-                           details.expTorsionAtoms.end(), [&et](const auto &t) {
-                             return t == et;
-                           }) != details.expTorsionAtoms.end());
+        CHECK(std::ranges::find_if(details.expTorsionAtoms,
+                                   [&et](const auto &t) { return t == et; }) !=
+              details.expTorsionAtoms.end());
       }
     }
     DGeomHelpers::EmbedParameters ps = DGeomHelpers::ETKDGv3;
@@ -1651,10 +1650,9 @@ TEST_CASE("Github #9143: ETKDGv3 generating twisted amides") {
           useMacrocycleTorsions, useBasicKnowledge, version, verbose);
       for (const auto &et : tc.second) {
         INFO(et[0] << " " << et[1] << " " << et[2] << " " << et[3]);
-        CHECK(std::find_if(details.expTorsionAtoms.begin(),
-                           details.expTorsionAtoms.end(), [&et](const auto &t) {
-                             return t == et;
-                           }) != details.expTorsionAtoms.end());
+        CHECK(std::ranges::find_if(details.expTorsionAtoms,
+                                   [&et](const auto &t) { return t == et; }) !=
+              details.expTorsionAtoms.end());
       }
     }
   }

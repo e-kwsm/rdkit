@@ -33,6 +33,8 @@
 // std bits
 #include <catch2/catch_all.hpp>
 
+#include <algorithm>
+
 // RD bits
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/RDKitQueries.h>
@@ -556,9 +558,9 @@ void testHolder() {
   REQUIRE(query);
   {
     auto matches1 = ssslib1.getMatches(*query);
-    std::sort(matches1.begin(), matches1.end());
+    std::ranges::sort(matches1);
     auto matches2 = ssslib2.getMatches(*query);
-    std::sort(matches2.begin(), matches2.end());
+    std::ranges::sort(matches2);
     CHECK(matches1.size() == matches2.size());
     for (size_t i = 0; i < matches1.size(); ++i) {
       CHECK(matches1.at(i) == matches2.at(i));
@@ -579,9 +581,9 @@ void testHolder() {
   CHECK(serializedLegacy.size() == serialized.size());
   {
     auto matches1 = serializedLegacy.getMatches(*query);
-    std::sort(matches1.begin(), matches1.end());
+    std::ranges::sort(matches1);
     auto matches2 = serialized.getMatches(*query);
-    std::sort(matches2.begin(), matches2.end());
+    std::ranges::sort(matches2);
     CHECK(matches1.size() == matches2.size());
     for (size_t i = 0; i < matches1.size(); ++i) {
       CHECK(matches1.at(i) == matches2.at(i));
