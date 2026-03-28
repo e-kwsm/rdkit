@@ -5,6 +5,9 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/FileParsers/FileWriters.h>
+
+#include <algorithm>
+
 namespace RDKit {
 namespace ChemDraw {
 std::string NodeType(CDXNodeType nodetype) {
@@ -126,7 +129,7 @@ struct FragmentReplacement {
             << std::endl;
         return false;
       }
-      auto it = std::find(bond_ordering.begin(), bond_ordering.end(), bond_id);
+      auto it = std::ranges::find(bond_ordering, bond_id);
       if (it == bond_ordering.end()) {
         return false;
       }
@@ -233,7 +236,7 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
       }
     }
 
-    std::sort(angles.begin(), angles.end());
+    std::ranges::sort(angles);
 
     // angles are now sorted in a clockwise rotation
     INT_LIST bonds;
