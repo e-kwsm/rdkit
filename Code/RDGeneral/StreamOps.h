@@ -268,7 +268,7 @@ void streamWrite(std::ostream &ss, const T &val) {
 
 //! special case for string
 inline void streamWrite(std::ostream &ss, const std::string &what) {
-  unsigned int l = static_cast<unsigned int>(what.length());
+  const unsigned int l = static_cast<unsigned int>(what.length());
   streamWrite(ss, l);
   ss.write(what.c_str(), sizeof(char) * l);
 };
@@ -491,7 +491,7 @@ inline bool streamWriteProps(
     std::ostream &ss, const RDProps &props, bool savePrivate = false,
     bool saveComputed = false, const CustomPropHandlerVec &handlers = {},
     const std::unordered_set<std::string_view> &ignore = {}) {
-  STR_VECT propsToSave = props.getPropList(savePrivate, saveComputed);
+  const STR_VECT propsToSave = props.getPropList(savePrivate, saveComputed);
   std::unordered_set<std::string> propnames;
   for (const auto &pn : propsToSave) {
     if (ignore.empty() || ignore.find(pn) == ignore.end()) {
@@ -546,21 +546,21 @@ void readRDVecValue(std::istream &ss, RDValue &value) {
 
 inline void readRDValueString(std::istream &ss, RDValue &value) {
   std::string v;
-  int version = 0;
+  const int version = 0;
   streamRead(ss, v, version);
   value = v;
 }
 
 inline void readRDStringVecValue(std::istream &ss, RDValue &value) {
   std::vector<std::string> v;
-  int version = 0;
+  const int version = 0;
   streamReadStringVec(ss, v, version);
   value = v;
 }
 
 inline bool streamReadProp(std::istream &ss, Dict::Pair &pair,
                            const CustomPropHandlerVec &handlers = {}) {
-  int version = 0;
+  const int version = 0;
   streamRead(ss, pair.key, version);
 
   unsigned char type;
@@ -602,7 +602,7 @@ inline bool streamReadProp(std::istream &ss, Dict::Pair &pair,
       break;
     case DTags::CustomTag: {
       std::string propType;
-      int version = 0;
+      const int version = 0;
       streamRead(ss, propType, version);
       for (auto &handler : handlers) {
         if (propType == handler->getPropName()) {

@@ -110,8 +110,8 @@ template <typename O>
 RealValueVect &RealValueVect::applyBinaryOp(const RealValueVect &other, O op) {
   PRECONDITION(other.d_length == d_length, "length mismatch");
   for (unsigned int i = 0; i < d_length; ++i) {
-    double v1 = getVal(i);
-    double v2 = other.getVal(i);
+    const double v1 = getVal(i);
+    const double v2 = other.getVal(i);
     setVal(i, op(v1, v2));
   }
   return *this;

@@ -22,7 +22,7 @@ inline unsigned int getNumThreadsToUse(int target) {
   if (target >= 1) {
     return static_cast<unsigned int>(target);
   }
-  unsigned int res = std::thread::hardware_concurrency();
+  const unsigned int res = std::thread::hardware_concurrency();
   if (res > rdcast<unsigned int>(-target)) {
     return res + target;
   } else {

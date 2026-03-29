@@ -174,7 +174,7 @@ std::string CaptureLog::messages() const { return d_messages.str(); }
 
 std::ostream &toStream(std::ostream &logstrm) {
   char buffer[16];
-  time_t t = time(nullptr);
+  const time_t t = time(nullptr);
 // localtime() is thread safe on windows, but not on *nix
 #ifdef WIN32
   strftime(buffer, 16, "[%T] ", localtime(&t));
