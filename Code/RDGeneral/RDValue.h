@@ -198,7 +198,7 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       res = boost::lexical_cast<std::string>(rdvalue_cast<int>(val));
       break;
     case RDTypeTag::DoubleTag: {
-      Utils::LocaleSwitcher ls;  // for lexical cast...
+      const Utils::LocaleSwitcher ls;  // for lexical cast...
       res = boost::lexical_cast<std::string>(rdvalue_cast<double>(val));
       break;
     }
@@ -211,7 +211,7 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       break;
 #endif
     case RDTypeTag::FloatTag: {
-      Utils::LocaleSwitcher ls;  // for lexical cast...
+      const Utils::LocaleSwitcher ls;  // for lexical cast...
       res = boost::lexical_cast<std::string>(rdvalue_cast<float>(val));
       break;
     }
@@ -235,7 +235,7 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       res = vectToString<std::string>(val);
       break;
     case RDTypeTag::AnyTag: {
-      Utils::LocaleSwitcher ls;  // for lexical cast...
+      const Utils::LocaleSwitcher ls;  // for lexical cast...
       try {
         res = std::any_cast<std::string>(rdvalue_cast<std::any &>(val));
       } catch (const std::bad_any_cast &) {
@@ -271,7 +271,7 @@ typename boost::enable_if<boost::is_arithmetic<T>, T>::type from_rdvalue(
     RDValue_cast_t arg) {
   T res;
   if (arg.getTag() == RDTypeTag::StringTag) {
-    Utils::LocaleSwitcher ls;
+    const Utils::LocaleSwitcher ls;
     try {
       res = rdvalue_cast<T>(arg);
     } catch (const std::bad_any_cast &exc) {

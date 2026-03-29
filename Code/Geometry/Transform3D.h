@@ -40,7 +40,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Transform3D
 
   Transform3D() : RDNumeric::SquareMatrix<double>(DIM_3D, 0.0) {
     for (unsigned int i = 0; i < DIM_3D; i++) {
-      unsigned int id = i * (DIM_3D + 1);
+      const unsigned int id = i * (DIM_3D + 1);
       d_data[id] = 1.0;
     }
   }

@@ -33,12 +33,12 @@ int getBitId(const char *&text, int format, int size, int curr) {
   int res = -1;
   if ((format == 0) ||
       ((format == 1) && (size >= std::numeric_limits<unsigned short>::max()))) {
-    int tmp =
+    const int tmp =
         EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)text);
     text += sizeof(tmp);
     res = tmp;
   } else if (format == 1) {  // version 16 and on bits sorted as short ints
-    unsigned short tmp =
+    const unsigned short tmp =
         EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
             *(unsigned short *)text);
     text += sizeof(tmp);
@@ -261,7 +261,7 @@ int NumOnBitsInCommon(const ExplicitBitVect &bv1, const ExplicitBitVect &bv2) {
   const unsigned char *afp, *bfp;
   unsigned int nBytes;
   if (EBVToBitmap(bv1, afp, nBytes) && EBVToBitmap(bv2, bfp, nBytes)) {
-    unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
+    const unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
     return (int)result;
   }
 
@@ -288,11 +288,11 @@ double TanimotoSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  unsigned int total = bv1.getNumOnBits() + bv2.getNumOnBits();
+  const unsigned int total = bv1.getNumOnBits() + bv2.getNumOnBits();
   if (total == 0) {
     return 0.0;
   }
-  unsigned int common = NumOnBitsInCommon(bv1, bv2);
+  const unsigned int common = NumOnBitsInCommon(bv1, bv2);
   return (double)common / (double)(total - common);
 }
 
@@ -303,13 +303,13 @@ double TverskySimilarity(const T1 &bv1, const T2 &bv2, double a, double b) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   auto y = bv1.getNumOnBits();
   auto z = bv2.getNumOnBits();
   if (y == 0 || z == 0) {
     return 0.0;
   }
-  double denom = a * y + b * z + (1 - a - b) * x;
+  const double denom = a * y + b * z + (1 - a - b) * x;
   if (denom == 0.0) {
     return 1.0;
   } else {
@@ -322,9 +322,9 @@ double CosineSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y * z > 0.0) {
     return x / sqrt(y * z);
@@ -338,9 +338,9 @@ double KulczynskiSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y * z > 0.0) {
     return x * (y + z) / (2 * y * z);
@@ -354,9 +354,9 @@ double DiceSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y + z > 0.0) {
     return 2 * x / (y + z);
@@ -370,7 +370,7 @@ double SokalSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   auto y = bv1.getNumOnBits();
   auto z = bv2.getNumOnBits();
   if (y == 0 || z == 0) {
@@ -385,9 +385,9 @@ double McConnaugheySimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y * z > 0.0) {
     return (x * (y + z) - (y * z)) / (y * z);
@@ -401,11 +401,11 @@ double AsymmetricSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
-  double min = std::min(y, z);
+  const double min = std::min(y, z);
   if (min > 0.0) {
     return x / min;
   } else {
@@ -418,11 +418,11 @@ double BraunBlanquetSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
-  double max = std::max(y, z);
+  const double max = std::max(y, z);
   if (max > 0.0) {
     return x / max;
   } else {
@@ -436,7 +436,7 @@ double RusselSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
 
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   return x / bv1.getNumBits();
 }
 
@@ -445,18 +445,18 @@ double RogotGoldbergSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   auto y = bv1.getNumOnBits();
   auto z = bv2.getNumOnBits();
   if (y == 0 || z == 0) {
     return 0.0;
   }
 
-  double l = bv1.getNumBits();
-  double d = l - y - z + x;
+  const double l = bv1.getNumBits();
+  const double d = l - y - z + x;
 
-  double denom1 = y + z;
-  double denom2 = 2 * l - y - z;
+  const double denom1 = y + z;
+  const double denom2 = 2 * l - y - z;
   if ((x == l) || (d == l)) {
     return 1.0;
   } else if (denom1 == 0 || denom2 == 0) {
@@ -484,8 +484,8 @@ double OnBitSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
 
-  double num = NumOnBitsInCommon(bv1, bv2);
-  double denom = (bv1 | bv2).getNumOnBits();
+  const double num = NumOnBitsInCommon(bv1, bv2);
+  const double denom = (bv1 | bv2).getNumOnBits();
 
   if (denom > 0) {
     return num / denom;
@@ -623,7 +623,7 @@ DoubleVect OnBitProjSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
   DoubleVect res(2, 0.0);
-  double num = NumOnBitsInCommon(bv1, bv2);
+  const double num = NumOnBitsInCommon(bv1, bv2);
   if (num) {
     res[0] = num / bv1.getNumOnBits();
     res[1] = num / bv2.getNumOnBits();
@@ -662,7 +662,7 @@ DoubleVect OffBitProjSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
   DoubleVect res(2, 0.0);
-  double num = (bv1 | bv2).getNumOffBits();
+  const double num = (bv1 | bv2).getNumOffBits();
   if (num) {
     res[0] = num / bv1.getNumOffBits();
     res[1] = num / bv2.getNumOffBits();
@@ -676,14 +676,14 @@ T1 *FoldFingerprint(const T1 &bv1, unsigned int factor) {
     throw ValueErrorException("invalid fold factor");
   }
 
-  int initSize = bv1.getNumBits();
-  int resSize = initSize / factor;
+  const int initSize = bv1.getNumBits();
+  const int resSize = initSize / factor;
   auto *res = new T1(resSize);
 
   IntVect onBits;
   bv1.getOnBits(onBits);
-  for (int &onBit : onBits) {
-    int pos = onBit % resSize;
+  for (const int  &onBit : onBits) {
+    const int pos = onBit % resSize;
     res->setBit(pos);
   }
   return res;
@@ -704,7 +704,7 @@ const char bin2Hex[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 template <typename T1>
 std::string BitVectToFPSText(const T1 &bv1) {
-  unsigned int size =
+  const unsigned int size =
       2 * (bv1.getNumBits() / 8 + (bv1.getNumBits() % 8 ? 1 : 0));
   std::string res(size, 0);
   unsigned char c = 0;
@@ -780,7 +780,7 @@ void UpdateBitVectFromBinaryText(T1 &bv1, const std::string &fps) {
   PRECONDITION(fps.length() * 8 >= bv1.getNumBits(), "bad FPS length");
   unsigned int bitIdx = 0;
   for (unsigned int i = 0; i < fps.size() && bitIdx < bv1.getNumBits(); i++) {
-    unsigned short c = fps[i];
+    const unsigned short c = fps[i];
     for (unsigned int bit = 0; bit < 8 && bitIdx < bv1.getNumBits();
          ++bit, ++bitIdx) {
       if (c & (1 << bit)) {
@@ -936,7 +936,7 @@ unsigned int CalcBitmapPopcount(const unsigned char *afp, unsigned int nBytes) {
     popcount += byte_popcounts[afp[i]];
   }
 #else
-  unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (unsigned int i = 0; i < eidx; ++i) {
     popcount += static_cast<unsigned int>(
         BUILTIN_POPCOUNT_INSTR(((BUILTIN_POPCOUNT_TYPE *)afp)[i]));
@@ -959,7 +959,7 @@ unsigned int CalcBitmapNumBitsInCommon(const unsigned char *afp,
     intersect_popcount += byte_popcounts[afp[i] & bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     intersect_popcount += static_cast<unsigned int>(BUILTIN_POPCOUNT_INSTR(
         ((BUILTIN_POPCOUNT_TYPE *)afp)[i] & ((BUILTIN_POPCOUNT_TYPE *)bfp)[i]));
@@ -983,7 +983,7 @@ double CalcBitmapTanimoto(const unsigned char *afp, const unsigned char *bfp,
     intersect_popcount += byte_popcounts[afp[i] & bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     union_popcount += static_cast<unsigned int>(BUILTIN_POPCOUNT_INSTR(
         ((BUILTIN_POPCOUNT_TYPE *)afp)[i] | ((BUILTIN_POPCOUNT_TYPE *)bfp)[i]));
@@ -1016,7 +1016,7 @@ double CalcBitmapDice(const unsigned char *afp, const unsigned char *bfp,
     intersect_popcount += byte_popcounts[afp[i] & bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     a_popcount += static_cast<unsigned int>(
         BUILTIN_POPCOUNT_INSTR(((BUILTIN_POPCOUNT_TYPE *)afp)[i]));
@@ -1052,7 +1052,7 @@ double CalcBitmapTversky(const unsigned char *afp, const unsigned char *bfp,
     bcount += byte_popcounts[bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     intersect_popcount += static_cast<unsigned int>(BUILTIN_POPCOUNT_INSTR(
         ((BUILTIN_POPCOUNT_TYPE *)afp)[i] & ((BUILTIN_POPCOUNT_TYPE *)bfp)[i]));
@@ -1068,7 +1068,8 @@ double CalcBitmapTversky(const unsigned char *afp, const unsigned char *bfp,
     bcount += byte_popcounts[bfp[i]];
   }
 #endif
-  double denom = ca * acount + cb * bcount + (1 - ca - cb) * intersect_popcount;
+  const double denom =
+      ca * acount + cb * bcount + (1 - ca - cb) * intersect_popcount;
   if (denom == 0.0) {
     return 0.0;
   }
@@ -1088,7 +1089,7 @@ bool CalcBitmapAllProbeBitsMatch(const unsigned char *probe,
     }
   }
 #else
-  unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (unsigned int i = 0; i < eidx; ++i) {
     if (BUILTIN_POPCOUNT_INSTR(((BUILTIN_POPCOUNT_TYPE *)probe)[i] &
                                ((BUILTIN_POPCOUNT_TYPE *)ref)[i]) !=

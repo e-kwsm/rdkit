@@ -39,7 +39,7 @@ bool feq(double v1, double v2, double tol) { return fabs(v1 - v2) <= tol; }
 
 double computeIntVectPrimesProduct(const INT_VECT &vect) {
   double invr = 1.0;
-  for (int ci : vect) {
+  for (const int ci : vect) {
     // this thing with using mod introduces a slight risk of
     // getting collisions. We'll have to either live with that
     // or switch to using a different hashing algorithm
