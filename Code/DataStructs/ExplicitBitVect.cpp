@@ -160,7 +160,7 @@ ExplicitBitVect ExplicitBitVect::operator~() const {
 
 ExplicitBitVect &ExplicitBitVect::operator+=(const ExplicitBitVect &other) {
   dp_bits->resize(d_size + other.d_size);
-  unsigned int original_size = d_size;
+  const unsigned int original_size = d_size;
   d_size = dp_bits->size();
   for (unsigned i = 0; i < other.d_size; i++) {
     if (other[i]) {
@@ -184,7 +184,7 @@ unsigned int ExplicitBitVect::getNumOffBits() const {
 
 // the contents of v are blown out
 void ExplicitBitVect::getOnBits(IntVect &v) const {
-  unsigned int nOn = getNumOnBits();
+  const unsigned int nOn = getNumOnBits();
   if (!v.empty()) {
     IntVect().swap(v);
   }

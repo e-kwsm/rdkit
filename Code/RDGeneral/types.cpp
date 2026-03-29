@@ -68,7 +68,7 @@ void Union(const VECT_INT_VECT &rings, INT_VECT &res, const INT_VECT *exclude) {
 }
 
 int nextCombination(INT_VECT &comb, int tot) {
-  int nelem = static_cast<int>(comb.size());
+  const int nelem = static_cast<int>(comb.size());
   int celem = nelem - 1;
 
   while (comb[celem] == (tot - nelem + celem)) {
