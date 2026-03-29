@@ -129,7 +129,8 @@ void get_tani_nbrs(const std::vector<FPBReader *> &d_readers,
                    std::vector<MultiFPBReader::ResultTuple> &res,
                    int numThreads, bool initOnSearch) {
   std::vector<std::vector<MultiFPBReader::ResultTuple>> accum(d_readers.size());
-  sim_args args = {bv, 0., 0., threshold, d_readers, &accum, initOnSearch};
+  const sim_args args = {bv,        0.,     0.,          threshold,
+                         d_readers, &accum, initOnSearch};
   generic_nbr_helper(res, tani_helper, args, numThreads);
 }
 
@@ -139,7 +140,7 @@ void get_tversky_nbrs(const std::vector<FPBReader *> &d_readers,
                       std::vector<MultiFPBReader::ResultTuple> &res,
                       int numThreads, bool initOnSearch) {
   std::vector<std::vector<MultiFPBReader::ResultTuple>> accum(d_readers.size());
-  sim_args args = {bv, a, b, threshold, d_readers, &accum, initOnSearch};
+  const sim_args args = {bv, a, b, threshold, d_readers, &accum, initOnSearch};
   generic_nbr_helper(res, tversky_helper, args, numThreads);
 }
 
@@ -185,7 +186,7 @@ void get_containing_nbrs(
 
   res.clear();
   for (unsigned int i = 0; i < d_readers.size(); ++i) {
-    std::vector<unsigned int> &r_res = accum[i];
+    const std::vector<unsigned int> &r_res = accum[i];
     for (auto ri : r_res) {
       res.emplace_back(ri, i);
     }
