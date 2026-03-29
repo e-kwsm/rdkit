@@ -27,7 +27,7 @@ std::ostream &operator<<(std::ostream &s, const Invariant &inv) {
 }
 
 std::string Invariant::toString() const {
-  std::string line = std::to_string(this->getLine());
+  const std::string line = std::to_string(this->getLine());
 
   std::string stringRep =
       this->prefix_d + "\n" + this->what() + "\nViolation occurred on line " +
@@ -44,11 +44,12 @@ std::string Invariant::toString() const {
 }
 
 std::string Invariant::toUserString() const {
-  std::string line = std::to_string(this->getLine());
+  const std::string line = std::to_string(this->getLine());
 
   std::string filename = this->getFile();
 
-  std::size_t pos = filename.find("Code");  // strip out build directory info
+  const std::size_t pos =
+      filename.find("Code");  // strip out build directory info
   if (pos != std::string::npos) {
     filename = filename.substr(pos);
   }

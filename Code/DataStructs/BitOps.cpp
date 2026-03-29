@@ -33,12 +33,12 @@ int getBitId(const char *&text, int format, int size, int curr) {
   int res = -1;
   if ((format == 0) ||
       ((format == 1) && (size >= std::numeric_limits<unsigned short>::max()))) {
-    int tmp =
+    const int tmp =
         EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)text);
     text += sizeof(tmp);
     res = tmp;
   } else if (format == 1) {  // version 16 and on bits sorted as short ints
-    unsigned short tmp =
+    const unsigned short tmp =
         EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
             *(unsigned short *)text);
     text += sizeof(tmp);
@@ -261,7 +261,7 @@ int NumOnBitsInCommon(const ExplicitBitVect &bv1, const ExplicitBitVect &bv2) {
   const unsigned char *afp, *bfp;
   unsigned int nBytes;
   if (EBVToBitmap(bv1, afp, nBytes) && EBVToBitmap(bv2, bfp, nBytes)) {
-    unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
+    const unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
     return (int)result;
   }
 
@@ -288,11 +288,11 @@ double TanimotoSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  unsigned int total = bv1.getNumOnBits() + bv2.getNumOnBits();
+  const unsigned int total = bv1.getNumOnBits() + bv2.getNumOnBits();
   if (total == 0) {
     return 0.0;
   }
-  unsigned int common = NumOnBitsInCommon(bv1, bv2);
+  const unsigned int common = NumOnBitsInCommon(bv1, bv2);
   return (double)common / (double)(total - common);
 }
 
@@ -303,13 +303,13 @@ double TverskySimilarity(const T1 &bv1, const T2 &bv2, double a, double b) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   auto y = bv1.getNumOnBits();
   auto z = bv2.getNumOnBits();
   if (y == 0 || z == 0) {
     return 0.0;
   }
-  double denom = a * y + b * z + (1 - a - b) * x;
+  const double denom = a * y + b * z + (1 - a - b) * x;
   if (denom == 0.0) {
     return 1.0;
   } else {
@@ -322,9 +322,9 @@ double CosineSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y * z > 0.0) {
     return x / sqrt(y * z);
@@ -338,9 +338,9 @@ double KulczynskiSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y * z > 0.0) {
     return x * (y + z) / (2 * y * z);
@@ -354,9 +354,9 @@ double DiceSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y + z > 0.0) {
     return 2 * x / (y + z);
@@ -370,7 +370,7 @@ double SokalSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   auto y = bv1.getNumOnBits();
   auto z = bv2.getNumOnBits();
   if (y == 0 || z == 0) {
@@ -385,9 +385,9 @@ double McConnaugheySimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
   if (y * z > 0.0) {
     return (x * (y + z) - (y * z)) / (y * z);
@@ -401,11 +401,11 @@ double AsymmetricSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
-  double min = std::min(y, z);
+  const double min = std::min(y, z);
   if (min > 0.0) {
     return x / min;
   } else {
@@ -418,11 +418,11 @@ double BraunBlanquetSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
-  double y = bv1.getNumOnBits();
-  double z = bv2.getNumOnBits();
+  const double x = NumOnBitsInCommon(bv1, bv2);
+  const double y = bv1.getNumOnBits();
+  const double z = bv2.getNumOnBits();
 
-  double max = std::max(y, z);
+  const double max = std::max(y, z);
   if (max > 0.0) {
     return x / max;
   } else {
@@ -436,7 +436,7 @@ double RusselSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
 
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   return x / bv1.getNumBits();
 }
 
@@ -445,18 +445,18 @@ double RogotGoldbergSimilarity(const T1 &bv1, const T2 &bv2) {
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
-  double x = NumOnBitsInCommon(bv1, bv2);
+  const double x = NumOnBitsInCommon(bv1, bv2);
   auto y = bv1.getNumOnBits();
   auto z = bv2.getNumOnBits();
   if (y == 0 || z == 0) {
     return 0.0;
   }
 
-  double l = bv1.getNumBits();
-  double d = l - y - z + x;
+  const double l = bv1.getNumBits();
+  const double d = l - y - z + x;
 
-  double denom1 = y + z;
-  double denom2 = 2 * l - y - z;
+  const double denom1 = y + z;
+  const double denom2 = 2 * l - y - z;
   if ((x == l) || (d == l)) {
     return 1.0;
   } else if (denom1 == 0 || denom2 == 0) {
