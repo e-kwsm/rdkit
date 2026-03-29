@@ -73,7 +73,7 @@ SparseBitVect &SparseBitVect::operator=(const SparseBitVect &other) {
   if (this == &other) {
     return *this;
   }
-  IntSet *bv = other.dp_bits;
+  IntSet const *bv = other.dp_bits;
   delete dp_bits;
   d_size = other.getNumBits();
   dp_bits = new IntSet;
@@ -89,7 +89,7 @@ SparseBitVect &SparseBitVect::operator=(const SparseBitVect &other) {
 //
 // -------------------------------------------------------
 SparseBitVect SparseBitVect::operator|(const SparseBitVect &other) const {
-  SparseBitVect ans(d_size);
+  const SparseBitVect ans(d_size);
   std::set_union(dp_bits->begin(), dp_bits->end(), other.dp_bits->begin(),
                  other.dp_bits->end(),
                  std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
@@ -103,7 +103,7 @@ SparseBitVect SparseBitVect::operator|(const SparseBitVect &other) const {
 //
 // """ -------------------------------------------------------
 SparseBitVect SparseBitVect::operator&(const SparseBitVect &other) const {
-  SparseBitVect ans(d_size);
+  const SparseBitVect ans(d_size);
   std::set_intersection(dp_bits->begin(), dp_bits->end(),
                         other.dp_bits->begin(), other.dp_bits->end(),
                         std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
@@ -117,7 +117,7 @@ SparseBitVect SparseBitVect::operator&(const SparseBitVect &other) const {
 //
 // """ -------------------------------------------------------
 SparseBitVect SparseBitVect::operator^(const SparseBitVect &other) const {
-  SparseBitVect ans(d_size);
+  const SparseBitVect ans(d_size);
   std::set_symmetric_difference(
       dp_bits->begin(), dp_bits->end(), other.dp_bits->begin(),
       other.dp_bits->end(), std::inserter(*(ans.dp_bits), ans.dp_bits->end()));
@@ -253,7 +253,7 @@ void SparseBitVect::getOnBits(IntVect &v) const {
   if (!dp_bits) {
     throw ValueErrorException("BitVect not properly initialized.");
   }
-  unsigned int nOn = getNumOnBits();
+  const unsigned int nOn = getNumOnBits();
   if (!v.empty()) {
     IntVect().swap(v);
   }
@@ -296,7 +296,7 @@ std::string SparseBitVect::toString() const {
 
   int prev = -1;
   unsigned int zeroes;
-  for (int dp_bit : *dp_bits) {
+  for (const int dp_bit : *dp_bits) {
     zeroes = dp_bit - prev - 1;
     RDKit::appendPackedIntToStream(ss, zeroes);
     prev = dp_bit;
