@@ -440,8 +440,6 @@ class MrvTests {
       return;
     }
     TEST_ASSERT(scsrMolTest->expectedResult == true);
-
-    return;
   }
 
   void testMarvinRxn(const RxnTest *rxnTest) {
