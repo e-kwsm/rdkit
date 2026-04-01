@@ -106,8 +106,7 @@ boost::shared_ptr<CoulombDielectric> makeAltCoulombDielectric(
 }
 
 python::tuple readCubeFile(const std::string &filename) {
-  std::unique_ptr<RDGeom::UniformRealValueGrid3D> grd(
-      new RDGeom::UniformRealValueGrid3D());
+  auto grd = std::make_unique<RDGeom::UniformRealValueGrid3D>();
   auto res = readFromCubeFile(*grd, filename);
   boost::python::manage_new_object::apply<
       RDGeom::UniformRealValueGrid3D *>::type grdConverter;

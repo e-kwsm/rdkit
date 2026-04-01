@@ -271,7 +271,7 @@ python::dict parseQueryDefFileHelper(python::object &input, bool standardize,
     parseQueryDefFile(get_filename(), queryDefs, standardize, delimiter,
                       comment, nameColumn, smartsColumn);
   } else {
-    std::unique_ptr<streambuf> sb(new streambuf(input));
+    auto sb = std::make_unique<streambuf>(input);
     std::unique_ptr<std::istream> istr(new streambuf::istream(*sb));
     parseQueryDefFile(istr.get(), queryDefs, standardize, delimiter, comment,
                       nameColumn, smartsColumn);

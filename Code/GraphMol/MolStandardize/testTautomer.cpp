@@ -996,8 +996,7 @@ void testCanonicalizeInvariantAcrossInputTautomers() {
       << "-----------------------\n Testing canonicalize() invariance across input tautomers"
       << std::endl;
 
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
   // The core behavior guarantee we care about for perf work: regardless of which
