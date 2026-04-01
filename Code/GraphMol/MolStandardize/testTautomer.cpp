@@ -1725,7 +1725,7 @@ void testCanonicalizePreservesNonTautomericBondStereo() {
     std::unique_ptr<RWMol> mol(SmilesToMol("O=CC/C=C/c1ccccc1"));
     TEST_ASSERT(mol);
     bool foundStereo = false;
-    for (const auto bond : mol->bonds()) {
+    for (auto *const bond : mol->bonds()) {
       if (bond->getBondType() == Bond::DOUBLE &&
           bond->getStereo() > Bond::STEREOANY) {
         foundStereo = true;
@@ -1744,7 +1744,7 @@ void testCanonicalizePreservesNonTautomericBondStereo() {
       ROMOL_SPTR canon(te.canonicalize(*mol));
       TEST_ASSERT(canon);
       bool hasStereo = false;
-      for (const auto bond : canon->bonds()) {
+      for (auto *const bond : canon->bonds()) {
         if (bond->getBondType() == Bond::DOUBLE &&
             bond->getStereo() > Bond::STEREOANY) {
           hasStereo = true;
@@ -1758,7 +1758,7 @@ void testCanonicalizePreservesNonTautomericBondStereo() {
       RWMol molCopy(*mol);
       te.canonicalizeInPlace(molCopy);
       bool hasStereo = false;
-      for (const auto bond : molCopy.bonds()) {
+      for (auto *const bond : molCopy.bonds()) {
         if (bond->getBondType() == Bond::DOUBLE &&
             bond->getStereo() > Bond::STEREOANY) {
           hasStereo = true;
