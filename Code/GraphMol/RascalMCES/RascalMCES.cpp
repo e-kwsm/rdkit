@@ -920,7 +920,7 @@ void explorePartitions(
       }
       if (goDeeper) {
         if (!part->isEmpty()) {
-          std::shared_ptr<PartitionSet> nextPart(new PartitionSet(*part));
+          auto nextPart = std::make_shared<PartitionSet>(*part);
           clique.push_back(nextPart->popLastVertex());
           if (clique.size() == 1 && canDoEquivs &&
               equivalentRootAlreadyDone(clique.front(), starter.d_vtxPairs,

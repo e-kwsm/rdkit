@@ -226,7 +226,7 @@ void RepeatUnitOp::initFromMol() {
   // now set up the repeat units for each of the SRUs
   for (const auto *sgp : enumerated_SGroups) {
     const auto &sg = *sgp;
-    std::shared_ptr<RWMol> repeat(new RWMol(*dp_mol));
+    auto repeat = std::make_shared<RWMol>(*dp_mol);
 
     // remove the atoms in the repeat unit from the frame:
     boost::dynamic_bitset<> sgatoms(dp_mol->getNumAtoms());

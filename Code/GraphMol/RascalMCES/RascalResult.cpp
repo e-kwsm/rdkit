@@ -688,7 +688,7 @@ const std::shared_ptr<ROMol> RascalResult::getMcesMol() const {
   for (const auto &am : d_atomMatches) {
     mol1Atoms.set(am.first);
   }
-  std::shared_ptr<RWMol> tmpMol(new RWMol(*d_mol1));
+  auto tmpMol = std::make_shared<RWMol>(*d_mol1);
   MolOps::KekulizeIfPossible(*tmpMol);
   tmpMol->beginBatchEdit();
   for (auto &bond : tmpMol->bonds()) {
