@@ -8133,7 +8133,7 @@ M  END
   // The bug report showed different manifestations of the problem
   // using the given coords and those generated from scratch.
   REQUIRE(m1);
-  std::unique_ptr<RDKit::ROMol> m2(new RDKit::ROMol(*m1));
+  auto m2 = std::make_unique<RDKit::ROMol>(*m1);
   RDDepict::compute2DCoords(*m2);
 
   // The test, in both cases, is that the 2 ends of the lines
