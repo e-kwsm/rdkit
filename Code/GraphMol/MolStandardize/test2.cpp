@@ -88,7 +88,7 @@ void testValidate() {
     std::vector<std::shared_ptr<Atom>> atomList;
 
     for (auto &atom : atoms) {
-      std::shared_ptr<Atom> a(new Atom(atom));
+      std::shared_ptr<Atom> a = std::make_shared<Atom>(atom);
       atomList.push_back(a);
     }
 
@@ -107,7 +107,7 @@ void testValidate() {
     std::vector<std::shared_ptr<Atom>> atomList;
 
     for (auto &atom : atoms) {
-      std::shared_ptr<Atom> a(new Atom(atom));
+      std::shared_ptr<Atom> a = std::make_shared<Atom>(atom);
       atomList.push_back(a);
     }
 
