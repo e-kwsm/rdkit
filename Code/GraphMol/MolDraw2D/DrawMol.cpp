@@ -3974,7 +3974,7 @@ void adjustBondEndForString(
 
     // if it's a wide label, such as C:7, the bond can intersect
     // more than 1 side of the rectangle, so check them all.
-    std::unique_ptr<Point2D> ip(new Point2D);
+    auto ip = std::make_unique<Point2D>();
     if (doLinesIntersect(moveEnd, end2, tl, tr, ip.get())) {
       moveEnd = *ip;
     }

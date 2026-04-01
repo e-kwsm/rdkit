@@ -7540,12 +7540,12 @@ void testGithub4162() {
   const std::string reaction(
       R"([C:1](=[O:2])-[OD1].[N!H0:3]>>[C:1](=[O:2])[N:3])");
   std::unique_ptr<ChemicalReaction> rxn(RxnSmartsToChemicalReaction(reaction));
-  std::unique_ptr<ChemicalReaction> rxnCopy(new ChemicalReaction(*rxn));
+  auto rxnCopy = std::make_unique<ChemicalReaction>(*rxn);
   RxnOps::sanitizeRxn(*rxn);
   RxnOps::sanitizeRxn(*rxnCopy);
   std::string pkl;
   ReactionPickler::pickleReaction(*rxn, pkl);
-  std::unique_ptr<ChemicalReaction> rxnFromPickle(new ChemicalReaction(pkl));
+  auto rxnFromPickle = std::make_unique<ChemicalReaction>(pkl);
   RxnOps::sanitizeRxn(*rxnFromPickle);
   ReactionPickler::pickleReaction(*rxnFromPickle, pkl);
   rxnFromPickle = std::make_unique<ChemicalReaction>(pkl);
@@ -7801,7 +7801,7 @@ void testGithub6138() {
   auto prods = rxn->runReactants(reacts);
   std::string pkl;
   ReactionPickler::pickleReaction(*rxn, pkl);
-  std::unique_ptr<ChemicalReaction> lrxn(new ChemicalReaction());
+  auto lrxn = std::make_unique<ChemicalReaction>();
   ReactionPickler::reactionFromPickle(pkl, lrxn.get());
   auto prods2 = lrxn->runReactants(reacts);
   auto s1 = MolToSmiles(*prods[0][0]);

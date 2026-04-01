@@ -94,14 +94,13 @@ void StereoisomerEnumerator::buildFlippers() {
       d_flippers.push_back(std::unique_ptr<details::Flipper>(
           new details::AtomFlipper(d_mol, si)));
     } else if (si.type == Chirality::StereoType::Bond_Double) {
-      std::unique_ptr<details::BondFlipper> newFlipper(
-          new details::BondFlipper(d_mol, si));
+      auto newFlipper = std::make_unique<details::BondFlipper>(d_mol, si);
       if (newFlipper->dp_bond) {
         d_flippers.push_back(std::move(newFlipper));
       }
     } else if (si.type == Chirality::StereoType::Bond_Atropisomer) {
-      std::unique_ptr<details::AtropisomerFlipper> newFlipper(
-          new details::AtropisomerFlipper(d_mol, si));
+      auto newFlipper =
+          std::make_unique<details::AtropisomerFlipper>(d_mol, si);
       d_flippers.push_back(std::move(newFlipper));
     }
   }

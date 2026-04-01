@@ -1353,7 +1353,7 @@ M  END
 
 TEST_CASE("CML writer", "[CML][writer]") {
   SECTION("basics") {
-    std::unique_ptr<RWMol> mol{new RWMol{}};
+    auto mol = std::make_unique<RWMol>();
     mol->setProp(common_properties::_Name, "S-lactic acid");
 
     for (auto z : {6u, 1u, 1u, 1u, 6u, 1u, 8u, 1u, 6u, 8u, 8u}) {
@@ -1564,7 +1564,7 @@ M  END
 
 TEST_CASE("XYZ", "[XYZ][writer]") {
   SECTION("basics") {
-    std::unique_ptr<RWMol> mol{new RWMol{}};
+    auto mol = std::make_unique<RWMol>();
     mol->setProp(common_properties::_Name,
                  "methane\nthis part should not be output");
 
@@ -1594,7 +1594,7 @@ H      0.635000    0.635000    0.635000
     CHECK(xyzblock == xyzblock_expected);
   }
   SECTION("precistion") {
-    std::unique_ptr<RWMol> mol{new RWMol{}};
+    auto mol = std::make_unique<RWMol>();
     mol->setProp(common_properties::_Name, "CHEMBL506259");
 
     for (unsigned z : {8, 6, 8, 6, 9, 9, 9}) {

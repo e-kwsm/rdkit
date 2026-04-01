@@ -80,15 +80,15 @@ std::vector<std::unique_ptr<Configuration>> findConfigs(
     switch (bond_cfg) {
       case Bond::STEREOTRANS:
       case Bond::STEREOCIS: {
-        std::unique_ptr<Sp2Bond> cfg(new Sp2Bond(
-            mol, bond, bond->getBeginAtom(), bond->getEndAtom(), bond_cfg));
+        auto cfg = std::make_unique<Sp2Bond>(mol, bond, bond->getBeginAtom(),
+                                             bond->getEndAtom(), bond_cfg);
         configs.push_back(std::move(cfg));
       } break;
 
       case Bond::STEREOATROPCCW:
       case Bond::STEREOATROPCW: {
-        std::unique_ptr<AtropisomerBond> cfgAtrop(new AtropisomerBond(
-            mol, bond, bond->getBeginAtom(), bond->getEndAtom(), bond_cfg));
+        auto cfgAtrop = std::make_unique<AtropisomerBond>(
+            mol, bond, bond->getBeginAtom(), bond->getEndAtom(), bond_cfg);
         configs.push_back(std::move(cfgAtrop));
       } break;
 

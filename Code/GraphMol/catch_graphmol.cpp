@@ -3026,7 +3026,7 @@ TEST_CASE(
       std::unique_ptr<ROMol> mol(RDKit::SmilesToMol(smi, ps));
       std::shuffle(atomInds.begin(), atomInds.end(), g);
       std::unique_ptr<ROMol> randmol(MolOps::renumberAtoms(*mol, atomInds));
-      std::unique_ptr<RWMol> rwrandmol(new RWMol(*randmol));
+      auto rwrandmol = std::make_unique<RWMol>(*randmol);
       MolOps::sanitizeMol(*rwrandmol);
       CHECK(MolToSmiles(*rwrandmol) == canon_smi);
     }

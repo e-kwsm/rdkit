@@ -222,7 +222,7 @@ void tautomerParentInPlace(std::vector<RWMol *> &mols, int numThreads,
 
 RWMol *tautomerParent(const RWMol &mol, const CleanupParameters &params,
                       bool skip_standardize) {
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   tautomerParentInPlace(*res, params, skip_standardize);
   return res.release();
 }
@@ -250,7 +250,7 @@ void fragmentParentInPlace(RWMol &mol, const CleanupParameters &params,
 //
 RWMol *fragmentParent(const RWMol &mol, const CleanupParameters &params,
                       bool skip_standardize) {
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   fragmentParentInPlace(*res, params, skip_standardize);
   return res.release();
 }
@@ -274,7 +274,7 @@ void stereoParentInPlace(RWMol &mol, const CleanupParameters &params,
 }
 RWMol *stereoParent(const RWMol &mol, const CleanupParameters &params,
                     bool skip_standardize) {
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   stereoParentInPlace(*res, params, skip_standardize);
   return res.release();
 }
@@ -300,7 +300,7 @@ void isotopeParentInPlace(RWMol &mol, const CleanupParameters &params,
 }
 RWMol *isotopeParent(const RWMol &mol, const CleanupParameters &params,
                      bool skip_standardize) {
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   isotopeParentInPlace(*res, params, skip_standardize);
   return res.release();
 }
@@ -325,7 +325,7 @@ RWMol *chargeParent(const RWMol &mol, const CleanupParameters &params,
                     bool skip_standardize) {
   // Return the charge parent of a given molecule.
   // The charge parent is the uncharged version of the fragment parent.
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   chargeParentInPlace(*res, params, skip_standardize);
   return res.release();
 }
@@ -355,7 +355,7 @@ void superParentInPlace(std::vector<RWMol *> &mols, int numThreads,
 
 RWMol *superParent(const RWMol &mol, const CleanupParameters &params,
                    bool skip_standardize) {
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   superParentInPlace(*res, params, skip_standardize);
   return res.release();
 }

@@ -7442,8 +7442,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   auto m =
       "[2H]C1=C(C(=C2C(=C1[2H])C(=O)C(=C(C2=O)C([2H])([2H])[2H])C/C=C(\\C)/CC([2H])([2H])/C=C(/CC/C=C(\\C)/CCC=C(C)C)\\C([2H])([2H])[2H])[2H])[2H]"_smiles;
   REQUIRE(m.get());
-  std::unique_ptr<IsotopicHsCount> m_isotopicHsPerHeavy(
-      new IsotopicHsCount(*m));
+  auto m_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*m);
   unsigned int m_numExplicitHs;
   unsigned int m_numImplicitHs;
   IsotopicHsCount::countExplicitImplicitHs(*m, m_numExplicitHs,
@@ -7473,8 +7472,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   REQUIRE(mNoH_numImplicitHs == 40);
   REQUIRE(mNoH_isotopicHsPerHeavy.total() == 0);
   std::unique_ptr<ROMol> mH(MolOps::addHs(*mNoH));
-  std::unique_ptr<IsotopicHsCount> mH_isotopicHsPerHeavy(
-      new IsotopicHsCount(*mH));
+  auto mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   unsigned int mH_numExplicitHs;
   unsigned int mH_numImplicitHs;
   IsotopicHsCount::countExplicitImplicitHs(*mH, mH_numExplicitHs,
@@ -7487,8 +7485,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   REQUIRE(mH_isotopicHsPerHeavy->total() == 12);
   std::unique_ptr<ROMol> mH2(MolOps::removeHs(*mH));
   REQUIRE(m->getNumAtoms() == mH2->getNumAtoms());
-  std::unique_ptr<IsotopicHsCount> mH2_isotopicHsPerHeavy(
-      new IsotopicHsCount(*mH2));
+  auto mH2_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH2);
   unsigned int mH2_numExplicitHs;
   unsigned int mH2_numImplicitHs;
   IsotopicHsCount::countExplicitImplicitHs(*mH2, mH2_numExplicitHs,
@@ -7589,7 +7586,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   for (unsigned int i : {0, 1}) {
     unsigned int hIdx = i + 24;
     std::string expectedCipCode(1, 'R' + i);
-    std::unique_ptr<ROMol> mChiral(new ROMol(*m));
+    auto mChiral = std::make_unique<ROMol>(*m);
     mChiral->getAtomWithIdx(23)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
     mChiral->getAtomWithIdx(hIdx)->setIsotope(0);
     MolOps::assignStereochemistry(*mChiral, true, true);
@@ -7645,7 +7642,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   for (unsigned int i : {0, 1}) {
     unsigned int hIdx = i + 24;
     std::string expectedCipCode(1, 'R' + i);
-    std::unique_ptr<ROMol> mChiral(new ROMol(*m));
+    auto mChiral = std::make_unique<ROMol>(*m);
     mChiral->getAtomWithIdx(23)->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
     mChiral->getAtomWithIdx(hIdx)->setIsotope(3);
     MolOps::assignStereochemistry(*mChiral, true, true);

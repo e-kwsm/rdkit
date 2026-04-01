@@ -138,7 +138,8 @@ ShapeInput::ShapeInput(const ShapeInput &other)
       d_canonTrans(other.d_canonTrans),
       d_eigenValues(other.d_eigenValues) {
   if (other.d_carbonRadii) {
-    d_carbonRadii.reset(new boost::dynamic_bitset<>(*other.d_carbonRadii));
+    d_carbonRadii =
+        std::make_unique<boost::dynamic_bitset<>>(*other.d_carbonRadii);
   }
 }
 
@@ -159,7 +160,8 @@ ShapeInput &ShapeInput::operator=(const ShapeInput &other) {
   d_canonTrans = other.d_canonTrans;
   d_eigenValues = other.d_eigenValues;
   if (other.d_carbonRadii) {
-    d_carbonRadii.reset(new boost::dynamic_bitset<>(*other.d_carbonRadii));
+    d_carbonRadii =
+        std::make_unique<boost::dynamic_bitset<>>(*other.d_carbonRadii);
   } else {
     d_carbonRadii.reset();
   }
@@ -301,8 +303,8 @@ void ShapeInput::extractAtoms(const ROMol &mol, int confId,
                               const ShapeInputOptions &opts) {
   d_coords.reserve(mol.getNumAtoms() * 4);
   if (!opts.allCarbonRadii) {
-    d_carbonRadii.reset(new boost::dynamic_bitset<>(
-        !opts.atomSubset.empty() ? opts.atomSubset.size() : mol.getNumAtoms()));
+    d_carbonRadii = std::make_unique<boost::dynamic_bitset<>>(
+        !opts.atomSubset.empty() ? opts.atomSubset.size() : mol.getNumAtoms());
   }
   auto conf = mol.getConformer(confId);
   // Index of atoms that have been added to the shape.
@@ -424,7 +426,7 @@ $([N;H0&+0]([C;!$(C(=O))])([C;!$(C(=O))])[C;!$(C(=O))])]"},  // Basic
 std::vector<std::vector<const ROMol *>> *getPh4Patterns() {
   static std::unique_ptr<std::vector<std::vector<const ROMol *>>> patterns;
   if (!patterns) {
-    patterns.reset(new std::vector<std::vector<const ROMol *>>());
+    patterns = std::make_unique<std::vector<std::vector<const ROMol *>>>();
     for (const auto &smartsV : smartsPatterns) {
       std::vector<const ROMol *> v;
       for (const auto &smarts : smartsV) {

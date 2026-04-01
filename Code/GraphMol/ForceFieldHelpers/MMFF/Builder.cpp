@@ -1115,7 +1115,7 @@ ForceFields::ForceField *constructForceField(
   PRECONDITION(mmffMolProperties->isValid(),
                "missing atom types - invalid force-field");
 
-  std::unique_ptr<ForceFields::ForceField> res(new ForceFields::ForceField());
+  auto res = std::make_unique<ForceFields::ForceField>();
   // add the atomic positions:
   Conformer &conf = mol.getConformer(confId);
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {

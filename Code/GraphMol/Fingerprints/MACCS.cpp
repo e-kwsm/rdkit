@@ -940,7 +940,7 @@ void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
 namespace RDKit {
 namespace MACCSFingerprints {
 ExplicitBitVect *getFingerprintAsBitVect(const ROMol &mol) {
-  std::unique_ptr<ExplicitBitVect> fp(new ExplicitBitVect(167));
+  auto fp = std::make_unique<ExplicitBitVect>(167);
   GenerateFP(mol, *fp);
   return fp.release();
 }

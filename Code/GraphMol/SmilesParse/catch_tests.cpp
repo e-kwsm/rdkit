@@ -453,18 +453,18 @@ TEST_CASE("dative ring closures", "[bug][smiles]") {
 
 TEST_CASE("github#2450: getAtomSmarts() fails for free atoms", "[bug]") {
   SECTION("original report") {
-    std::unique_ptr<QueryAtom> qat(new QueryAtom());
+    auto qat = std::make_unique<QueryAtom>();
     qat->setQuery(makeAtomNumQuery(6));
     auto smarts = SmartsWrite::GetAtomSmarts(qat.get());
     CHECK(smarts == "[#6]");
   }
   SECTION("query bonds") {
-    std::unique_ptr<QueryBond> qbnd(new QueryBond(Bond::AROMATIC));
+    auto qbnd = std::make_unique<QueryBond>(Bond::AROMATIC);
     auto smarts = SmartsWrite::GetBondSmarts(qbnd.get());
     CHECK(smarts == ":");
   }
   SECTION("SMILES works too") {
-    std::unique_ptr<Bond> bnd(new Bond(Bond::AROMATIC));
+    auto bnd = std::make_unique<Bond>(Bond::AROMATIC);
     auto smiles = SmilesWrite::GetBondSmiles(bnd.get());
     CHECK(smiles == ":");
   }

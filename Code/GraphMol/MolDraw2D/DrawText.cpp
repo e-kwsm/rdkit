@@ -128,7 +128,7 @@ void DrawText::adjustLineForString(const std::string &label, OrientType orient,
 
     Point2D tl, tr, bl, br;
     r->calcCorners(tl, tr, br, bl, 0.025 * bond_len);
-    std::unique_ptr<Point2D> ip(new Point2D);
+    auto ip = std::make_unique<Point2D>();
 
     // if it's a wide label, such as C:7, the bond can intersect
     // more than 1 side of the rectangle, so check them all.

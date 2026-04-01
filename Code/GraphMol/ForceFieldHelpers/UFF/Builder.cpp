@@ -683,7 +683,7 @@ ForceFields::ForceField *constructForceField(ROMol &mol,
         << std::endl;
   }
 
-  std::unique_ptr<ForceFields::ForceField> res(new ForceFields::ForceField());
+  auto res = std::make_unique<ForceFields::ForceField>();
 
   // add the atomic positions:
   Conformer &conf = mol.getConformer(confId);

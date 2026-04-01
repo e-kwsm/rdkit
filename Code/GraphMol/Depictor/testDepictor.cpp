@@ -1756,8 +1756,8 @@ M  END
 )RES";
     std::unique_ptr<RWMol> cpSittingOnHorizontalBond(
         MolBlockToMol(cpSittingOnHorizontalBondCTab));
-    std::unique_ptr<RWMol> cpSittingOnHorizontalBondCopy(
-        new RWMol(*cpSittingOnHorizontalBond));
+    auto cpSittingOnHorizontalBondCopy =
+        std::make_unique<RWMol>(*cpSittingOnHorizontalBond);
     RDDepict::straightenDepiction(*cpSittingOnHorizontalBond);
     TEST_ASSERT(MolAlign::CalcRMS(*cpSittingOnHorizontalBond,
                                   *cpSittingOnHorizontalBondCopy) < 1.e-3);

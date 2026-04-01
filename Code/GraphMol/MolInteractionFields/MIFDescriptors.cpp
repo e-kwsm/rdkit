@@ -1945,7 +1945,7 @@ std::unique_ptr<RDKit::RWMol> readFromCubeStream(
   std::unique_ptr<RDKit::RWMol> molecule;
   if (nAtoms) {
     molecule = std::make_unique<RDKit::RWMol>();
-    std::unique_ptr<RDKit::Conformer> conf(new RDKit::Conformer(nAtoms));
+    auto conf = std::make_unique<RDKit::Conformer>(nAtoms);
     int atomNum;
     for (auto i = 0; i < nAtoms; ++i) {
       inStrm >> atomNum >> temp1 >> x >> y >> z;

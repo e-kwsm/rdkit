@@ -386,7 +386,7 @@ void extractRings(const ROMol &mol,
                   std::vector<std::string> &molRingSmiles) {
   const auto &molBondRings = mol.getRingInfo()->bondRings();
   for (size_t i = 0u; i < molBondRings.size(); ++i) {
-    std::unique_ptr<RWMol> ringMol(new RWMol(mol));
+    auto ringMol = std::make_unique<RWMol>(mol);
     const auto &molAtomRings = mol.getRingInfo()->atomRings();
     boost::dynamic_bitset<> atomsInRing(mol.getNumAtoms());
     for (auto a : molAtomRings[i]) {

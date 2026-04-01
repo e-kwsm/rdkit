@@ -178,8 +178,8 @@ void readAtom(RWMol *mol, const bj::value &atomVal,
   if (stereoVal == chilookup.end()) {
     throw FileParseException("Bad Format: bad stereo value for atom");
   }
-  std::unique_ptr<Atom> at(
-      new Atom(getIntDefaultValue("z", atomVal, atomDefaults)));
+  auto at =
+      std::make_unique<Atom>(getIntDefaultValue("z", atomVal, atomDefaults));
   if (params.useHCounts) {
     at->setNoImplicit(true);
     at->setNumExplicitHs(getIntDefaultValue("impHs", atomVal, atomDefaults));
@@ -201,7 +201,7 @@ void readBond(RWMol *mol, const bj::value &bondVal,
     throw FileParseException("Bad Format: bad bond order for bond");
   }
   const auto &aids = bondVal.at("atoms").as_array();
-  std::unique_ptr<Bond> bnd(new Bond());
+  auto bnd = std::make_unique<Bond>();
   bnd->setBeginAtomIdx(static_cast<int>(aids.at(0).as_int64()));
   bnd->setEndAtomIdx(static_cast<int>(aids.at(1).as_int64()));
   bnd->setBondType(bondOrder->second);
@@ -1000,7 +1000,7 @@ std::vector<boost::shared_ptr<ROMol>> DocToMols(
       throw FileParseException("Bad Format: molecules is not an array");
     }
     for (const auto &molval : doc.at("molecules").as_array()) {
-      std::unique_ptr<RWMol> mol(new RWMol());
+      auto mol = std::make_unique<RWMol>();
       processMol(mol.get(), molval, atomDefaults, bondDefaults, params);
       mol->updatePropertyCache(params.strictValenceCheck);
       mol->setProp(common_properties::_StereochemDone, 1);

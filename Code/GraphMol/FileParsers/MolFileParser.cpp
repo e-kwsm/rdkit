@@ -1470,7 +1470,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
       throw FileParseException(errout.str());
     }
   }
-  std::unique_ptr<Atom> res(new Atom);
+  auto res = std::make_unique<Atom>();
   bool isComplexQueryName =
       std::find(complexQueries.begin(), complexQueries.end(), symb) !=
       complexQueries.end();
