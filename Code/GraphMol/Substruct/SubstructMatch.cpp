@@ -552,7 +552,7 @@ unsigned int SubstructMatchCount(const ROMol &mol, const ROMol &query,
 
   if (params.recursionPossible) {
     detail::SUBQUERY_MAP subqueryMap;
-    for (const auto atom : query.atoms()) {
+    for (auto *const atom : query.atoms()) {
       if (atom->hasQuery()) {
         detail::MatchSubqueries(mol, atom->getQuery(), params, subqueryMap,
                                 locker.locked);
