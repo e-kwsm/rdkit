@@ -46,7 +46,7 @@ TransformCatalogParams::TransformCatalogParams(
   const std::vector<std::shared_ptr<ChemicalReaction>> &otransforms =
       other.getTransformations();
   for (auto &transi : otransforms) {
-    std::shared_ptr<ChemicalReaction> transform(new ChemicalReaction(*transi));
+    auto transform = std::make_shared<ChemicalReaction>(*transi);
     d_transformations.push_back(transform);
   }
 }
