@@ -106,13 +106,13 @@ TEST_CASE("Basic MolHash", "[molhash]") {
     auto om = "C(CC1=NNC=C1)C1=CNC=N1"_smiles;
     REQUIRE(om);
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomTautomer);
       CHECK(hsh == "[CH]1[CH][C](CC[C]2[CH][N][CH][N]2)[N][N]1_2_0");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomProtomer);
       CHECK(hsh == "[CH]1[CH][C](CC[C]2[CH][N][CH][N]2)[N][N]1_2");
@@ -151,10 +151,10 @@ TEST_CASE("Basic MolHash", "[molhash]") {
         "CCC(=Cc1[se]c2ccc(C)cc2[n+]1CC)C=C1Sc2cc(C)c(C)cc2N1CC(O)CS(=O)(=O)O"_smiles;
     REQUIRE(m2);
 
-    std::unique_ptr<RWMol> t1(new RWMol(*m1));
+    auto t1 = std::make_unique<RWMol>(*m1);
     auto hsh1 =
         MolHash::MolHash(t1.get(), MolHash::HashFunction::HetAtomTautomer);
-    std::unique_ptr<RWMol> t2(new RWMol(*m2));
+    auto t2 = std::make_unique<RWMol>(*m2);
     auto hsh2 =
         MolHash::MolHash(t2.get(), MolHash::HashFunction::HetAtomTautomer);
     CHECK(hsh1 == hsh2);
@@ -170,10 +170,10 @@ TEST_CASE("Basic MolHash", "[molhash]") {
         "N/C(=N\\CCCCCCCC(=O)NC(CC(=O)OCc1ccccc1)C(=O)NCCCC/N=C(\\N)N[N+](=O)[O-])N[N+](=O)[O-]"_smiles;
     REQUIRE(m2);
 
-    std::unique_ptr<RWMol> t1(new RWMol(*m1));
+    auto t1 = std::make_unique<RWMol>(*m1);
     auto hsh1 =
         MolHash::MolHash(t1.get(), MolHash::HashFunction::HetAtomTautomer);
-    std::unique_ptr<RWMol> t2(new RWMol(*m2));
+    auto t2 = std::make_unique<RWMol>(*m2);
     auto hsh2 =
         MolHash::MolHash(t2.get(), MolHash::HashFunction::HetAtomTautomer);
     CHECK(hsh1 == hsh2);
@@ -189,19 +189,19 @@ TEST_CASE("Tautomers and chirality", "[molhash]") {
     REQUIRE(om);
 
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::CanonicalSmiles);
       CHECK(hsh == "C[C@@H](C(=O)[O-])C(=O)O");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomTautomer);
       CHECK(hsh == "CC([C]([O])[O])[C]([O])[O]_1_-1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomProtomer);
       CHECK(hsh == "CC([C]([O])[O])[C]([O])[O]_2");
