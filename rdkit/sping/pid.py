@@ -570,7 +570,7 @@ class AffineMatrix:
     if init:
       if len(init) == 6:
         self.A = init
-      if type(init) == type(self):  # erpht!!! this seems so wrong
+      if isinstance(init, type(self)):  # erpht!!! this seems so wrong
         self.A = init.A
     else:
       self.A = [1.0, 0, 0, 1.0, 0.0, 0.0]  # set to identity
