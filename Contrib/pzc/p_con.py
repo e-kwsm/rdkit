@@ -1227,7 +1227,7 @@ table th[class*="col-"] {
 
   def load_models(self, model_files):
     """load model or list of models into self.model"""
-    if type(model_files) == str:
+    if isinstance(model_files, str):
       model_files = [model_files]
     i = 0
     for mod_file in model_files:
