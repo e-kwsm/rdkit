@@ -56,14 +56,14 @@ class TestCase(unittest.TestCase):
     picker = SimilarityPickers.TopNOverallPicker(numToPick=2, probeFps=[probeFp], dataSet=probefps)
     self.assertIsNone(picker._picks)
     self.assertEqual(len(picker), 2)
-    self.assertNotEqual(picker._picks, None)
+    self.assertIsNotNone(picker._picks)
     # or by addressing the elements
     picker = SimilarityPickers.TopNOverallPicker(numToPick=2, probeFps=[probeFp], dataSet=probefps)
     self.assertIsNone(picker._picks)
     fp, score = picker[0]
     self.assertEqual(fp._id, 'ether-1')
     self.assertEqual(score, 1.0)
-    self.assertNotEqual(picker._picks, None)
+    self.assertIsNotNone(picker._picks)
 
   def test_SpreadPicker(self):
     probefps = self.getTestData()
