@@ -19,7 +19,7 @@ class TestCase(unittest.TestCase):
     for i in range(30):
       v1[i] = i / 10.0
 
-    self.assertTrue(len(v1) == 30)
+    self.assertEqual(len(v1), 30)
     self.assertAlmostEqual(v1.GetTotalVal(), 43.5)
 
     for i in range(len(v1)):
@@ -67,15 +67,15 @@ class TestCase(unittest.TestCase):
     self.assertAlmostEqual(v2.GetTotalVal(), 12.8)
 
     v3 = v1 | v2
-    self.assertTrue(len(v3) == len(v2))
+    self.assertEqual(len(v3), len(v2))
     self.assertAlmostEqual(v3.GetTotalVal(), 16.8)
 
     v3 = v1 & v2
-    self.assertTrue(len(v3) == len(v2))
+    self.assertEqual(len(v3), len(v2))
     self.assertAlmostEqual(v3.GetTotalVal(), 4.4)
 
     v4 = v1 + v2
-    self.assertTrue(len(v4) == len(v2))
+    self.assertEqual(len(v4), len(v2))
     self.assertAlmostEqual(v4.GetTotalVal(), 21.2)
 
     v4 = v1 - v2
@@ -94,7 +94,7 @@ class TestCase(unittest.TestCase):
     for i in range(15):
       v1[2 * i] = 1.1
     l1 = list(v1)
-    self.assertTrue(len(l1) == len(v1))
+    self.assertEqual(len(l1), len(v1))
     for i, v in enumerate(v1):
       self.assertAlmostEqual(l1[i], v)
     with self.assertRaises(IndexError):
