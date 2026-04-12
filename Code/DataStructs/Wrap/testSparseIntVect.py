@@ -37,7 +37,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(v1.GetLength() == 5)
 
     v2 = ds.IntSparseIntVect(5)
-    self.assertTrue(v1 != v2)
+    self.assertNotEqual(v1, v2)
     v2 |= v1
     self.assertTrue(v2 == v1)
 
@@ -61,7 +61,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(v1.GetLength() == l)
 
     v2 = ds.LongSparseIntVect(l)
-    self.assertTrue(v1 != v2)
+    self.assertNotEqual(v1, v2)
     v2 |= v1
     self.assertTrue(v2 == v1)
 
