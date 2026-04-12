@@ -830,7 +830,7 @@ if __name__ == '__main__':
       res = BRICSDecompose(m)
       self.assertEqual(len(res), 7)
       self.assertIn('[3*]O[3*]', res)
-      self.assertFalse('[14*]c1ncnc(NCCCC)n1' in res)
+      self.assertNotIn('[14*]c1ncnc(NCCCC)n1', res)
       res = BRICSDecompose(m, singlePass=True)
       self.assertEqual(len(res), 13)
       self.assertIn('[3*]OCC', res)
