@@ -31,7 +31,7 @@ class TestCase(unittest.TestCase):
 
     self.assertEqual(bv1, bv2)
     bv2.SetBit(1)
-    self.assertTrue(bv1 != bv2)
+    self.assertNotEqual(bv1, bv2)
     bv2.UnSetBit(1)
     self.assertEqual(bv1, bv2)
 
