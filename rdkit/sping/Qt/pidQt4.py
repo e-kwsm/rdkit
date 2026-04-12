@@ -88,7 +88,7 @@ class QtCanvas(pid.Canvas):
 
   def _initOutput(self):
     for obj in self.objs:
-      if type(obj) == types.TupleType:
+      if isinstance(obj, types.TupleType):
         self._scene.removeItem(obj[0])
       else:
         self._scene.removeItem(obj)

@@ -529,14 +529,14 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('C1=CN=CC=C1')
     pkl = pickle.dumps(m)
     m2 = pickle.loads(pkl)
-    self.assertTrue(type(m2) == Chem.Mol)
+    self.assertIsInstance(m2, Chem.Mol)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
     self.assertTrue(smi1 == smi2)
 
     pkl = pickle.dumps(Chem.RWMol(m))
     m2 = pickle.loads(pkl)
-    self.assertTrue(type(m2) == Chem.RWMol)
+    self.assertIsInstance(m2, Chem.RWMol)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
     self.assertTrue(smi1 == smi2)
@@ -633,8 +633,8 @@ class TestCase(unittest.TestCase):
         "string whitespace": " \t"
       })
 
-    self.assertEqual(type(m.GetPropsAsDict()['int']), int)
-    self.assertEqual(type(m.GetPropsAsDict()['double']), float)
+    self.assertIsInstance(m.GetPropsAsDict()['int'], int)
+    self.assertIsInstance(m.GetPropsAsDict()['double'], float)
 
   def test17Kekulize(self):
     m = Chem.MolFromSmiles('c1ccccc1')
@@ -2364,10 +2364,10 @@ CAS<~>
 
     """
     mol = Chem.MolFromSmiles('C1CCC1')
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertIsInstance(mol, Chem.Mol)
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
-      self.assertTrue(type(rwmol) in [Chem.EditableMol, Chem.RWMol])
+      self.assertIsInstance(rwmol, (Chem.EditableMol, Chem.RWMol))
       newAt = Chem.Atom(8)
       rwmol.ReplaceAtom(0, newAt)
       self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1COC1')
@@ -2425,7 +2425,7 @@ CAS<~>
     mol.GetAtomWithIdx(0).SetProp("foo", "bar")
     mol.GetBondWithIdx(0).SetProp("foo", "bar")
     newBond = mol2.GetBondWithIdx(0)
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertIsInstance(mol, Chem.Mol)
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
       newAt = Chem.Atom(8)
@@ -3738,7 +3738,7 @@ CAS<~>
 
     """
     mol = Chem.MolFromSmiles('C1CCC1')
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertIsInstance(mol, Chem.Mol)
     rwmol = Chem.RWMol(mol)
     self.assertEqual(Chem.MolToSmiles(rwmol, True), Chem.MolToSmiles(rwmol.GetMol()))
     newAt = Chem.Atom(8)
@@ -4470,7 +4470,7 @@ $$$$
     for atom in m.GetAtoms():
       d = atom.GetPropsAsDict()
       self.assertEqual(set(d.keys()), set(['_CIPRank', '__computedProps']))
-      self.assertEqual(type(d['_CIPRank']), int)
+      self.assertIsInstance(d['_CIPRank'], int)
       self.assertEqual(list(d['__computedProps']), ['_CIPRank'])
 
     m = Chem.MolFromSmiles('c1ccccc1')

@@ -55,13 +55,13 @@ def _molDrawOptionsToDict(molDrawOptions=rdMolDraw2D.MolDrawOptions()):
 
 
 def _isDrawOptionEqual(v1, v2):
-  if type(v1) != type(v2):
+  if type(v1) is not type(v2):
     return False
-  if type(v1) in (tuple, list):
+  if isinstance(v1, (tuple, list)):
     if len(v1) != len(v2):
       return False
     return all(_isDrawOptionEqual(item1, v2[i]) for i, item1 in enumerate(v1))
-  if type(v1) == float:
+  if isinstance(v1, float):
     return abs(v1 - v2) < 1.e-5
   return v1 == v2
 
