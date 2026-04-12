@@ -199,7 +199,7 @@ class TestCase(unittest.TestCase):
     for i, ci in enumerate(cs):
       for j in range(i + 1, len(cs)):
         cj = cs[j]
-        self.assertTrue(Chem.MolToMolBlock(m, confId=ci) != Chem.MolToMolBlock(m, confId=cj))
+        self.assertNotEqual(Chem.MolToMolBlock(m, confId=ci), Chem.MolToMolBlock(m, confId=cj))
 
   def test6RmsPruning(self):
     smiles = [
