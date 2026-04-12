@@ -633,8 +633,8 @@ class TestCase(unittest.TestCase):
         "string whitespace": " \t"
       })
 
-    self.assertEqual(type(m.GetPropsAsDict()['int']), int)
-    self.assertEqual(type(m.GetPropsAsDict()['double']), float)
+    self.assertIsInstance(m.GetPropsAsDict()['int'], int)
+    self.assertIsInstance(m.GetPropsAsDict()['double'], float)
 
   def test17Kekulize(self):
     m = Chem.MolFromSmiles('c1ccccc1')
@@ -2367,7 +2367,7 @@ CAS<~>
     self.assertIsInstance(mol, Chem.Mol)
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
-      self.assertTrue(type(rwmol) in [Chem.EditableMol, Chem.RWMol])
+      self.assertIsInstance(rwmol, (Chem.EditableMol, Chem.RWMol))
       newAt = Chem.Atom(8)
       rwmol.ReplaceAtom(0, newAt)
       self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1COC1')
@@ -4470,7 +4470,7 @@ $$$$
     for atom in m.GetAtoms():
       d = atom.GetPropsAsDict()
       self.assertEqual(set(d.keys()), set(['_CIPRank', '__computedProps']))
-      self.assertEqual(type(d['_CIPRank']), int)
+      self.assertIsInstance(d['_CIPRank'], int)
       self.assertEqual(list(d['__computedProps']), ['_CIPRank'])
 
     m = Chem.MolFromSmiles('c1ccccc1')
