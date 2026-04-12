@@ -263,7 +263,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(res)
     self.assertTrue(len(res.GetLeaves()) == 2)
     ks = res.GetLeaves().keys()
-    self.assertFalse('*C(*)*' in ks)
+    self.assertNotIn('*C(*)*', ks)
     self.assertIn('*c1ccccc1', ks)
     self.assertIn('*C(*)Oc1ccccc1', ks)
 
