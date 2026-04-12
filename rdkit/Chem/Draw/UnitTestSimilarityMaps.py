@@ -208,7 +208,7 @@ class TestCase(unittest.TestCase):
     svg = d.GetDrawingText()
     with open('github4763.svg', 'w+') as outf:
       outf.write(svg)
-    self.assertFalse('fill:#FBFCFB7F' in svg)
+    self.assertNotIn('fill:#FBFCFB7F', svg)
     self.assertIn('fill:#DDDCDB', svg)
 
 
