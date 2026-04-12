@@ -204,7 +204,7 @@ class TestCase(unittest.TestCase):
     # test function returns expected outputs
     AllChem.EmbedMultipleConfs(mol, 10, randomSeed=0xf00d)
     descs = Descriptors3D.CalcMolDescriptors3D(mol)
-    self.assertTrue('InertialShapeFactor' in descs)
+    self.assertIn('InertialShapeFactor', descs)
     self.assertAlmostEqual(descs['PMI1'], 20.9582649071385, delta=1e-4)
     descs2 = Descriptors3D.CalcMolDescriptors3D(mol, confId=2)
     for key in descs:
