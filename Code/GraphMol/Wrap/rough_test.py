@@ -8176,7 +8176,7 @@ M  END
     # m2 = Chem.CanonicalizeStereoGroups(m2)
     smi = Chem.MolToCXSmiles(m, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
     smi2 = Chem.MolToCXSmiles(m2, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
-    self.assertTrue(smi != smi2)
+    self.assertNotEqual(smi, smi2)
 
     m2 = Chem.CanonicalizeStereoGroups(m2)
     smi2 = Chem.MolToCXSmiles(m, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
@@ -8688,7 +8688,7 @@ M  END
     sdSup = Chem.SDMolSupplier(fileN)
     mols = list(sdSup)
     self.assertEqual(len(mols[0].GetPropsAsDict()["comment"]), 65369)
-    self.assertTrue(mols[1] != None)
+    self.assertNotEqual(mols[1], None)
 
   def testGithub9125(self):
     m1 = Chem.MolFromSmiles('c1ncc(C)nc1')
