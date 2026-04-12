@@ -8101,7 +8101,7 @@ M  END
     m = Chem.MolFromSmiles(
       'CC1=C(N2C=CC=C2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),wD:2.11,wU:8.10,&1:8|'
     )
-    self.assertTrue(m is not None)
+    self.assertIsNotNone(m)
     self.assertTrue(m.GetNumAtoms() == 16)
 
     sys.stdout.flush()
@@ -8126,13 +8126,13 @@ M  END
     m = Chem.MolFromSmiles(
       'C[C@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29,&13:31,&14:33,&15:35,&16:37,&17:39,&18:41,&19:43,&20:45,&21:47,&22:51,&23:53,&24:56,&25:58,&26:59|'
     )
-    self.assertTrue(m is not None)
+    self.assertIsNotNone(m)
     self.assertTrue(m.GetNumAtoms() == 61)
 
     m2 = Chem.MolFromSmiles(
       'C[C@@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29,&13:31,&14:33,&15:35,&16:37,&17:39,&18:41,&19:43,&20:45,&21:47,&22:51,&23:53,&24:56,&25:58,&26:59|'
     )
-    self.assertTrue(m2 is not None)
+    self.assertIsNotNone(m2)
     self.assertTrue(m2.GetNumAtoms() == 61)
 
     sys.stdout.flush()
@@ -8155,13 +8155,13 @@ M  END
     m = Chem.MolFromSmiles(
       'C[C@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29|'
     )
-    self.assertTrue(m is not None)
+    self.assertIsNotNone(m)
     self.assertTrue(m.GetNumAtoms() == 61)
 
     m2 = Chem.MolFromSmiles(
       'C[C@@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29|'
     )
-    self.assertTrue(m2 is not None)
+    self.assertIsNotNone(m2)
     self.assertTrue(m2.GetNumAtoms() == 61)
 
     sys.stdout.flush()
@@ -8691,7 +8691,7 @@ M  END
     sdSup = Chem.SDMolSupplier(fileN)
     mols = list(sdSup)
     self.assertEqual(len(mols[0].GetPropsAsDict()["comment"]), 65369)
-    self.assertTrue(mols[1] != None)
+    self.assertIsNotNone(mols[1])
 
   def testGithub9125(self):
     m1 = Chem.MolFromSmiles('c1ncc(C)nc1')
