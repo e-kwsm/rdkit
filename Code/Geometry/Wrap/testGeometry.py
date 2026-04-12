@@ -522,19 +522,19 @@ class TestCase(unittest.TestCase):
 
     pkl = pickle.dumps(pt)
     pt2 = pickle.loads(pkl)
-    self.assertTrue(len(pt) == len(pt2))
+    self.assertEqual(len(pt), len(pt2))
     for i in range(len(pt)):
       self.assertTrue(feq(pt2[i], pt[i]))
 
   def test3UniformGrid(self):
     ugrid = geom.UniformGrid3D(20, 18, 15)
-    self.assertTrue(ugrid.GetNumX() == 40)
-    self.assertTrue(ugrid.GetNumY() == 36)
-    self.assertTrue(ugrid.GetNumZ() == 30)
+    self.assertEqual(ugrid.GetNumX(), 40)
+    self.assertEqual(ugrid.GetNumY(), 36)
+    self.assertEqual(ugrid.GetNumZ(), 30)
     dvect = ugrid.GetOccupancyVect()
     ugrid = geom.UniformGrid3D(20, 18, 15, 0.5, DataStructs.DiscreteValueType.TWOBITVALUE)
     dvect = ugrid.GetOccupancyVect()
-    self.assertTrue(dvect.GetValueType() == DataStructs.DiscreteValueType.TWOBITVALUE)
+    self.assertEqual(dvect.GetValueType(), DataStructs.DiscreteValueType.TWOBITVALUE)
 
     grd = geom.UniformGrid3D(10.0, 10.0, 10.0, 0.5)
     grd.SetSphereOccupancy(geom.Point3D(-2.0, -2.0, 0.0), 1.5, 0.25)
@@ -549,11 +549,11 @@ class TestCase(unittest.TestCase):
     grd2.SetSphereOccupancy(geom.Point3D(2.0, -2.0, 0.0), 1.5, 0.25)
 
     dist = geom.TanimotoDistance(grd, grd2)
-    self.assertTrue(dist == 0.25)
+    self.assertEqual(dist, 0.25)
     dist = geom.ProtrudeDistance(grd, grd2)
-    self.assertTrue(dist == 0.25)
+    self.assertEqual(dist, 0.25)
     dist = geom.ProtrudeDistance(grd2, grd)
-    self.assertTrue(dist == 0.0)
+    self.assertEqual(dist, 0.0)
 
     grd2 = geom.UniformGrid3D(10.0, 10.0, 10.0, 0.5, DataStructs.DiscreteValueType.FOURBITVALUE)
     grd2.SetSphereOccupancy(geom.Point3D(-2.0, -2.0, 0.0), 1.5, 0.25, 3)
@@ -583,7 +583,7 @@ class TestCase(unittest.TestCase):
         for i in range(8):
           bPt1 += geom.Point3D(0.5, 0.0, 0.0)
           bPt2 -= geom.Point3D(0.5, 0.0, 0.0)
-          self.assertTrue(grd.GetValPoint(bPt1) == grd.GetValPoint(bPt2))
+          self.assertEqual(grd.GetValPoint(bPt1), grd.GetValPoint(bPt2))
 
         bPt1.x = -4.0
         bPt2.x = 4.0
@@ -592,9 +592,9 @@ class TestCase(unittest.TestCase):
 
   def test4UniformRealValueGrid(self):
     ugrid = geom.UniformRealValueGrid3D(20, 18, 15)
-    self.assertTrue(ugrid.GetNumX() == 40)
-    self.assertTrue(ugrid.GetNumY() == 36)
-    self.assertTrue(ugrid.GetNumZ() == 30)
+    self.assertEqual(ugrid.GetNumX(), 40)
+    self.assertEqual(ugrid.GetNumY(), 36)
+    self.assertEqual(ugrid.GetNumZ(), 30)
     dvect = ugrid.GetOccupancyVect()
     ugrid = geom.UniformRealValueGrid3D(20, 18, 15, 0.5)
     ugrid.SetVal(50, 2.3)
@@ -615,32 +615,32 @@ class TestCase(unittest.TestCase):
 
   def test6GridPickles(self):
     grd = geom.UniformGrid3D(10.0, 9.0, 8.0, 0.5)
-    self.assertTrue(grd.GetNumX() == 20)
-    self.assertTrue(grd.GetNumY() == 18)
-    self.assertTrue(grd.GetNumZ() == 16)
+    self.assertEqual(grd.GetNumX(), 20)
+    self.assertEqual(grd.GetNumY(), 18)
+    self.assertEqual(grd.GetNumZ(), 16)
     grd.SetSphereOccupancy(geom.Point3D(-2.0, -2.0, 0.0), 1.5, 0.25)
     grd.SetSphereOccupancy(geom.Point3D(-2.0, 2.0, 0.0), 1.5, 0.25)
     grd.SetSphereOccupancy(geom.Point3D(2.0, -2.0, 0.0), 1.5, 0.25)
     grd.SetSphereOccupancy(geom.Point3D(2.0, 2.0, 0.0), 1.5, 0.25)
 
-    self.assertTrue(geom.TanimotoDistance(grd, grd) == 0.0)
+    self.assertEqual(geom.TanimotoDistance(grd, grd), 0.0)
 
     grd2 = pickle.loads(pickle.dumps(grd))
-    self.assertTrue(grd2.GetNumX() == 20)
-    self.assertTrue(grd2.GetNumY() == 18)
-    self.assertTrue(grd2.GetNumZ() == 16)
-    self.assertTrue(geom.TanimotoDistance(grd, grd2) == 0.0)
+    self.assertEqual(grd2.GetNumX(), 20)
+    self.assertEqual(grd2.GetNumY(), 18)
+    self.assertEqual(grd2.GetNumZ(), 16)
+    self.assertEqual(geom.TanimotoDistance(grd, grd2), 0.0)
 
   def test7RealGridPickles(self):
     grd = geom.UniformRealValueGrid3D(10.0, 9.0, 8.0, 0.5)
-    self.assertTrue(grd.GetNumX() == 20)
-    self.assertTrue(grd.GetNumY() == 18)
-    self.assertTrue(grd.GetNumZ() == 16)
+    self.assertEqual(grd.GetNumX(), 20)
+    self.assertEqual(grd.GetNumY(), 18)
+    self.assertEqual(grd.GetNumZ(), 16)
 
     grd2 = pickle.loads(pickle.dumps(grd))
-    self.assertTrue(grd2.GetNumX() == 20)
-    self.assertTrue(grd2.GetNumY() == 18)
-    self.assertTrue(grd2.GetNumZ() == 16)
+    self.assertEqual(grd2.GetNumX(), 20)
+    self.assertEqual(grd2.GetNumY(), 18)
+    self.assertEqual(grd2.GetNumZ(), 16)
 
   def test8GridOps(self):
     grd = geom.UniformGrid3D(10, 10, 10)
@@ -651,22 +651,22 @@ class TestCase(unittest.TestCase):
     grd2.SetSphereOccupancy(geom.Point3D(2.0, -2.0, 0.0), 1.0, 0.25)
     grd2.SetSphereOccupancy(geom.Point3D(2.0, 2.0, 0.0), 1.0, 0.25)
 
-    self.assertTrue(geom.TanimotoDistance(grd, grd) == 0.0)
-    self.assertTrue(geom.TanimotoDistance(grd, grd2) == 1.0)
+    self.assertEqual(geom.TanimotoDistance(grd, grd), 0.0)
+    self.assertEqual(geom.TanimotoDistance(grd, grd2), 1.0)
 
     grd3 = copy.deepcopy(grd)
     grd3 |= grd2
-    self.assertTrue(geom.TanimotoDistance(grd3, grd) == .5)
-    self.assertTrue(geom.TanimotoDistance(grd3, grd2) == .5)
+    self.assertEqual(geom.TanimotoDistance(grd3, grd), .5)
+    self.assertEqual(geom.TanimotoDistance(grd3, grd2), .5)
 
     grd3 = copy.deepcopy(grd)
     grd3 += grd2
-    self.assertTrue(geom.TanimotoDistance(grd3, grd) == .5)
-    self.assertTrue(geom.TanimotoDistance(grd3, grd2) == .5)
+    self.assertEqual(geom.TanimotoDistance(grd3, grd), .5)
+    self.assertEqual(geom.TanimotoDistance(grd3, grd2), .5)
 
     grd3 -= grd
-    self.assertTrue(geom.TanimotoDistance(grd3, grd) == 1.0)
-    self.assertTrue(geom.TanimotoDistance(grd3, grd2) == 0)
+    self.assertEqual(geom.TanimotoDistance(grd3, grd), 1.0)
+    self.assertEqual(geom.TanimotoDistance(grd3, grd2), 0)
 
     grd4 = geom.UniformGrid3D(10, 10, 10)
     grd4.SetSphereOccupancy(geom.Point3D(-2.0, -2.0, 0.0), 1.0, 0.25)
@@ -797,7 +797,7 @@ class TestCase(unittest.TestCase):
     ugrid.SetValPoint(pt, 2.3)
     idx = ugrid.GetGridPointIndex(pt)
     self.assertTrue(feq(ugrid.GetValPoint(pt), 2.3))
-    self.assertTrue(idx == 0)
+    self.assertEqual(idx, 0)
     self.assertTrue(feq(ugrid.GetVal(idx), 2.3))
 
     pt2 = ugrid.GetGridPointLoc(idx)
