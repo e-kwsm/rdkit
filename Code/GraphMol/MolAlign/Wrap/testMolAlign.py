@@ -552,7 +552,8 @@ class TestCase(unittest.TestCase):
       prbCopy, ref, map=matches, weights=weights)
     self.assertAlmostEqual(refRmsd, rmsdCopy, 3)
     self.assertEqual(len(bestMatch), ref.GetNumAtoms())
-    self.assertTrue(all(len(tup) == 2 for tup in bestMatch))
+    for tup in bestMatch:
+      self.assertEqual(len(tup), 2)
 
     params = rdMolAlign.BestAlignmentParams()
     params.ignoreHs = False
