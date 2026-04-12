@@ -249,7 +249,7 @@ class DbConnect(object):
 
     """
     c = self.GetCursor()
-    if type(vals) != tuple:
+    if not isinstance(vals, tuple):
       vals = tuple(vals)
     insTxt = '(' + ','.join([DbModule.placeHolder] * len(vals)) + ')'
     # insTxt = '(%s'%('%s,'*len(vals))
