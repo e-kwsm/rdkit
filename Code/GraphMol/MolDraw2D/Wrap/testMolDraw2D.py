@@ -22,8 +22,8 @@ class TestCase(unittest.TestCase):
     d.DrawMolecule(m)
     d.FinishDrawing()
     txt = d.GetDrawingText()
-    self.assertTrue(txt.find("<svg") != -1)
-    self.assertTrue(txt.find("</svg>") != -1)
+    self.assertNotEqual(txt.find("<svg"), -1)
+    self.assertNotEqual(txt.find("</svg>"), -1)
 
   def test2(self):
     m = Chem.MolFromSmiles('c1ccc(C)c(C)c1C')
@@ -34,10 +34,10 @@ class TestCase(unittest.TestCase):
     d.DrawMolecule(m)
     d.FinishDrawing()
     txt = d.GetDrawingText()
-    self.assertTrue(txt.find(">f</text>") != -1)
-    self.assertTrue(txt.find(">o</text>") != -1)
-    self.assertTrue(txt.find(">l</text>") != -1)
-    self.assertTrue(txt.find(">a</text>") != -1)
+    self.assertNotEqual(txt.find(">f</text>"), -1)
+    self.assertNotEqual(txt.find(">o</text>"), -1)
+    self.assertNotEqual(txt.find(">l</text>"), -1)
+    self.assertNotEqual(txt.find(">a</text>"), -1)
 
   @unittest.skipUnless(hasattr(Draw, 'MolDraw2DCairo'), 'Cairo support not enabled')
   def testGithubIssue571(self):
@@ -214,8 +214,8 @@ M  END""")
     d.DrawReaction(rxn)
     d.FinishDrawing()
     txt = d.GetDrawingText()
-    self.assertTrue(txt.find("<svg") != -1)
-    self.assertTrue(txt.find("</svg>") != -1)
+    self.assertNotEqual(txt.find("<svg"), -1)
+    self.assertNotEqual(txt.find("</svg>"), -1)
     # print(txt,file=open('blah1.svg','w+'))
 
   def testReaction2(self):
@@ -226,8 +226,8 @@ M  END""")
     d.DrawReaction(rxn, highlightByReactant=True)
     d.FinishDrawing()
     txt = d.GetDrawingText()
-    self.assertTrue(txt.find("<svg") != -1)
-    self.assertTrue(txt.find("</svg>") != -1)
+    self.assertNotEqual(txt.find("<svg"), -1)
+    self.assertNotEqual(txt.find("</svg>"), -1)
     # print(txt,file=open('blah2.svg','w+'))
 
   def testReaction3(self):
@@ -239,8 +239,8 @@ M  END""")
     d.DrawReaction(rxn, highlightByReactant=True, highlightColorsReactants=colors)
     d.FinishDrawing()
     txt = d.GetDrawingText()
-    self.assertTrue(txt.find("<svg") != -1)
-    self.assertTrue(txt.find("</svg>") != -1)
+    self.assertNotEqual(txt.find("<svg"), -1)
+    self.assertNotEqual(txt.find("</svg>"), -1)
 
   def testReaction4(self):
     rxn = AllChem.ReactionFromSmarts(
