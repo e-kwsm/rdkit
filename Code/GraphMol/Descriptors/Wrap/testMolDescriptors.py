@@ -98,13 +98,13 @@ class TestCase(unittest.TestCase):
     self.assertTrue(fp1 == fp2)
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048, 1, 2)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0)
+    self.assertGreater(sim, 0.0)
     self.assertLess(sim, 1.0)
 
     m = Chem.MolFromSmiles('c1ccccn1')
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0)
+    self.assertGreater(sim, 0.0)
     self.assertLess(sim, 1.0)
 
     m = Chem.MolFromSmiles('c1ccccc1')
@@ -112,7 +112,7 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('c1ccccn1')
     fp2 = rdMD.GetHashedAtomPairFingerprintAsBitVect(m, 2048)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0)
+    self.assertGreater(sim, 0.0)
     self.assertLess(sim, 1.0)
 
   def testRootedAtomPairs(self):
