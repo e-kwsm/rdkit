@@ -303,7 +303,8 @@ class TestCase(unittest.TestCase):
     
     
   def test_cdxml(self):
-    try: from rdkit.Chem import rdChemDraw
+    try:
+      from rdkit.Chem import rdChemDraw
     except:
       return
 
@@ -374,12 +375,14 @@ class TestCase(unittest.TestCase):
               data = f.read()
               try:
                 mols = Chem.MolsFromCDXML(data, Chem.CDXMLParserParams(True, True, format))
-                if res: assert mols
+                if res:
+                  assert mols
               except RuntimeError:
                 assert res == False
           else:
             mols = Chem.MolsFromCDXMLFile(filename, Chem.CDXMLParserParams(True, True, format))
-            if res: assert mols
+            if res:
+              assert mols
           
 
         
