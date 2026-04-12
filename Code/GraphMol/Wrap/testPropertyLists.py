@@ -65,7 +65,7 @@ $$$$"""
 
     self.assertTrue(m.HasProp("bond.iprop.Number"))
     self.assertTrue(m.GetBondWithIdx(0).HasProp("Number"))
-    self.assertTrue('Number' in m.GetBondWithIdx(0).GetPropsAsDict())
+    self.assertIn('Number', m.GetBondWithIdx(0).GetPropsAsDict())
     self.assertEqual(m.GetBondWithIdx(0).GetIntProp("Number"), 3)
 
   def testSupplier(self):
