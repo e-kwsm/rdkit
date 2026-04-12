@@ -73,8 +73,8 @@ class TestCase(unittest.TestCase):
       self.assertIn(rdMD.GetAtomPairCode(ac0, ac1, 1), fp.GetNonzeroElements())
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0), includeChirality=True)
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), includeChirality=True)
-      self.assertFalse(
-        rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True) in fp.GetNonzeroElements())
+      self.assertNotIn(
+        rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True), fp.GetNonzeroElements())
       self.assertIn(
         rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True), cfp.GetNonzeroElements())
 
