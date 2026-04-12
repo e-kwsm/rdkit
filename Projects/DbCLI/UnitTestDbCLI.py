@@ -385,7 +385,7 @@ class TestCase(unittest.TestCase):
     d = conn.GetData('molecules', fields='*')
     self.assertEqual(len(d), 10)
     cns = [x.lower() for x in d.GetColumnNames()]
-    self.assertFalse('smiles' in cns)
+    self.assertNotIn('smiles', cns)
 
     conn = None
     d = None
@@ -415,7 +415,7 @@ class TestCase(unittest.TestCase):
     d = conn.GetData('molecules', fields='*')
     self.assertTrue(len(d) == 10)
     cns = [x.lower() for x in d.GetColumnNames()]
-    self.assertFalse('smiles' in cns)
+    self.assertNotIn('smiles', cns)
     d = None
     conn.KillCursor()
     conn = None
