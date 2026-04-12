@@ -1,5 +1,6 @@
 from __future__ import print_function
-import os, sys
+import os
+import sys
 import unittest
 import copy
 from rdkit import DataStructs, RDConfig
