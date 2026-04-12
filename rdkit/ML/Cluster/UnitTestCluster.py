@@ -135,7 +135,7 @@ class TestCase(unittest.TestCase):
     self.assertFalse(root.IsTerminal())
     self.assertTrue(t32.IsTerminal())
 
-    self.assertEqual(root.GetData(), None)
+    self.assertIsNone(root.GetData())
     root.SetData(3.14)
     self.assertEqual(root.GetData(), 3.14)
 

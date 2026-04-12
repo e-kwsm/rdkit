@@ -238,7 +238,7 @@ class TestCase(unittest.TestCase):
 
     m = Chem.MolFromSmiles("CN" * 20)
     entry = catalog.GetFirstMatch(m)
-    self.assertEqual(catalog.GetFirstMatch(m), None)
+    self.assertIsNone(catalog.GetFirstMatch(m))
 
   def testSmartsMatcherAPI(self):
     sm = FilterCatalog.SmartsMatcher("Too many carbons", "[#6]", 40 + 1)
