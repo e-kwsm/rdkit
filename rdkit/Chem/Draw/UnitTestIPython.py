@@ -40,7 +40,7 @@ class TestCase(unittest.TestCase):
     if hasattr(rdMolDraw2D, 'MolDraw2DCairo'):
       IPythonConsole.ipython_useSVG = False
       res = Draw.MolsToGridImage((m, m))
-      self.assertFalse(isinstance(res, SVG))
+      self.assertNotIsInstance(res, SVG)
 
     res = Draw.MolsToGridImage((m, m), useSVG=True)
     self.assertIsInstance(res, SVG)
