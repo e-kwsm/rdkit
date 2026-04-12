@@ -517,7 +517,7 @@ class TestCase(unittest.TestCase):
       lastVal = 1.0
       while i < len(line):
         nbrs[line[i]] = line[i + 1]
-        self.assertTrue(float(line[i + 1]) <= lastVal)
+        self.assertLessEqual(float(line[i + 1]), lastVal)
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
