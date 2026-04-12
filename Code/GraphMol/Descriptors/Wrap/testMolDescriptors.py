@@ -121,7 +121,7 @@ class TestCase(unittest.TestCase):
     nz1 = fp1.GetNonzeroElements()
     nz2 = fp2.GetNonzeroElements()
     for k, v in nz2.items():
-      self.assertTrue(v <= nz1[k])
+      self.assertLessEqual(v, nz1[k])
 
   def testTopologicalTorsions(self):
     mol = Chem.MolFromSmiles("CC")
@@ -158,7 +158,7 @@ class TestCase(unittest.TestCase):
     nz1 = fp1.GetNonzeroElements()
     nz2 = fp2.GetNonzeroElements()
     for k, v in nz2.items():
-      self.assertTrue(v <= nz1[k])
+      self.assertLessEqual(v, nz1[k])
 
     m = Chem.MolFromSmiles('COCC')
     fp1 = rdMD.GetTopologicalTorsionFingerprint(m)
