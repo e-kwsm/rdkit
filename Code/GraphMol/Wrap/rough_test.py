@@ -3322,7 +3322,7 @@ CAS<~>
 
     d = Chem.ParseMolQueryDefFile(fileN)
     self.assertIn('carboxylicacid', d)
-    self.assertFalse('CarboxylicAcid' in d)
+    self.assertNotIn('CarboxylicAcid', d)
 
   def test81Issue275(self):
     smi = Chem.MolToSmiles(Chem.MurckoDecompose(
