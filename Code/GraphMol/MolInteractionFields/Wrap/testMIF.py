@@ -128,7 +128,7 @@ class TestCase(unittest.TestCase):
     rdMIF.CalculateDescriptors(grd, rdMIF.Coulomb(mol, absVal=True))
 
     for i in range(grd.GetSize()):
-      self.assertTrue(grd.GetVal(i) <= 0.0)
+      self.assertLessEqual(grd.GetVal(i), 0.0)
 
     coul1 = rdMIF.Coulomb(mol, probeCharge=-1.0)
     self.assertLess(coul1(-2.0, 0.0, 0.0, 1000), 0)
