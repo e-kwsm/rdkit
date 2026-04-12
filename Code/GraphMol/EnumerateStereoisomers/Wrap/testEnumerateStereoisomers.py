@@ -76,7 +76,7 @@ class TestCase(unittest.TestCase):
     while True:
       iso = enum.next()
       if iso is None:
-          break;
+          break
       self.assertEqual(iso.GetProp('_MolFileChiralFlag'), '1')
       smiles.add(Chem.MolToSmiles(iso, isomericSmiles=True))
     self.assertEqual(len(smiles), 13)
