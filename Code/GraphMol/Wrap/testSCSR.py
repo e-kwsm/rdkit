@@ -38,13 +38,13 @@ class TestCase(unittest.TestCase):
     for mol in (Chem.MolFromSCSRBlock(scsrBlock, False, False, molFromSCSRParams),
                 Chem.MolFromSCSRFile(ofile, False, False, molFromSCSRParams)):
 
-      self.assertTrue(mol.GetNumAtoms() == 30)
+      self.assertEqual(mol.GetNumAtoms(), 30)
       sgs = Chem.GetMolSubstanceGroups(mol)
       self.assertEqual(len(sgs), 6)
 
     # check defaults:
     for mol in (Chem.MolFromSCSRBlock(scsrBlock), Chem.MolFromSCSRFile(ofile)):
-      self.assertTrue(mol.GetNumAtoms() == 30)
+      self.assertEqual(mol.GetNumAtoms(), 30)
       sgs = Chem.GetMolSubstanceGroups(mol)
       self.assertEqual(len(sgs), 6)
 
@@ -63,18 +63,18 @@ class TestCase(unittest.TestCase):
 
     mol = Chem.MolFromSCSRBlock(scsrBlock, False, False, molFromSCSRParams)
 
-    self.assertTrue(mol.GetNumAtoms() == 254)
-    self.assertTrue(mol.GetNumBonds() == 300)
+    self.assertEqual(mol.GetNumAtoms(), 254)
+    self.assertEqual(mol.GetNumBonds(), 300)
     sgs = Chem.GetMolSubstanceGroups(mol)
-    self.assertTrue(len(sgs) == 38)
+    self.assertEqual(len(sgs), 38)
 
     molFromSCSRParams.scsrBaseHbondOptions = Chem.SCSRBaseHbondOptions.Ignore
     mol = Chem.MolFromSCSRBlock(scsrBlock, False, False, molFromSCSRParams)
 
-    self.assertTrue(mol.GetNumAtoms() == 254)
-    self.assertTrue(mol.GetNumBonds() == 282)
+    self.assertEqual(mol.GetNumAtoms(), 254)
+    self.assertEqual(mol.GetNumBonds(), 282)
     sgs = Chem.GetMolSubstanceGroups(mol)
-    self.assertTrue(len(sgs) == 38)
+    self.assertEqual(len(sgs), 38)
 
   def testThreeLetterCodes(self):
     """Test the SCSR system with three letter codes"""
@@ -93,7 +93,7 @@ class TestCase(unittest.TestCase):
     self.assertEqual(mol.GetNumAtoms(), 26)
     self.assertEqual(mol.GetNumBonds(), 25)
     sgs = Chem.GetMolSubstanceGroups(mol)
-    self.assertTrue(len(sgs) == 7)
+    self.assertEqual(len(sgs), 7)
     sgs[0].GetProp('LABEL')
     self.assertEqual(sgs[0].GetProp('LABEL'), 'Ala_4')
 

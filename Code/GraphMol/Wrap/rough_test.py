@@ -2362,7 +2362,7 @@ CAS<~>
 
     """
     mol = Chem.MolFromSmiles('C1CCC1')
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertEqual(type(mol), Chem.Mol)
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
       self.assertTrue(type(rwmol) in [Chem.EditableMol, Chem.RWMol])
@@ -8124,13 +8124,13 @@ M  END
       'C[C@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29,&13:31,&14:33,&15:35,&16:37,&17:39,&18:41,&19:43,&20:45,&21:47,&22:51,&23:53,&24:56,&25:58,&26:59|'
     )
     self.assertTrue(m is not None)
-    self.assertTrue(m.GetNumAtoms() == 61)
+    self.assertEqual(m.GetNumAtoms(), 61)
 
     m2 = Chem.MolFromSmiles(
       'C[C@@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29,&13:31,&14:33,&15:35,&16:37,&17:39,&18:41,&19:43,&20:45,&21:47,&22:51,&23:53,&24:56,&25:58,&26:59|'
     )
     self.assertTrue(m2 is not None)
-    self.assertTrue(m2.GetNumAtoms() == 61)
+    self.assertEqual(m2.GetNumAtoms(), 61)
 
     sys.stdout.flush()
     flags = Chem.CXSmilesFields.CX_COORDS | \
@@ -8146,20 +8146,20 @@ M  END
                                       16)
     smi = Chem.MolToCXSmiles(m, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
     smi2 = Chem.MolToCXSmiles(m2, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
-    self.assertTrue(smi == smi2)
+    self.assertEqual(smi, smi2)
 
   def testEnhancedStereoDoesNotExceedsLimit(self):
     m = Chem.MolFromSmiles(
       'C[C@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29|'
     )
     self.assertTrue(m is not None)
-    self.assertTrue(m.GetNumAtoms() == 61)
+    self.assertEqual(m.GetNumAtoms(), 61)
 
     m2 = Chem.MolFromSmiles(
       'C[C@@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C |&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29|'
     )
     self.assertTrue(m2 is not None)
-    self.assertTrue(m2.GetNumAtoms() == 61)
+    self.assertEqual(m2.GetNumAtoms(), 61)
 
     sys.stdout.flush()
     flags = Chem.CXSmilesFields.CX_COORDS | \
@@ -8180,7 +8180,7 @@ M  END
 
     m2 = Chem.CanonicalizeStereoGroups(m2)
     smi2 = Chem.MolToCXSmiles(m, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
-    self.assertTrue(smi == smi2)
+    self.assertEqual(smi, smi2)
 
   def test_picklingWithAddedAttribs(self):
     m = Chem.MolFromSmiles("C")
