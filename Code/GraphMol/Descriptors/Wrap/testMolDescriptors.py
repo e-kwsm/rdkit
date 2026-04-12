@@ -31,8 +31,8 @@ class TestCase(unittest.TestCase):
       | (1 | 1 << params.numPiBits) << params.numBranchBits)
 
     mol = Chem.MolFromSmiles("C#CO")
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)) != rdMD.GetAtomPairAtomCode(
+    self.assertNotEqual(
+      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)), rdMD.GetAtomPairAtomCode(
         mol.GetAtomWithIdx(1)))
     self.assertEqual(
       rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)), 1
