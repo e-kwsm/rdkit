@@ -41,7 +41,7 @@ class TestCase(unittest.TestCase):
       self.assertEqual(info.bondMapping[src], dst)
 
     opts = Chem.SubsetOptions()
-    opts.method = Chem.SubsetMethod.BONDS;
+    opts.method = Chem.SubsetMethod.BONDS
     sub = Chem.CopyMolSubset(m, N, opts)
     self.assertEqual(Chem.MolToSmiles(sub), "ccccccC")
 
