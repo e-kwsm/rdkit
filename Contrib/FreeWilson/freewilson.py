@@ -214,7 +214,8 @@ def molzip_mols(mols):
   """Fix a rgroup smiles for molzip, note that the core MUST come first
     in the smiles string, ala core.rgroup1.rgroup2 ...
     """
-  if not mols: return Chem.RWMol()
+  if not mols:
+    return Chem.RWMol()
   
   m = Chem.RWMol(mols[0])
   dupes = set()
@@ -466,7 +467,8 @@ def FWDecompose(scaffolds, mols, scores,
     descriptor = [0] * len(rgroup_idx)
     descriptors.append(descriptor)
     for k, de in row.items():
-      if k == "original_idx" or k == 'molecule': continue
+      if k == "original_idx" or k == 'molecule':
+        continue
       if de.smiles in rgroup_idx:
         descriptor[rgroup_idx[de.smiles]] = 1
 
