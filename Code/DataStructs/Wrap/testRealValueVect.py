@@ -52,7 +52,7 @@ class TestCase(unittest.TestCase):
       v2 = pickle.load(inF, encoding='bytes')
       self.assertAlmostEqual(ds.ComputeL1Norm(v1, v2), 0)
       self.assertAlmostEqual(v1.GetTotalVal(), v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertNotEqual(v2.GetTotalVal(), 0)
     #outF.close()
 
   def test4RealVectOps(self):
