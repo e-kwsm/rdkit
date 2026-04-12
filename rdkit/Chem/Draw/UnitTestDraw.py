@@ -351,7 +351,7 @@ class TestCase(unittest.TestCase):
     self.assertEqual(svg1, svg2)
     self.assertIn("style='fill:#CCCCCC;", svg1)
     self.assertIn("style='fill:#E5E533;", svg1)
-    self.assertFalse("style='fill:#9999E5;" in svg1)
+    self.assertNotIn("style='fill:#9999E5;", svg1)
     with self.assertRaises(KeyError):
       Draw.DrawMorganBit(m, 32, bi)
 
@@ -371,8 +371,8 @@ class TestCase(unittest.TestCase):
     svg2 = Draw.DrawRDKitEnv(m, path)
     self.assertEqual(svg1, svg2)
     self.assertIn("style='fill:#E5E533;", svg1)
-    self.assertFalse("style='fill:#CCCCCC;" in svg1)
-    self.assertFalse("style='fill:#9999E5;" in svg1)
+    self.assertNotIn("style='fill:#CCCCCC;", svg1)
+    self.assertNotIn("style='fill:#9999E5;", svg1)
     with self.assertRaises(KeyError):
       Draw.DrawRDKitBit(m, 32, bi)
 
