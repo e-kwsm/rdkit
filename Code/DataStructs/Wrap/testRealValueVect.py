@@ -4,7 +4,8 @@
 
 from __future__ import print_function, unicode_literals
 from rdkit import RDConfig
-import os, pickle
+import os
+import pickle
 import unittest
 from rdkit import DataStructs as ds
 
