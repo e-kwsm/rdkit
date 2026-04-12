@@ -30,19 +30,19 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[3] = 3
-    self.assertTrue(v1 == v1)
-    self.assertTrue(v1.GetLength() == 5)
+    self.assertEqual(v1, v1)
+    self.assertEqual(v1.GetLength(), 5)
 
     v2 = ds.IntSparseIntVect(5)
     self.assertNotEqual(v1, v2)
     v2 |= v1
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = v2 | v1
-    self.assertTrue(v3 == v1)
+    self.assertEqual(v3, v1)
 
     onVs = v1.GetNonzeroElements()
-    self.assertTrue(onVs == {0: 1, 2: 2, 3: 3})
+    self.assertEqual(onVs, {0: 1, 2: 2, 3: 3})
 
   def test2Long(self):
     """
@@ -54,16 +54,16 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[1 << 35] = 3
-    self.assertTrue(v1 == v1)
-    self.assertTrue(v1.GetLength() == l)
+    self.assertEqual(v1, v1)
+    self.assertEqual(v1.GetLength(), l)
 
     v2 = ds.LongSparseIntVect(l)
     self.assertNotEqual(v1, v2)
     v2 |= v1
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = v2 | v1
-    self.assertTrue(v3 == v1)
+    self.assertEqual(v3, v1)
 
     onVs = v1.GetNonzeroElements()
     self.assertEqual(onVs, {0: 1, 2: 2, 1 << 35: 3})
@@ -78,14 +78,14 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[1 << 35] = 3
-    self.assertTrue(v1 == v1)
+    self.assertEqual(v1, v1)
 
     v2 = pickle.loads(pickle.dumps(v1))
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = ds.LongSparseIntVect(v2.ToBinary())
-    self.assertTrue(v2 == v3)
-    self.assertTrue(v1 == v3)
+    self.assertEqual(v2, v3)
+    self.assertEqual(v1, v3)
 
     #pickle.dump(v1,file('lsiv.pkl','wb+'))
     with open(os.path.join(RDConfig.RDBaseDir, 'Code/DataStructs/Wrap/testData/lsiv.pkl'),
@@ -94,7 +94,7 @@ class TestCase(unittest.TestCase):
       tf.close()
     with io.BytesIO(buf) as f:
       v3 = pickle.load(f)
-      self.assertTrue(v3 == v1)
+      self.assertEqual(v3, v1)
 
   def test3Pickle2(self):
     """
@@ -106,14 +106,14 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[1 << 12] = 3
-    self.assertTrue(v1 == v1)
+    self.assertEqual(v1, v1)
 
     v2 = pickle.loads(pickle.dumps(v1))
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = ds.IntSparseIntVect(v2.ToBinary())
-    self.assertTrue(v2 == v3)
-    self.assertTrue(v1 == v3)
+    self.assertEqual(v2, v3)
+    self.assertEqual(v1, v3)
 
     #pickle.dump(v1,file('isiv.pkl','wb+'))
     with open(os.path.join(RDConfig.RDBaseDir, 'Code/DataStructs/Wrap/testData/isiv.pkl'),
@@ -122,7 +122,7 @@ class TestCase(unittest.TestCase):
       tf.close()
     with io.BytesIO(buf) as f:
       v3 = pickle.load(f)
-      self.assertTrue(v3 == v1)
+      self.assertEqual(v3, v1)
 
   def test4Update(self):
     """
@@ -133,11 +133,11 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[3] = 3
-    self.assertTrue(v1 == v1)
+    self.assertEqual(v1, v1)
 
     v2 = ds.IntSparseIntVect(5)
     v2.UpdateFromSequence((0, 2, 3, 3, 2, 3))
-    self.assertTrue(v1 == v2)
+    self.assertEqual(v1, v2)
 
   def test5Dice(self):
     """
