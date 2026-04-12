@@ -141,7 +141,7 @@ class TestCase(unittest.TestCase):
       v2 = pickle.load(inF, encoding='bytes')
       self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 30)
       for i in range(30):
@@ -152,7 +152,7 @@ class TestCase(unittest.TestCase):
       v2 = pickle.load(inF, encoding='bytes')
       self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.FOURBITVALUE, 16)
       for i in range(16):
@@ -163,7 +163,7 @@ class TestCase(unittest.TestCase):
       v2 = pickle.load(inF, encoding='bytes')
       self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.EIGHTBITVALUE, 5)
       v1[0] = 34
@@ -177,7 +177,7 @@ class TestCase(unittest.TestCase):
       v2 = pickle.load(inF, encoding='bytes')
       self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.SIXTEENBITVALUE, 3)
       v1[0] = 2345
@@ -189,7 +189,7 @@ class TestCase(unittest.TestCase):
       v2 = pickle.load(inF, encoding='bytes')
       self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
   def test4DiscreteVectOps(self):
     v1 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 8)
