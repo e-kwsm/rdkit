@@ -54,7 +54,7 @@ class TestCase(unittest.TestCase):
 
     # The picker is initialized lazy; calculation is triggered either by len
     picker = SimilarityPickers.TopNOverallPicker(numToPick=2, probeFps=[probeFp], dataSet=probefps)
-    self.assertEqual(picker._picks, None)
+    self.assertIsNone(picker._picks)
     self.assertEqual(len(picker), 2)
     self.assertNotEqual(picker._picks, None)
     # or by addressing the elements
