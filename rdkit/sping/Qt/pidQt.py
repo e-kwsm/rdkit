@@ -91,7 +91,7 @@ class QtCanvas(pid.Canvas):
 
   def _initOutput(self):
     for obj in self.objs:
-      if type(obj) == tuple:
+      if isinstance(obj, tuple):
         obj[0].hide()
       else:
         obj.hide()
