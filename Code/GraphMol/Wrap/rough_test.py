@@ -8464,7 +8464,7 @@ M  END
     self.assertEqual(mol.GetNumAtoms(), 13)
     mrv = Chem.MolToMrvBlock(mol)
     self.assertIn('<molecule molID="m1">', mrv)
-    self.assertFalse('<reaction>' in mrv)
+    self.assertNotIn('<reaction>', mrv)
 
     fName = tempfile.NamedTemporaryFile(suffix='.mrv').name
     self.assertFalse(os.path.exists(fName))
