@@ -97,12 +97,14 @@ def test_fep_benchmark_3D():
   # we use an rms of 0.7 because we are assembling rgroups from different
   #  ligands together which may not exactly align
   for p in preds2:
-    if not p.is_training: continue
+    if not p.is_training:
+      continue
     
     smi = Chem.MolToSmiles(p.mol)
 
     count += 1
-    if smi not in smis: continue
+    if smi not in smis:
+      continue
     rms = rdMolAlign.GetBestRMS(smis[smi], p.mol)
     assert rms < 0.7
 
