@@ -448,7 +448,7 @@ class TestCase(unittest.TestCase):
     m.GetAtomWithIdx(2).SetProp("molAtomMapNumber", "1")
     self.assertEqual(m.GetNumAtoms(), 3)
     m2 = Chem.MergeQueryHs(m, mergeUnmappedOnly=True)
-    self.assertTrue(m2 is not None)
+    self.assertIsNotNone(m2)
     self.assertEqual(m2.GetNumAtoms(), 3)
     self.assertFalse(m2.GetAtomWithIdx(1).HasQuery())
 
@@ -458,7 +458,7 @@ class TestCase(unittest.TestCase):
     m.GetAtomWithIdx(1).SetProp("molAtomMapNumber", "1")
     self.assertEqual(m.GetNumAtoms(), 3)
     m2 = Chem.MergeQueryHs(m, mergeUnmappedOnly=True)
-    self.assertTrue(m2 is not None)
+    self.assertIsNotNone(m2)
     self.assertEqual(m2.GetNumAtoms(), 2)
     self.assertTrue(m2.GetAtomWithIdx(1).HasQuery())
 
@@ -466,7 +466,7 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('CC[2H]', False)
     self.assertEqual(m.GetNumAtoms(), 3)
     m2 = Chem.MergeQueryHs(m)
-    self.assertTrue(m2 is not None)
+    self.assertIsNotNone(m2)
     self.assertEqual(m2.GetNumAtoms(), 3)
     self.assertFalse(m2.GetAtomWithIdx(1).HasQuery())
 
@@ -475,7 +475,7 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('CC[2H]', False)
     self.assertEqual(m.GetNumAtoms(), 3)
     m2 = Chem.MergeQueryHs(m, mergeIsotopes=True)
-    self.assertTrue(m2 is not None)
+    self.assertIsNotNone(m2)
     self.assertEqual(m2.GetNumAtoms(), 2)
     self.assertTrue(m2.GetAtomWithIdx(1).HasQuery())
 
@@ -864,11 +864,11 @@ class TestCase(unittest.TestCase):
     with open(fileN, 'r') as inF:
       inD = inF.read()
     m1 = Chem.MolFromMolBlock(inD)
-    self.assertTrue(m1 is not None)
+    self.assertIsNotNone(m1)
     self.assertTrue(m1.GetNumAtoms() == 9)
 
     m1 = Chem.MolFromMolFile(fileN)
-    self.assertTrue(m1 is not None)
+    self.assertIsNotNone(m1)
     self.assertTrue(m1.GetNumAtoms() == 9)
 
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',

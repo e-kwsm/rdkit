@@ -742,7 +742,7 @@ M  END
   def test_PNGMetadata(self):
     fname = os.path.join(self.dataDir, 'reaction1.smarts.png')
     rxn = rdChemReactions.ReactionFromPNGFile(fname)
-    self.assertFalse(rxn is None)
+    self.assertIsNotNone(rxn)
     self.assertEqual(rxn.GetNumReactantTemplates(), 2)
     self.assertEqual(rxn.GetNumProductTemplates(), 1)
 
@@ -752,7 +752,7 @@ M  END
     npng2 = rdChemReactions.ReactionMetadataToPNGString(rxn, png)
     self.assertEqual(npng1, npng2)
     nrxn = rdChemReactions.ReactionFromPNGString(npng2)
-    self.assertFalse(nrxn is None)
+    self.assertIsNotNone(nrxn)
     self.assertEqual(nrxn.GetNumReactantTemplates(), 2)
     self.assertEqual(nrxn.GetNumProductTemplates(), 1)
     opts = [
@@ -784,7 +784,7 @@ M  END
     for opt in opts:
       npng = rdChemReactions.ReactionMetadataToPNGString(rxn, png, **opt)
       nrxn = rdChemReactions.ReactionFromPNGString(npng)
-      self.assertFalse(nrxn is None)
+      self.assertIsNotNone(nrxn)
       self.assertEqual(nrxn.GetNumReactantTemplates(), 2)
       self.assertEqual(nrxn.GetNumProductTemplates(), 1)
 
