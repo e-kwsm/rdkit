@@ -375,7 +375,8 @@ M  END"""
     res, after = tuple(zip(*ChemicalForceFields.OptimizeMoleculeConfs(m, ff, maxIters=200)))
     self.assertEqual(len(res), 10)
     self.assertEqual(len(before), len(after))
-    self.assertTrue(all(map(lambda i: i == 0, res)))
+    for i in res:
+      self.assertEqual(i, 0)
     self.assertTrue(all(after[i] < b for i, b in enumerate(before)))
 
   def testEmptyFF(self) -> None:
@@ -390,7 +391,8 @@ M  END"""
     self.assertTrue(ff)
     self.assertFalse(ff.Initialize())
     self.assertEqual(ff.CalcEnergy(), 0.0)
-    self.assertTrue(all(v == 0.0 for v in ff.CalcGrad()))
+    for v in ff.CalcGrad():
+      self.assertEqual(v, 0.0)
     self.assertEqual(ff.NumPoints(), m.GetNumAtoms())
     self.assertEqual(len(ff.Positions()) / 3, m.GetNumAtoms())
     self.assertFalse(ff.Minimize())
