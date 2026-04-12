@@ -123,7 +123,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(grd.CompareGrids(grd2))
     self.assertTrue(feq(coul(0.0, 0.0, 0.0, 1000), 0.0))
     self.assertLess(coul(2.0, 0.0, 0.0, 1000), 0)
-    self.assertTrue(coul(-2.0, 0.0, 0.0, 1000) > 0)
+    self.assertGreater(coul(-2.0, 0.0, 0.0, 1000), 0)
 
     rdMIF.CalculateDescriptors(grd, rdMIF.Coulomb(mol, absVal=True))
 
@@ -132,16 +132,16 @@ class TestCase(unittest.TestCase):
 
     coul1 = rdMIF.Coulomb(mol, probeCharge=-1.0)
     self.assertLess(coul1(-2.0, 0.0, 0.0, 1000), 0)
-    self.assertTrue(coul1(2.0, 0.0, 0.0, 1000) > 0)
+    self.assertGreater(coul1(2.0, 0.0, 0.0, 1000), 0)
 
     coul2 = rdMIF.Coulomb(mol, probeCharge=-.5)
     self.assertLess(coul1(-2.0, 0.0, 0.0, 1000), coul2(-2.0, 0.0, 0.0, 1000))
 
     coul3 = rdMIF.Coulomb(mol, confId=0, probeCharge=1.0, absVal=False,
                           chargeKey="_GasteigerCharge", softcoreParam=0.01, cutoff=1.0)
-    self.assertTrue(coul3(0.0, 0.0, 0.0, 1000) > coul3(0.1, 0.0, 0.0, 1000))
-    self.assertTrue(coul3(0.66, 0.0, 0.0, 1000) > coul3(0.68, 0.0, 0.0, 1000))
-    self.assertTrue(coul3(0.70, 0.0, 0.0, 1000) > coul3(0.68, 0.0, 0.0, 1000))
+    self.assertGreater(coul3(0.0, 0.0, 0.0, 1000), coul3(0.1, 0.0, 0.0, 1000))
+    self.assertGreater(coul3(0.66, 0.0, 0.0, 1000), coul3(0.68, 0.0, 0.0, 1000))
+    self.assertGreater(coul3(0.70, 0.0, 0.0, 1000), coul3(0.68, 0.0, 0.0, 1000))
 
   def test4CoulombDielectric(self):
     mol = AllChem.MolFromMolFile(
