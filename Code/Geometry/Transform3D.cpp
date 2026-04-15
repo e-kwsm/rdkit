@@ -21,26 +21,29 @@ void Transform3D::setToIdentity() {
   double *data = d_data.get();
   memset(static_cast<void *>(data), 0, d_dataSize * sizeof(double));
   for (unsigned int i = 0; i < DIM_3D; i++) {
-    unsigned int id = i * (DIM_3D + 1);
+    const unsigned int id = i * (DIM_3D + 1);
     data[id] = 1.0;
   }
 }
 
 void Transform3D::TransformPoint(Point3D &pt) const {
-  double *data = d_data.get();
-  double x = data[0] * pt.x + data[1] * pt.y + data[2] * pt.z + data[3];
-  double y = data[4] * pt.x + data[5] * pt.y + data[6] * pt.z + data[7];
-  double z = data[8] * pt.x + data[9] * pt.y + data[10] * pt.z + data[11];
+  double const *data = d_data.get();
+  const double x = data[0] * pt.x + data[1] * pt.y + data[2] * pt.z + data[3];
+  const double y = data[4] * pt.x + data[5] * pt.y + data[6] * pt.z + data[7];
+  const double z = data[8] * pt.x + data[9] * pt.y + data[10] * pt.z + data[11];
   pt.x = x;
   pt.y = y;
   pt.z = z;
 }
 
 void Transform3D::TransformPoint(double *pt) const {
-  double *data = d_data.get();
-  double x = data[0] * pt[0] + data[1] * pt[1] + data[2] * pt[2] + data[3];
-  double y = data[4] * pt[0] + data[5] * pt[1] + data[6] * pt[2] + data[7];
-  double z = data[8] * pt[0] + data[9] * pt[1] + data[10] * pt[2] + data[11];
+  double const *data = d_data.get();
+  const double x =
+      data[0] * pt[0] + data[1] * pt[1] + data[2] * pt[2] + data[3];
+  const double y =
+      data[4] * pt[0] + data[5] * pt[1] + data[6] * pt[2] + data[7];
+  const double z =
+      data[8] * pt[0] + data[9] * pt[1] + data[10] * pt[2] + data[11];
   pt[0] = x;
   pt[1] = y;
   pt[2] = z;
@@ -59,8 +62,8 @@ void Transform3D::SetTranslation(const Point3D &move) {
 }
 
 void Transform3D::SetRotation(double angle, AxisType axis) {
-  double cosT = cos(angle);
-  double sinT = sin(angle);
+  const double cosT = cos(angle);
+  const double sinT = sin(angle);
   this->setToIdentity();
   double *data = d_data.get();
   switch (axis) {
@@ -86,10 +89,10 @@ void Transform3D::SetRotation(double angle, AxisType axis) {
 }
 
 void Transform3D::SetRotation(double cosT, double sinT, const Point3D &axis) {
-  double t = 1 - cosT;
-  double X = axis.x;
-  double Y = axis.y;
-  double Z = axis.z;
+  const double t = 1 - cosT;
+  const double X = axis.x;
+  const double Y = axis.y;
+  const double Z = axis.z;
   double *data = d_data.get();
   data[0] = t * X * X + cosT;
   data[1] = t * X * Y - sinT * Z;
@@ -106,24 +109,24 @@ void Transform3D::SetRotation(double cosT, double sinT, const Point3D &axis) {
 
 void Transform3D::SetRotation(double angle, const Point3D &axis) {
   this->setToIdentity();
-  double c = cos(angle);
-  double s = sin(angle);
+  const double c = cos(angle);
+  const double s = sin(angle);
   this->SetRotation(c, s, axis);
 }
 
 void Transform3D::SetRotationFromQuaternion(const double quaternion[4]) {
-  double q00 = quaternion[0] * quaternion[0];
-  double q11 = quaternion[1] * quaternion[1];
-  double q22 = quaternion[2] * quaternion[2];
-  double q33 = quaternion[3] * quaternion[3];
-  double sumSq = q00 + q11 + q22 + q33;
+  const double q00 = quaternion[0] * quaternion[0];
+  const double q11 = quaternion[1] * quaternion[1];
+  const double q22 = quaternion[2] * quaternion[2];
+  const double q33 = quaternion[3] * quaternion[3];
+  const double sumSq = q00 + q11 + q22 + q33;
 
-  double q01 = 2 * quaternion[0] * quaternion[1];
-  double q02 = 2 * quaternion[0] * quaternion[2];
-  double q03 = 2 * quaternion[0] * quaternion[3];
-  double q12 = 2 * quaternion[1] * quaternion[2];
-  double q13 = 2 * quaternion[1] * quaternion[3];
-  double q23 = 2 * quaternion[2] * quaternion[3];
+  const double q01 = 2 * quaternion[0] * quaternion[1];
+  const double q02 = 2 * quaternion[0] * quaternion[2];
+  const double q03 = 2 * quaternion[0] * quaternion[3];
+  const double q12 = 2 * quaternion[1] * quaternion[2];
+  const double q13 = 2 * quaternion[1] * quaternion[3];
+  const double q23 = 2 * quaternion[2] * quaternion[3];
   double *data = d_data.get();
   data[0] = (q00 + q11 - q22 - q33) / sumSq;
   data[1] = (q12 + q03) / sumSq;
@@ -141,7 +144,7 @@ void Transform3D::SetRotationFromQuaternion(const double quaternion[4]) {
 void Transform3D::Reflect() {
   double *data = d_data.get();
   for (unsigned int i = 0; i < DIM_3D - 1; i++) {
-    unsigned int id = i * DIM_3D;
+    const unsigned int id = i * DIM_3D;
     for (unsigned int j = 0; j < DIM_3D - 1; j++) {
       data[id + j] *= -1.0;
     }
