@@ -39,7 +39,7 @@ char *Base64Encode(const unsigned char *inText, const unsigned int inLen) {
   // Notes:
   //   - whoever calls us is responsible for free'ing the result we return
   //   - we cheat and don't worry about breaking lines
-  static unsigned char transTable[64] = {
+  static const unsigned char transTable[64] = {
       'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
       'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -83,7 +83,7 @@ char *Base64Decode(const char *inText, unsigned int *size) {
   //   - whoever calls us is responsible for free'ing the result we return
 
   unsigned char transTable[256];
-  size_t inLen = strlen(inText);
+  const size_t inLen = strlen(inText);
 
   size_t i;
   // FIX: we don't really need to build this table here
@@ -102,7 +102,7 @@ char *Base64Decode(const char *inText, unsigned int *size) {
   transTable[static_cast<int>('+')] = 62;
   transTable[static_cast<int>('/')] = 63;
 
-  size_t outLen = 3 * inLen / 4;
+  const size_t outLen = 3 * inLen / 4;
   auto *res = new char[outLen];
   res[outLen - 1] = 0;
   size_t pos = 0;
@@ -111,7 +111,7 @@ char *Base64Decode(const char *inText, unsigned int *size) {
   unsigned char block[4];
   int nInBlock = 0;
   while (i < inLen) {
-    unsigned char c = inText[i];
+    const unsigned char c = inText[i];
 
     // above we set 0x80 as the junk marker in the translation table
     if (!(transTable[c] & 0x80)) {

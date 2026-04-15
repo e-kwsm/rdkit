@@ -244,8 +244,8 @@ DiscreteValueVect DiscreteValueVect::operator|(
   }
   DiscreteValueVect ans(typ, d_length);
   for (unsigned int i = 0; i < d_length; ++i) {
-    unsigned int v1 = getVal(i);
-    unsigned int v2 = other.getVal(i);
+    const unsigned int v1 = getVal(i);
+    const unsigned int v2 = other.getVal(i);
     ans.setVal(i, std::max(v2, v1));
   }
   return (ans);
@@ -254,10 +254,10 @@ DiscreteValueVect DiscreteValueVect::operator|(
 DiscreteValueVect &DiscreteValueVect::operator+=(
     const DiscreteValueVect &other) {
   PRECONDITION(other.d_length == d_length, "length mismatch");
-  unsigned int maxVal = (1 << d_bitsPerVal) - 1;
+  const unsigned int maxVal = (1 << d_bitsPerVal) - 1;
 
   for (unsigned int i = 0; i < d_length; i++) {
-    unsigned int v = getVal(i) + other.getVal(i);
+    const unsigned int v = getVal(i) + other.getVal(i);
     setVal(i, std::min(v, maxVal));
   }
   return *this;
@@ -267,8 +267,8 @@ DiscreteValueVect &DiscreteValueVect::operator-=(
   PRECONDITION(other.d_length == d_length, "length mismatch");
 
   for (unsigned int i = 0; i < d_length; i++) {
-    unsigned int v1 = getVal(i);
-    unsigned int v2 = other.getVal(i);
+    const unsigned int v1 = getVal(i);
+    const unsigned int v2 = other.getVal(i);
     setVal(i, v1 > v2 ? (v1 - v2) : 0);
   }
   return *this;
