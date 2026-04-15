@@ -29,11 +29,6 @@ def lstFeq(l1, l2, tol=1.e-4):
   return 1
 
 
-def ptFeq(pt1, pt2, tol=0.0001):
-  dist = pt1.Distance(pt2)
-  return feq(dist, 0.0, tol)
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -48,7 +43,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ffeat.GetFamily() == "HBondDonor")
     ffeat.SetPos(geom.Point3D(1.0, 2.0, 3.0))
     pos = ffeat.GetPos()
-    self.assertTrue(ptFeq(pos, geom.Point3D(1.0, 2.0, 3.0)))
+    self.assertAlmostEqual(pos.Distance(geom.Point3D(1.0, 2.0, 3.0)), 0.0, delta=0.0001)
     ffeat.SetType("HBondDonor1")
     self.assertTrue(ffeat.GetType() == "HBondDonor1")
 
@@ -65,7 +60,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ffeat.GetType() == "HBondDonor1")
 
     pos = ffeat.GetPos()
-    self.assertTrue(ptFeq(pos, geom.Point3D(1.0, 2.0, 3.0)))
+    self.assertAlmostEqual(pos.Distance(geom.Point3D(1.0, 2.0, 3.0)), 0.0, delta=0.0001)
 
     ffeat = ChemicalFeatures.FreeChemicalFeature(id=123, type="HBondDonor1", family="HBondDonor",
                                                  loc=geom.Point3D(1.0, 2.0, 3.0))
@@ -73,7 +68,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ffeat.GetFamily() == "HBondDonor")
     self.assertTrue(ffeat.GetType() == "HBondDonor1")
     pos = ffeat.GetPos()
-    self.assertTrue(ptFeq(pos, geom.Point3D(1.0, 2.0, 3.0)))
+    self.assertAlmostEqual(pos.Distance(geom.Point3D(1.0, 2.0, 3.0)), 0.0, delta=0.0001)
 
   def testPickle(self):
     ffeat = ChemicalFeatures.FreeChemicalFeature("HBondDonor", "HBondDonor1",
@@ -83,7 +78,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ffeat2.GetId() == ffeat.GetId())
     self.assertTrue(ffeat2.GetFamily() == ffeat.GetFamily())
     self.assertTrue(ffeat2.GetType() == ffeat.GetType())
-    self.assertTrue(ptFeq(ffeat2.GetPos(), ffeat.GetPos()))
+    self.assertAlmostEqual(ffeat2.GetPos().Distance(ffeat.GetPos()), 0.0, delta=0.0001)
 
     # Check that the old pickled versions have not been broken
     inTF = open(os.path.join(RDConfig.RDBaseDir, 'Code/ChemicalFeatures/Wrap/testData/feat.pkl'),
@@ -95,7 +90,7 @@ class TestCase(unittest.TestCase):
     # this version (1.0) does not have an id in the byte stream
     self.assertTrue(ffeat2.GetFamily() == ffeat.GetFamily())
     self.assertTrue(ffeat2.GetType() == ffeat.GetType())
-    self.assertTrue(ptFeq(ffeat2.GetPos(), ffeat.GetPos()))
+    self.assertAlmostEqual(ffeat2.GetPos().Distance(ffeat.GetPos()), 0.0, delta=0.0001)
 
     # Test the new version also has the id and works as expected
 
@@ -111,7 +106,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ffeat2.GetId() == ffeat.GetId())
     self.assertTrue(ffeat2.GetFamily() == ffeat.GetFamily())
     self.assertTrue(ffeat2.GetType() == ffeat.GetType())
-    self.assertTrue(ptFeq(ffeat2.GetPos(), ffeat.GetPos()))
+    self.assertAlmostEqual(ffeat2.GetPos().Distance(ffeat.GetPos()), 0.0, delta=0.0001)
 
 
 if __name__ == '__main__':
