@@ -108,10 +108,10 @@ int UniformGrid3D::getGridPointIndex(const Point3D &point) const {
   Point3D tPt(point);
   tPt -= d_offSet;  // d_origin;
   tPt /= d_spacing;
-  double move = 0.5;
-  int xi = static_cast<int>(floor(tPt.x + move));
-  int yi = static_cast<int>(floor(tPt.y + move));
-  int zi = static_cast<int>(floor(tPt.z + move));
+  const double move = 0.5;
+  const int xi = static_cast<int>(floor(tPt.x + move));
+  const int yi = static_cast<int>(floor(tPt.y + move));
+  const int zi = static_cast<int>(floor(tPt.z + move));
 
   if ((xi < 0) || (xi >= static_cast<int>(d_numX))) {
     return -1;
@@ -127,7 +127,7 @@ int UniformGrid3D::getGridPointIndex(const Point3D &point) const {
 }
 
 int UniformGrid3D::getVal(const Point3D &point) const {
-  int id = getGridPointIndex(point);
+  const int id = getGridPointIndex(point);
   if (id < 0) {
     return -1;
   }
@@ -139,7 +139,7 @@ unsigned int UniformGrid3D::getVal(unsigned int pointId) const {
 }
 
 void UniformGrid3D::setVal(const Point3D &point, unsigned int val) {
-  int id = getGridPointIndex(point);
+  const int id = getGridPointIndex(point);
   if (id < 0) {
     return;
   }
@@ -181,7 +181,7 @@ bool UniformGrid3D::compareParams(const UniformGrid3D &other) const {
 void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
                                        double stepSize, int maxNumLayers,
                                        bool ignoreOutOfBound) {
-  int ptIndex = getGridPointIndex(center);
+  const int ptIndex = getGridPointIndex(center);
   if (ptIndex == -1) {
     if (ignoreOutOfBound) {
       return;
@@ -198,27 +198,27 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
   // unsigned int y = (ptIndex%(d_numX*d_numY))/d_numX;
   // unsigned int x = ptIndex%d_numX;
 
-  unsigned int bPerVal = dp_storage->getNumBitsPerVal();
-  unsigned int maxVal = (1 << bPerVal) - 1;
+  const unsigned int bPerVal = dp_storage->getNumBitsPerVal();
+  const unsigned int maxVal = (1 << bPerVal) - 1;
   unsigned int nLayers = maxVal;
   unsigned int valStep = 1;
   if ((maxNumLayers > 0) && (maxNumLayers <= static_cast<int>(nLayers))) {
     nLayers = maxNumLayers;
     valStep = (maxVal + 1) / nLayers;
   }
-  double bgRad = radius / d_spacing;        // base radius in grid coords
-  double gStepSize = stepSize / d_spacing;  // step size in grid coords
-  double gRadius =
+  const double bgRad = radius / d_spacing;        // base radius in grid coords
+  const double gStepSize = stepSize / d_spacing;  // step size in grid coords
+  const double gRadius =
       bgRad + nLayers * gStepSize;  // largest radius in grid coords
-  double gRad2 = gRadius * gRadius;
-  double bgRad2 = bgRad * bgRad;
+  const double gRad2 = gRadius * gRadius;
+  const double bgRad2 = bgRad * bgRad;
   double dx, dy, dz, d, d2, dy2z2, dz2;
-  int xmax = static_cast<int>(floor(gPt.x + gRadius));
-  int xmin = static_cast<int>(ceil(gPt.x - gRadius));
-  int ymax = static_cast<int>(floor(gPt.y + gRadius));
-  int ymin = static_cast<int>(ceil(gPt.y - gRadius));
-  int zmax = static_cast<int>(floor(gPt.z + gRadius));
-  int zmin = static_cast<int>(ceil(gPt.z - gRadius));
+  const int xmax = static_cast<int>(floor(gPt.x + gRadius));
+  const int xmin = static_cast<int>(ceil(gPt.x - gRadius));
+  const int ymax = static_cast<int>(floor(gPt.y + gRadius));
+  const int ymin = static_cast<int>(ceil(gPt.y - gRadius));
+  const int zmax = static_cast<int>(floor(gPt.z + gRadius));
+  const int zmin = static_cast<int>(ceil(gPt.z - gRadius));
 
   unsigned int oval, val, valChange;
   int ptId1, ptId2;
@@ -336,7 +336,7 @@ std::string UniformGrid3D::toString() const {
   streamWrite(ss, d_offSet.y);
   streamWrite(ss, d_offSet.z);
 
-  std::string storePkl = dp_storage->toString();
+  const std::string storePkl = dp_storage->toString();
   std::uint32_t pklSz = storePkl.size();
   streamWrite(ss, pklSz);
   ss.write(storePkl.c_str(), pklSz * sizeof(char));
@@ -379,13 +379,13 @@ void UniformGrid3D::initFromText(const char *pkl, const unsigned int length) {
 }
 
 void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
-  int dimX = static_cast<int>(grid.getNumX());  //+2;
-  int dimY = static_cast<int>(grid.getNumY());  //+2;
-  int dimZ = static_cast<int>(grid.getNumZ());  //+2;
-  double spacing = grid.getSpacing();
-  double lenX = dimX * spacing;
-  double lenY = dimY * spacing;
-  double lenZ = dimZ * spacing;
+  const int dimX = static_cast<int>(grid.getNumX());  //+2;
+  const int dimY = static_cast<int>(grid.getNumY());  //+2;
+  const int dimZ = static_cast<int>(grid.getNumZ());  //+2;
+  const double spacing = grid.getSpacing();
+  const double lenX = dimX * spacing;
+  const double lenY = dimY * spacing;
+  const double lenZ = dimZ * spacing;
   Point3D offSet = grid.getOffset();
   offSet /= spacing;
   outStrm << "Grid file representing a Shape \n\n";

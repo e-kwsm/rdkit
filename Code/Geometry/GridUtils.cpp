@@ -27,14 +27,14 @@ double tverskyIndex(const GRIDTYPE &grid1, const GRIDTYPE &grid2, double alpha,
   }
   const DiscreteValueVect *v1 = grid1.getOccupancyVect();
   const DiscreteValueVect *v2 = grid2.getOccupancyVect();
-  unsigned int dist = computeL1Norm(*v1, *v2);
-  unsigned int totv1 = v1->getTotalVal();
-  unsigned int totv2 = v2->getTotalVal();
-  double inter = 0.5 * (totv1 + totv2 - dist);
+  const unsigned int dist = computeL1Norm(*v1, *v2);
+  const unsigned int totv1 = v1->getTotalVal();
+  const unsigned int totv2 = v2->getTotalVal();
+  const double inter = 0.5 * (totv1 + totv2 - dist);
   //  double alpha = 1.0;
   //  double beta = 1.0;
-  double tversky_res = inter / (alpha * (1.0 * totv1 - inter) +
-                                beta * (1.0 * totv2 - inter) + inter);
+  const double tversky_res = inter / (alpha * (1.0 * totv1 - inter) +
+                                      beta * (1.0 * totv2 - inter) + inter);
   //  double res = dist / (dist + inter);
   return tversky_res;
 }
@@ -50,11 +50,11 @@ double tanimotoDistance(const GRIDTYPE &grid1, const GRIDTYPE &grid2) {
   }
   const DiscreteValueVect *v1 = grid1.getOccupancyVect();
   const DiscreteValueVect *v2 = grid2.getOccupancyVect();
-  unsigned int dist = computeL1Norm(*v1, *v2);
-  unsigned int totv1 = v1->getTotalVal();
-  unsigned int totv2 = v2->getTotalVal();
-  double inter = 0.5 * (totv1 + totv2 - dist);
-  double res = dist / (dist + inter);
+  const unsigned int dist = computeL1Norm(*v1, *v2);
+  const unsigned int totv1 = v1->getTotalVal();
+  const unsigned int totv2 = v2->getTotalVal();
+  const double inter = 0.5 * (totv1 + totv2 - dist);
+  const double res = dist / (dist + inter);
   return res;
 }
 
@@ -68,11 +68,11 @@ double protrudeDistance(const GRIDTYPE &grid1, const GRIDTYPE &grid2) {
   }
   const DiscreteValueVect *v1 = grid1.getOccupancyVect();
   const DiscreteValueVect *v2 = grid2.getOccupancyVect();
-  unsigned int totv1 = v1->getTotalVal();
-  unsigned int totv2 = v2->getTotalVal();
-  unsigned int totProtrude = computeL1Norm(*v1, *v2);
-  unsigned int intersectVolume = (totv1 + totv2 - totProtrude) / 2;
-  double res = (1.0 * totv1 - intersectVolume) / (1.0 * totv1);
+  const unsigned int totv1 = v1->getTotalVal();
+  const unsigned int totv2 = v2->getTotalVal();
+  const unsigned int totProtrude = computeL1Norm(*v1, *v2);
+  const unsigned int intersectVolume = (totv1 + totv2 - totProtrude) / 2;
+  const double res = (1.0 * totv1 - intersectVolume) / (1.0 * totv1);
   return res;
 }
 
@@ -82,19 +82,19 @@ template RDKIT_RDGEOMETRYLIB_EXPORT double protrudeDistance(
 std::map<int, std::vector<int>> gridIdxCache;
 std::vector<int> computeGridIndices(const UniformGrid3D &grid,
                                     double windowRadius) {
-  double gridSpacing = grid.getSpacing();
-  int radInGrid = static_cast<int>(ceil(windowRadius / gridSpacing));
+  const double gridSpacing = grid.getSpacing();
+  const int radInGrid = static_cast<int>(ceil(windowRadius / gridSpacing));
   // if(gridIdxCache.count(radInGrid)>0){
   //  return gridIdxCache[radInGrid];
   //}
-  unsigned int dX = grid.getNumX();
-  unsigned int dY = grid.getNumY();
+  const unsigned int dX = grid.getNumX();
+  const unsigned int dY = grid.getNumY();
   std::vector<int> res;
   for (int i = -radInGrid; i <= radInGrid; ++i) {
     for (int j = -radInGrid; j <= radInGrid; ++j) {
       for (int k = -radInGrid; k <= radInGrid; ++k) {
-        double r2 = i * i + j * j + k * k;
-        int d = static_cast<int>(sqrt(r2));
+        const double r2 = i * i + j * j + k * k;
+        const int d = static_cast<int>(sqrt(r2));
         if (d <= radInGrid) {
           res.push_back((i * dY + j) * dX + k);
         }
@@ -111,12 +111,13 @@ Point3D computeGridCentroid(const UniformGrid3D &grid, const Point3D &pt,
   const DiscreteValueVect *v1 = grid.getOccupancyVect();
   Point3D centroid(0.0, 0.0, 0.0);
 
-  unsigned int idxI = grid.getGridPointIndex(pt);
-  std::vector<int> indicesInSphere = computeGridIndices(grid, windowRadius);
+  const unsigned int idxI = grid.getGridPointIndex(pt);
+  const std::vector<int> indicesInSphere =
+      computeGridIndices(grid, windowRadius);
   for (const auto it : indicesInSphere) {
-    int idx = idxI + it;
+    const int idx = idxI + it;
     if (idx >= 0 && static_cast<unsigned int>(idx) < v1->getLength()) {
-      unsigned int wt = v1->getVal(idx);
+      const unsigned int wt = v1->getVal(idx);
       centroid += grid.getGridPointLoc(static_cast<unsigned int>(idx)) * wt;
       weightSum += wt;
     }
@@ -128,9 +129,10 @@ std::vector<Point3D> findGridTerminalPoints(const UniformGrid3D &grid,
                                             double windowRadius,
                                             double inclusionFraction) {
   std::vector<Point3D> res;
-  std::vector<int> indicesInSphere = computeGridIndices(grid, windowRadius);
+  const std::vector<int> indicesInSphere =
+      computeGridIndices(grid, windowRadius);
   const DiscreteValueVect *storage = grid.getOccupancyVect();
-  unsigned int maxGridVal = (0x1 << storage->getNumBitsPerVal()) - 1;
+  const unsigned int maxGridVal = (0x1 << storage->getNumBitsPerVal()) - 1;
   for (unsigned int i = 0; i < storage->getLength(); ++i) {
     if (storage->getVal(i) < maxGridVal) {
       continue;
@@ -141,7 +143,7 @@ std::vector<Point3D> findGridTerminalPoints(const UniformGrid3D &grid,
     double volInSphere = 0.0;
     unsigned int nPtsHere = 0;
     for (const auto it : indicesInSphere) {
-      int idx = i + it;
+      const int idx = i + it;
       if (idx >= 0 && static_cast<unsigned int>(idx) < storage->getLength()) {
         volInSphere += storage->getVal(static_cast<unsigned int>(idx));
         ++nPtsHere;
@@ -151,11 +153,11 @@ std::vector<Point3D> findGridTerminalPoints(const UniformGrid3D &grid,
     // the shape may be cut off by the edge of the grid, so
     // the actual max volume in the sphere may well be less
     // than the theoretical max:
-    double maxPossValInSphere = nPtsHere * maxGridVal;
+    const double maxPossValInSphere = nPtsHere * maxGridVal;
     if (volInSphere / maxPossValInSphere <= inclusionFraction) {
-      Point3D ptI = grid.getGridPointLoc(i);
+      const Point3D ptI = grid.getGridPointLoc(i);
       double weightSum;
-      Point3D centroid =
+      const Point3D centroid =
           computeGridCentroid(grid, ptI, windowRadius, weightSum);
       res.push_back(centroid);
     }
