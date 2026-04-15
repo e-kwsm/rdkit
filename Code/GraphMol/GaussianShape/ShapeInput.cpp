@@ -390,9 +390,9 @@ class ss_matcher {
 }  // namespace
 
 // This came from the original PubChemShape.cpp
-typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
-                         boost::flyweights::no_tracking>
-    pattern_flyweight;
+using pattern_flyweight =
+    boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
+                     boost::flyweights::no_tracking>;
 // Definitions for feature points adapted from:
 // Gobbi and Poppinger, Biotech. Bioeng. _61_ 47-54 (1998)
 const std::vector<std::vector<std::string>> smartsPatterns = {
