@@ -447,14 +447,14 @@ void canonicalizeDoubleBond(Bond *dblBond, const UINT_VECT &bondVisitOrders,
   // in the SMILES C(\N)(/O)=C(/N)\O they are both flipped. Note
   // that, with this definition secondFromAtom1 is usually "flipped".
   //
-  bool isFirstFromAtom1Flipped = [&]() {
+  const bool isFirstFromAtom1Flipped = [&]() {
     auto anchorIdx = firstFromAtom1->getOtherAtom(atom1)->getIdx();
     return (atomVisitOrders[atom1->getIdx()] < atomVisitOrders[anchorIdx]) !=
            firstFromAtom1->hasProp(
                common_properties::_TraversalRingClosureBond);
   }();
 
-  bool isSecondFromAtom1Flipped = [&]() {
+  const bool isSecondFromAtom1Flipped = [&]() {
     if (secondFromAtom1 == nullptr) {
       return false;
     }
@@ -469,14 +469,14 @@ void canonicalizeDoubleBond(Bond *dblBond, const UINT_VECT &bondVisitOrders,
   // this always requires rings to be involved). An example of firstFromAtom2
   //  being flipped would be the C atom in "C\N=2" in C=c1s/c2n(c1=O)CCCCC\N=2
 
-  bool isFirstFromAtom2Flipped = [&]() {
+  const bool isFirstFromAtom2Flipped = [&]() {
     auto anchorIdx = firstFromAtom2->getOtherAtom(atom2)->getIdx();
     return (atomVisitOrders[anchorIdx] < atomVisitOrders[atom2->getIdx()]) !=
            firstFromAtom2->hasProp(
                common_properties::_TraversalRingClosureBond);
   }();
 
-  bool isSecondFromAtom2Flipped = [&]() {
+  const bool isSecondFromAtom2Flipped = [&]() {
     if (secondFromAtom2 == nullptr) {
       return false;
     }
@@ -551,8 +551,8 @@ void canonicalizeDoubleBond(Bond *dblBond, const UINT_VECT &bondVisitOrders,
   }
 
   bool setFromBond1 = true;
-  Bond *atom1ControllingBond = firstFromAtom1;
-  Bond *atom2ControllingBond = firstFromAtom2;
+  Bond const *atom1ControllingBond = firstFromAtom1;
+  Bond const *atom2ControllingBond = firstFromAtom2;
   if (!dir1Set && !dir2Set) {
     // ----------------------------------
     // nothing has touched our bonds so far, so set the
@@ -760,7 +760,7 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
     }
 
     auto bond = msI.obj.bond;
-    Bond::BondDir dir = bond->getBondDir();
+    const Bond::BondDir dir = bond->getBondDir();
     if (dir == Bond::ENDDOWNRIGHT || dir == Bond::ENDUPRIGHT) {
       bond->setBondDir(Bond::NONE);
     }
