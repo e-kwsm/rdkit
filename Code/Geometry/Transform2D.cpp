@@ -21,15 +21,15 @@ void Transform2D::setToIdentity() {
   double *data = d_data.get();
   memset(static_cast<void *>(data), 0, d_dataSize * sizeof(double));
   for (unsigned int i = 0; i < DIM_2D; i++) {
-    unsigned int id = i * (DIM_2D + 1);
+    const unsigned int id = i * (DIM_2D + 1);
     data[id] = 1.0;
   }
 }
 
 void Transform2D::TransformPoint(Point2D &pt) const {
-  double *data = d_data.get();
-  double x = data[0] * pt.x + data[1] * pt.y + data[2];
-  double y = data[3] * pt.x + data[4] * pt.y + data[5];
+  double const *data = d_data.get();
+  const double x = data[0] * pt.x + data[1] * pt.y + data[2];
+  const double y = data[3] * pt.x + data[4] * pt.y + data[5];
 
   pt.x = x;
   pt.y = y;
@@ -71,11 +71,11 @@ void Transform2D::SetTransform(const Point2D &pt, double angle) {
 void Transform2D::SetTransform(const Point2D &ref1, const Point2D &ref2,
                                const Point2D &pt1, const Point2D &pt2) {
   // compute the angle between the two vectors
-  Point2D rvec = ref2 - ref1;
-  Point2D pvec = pt2 - pt1;
+  const Point2D rvec = ref2 - ref1;
+  const Point2D pvec = pt2 - pt1;
 
-  double dp = rvec.dotProduct(pvec);
-  double lp = (rvec.length()) * (pvec.length());
+  const double dp = rvec.dotProduct(pvec);
+  const double lp = (rvec.length()) * (pvec.length());
   if (lp <= 0.0) {
     this->setToIdentity();
     return;
@@ -91,7 +91,7 @@ void Transform2D::SetTransform(const Point2D &ref1, const Point2D &ref2,
   double ang = acos(cval);
 
   // figure out if we have to do clock wise or anti clock wise rotation
-  double cross = (pvec.x) * (rvec.y) - (pvec.y) * (rvec.x);
+  const double cross = (pvec.x) * (rvec.y) - (pvec.y) * (rvec.x);
 
   if (cross < 0.0) {
     ang *= -1.0;
