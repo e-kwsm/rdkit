@@ -484,8 +484,8 @@ double OnBitSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
 
-  double num = NumOnBitsInCommon(bv1, bv2);
-  double denom = (bv1 | bv2).getNumOnBits();
+  const double num = NumOnBitsInCommon(bv1, bv2);
+  const double denom = (bv1 | bv2).getNumOnBits();
 
   if (denom > 0) {
     return num / denom;
@@ -623,7 +623,7 @@ DoubleVect OnBitProjSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
   DoubleVect res(2, 0.0);
-  double num = NumOnBitsInCommon(bv1, bv2);
+  const double num = NumOnBitsInCommon(bv1, bv2);
   if (num) {
     res[0] = num / bv1.getNumOnBits();
     res[1] = num / bv2.getNumOnBits();
@@ -662,7 +662,7 @@ DoubleVect OffBitProjSimilarity(const T1 &bv1, const T2 &bv2) {
     throw ValueErrorException("BitVects must be same length");
   }
   DoubleVect res(2, 0.0);
-  double num = (bv1 | bv2).getNumOffBits();
+  const double num = (bv1 | bv2).getNumOffBits();
   if (num) {
     res[0] = num / bv1.getNumOffBits();
     res[1] = num / bv2.getNumOffBits();
@@ -676,14 +676,14 @@ T1 *FoldFingerprint(const T1 &bv1, unsigned int factor) {
     throw ValueErrorException("invalid fold factor");
   }
 
-  int initSize = bv1.getNumBits();
-  int resSize = initSize / factor;
+  const int initSize = bv1.getNumBits();
+  const int resSize = initSize / factor;
   auto *res = new T1(resSize);
 
   IntVect onBits;
   bv1.getOnBits(onBits);
-  for (int &onBit : onBits) {
-    int pos = onBit % resSize;
+  for (const int  &onBit : onBits) {
+    const int pos = onBit % resSize;
     res->setBit(pos);
   }
   return res;
@@ -704,7 +704,7 @@ const char bin2Hex[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 template <typename T1>
 std::string BitVectToFPSText(const T1 &bv1) {
-  unsigned int size =
+  const unsigned int size =
       2 * (bv1.getNumBits() / 8 + (bv1.getNumBits() % 8 ? 1 : 0));
   std::string res(size, 0);
   unsigned char c = 0;
@@ -780,7 +780,7 @@ void UpdateBitVectFromBinaryText(T1 &bv1, const std::string &fps) {
   PRECONDITION(fps.length() * 8 >= bv1.getNumBits(), "bad FPS length");
   unsigned int bitIdx = 0;
   for (unsigned int i = 0; i < fps.size() && bitIdx < bv1.getNumBits(); i++) {
-    unsigned short c = fps[i];
+    const unsigned short c = fps[i];
     for (unsigned int bit = 0; bit < 8 && bitIdx < bv1.getNumBits();
          ++bit, ++bitIdx) {
       if (c & (1 << bit)) {
@@ -936,7 +936,7 @@ unsigned int CalcBitmapPopcount(const unsigned char *afp, unsigned int nBytes) {
     popcount += byte_popcounts[afp[i]];
   }
 #else
-  unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (unsigned int i = 0; i < eidx; ++i) {
     popcount += static_cast<unsigned int>(
         BUILTIN_POPCOUNT_INSTR(((BUILTIN_POPCOUNT_TYPE *)afp)[i]));
@@ -959,7 +959,7 @@ unsigned int CalcBitmapNumBitsInCommon(const unsigned char *afp,
     intersect_popcount += byte_popcounts[afp[i] & bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     intersect_popcount += static_cast<unsigned int>(BUILTIN_POPCOUNT_INSTR(
         ((BUILTIN_POPCOUNT_TYPE *)afp)[i] & ((BUILTIN_POPCOUNT_TYPE *)bfp)[i]));
@@ -983,7 +983,7 @@ double CalcBitmapTanimoto(const unsigned char *afp, const unsigned char *bfp,
     intersect_popcount += byte_popcounts[afp[i] & bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     union_popcount += static_cast<unsigned int>(BUILTIN_POPCOUNT_INSTR(
         ((BUILTIN_POPCOUNT_TYPE *)afp)[i] | ((BUILTIN_POPCOUNT_TYPE *)bfp)[i]));
@@ -1016,7 +1016,7 @@ double CalcBitmapDice(const unsigned char *afp, const unsigned char *bfp,
     intersect_popcount += byte_popcounts[afp[i] & bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     a_popcount += static_cast<unsigned int>(
         BUILTIN_POPCOUNT_INSTR(((BUILTIN_POPCOUNT_TYPE *)afp)[i]));
