@@ -1052,7 +1052,7 @@ double CalcBitmapTversky(const unsigned char *afp, const unsigned char *bfp,
     bcount += byte_popcounts[bfp[i]];
   }
 #else
-  BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const BUILTIN_POPCOUNT_TYPE eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (BUILTIN_POPCOUNT_TYPE i = 0; i < eidx; ++i) {
     intersect_popcount += static_cast<unsigned int>(BUILTIN_POPCOUNT_INSTR(
         ((BUILTIN_POPCOUNT_TYPE *)afp)[i] & ((BUILTIN_POPCOUNT_TYPE *)bfp)[i]));
@@ -1068,7 +1068,8 @@ double CalcBitmapTversky(const unsigned char *afp, const unsigned char *bfp,
     bcount += byte_popcounts[bfp[i]];
   }
 #endif
-  double denom = ca * acount + cb * bcount + (1 - ca - cb) * intersect_popcount;
+  const double denom =
+      ca * acount + cb * bcount + (1 - ca - cb) * intersect_popcount;
   if (denom == 0.0) {
     return 0.0;
   }
@@ -1088,7 +1089,7 @@ bool CalcBitmapAllProbeBitsMatch(const unsigned char *probe,
     }
   }
 #else
-  unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
+  const unsigned int eidx = nBytes / sizeof(BUILTIN_POPCOUNT_TYPE);
   for (unsigned int i = 0; i < eidx; ++i) {
     if (BUILTIN_POPCOUNT_INSTR(((BUILTIN_POPCOUNT_TYPE *)probe)[i] &
                                ((BUILTIN_POPCOUNT_TYPE *)ref)[i]) !=

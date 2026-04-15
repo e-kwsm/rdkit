@@ -59,8 +59,8 @@ unsigned int DiscreteValueVect::getVal(unsigned int i) const {
   if (i >= d_length) {
     throw IndexErrorException(i);
   }
-  unsigned int shift = d_bitsPerVal * (i % d_valsPerInt);
-  unsigned int intId = i / d_valsPerInt;
+  const unsigned int shift = d_bitsPerVal * (i % d_valsPerInt);
+  const unsigned int intId = i / d_valsPerInt;
   return ((d_data[intId] >> shift) & d_mask);
 }
 
@@ -71,8 +71,8 @@ void DiscreteValueVect::setVal(unsigned int i, unsigned int val) {
   if ((val & d_mask) != val) {
     throw ValueErrorException("Value out of range");
   }
-  unsigned int shift = d_bitsPerVal * (i % d_valsPerInt);
-  unsigned int intId = i / d_valsPerInt;
+  const unsigned int shift = d_bitsPerVal * (i % d_valsPerInt);
+  const unsigned int intId = i / d_valsPerInt;
   unsigned int mask = ((1 << d_bitsPerVal) - 1) << shift;
   mask = ~mask;
   d_data[intId] = (d_data[intId] & mask) | (val << shift);
@@ -99,7 +99,7 @@ unsigned int computeL1Norm(const DiscreteValueVect &v1,
     throw ValueErrorException("Comparing vectors of different lengths");
   }
 
-  DiscreteValueVect::DiscreteValueType valType = v1.getValueType();
+  const DiscreteValueVect::DiscreteValueType valType = v1.getValueType();
 
   if (valType != v2.getValueType()) {
     throw ValueErrorException("Comparing vector of different value types");
@@ -228,8 +228,8 @@ DiscreteValueVect DiscreteValueVect::operator&(
   }
   DiscreteValueVect ans(typ, d_length);
   for (unsigned int i = 0; i < d_length; ++i) {
-    unsigned int v1 = getVal(i);
-    unsigned int v2 = other.getVal(i);
+    const unsigned int v1 = getVal(i);
+    const unsigned int v2 = other.getVal(i);
     ans.setVal(i, std::min(v2, v1));
   }
   return (ans);
