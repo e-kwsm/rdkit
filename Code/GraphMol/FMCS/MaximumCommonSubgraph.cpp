@@ -427,7 +427,8 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
                            if (a->getFormalCharge() != b->getFormalCharge()) {
                              return (a->getFormalCharge() <
                                      b->getFormalCharge());
-                           } else if (a->getAtomicNum() != b->getAtomicNum()) {
+                           }
+                           if (a->getAtomicNum() != b->getAtomicNum()) {
                              return (a->getAtomicNum() < b->getAtomicNum());
                            }
                            return (a->getIdx() < b->getIdx());
