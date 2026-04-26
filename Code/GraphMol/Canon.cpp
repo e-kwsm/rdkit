@@ -214,60 +214,56 @@ bool handleDirConflictsAcrossDoubleBond(
         dblBond, atom1, firstFromAtom1, isFirstFromAtom1Flipped,
         secondFromAtom1, isSecondFromAtom1Flipped, atom2, firstFromAtom2,
         isFirstFromAtom2Flipped, bondDirCounts, atomDirCounts);
+  }
+  // This is the tricky one. We have conflicts on both sides,
+  // which means we must have both secondFromAtom1 and secondFromAtom2.
+  // We need to check which directions can be removed, and which need
+  // to be removed to end up with a valid across-double-bond configuration.
 
-  } else {
-    // This is the tricky one. We have conflicts on both sides,
-    // which means we must have both secondFromAtom1 and secondFromAtom2.
-    // We need to check which directions can be removed, and which need
-    // to be removed to end up with a valid across-double-bond configuration.
+  for (const auto &[atom1Bond, atom1BondisFlipped] :
+       {std::make_pair(firstFromAtom1, isFirstFromAtom1Flipped),
+        std::make_pair(secondFromAtom1, isSecondFromAtom1Flipped)}) {
+    for (const auto &[atom2Bond, atom2BondisFlipped] :
+         {std::make_pair(firstFromAtom2, isFirstFromAtom2Flipped),
+          std::make_pair(secondFromAtom2, isSecondFromAtom2Flipped)}) {
+      auto expectedAtom2Dir = getReferenceDirection(
+          dblBond, atom1, atom2, atom1Bond, atom1BondisFlipped, atom2Bond,
+          atom2BondisFlipped);
+      if (expectedAtom2Dir == atom2Bond.getBondDir()) {
+        // We have found a combination of directions that are consistent with
+        // the double bond's stereo label. Now we need to check if we can
+        // remove the other two directions to fix the conflict.
 
-    for (const auto &[atom1Bond, atom1BondisFlipped] :
-         {std::make_pair(firstFromAtom1, isFirstFromAtom1Flipped),
-          std::make_pair(secondFromAtom1, isSecondFromAtom1Flipped)}) {
-      for (const auto &[atom2Bond, atom2BondisFlipped] :
-           {std::make_pair(firstFromAtom2, isFirstFromAtom2Flipped),
-            std::make_pair(secondFromAtom2, isSecondFromAtom2Flipped)}) {
-        auto expectedAtom2Dir = getReferenceDirection(
-            dblBond, atom1, atom2, atom1Bond, atom1BondisFlipped, atom2Bond,
-            atom2BondisFlipped);
-        if (expectedAtom2Dir == atom2Bond.getBondDir()) {
-          // We have found a combination of directions that are consistent with
-          // the double bond's stereo label. Now we need to check if we can
-          // remove the other two directions to fix the conflict.
-
-          auto atom1OtherBond =
-              (&atom1Bond == &firstFromAtom1 ? secondFromAtom1
-                                             : firstFromAtom1);
-          auto atom1OtherIdx = atom1OtherBond.getOtherAtomIdx(atom1.getIdx());
-          auto canAtom1OtherDirBeRemoved = atomDirCounts[atom1OtherIdx] == 2;
-          if (!canAtom1OtherDirBeRemoved) {
-            continue;
-          }
-
-          auto atom2OtherBond =
-              (&atom2Bond == &firstFromAtom2 ? secondFromAtom2
-                                             : firstFromAtom2);
-          auto atom2OtherIdx = atom2OtherBond.getOtherAtomIdx(atom2.getIdx());
-          if (atom1OtherIdx == atom2OtherIdx) {
-            // unlikely, but not impossible, so just in case...
-            continue;
-          }
-
-          auto canAtom2OtherDirBeRemoved = atomDirCounts[atom2OtherIdx] == 2;
-          if (!canAtom2OtherDirBeRemoved) {
-            continue;
-          }
-
-          bondDirCounts[atom1OtherBond.getIdx()] = 0;
-          --atomDirCounts[atom1.getIdx()];
-          --atomDirCounts[atom1OtherIdx];
-
-          bondDirCounts[atom2OtherBond.getIdx()] = 0;
-          --atomDirCounts[atom2.getIdx()];
-          --atomDirCounts[atom2OtherIdx];
-
-          return true;
+        auto atom1OtherBond =
+            (&atom1Bond == &firstFromAtom1 ? secondFromAtom1 : firstFromAtom1);
+        auto atom1OtherIdx = atom1OtherBond.getOtherAtomIdx(atom1.getIdx());
+        auto canAtom1OtherDirBeRemoved = atomDirCounts[atom1OtherIdx] == 2;
+        if (!canAtom1OtherDirBeRemoved) {
+          continue;
         }
+
+        auto atom2OtherBond =
+            (&atom2Bond == &firstFromAtom2 ? secondFromAtom2 : firstFromAtom2);
+        auto atom2OtherIdx = atom2OtherBond.getOtherAtomIdx(atom2.getIdx());
+        if (atom1OtherIdx == atom2OtherIdx) {
+          // unlikely, but not impossible, so just in case...
+          continue;
+        }
+
+        auto canAtom2OtherDirBeRemoved = atomDirCounts[atom2OtherIdx] == 2;
+        if (!canAtom2OtherDirBeRemoved) {
+          continue;
+        }
+
+        bondDirCounts[atom1OtherBond.getIdx()] = 0;
+        --atomDirCounts[atom1.getIdx()];
+        --atomDirCounts[atom1OtherIdx];
+
+        bondDirCounts[atom2OtherBond.getIdx()] = 0;
+        --atomDirCounts[atom2.getIdx()];
+        --atomDirCounts[atom2OtherIdx];
+
+        return true;
       }
     }
   }
