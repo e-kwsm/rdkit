@@ -194,8 +194,8 @@ bool handleDirConflictsAcrossDoubleBond(
         dblBond, atom1, atom2, firstFromAtom1, isFirstFromAtom1Flipped,
         firstFromAtom2, isFirstFromAtom2Flipped);
     return expectedFirstFromAtom2Dir == firstFromAtom2.getBondDir();
-
-  } else if (!atom2DirsAreConsistent && atom1DirsAreConsistent) {
+  }
+  if (!atom2DirsAreConsistent && atom1DirsAreConsistent) {
     // atom2 has conflicting directions, which means we must have a
     // secondFromAtom2. We don't know anything about secondFromAtom1:
     // it might be present or not, but we don't care about it, since
@@ -204,8 +204,8 @@ bool handleDirConflictsAcrossDoubleBond(
         dblBond, atom2, firstFromAtom2, isFirstFromAtom2Flipped,
         secondFromAtom2, isSecondFromAtom2Flipped, atom1, firstFromAtom1,
         isFirstFromAtom1Flipped, bondDirCounts, atomDirCounts);
-
-  } else if (!atom1DirsAreConsistent && atom2DirsAreConsistent) {
+  }
+  if (!atom1DirsAreConsistent && atom2DirsAreConsistent) {
     // atom1 has conflicting directions, which means we must have a
     // secondFromAtom1. We don't know anything about secondFromAtom2:
     // it might be present or not, but we don't care about it, since

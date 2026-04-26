@@ -486,7 +486,8 @@ std::vector<SGroupDataLabel> getSGroupDataLabels(const ROMol &mol,
         if (atomIdx < 0) {
           // no atom to anchor relative position to, skip
           continue;
-        } else if (fabs(xp) > 1e-3 || fabs(yp) > 1e-3) {
+        }
+        if (fabs(xp) > 1e-3 || fabs(yp) > 1e-3) {
           // opposite sign for y
           pos.x += conf.getAtomPos(atomIdx).x;
           pos.y -= conf.getAtomPos(atomIdx).y;

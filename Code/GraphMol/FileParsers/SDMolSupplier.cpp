@@ -266,18 +266,17 @@ unsigned int SDMolSupplier::length() {
   // return the number of mol blocks in the sdfile
   if (d_len > 0 || (df_end && d_len == 0)) {
     return d_len;
-  } else {
-    int old_last = d_last;
-    buildIndexTo(UINT32_MAX);
-    d_len = rdcast<int>(d_molpos.size());
-
-    // safeguard to restore the pointer to the last read molecule
-    d_last = old_last;
-    dp_inStream->clear();
-    dp_inStream->seekg(d_molpos[d_last]);
-    df_end = false;
-    return d_len;
   }
+  int old_last = d_last;
+  buildIndexTo(UINT32_MAX);
+  d_len = rdcast<int>(d_molpos.size());
+
+  // safeguard to restore the pointer to the last read molecule
+  d_last = old_last;
+  dp_inStream->clear();
+  dp_inStream->seekg(d_molpos[d_last]);
+  df_end = false;
+  return d_len;
 }
 
 void SDMolSupplier::buildIndexTo(unsigned int targetIdx) {
