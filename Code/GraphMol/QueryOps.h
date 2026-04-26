@@ -328,9 +328,8 @@ static inline int queryAtomRingBondCount(Atom const *at) {
 static inline int queryAtomIsInRingOfSize(Atom const *at, int tgt) {
   if (at->getOwningMol().getRingInfo()->isAtomInRingOfSize(at->getIdx(), tgt)) {
     return tgt;
-  } else {
-    return 0;
   }
+  return 0;
 };
 //! returns the size of an SSSR ring the atom is in that's within the specified
 //! range, or a value outside the range if there are no rings with a size in the
@@ -351,11 +350,11 @@ static inline int queryAtomIsInRingOfSize(Atom const *at, int lower, int upper,
   // we didn't find it, return a result that's not in the acceptable range:
   if (lower > -1) {
     return -1;
-  } else if (upper > -1) {
-    return std::numeric_limits<int>::max();
-  } else {
-    return 0;
   }
+  if (upper > -1) {
+    return std::numeric_limits<int>::max();
+  }
+  return 0;
 };
 template <int tgt>
 int queryAtomIsInRingOfSize(Atom const *at) {
