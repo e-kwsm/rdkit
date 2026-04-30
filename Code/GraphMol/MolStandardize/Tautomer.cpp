@@ -86,7 +86,7 @@ SubstructTerm::SubstructTerm(std::string aname, std::string asmarts, int ascore,
   if (!connectivitySmarts.empty()) {
     std::unique_ptr<ROMol> connPattern(SmartsToMol(connectivitySmarts));
     if (connPattern) {
-      connectivityMatcher = std::move(*connPattern);
+      connectivityMatcher = *connPattern;
     }
   }
 }
