@@ -739,7 +739,7 @@ void testChiralityCleanup() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->getChiralTag() == Atom::CHI_UNSPECIFIED);
 
   smi = "F[C@+](C)(Cl)(Br)I";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi, ps).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi, ps);
   MolOps::removeHs(*mol, rhp, sanitize);
   TEST_ASSERT(mol->getAtomWithIdx(1)->getChiralTag() == Atom::CHI_UNSPECIFIED);
 
@@ -749,7 +749,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should NOT remove this manual cis/trans stereo
   // assignment
   smi = "CC=CC(Cl)C";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   mol->getAtomWithIdx(4)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
   TEST_ASSERT(mol->getBondWithIdx(1)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(1)->setStereoAtoms(0, 3);
@@ -764,7 +764,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should NOT remove this manual cis/trans stereo
   // assignment
   smi = "CC(F)=CC(Cl)C";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   mol->getAtomWithIdx(4)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
   TEST_ASSERT(mol->getBondWithIdx(2)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(2)->setStereoAtoms(0, 4);
@@ -777,7 +777,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should NOT remove this manual cis/trans stereo
   // assignment
   smi = "CC(F)=CC(Cl)C";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   mol->getAtomWithIdx(4)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
   TEST_ASSERT(mol->getBondWithIdx(2)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(2)->setStereoAtoms(2, 4);
@@ -789,7 +789,7 @@ void testChiralityCleanup() {
 
   // cleanIt=true, force=true should clean up these manual assignments
   smi = "FC(F)=C(Cl)Cl";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getBondWithIdx(2)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(2)->setStereoAtoms(2, 4);
   mol->getBondWithIdx(2)->setStereo(Bond::STEREOCIS);
@@ -798,7 +798,7 @@ void testChiralityCleanup() {
   TEST_ASSERT(MolToSmiles(*mol, true) == "FC(F)=C(Cl)Cl");
 
   smi = "FC=C1CCCCC1";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getBondWithIdx(1)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(1)->setStereoAtoms(0, 3);
   mol->getBondWithIdx(1)->setStereo(Bond::STEREOTRANS);
@@ -807,7 +807,7 @@ void testChiralityCleanup() {
   TEST_ASSERT(MolToSmiles(*mol, true) == "FC=C1CCCCC1");
 
   smi = "C1CCCCC1=CF";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getBondWithIdx(5)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(5)->setStereoAtoms(4, 7);
   mol->getBondWithIdx(5)->setStereo(Bond::STEREOCIS);
@@ -870,7 +870,7 @@ void testChiralityCleanup() {
 
   // cleanIt=true, force=true should remove this trickier case of pseudo-stereo
   smi = "CCC=CC(=C(CC)CO)C=CCC";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getBondWithIdx(2)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(2)->setStereoAtoms(1, 4);
   mol->getBondWithIdx(2)->setStereo(Bond::STEREOCIS);
@@ -892,7 +892,7 @@ void testChiralityCleanup() {
 
   // make sure there isn't a difference when the bond stereo is set from SMILES
   smi = "CC/C=C\\C(\\C=C/CC)=C(CC)CO";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getBondWithIdx(8)->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(mol->getBondWithIdx(8)->getStereo() == Bond::STEREONONE);
 
@@ -922,7 +922,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should remove this manual assignment of bond
   // stereochemistry since it's a pseudo-stereo center
   smi = "CCC(CO)=C([C@@H](C)F)[C@@H](C)F";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getBondWithIdx(4)->getBondType() == Bond::DOUBLE);
   mol->getBondWithIdx(4)->setStereoAtoms(1, 6);
   mol->getBondWithIdx(4)->setStereo(Bond::STEREOCIS);
@@ -935,7 +935,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should remove this manual assignment of atom
   // stereochemistry since it's a pseudo-stereo center
   smi = "C[C@H]1CC(N2CCc3ccc(N)cc3C2)C[C@H](C)C1";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getRingInfo()->isAtomInRingOfSize(3, 6));
   auto chiral_center = mol->getAtomWithIdx(3);
   TEST_ASSERT(chiral_center->getAtomicNum() == 6);
@@ -952,7 +952,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should NOT remove this manual assignment of atom
   // stereochemistry since it's a pseudo-stereo center
   smi = "C[C@@H]1CC(N2CCc3ccc(N)cc3C2)C[C@H](C)C1";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   TEST_ASSERT(mol->getRingInfo()->isAtomInRingOfSize(3, 6));
   chiral_center = mol->getAtomWithIdx(3);
   TEST_ASSERT(chiral_center->getAtomicNum() == 6);
@@ -970,7 +970,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should remove this manual assignment of atom
   // stereochemistry since it's a pseudo-stereo center
   smi = "C/C=C/C(/C=C/C)(CC)CO";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   chiral_center = mol->getAtomWithIdx(3);
   TEST_ASSERT(chiral_center->getAtomicNum() == 6);
   TEST_ASSERT(chiral_center->getDegree() == 4);
@@ -985,7 +985,7 @@ void testChiralityCleanup() {
   // cleanIt=true, force=true should NOT remove this manual assignment of atom
   // stereochemistry since it's a pseudo-stereo center
   smi = "C/C=C\\C(/C=C/C)(CC)CO";
-  mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
+  mol = v2::SmilesParse::MolFromSmiles(smi);
   chiral_center = mol->getAtomWithIdx(3);
   TEST_ASSERT(chiral_center->getAtomicNum() == 6);
   TEST_ASSERT(chiral_center->getDegree() == 4);
