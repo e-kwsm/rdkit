@@ -339,11 +339,10 @@ void extractFeatureCoords(
     std::vector<double> &rad_vector) {
   // get feature coordinates - simply the average of coords of all atoms in the
   // feature
-  for (unsigned i = 0; i < feature_idx_type.size(); ++i) {
+  for (const auto & i : feature_idx_type) {
     RDGeom::Point3D floc;
     unsigned int nSel = 0;
-    for (unsigned int j = 0; j < feature_idx_type[i].first.size(); ++j) {
-      unsigned int idx = feature_idx_type[i].first[j];
+    for (unsigned int idx : i.first) {
       if (!atomInSubset(idx, shapeOpts) ||
           !atomAllowedInColor(idx, shapeOpts)) {
         continue;
@@ -355,7 +354,7 @@ void extractFeatureCoords(
       floc += conformer.getAtomPos(idx);
       ++nSel;
     }
-    if (nSel == feature_idx_type[i].first.size()) {
+    if (nSel == i.first.size()) {
       floc /= nSel;
       if (shapeOpts.normalize) {
         floc -= ave;
@@ -368,7 +367,7 @@ void extractFeatureCoords(
       res.coord[(array_idx * 3) + 1] = floc.y;
       res.coord[(array_idx * 3) + 2] = floc.z;
       rad_vector[array_idx] = radius_color;
-      res.atom_type_vector[array_idx] = feature_idx_type[i].second;
+      res.atom_type_vector[array_idx] = i.second;
       ++numFeatures;
     }
   }
