@@ -348,11 +348,14 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
                                         double mimicDmatWt = 0.0,
                                         bool permuteDeg4Nodes = false);
 
-  //! Remove collisions in a structure by flipping rotatable bonds and spiro centers
-  //! along the shortest path between two colliding atoms
+  //! Remove collisions in a structure by flipping rotatable bonds and spiro
+  //! centers along the shortest path between two colliding atoms
   void removeCollisionsBondAndSpiroFlip();
-  
-  [[deprecated("please use removeCollisionsBondAndSpiroFlip()")]] void removeCollisionsBondFlip() { removeCollisionsBondAndSpiroFlip(); };
+
+  [[deprecated("please use removeCollisionsBondAndSpiroFlip()")]] void
+  removeCollisionsBondFlip() {
+    removeCollisionsBondAndSpiroFlip();
+  };
 
   //! Remove collision by opening angles at the offending atoms
   void removeCollisionsOpenAngles();
@@ -386,19 +389,14 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
 
   // Helper methods for collision resolution
   bool tryResolvingCollisionWithBondFlip(
-      const std::pair<unsigned int, unsigned int> &cAids,
-      unsigned int ncols,
-      double prevDensity,
-      std::map<int, unsigned int> &doneBonds,
+      const std::pair<unsigned int, unsigned int> &cAids, unsigned int ncols,
+      double prevDensity, std::map<int, unsigned int> &doneBonds,
       const double *dmat);
 
   bool tryResolvingCollisionWithSpiroFlip(
-      const std::pair<unsigned int, unsigned int> &cAids,
-      unsigned int ncols,
-      double prevDensity,
-      std::map<int, unsigned int> &doneSpiros,
-      const boost::dynamic_bitset<> &spiroCenters,
-      const double *dmat);
+      const std::pair<unsigned int, unsigned int> &cAids, unsigned int ncols,
+      double prevDensity, std::map<int, unsigned int> &doneSpiros,
+      const boost::dynamic_bitset<> &spiroCenters, const double *dmat);
 
   // returns true if fused rings found a template
   bool matchToTemplate(const RDKit::INT_VECT &ringSystemAtoms);

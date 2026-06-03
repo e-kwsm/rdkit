@@ -386,15 +386,14 @@ void sortAndUniquifyToTry(
   // pair; deduplicate so we don't build the same product twice.
   boost::unordered_flat_set<std::size_t> seen;
   seen.reserve(toTry.size());
-  toTry.erase(
-      std::remove_if(toTry.begin(), toTry.end(),
-                     [&seen](const auto &entry) {
-                       return !seen
-                                   .insert(details::buildProductHash(
-                                       entry.first, entry.second))
-                                   .second;
-                     }),
-      toTry.end());
+  toTry.erase(std::remove_if(toTry.begin(), toTry.end(),
+                             [&seen](const auto &entry) {
+                               return !seen
+                                           .insert(details::buildProductHash(
+                                               entry.first, entry.second))
+                                           .second;
+                             }),
+              toTry.end());
 }
 
 }  // namespace
@@ -456,8 +455,9 @@ void SynthonSpaceSearcher::buildAllHits(
                        std::make_move_iterator(partResults.begin()),
                        std::make_move_iterator(partResults.end()));
         partResults.clear();
-        enoughHits = d_params.maxHits != -1 &&
-                     numHitsFound.load() >= d_params.maxHits + d_params.hitStart;
+        enoughHits =
+            d_params.maxHits != -1 &&
+            numHitsFound.load() >= d_params.maxHits + d_params.hitStart;
         timedOut = details::checkTimeOut(endTime);
         toTry.clear();
         if (enoughHits || timedOut || ControlCHandler::getGotSignal()) {

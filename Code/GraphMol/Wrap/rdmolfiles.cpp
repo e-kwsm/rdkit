@@ -798,20 +798,21 @@ python::tuple MolsFromCDXML(python::object cdxml, bool sanitize,
   return python::tuple(res);
 }
 
-python::object MolToCDXMLBlockHelper(const RDKit::ROMol &mol,
-				     RDKit::v2::CDXMLParser::CDXMLFormat format) {
+python::object MolToCDXMLBlockHelper(
+    const RDKit::ROMol &mol, RDKit::v2::CDXMLParser::CDXMLFormat format) {
   auto block = RDKit::v2::CDXMLParser::MolToCDXMLBlock(mol, format);
   // if CDXML return string
   // if CDX return byteszo
 
-  if(format == RDKit::v2::CDXMLParser::CDXMLFormat::CDX) {
-    PyObject* py_bytes = PyBytes_FromStringAndSize(block.data(), block.size());
+  if (format == RDKit::v2::CDXMLParser::CDXMLFormat::CDX) {
+    PyObject *py_bytes = PyBytes_FromStringAndSize(block.data(), block.size());
     return python::object(python::handle<>(py_bytes));
   } else {
-    return python::object(python::handle<>(PyUnicode_FromString(block.c_str())));
+    return python::object(
+        python::handle<>(PyUnicode_FromString(block.c_str())));
   }
 }
- 
+
 namespace {
 python::object translateMetadataToList(
     const std::vector<std::pair<std::string, std::string>> &metadata) {
@@ -2785,9 +2786,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
       RETURNS:
         a tuple of parsed Mol objects.)DOC";
-  
-  python::def("MolToCDXMLBlock", MolToCDXMLBlockHelper,
-              (python::arg("mol"), python::arg("format")=RDKit::v2::CDXMLParser::CDXMLFormat::CDXML), docString.c_str());
+
+  python::def(
+      "MolToCDXMLBlock", MolToCDXMLBlockHelper,
+      (python::arg("mol"),
+       python::arg("format") = RDKit::v2::CDXMLParser::CDXMLFormat::CDXML),
+      docString.c_str());
 
   docString = "Returns true if the RDKit is built with ChemDraw CDX support";
   python::def("HasChemDrawCDXSupport",
