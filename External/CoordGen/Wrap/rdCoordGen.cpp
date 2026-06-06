@@ -48,7 +48,7 @@ void SetDefaultTemplateFileDir(const std::string &dir) {
 
 struct coordgen_wrapper {
   static void wrap() {
-    std::string docString = "";
+    std::string docString;
 
     python::class_<CoordGen::CoordGenParams>(
         "CoordGenParams", "Parameters controlling coordinate generation")
