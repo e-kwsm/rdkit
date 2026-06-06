@@ -337,7 +337,7 @@ TEST_CASE("Overlay onto shape bug (Github8462)") {
       "c1ccc(-c2ccccc2)cc1 |(-3.26053,-0.0841607,-0.741909;-2.93383,0.123873,0.593407;-1.60713,0.377277,0.917966;-0.644758,0.654885,-0.0378428;0.743308,0.219134,0.168663;1.82376,1.0395,-0.0112769;3.01462,0.695405,0.613858;3.18783,-0.589771,1.09649;2.15761,-1.50458,1.01949;0.988307,-1.1313,0.385783;-1.1048,0.797771,-1.34022;-2.39754,0.435801,-1.69921)|"_smiles;
   REQUIRE(m1);
   ROMol m2(*m1);
-  for (auto a : m2.atoms()) {
+  for (auto *a : m2.atoms()) {
     auto &pos = m2.getConformer().getAtomPos(a->getIdx());
     pos.x += 3.0;
     pos.y += 2.0;
@@ -497,8 +497,8 @@ TEST_CASE("Hs not properly transformed when hcount = feature count") {
       // looking at bond lengths to Hs:
       for (auto i = cp.getNumHeavyAtoms(); i < cp.getNumAtoms(); ++i) {
         INFO("checking atom " << i);
-        auto at = cp.getAtomWithIdx(i);
-        for (auto nbr : cp.atomNeighbors(at)) {
+        auto *at = cp.getAtomWithIdx(i);
+        for (auto *nbr : cp.atomNeighbors(at)) {
           auto dist = (cp.getConformer().getAtomPos(i) -
                        cp.getConformer().getAtomPos(nbr->getIdx()))
                           .length();

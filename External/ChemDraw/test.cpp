@@ -1344,12 +1344,12 @@ TEST_CASE("Round TRIP") {
         if (mol) {
           // CDX doesn't support atom map numbers apparently
           total++;
-          for (auto atom : mol->atoms()) {
+          for (auto *atom : mol->atoms()) {
             atom->setAtomMapNum(0);
           }
           // CDXML doesn't support ZERO bonds
           bool haszerobond = false;
-          for (auto bond : mol->bonds()) {
+          for (auto *bond : mol->bonds()) {
             if (bond->getBondType() == Bond::BondType::ZERO) {
               haszerobond = true;
               break;
@@ -1469,7 +1469,7 @@ TEST_CASE("Bond stereo") {
     CHECK(MolToSmiles(mol, false) == "CC1C2CCC1CC(=NO)C2");
 
     Bond *bond = nullptr;
-    for (auto candidate : mol.bonds()) {
+    for (auto *candidate : mol.bonds()) {
       if (candidate->getBondType() == Bond::BondType::DOUBLE) {
         bond = candidate;
         break;
@@ -1482,7 +1482,7 @@ TEST_CASE("Bond stereo") {
     auto roundtrip = v2::FileParsers::MolFromMolBlock(MolToV3KMolBlock(mol));
     REQUIRE(roundtrip);
     Bond *roundtripBond = nullptr;
-    for (auto candidate : roundtrip->bonds()) {
+    for (auto *candidate : roundtrip->bonds()) {
       if (candidate->getBondType() == Bond::BondType::DOUBLE) {
         roundtripBond = candidate;
         break;
@@ -1497,7 +1497,7 @@ TEST_CASE("Bond stereo") {
     auto rawMols = MolsFromChemDrawFile(fname, params);
     REQUIRE(rawMols.size() == 1);
     Bond *rawBond = nullptr;
-    for (auto candidate : rawMols[0]->bonds()) {
+    for (auto *candidate : rawMols[0]->bonds()) {
       if (candidate->getBondType() == Bond::BondType::DOUBLE) {
         rawBond = candidate;
         break;
@@ -1540,7 +1540,7 @@ TEST_CASE("NeedsClean hydrogens") {
     CHECK(MolToSmiles(mol) == "CNC(=O)OC");
 
     unsigned int nitrogens = 0;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getSymbol() == "N") {
         ++nitrogens;
         CHECK(atom->getNumRadicalElectrons() == 0);
@@ -1561,7 +1561,7 @@ TEST_CASE("NeedsClean hydrogens") {
     CHECK(MolToSmiles(mol) == "C[N]C(=O)OC");
 
     unsigned int nitrogens = 0;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getSymbol() == "N") {
         ++nitrogens;
         CHECK(atom->getNumRadicalElectrons() == 1);
@@ -1621,7 +1621,7 @@ TEST_CASE("Abnormal valence") {
     auto &mol = *mols[0];
 
     unsigned int radicalAtoms = 0;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getNumRadicalElectrons() == 2) {
         ++radicalAtoms;
         CHECK(atom->getNoImplicit());
@@ -1672,7 +1672,7 @@ TEST_CASE("github8761") {
 
   SECTION("Failing Patents") {
     std::filesystem::path patents(path + "patents");
-    for (auto &entry : std::filesystem::directory_iterator(patents)) {
+    for (const auto &entry : std::filesystem::directory_iterator(patents)) {
       ChemDrawParserParams params;
       params.sanitize = false;
       auto mols = MolsFromChemDrawFile(entry.path().generic_string(), params);
