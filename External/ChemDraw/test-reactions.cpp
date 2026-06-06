@@ -59,14 +59,14 @@ TEST_CASE("CDXML Parser") {
     CHECK(rxns.size() == 1);
     unsigned int i = 0;
     int count = 0;
-    for (auto &mol : rxns[0]->getReactants()) {
+    for (const auto &mol : rxns[0]->getReactants()) {
       CHECK(mol->getProp<unsigned int>("CDX_SCHEME_ID") == 397);
       CHECK(mol->getProp<unsigned int>("CDX_STEP_ID") == 398);
       CHECK(mol->getProp<unsigned int>("CDX_REAGENT_ID") == i++);
       CHECK(MolToSmiles(*mol) == expected[count++]);
     }
     i = 0;
-    for (auto &mol : rxns[0]->getProducts()) {
+    for (const auto &mol : rxns[0]->getProducts()) {
       CHECK(mol->getProp<unsigned int>("CDX_SCHEME_ID") == 397);
       CHECK(mol->getProp<unsigned int>("CDX_STEP_ID") == 398);
       CHECK(mol->getProp<unsigned int>("CDX_PRODUCT_ID") == i++);
