@@ -1344,12 +1344,12 @@ TEST_CASE("Round TRIP") {
         if (mol) {
           // CDX doesn't support atom map numbers apparently
           total++;
-          for (auto atom : mol->atoms()) {
+          for (auto *atom : mol->atoms()) {
             atom->setAtomMapNum(0);
           }
           // CDXML doesn't support ZERO bonds
           bool haszerobond = false;
-          for (auto bond : mol->bonds()) {
+          for (auto *bond : mol->bonds()) {
             if (bond->getBondType() == Bond::BondType::ZERO) {
               haszerobond = true;
               break;
@@ -1479,13 +1479,7 @@ TEST_CASE("Bond stereo") {
     CHECK(bond->getStereo() == expectedStereo);
     CHECK(bond->getStereoAtoms() == INT_VECT({0, 10}));
 
-<<<<<<< HEAD
     auto roundtrip = v2::FileParsers::MolFromMolBlock(MolToV3KMolBlock(mol));
-||||||| parent of 2ae39548f (fixup! style: readability-qualified-auto)
-    auto roundtrip = MolBlockToMol(MolToV3KMolBlock(mol));
-=======
-    auto *roundtrip = MolBlockToMol(MolToV3KMolBlock(mol));
->>>>>>> 2ae39548f (fixup! style: readability-qualified-auto)
     REQUIRE(roundtrip);
     Bond *roundtripBond = nullptr;
     for (auto *candidate : roundtrip->bonds()) {
@@ -1678,7 +1672,7 @@ TEST_CASE("github8761") {
 
   SECTION("Failing Patents") {
     std::filesystem::path patents(path + "patents");
-    for (auto &entry : std::filesystem::directory_iterator(patents)) {
+    for (const auto &entry : std::filesystem::directory_iterator(patents)) {
       ChemDrawParserParams params;
       params.sanitize = false;
       auto mols = MolsFromChemDrawFile(entry.path().generic_string(), params);

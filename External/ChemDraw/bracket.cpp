@@ -38,11 +38,11 @@ namespace ChemDraw {
 //  or support for expansion inside the RDChemDrawLib
 bool parseBracket(CDXBracketedGroup &bracket, PageData & /*pagedata*/) {
   // Get the contained atoms/bonds in the bracket
-  for (auto &attachment : bracket.ContainedObjects()) {
+  for (const auto &attachment : bracket.ContainedObjects()) {
     auto childid = (CDXDatumID)attachment.second->GetTag();
     if (childid == kCDXObj_BracketAttachment) {
       auto &bracketattachment = (CDXBracketAttachment &)(*attachment.second);
-      for (auto &bracketdata : bracketattachment.ContainedObjects()) {
+      for (const auto &bracketdata : bracketattachment.ContainedObjects()) {
         auto bracketid = (CDXDatumID)bracketdata.second->GetTag();
         if (bracketid == kCDXObj_CrossingBond) {
           // CDXCrossingBond &crossingbond =

@@ -133,7 +133,7 @@ void visit_children(
 
       bool hasConf = false;
       bool is3D = false;
-      for (auto &atm : res->atoms()) {
+      for (const auto &atm : res->atoms()) {
         RDGeom::Point3D p{0.0, 0.0, 0.0};
 
         if (atm->hasProp(CDX_ATOM_POS)) {
