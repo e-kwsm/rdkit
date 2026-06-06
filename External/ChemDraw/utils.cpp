@@ -51,7 +51,7 @@ void scaleBonds(const ROMol &mol, Conformer &conf, double targetBondLength,
   if (bondLength < 0) {
     // If we don't have a bond length for any reason, just scale the average
     // bond length
-    for (auto &bond : mol.bonds()) {
+    for (const auto &bond : mol.bonds()) {
       avg_bond_length += (conf.getAtomPos(bond->getBeginAtomIdx()) -
                           conf.getAtomPos(bond->getEndAtomIdx()))
                              .length();
@@ -118,7 +118,7 @@ struct FragmentReplacement {
     std::vector<Bond *> xbonds;  // Reuse this vector to reduce repeated allocations
 
     // Find the connecting atoms and and do the replacement
-    for (auto bond : replacement_bonds) {
+    for (auto *bond : replacement_bonds) {
       // find the position of the attachment bonds in the bond ordering
       unsigned bond_id = 0;
       if (!bond->getPropIfPresent<unsigned int>(CDX_BOND_ID, bond_id)) {
@@ -175,7 +175,7 @@ bool replaceFragments(RWMol &mol) {
   // is here
   std::map<int, FragmentReplacement> replacements;
 
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     auto label = get_fuse_label(atom);
     if (label) {
       if (atom->hasProp(CDX_BOND_ORDERING)) {
@@ -325,14 +325,14 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
         continue;
       }
 
-      for (auto bond : mol.atomBonds(center_atom)) {
+      for (auto *bond : mol.atomBonds(center_atom)) {
         int bond_id;
         if (bond->getPropIfPresent<int>(CDX_BOND_ID, bond_id)) {
         } else {
           return Atom::ChiralType::CHI_UNSPECIFIED;
         }
         if (bond_id == cdx_id) {
-          auto atom = bond->getOtherAtom(center_atom);
+          auto *atom = bond->getOtherAtom(center_atom);
           if (!atom) {
             // something went really wrong
             return Atom::ChiralType::CHI_UNSPECIFIED;
@@ -426,7 +426,7 @@ void checkChemDrawTetrahedralGeometries(RWMol &mol) {
   }
   bool chiralityChanged = false;
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     // only deal with unspecified chiralities
     if (atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED) {
       atom->clearProp(CDX_CIP);
