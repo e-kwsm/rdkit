@@ -293,8 +293,7 @@ struct RandomAccessSupplierIter {
       default;
   RandomAccessSupplierIter(RandomAccessSupplierIter &&) = default;
   RandomAccessSupplierIter &operator=(RandomAccessSupplierIter &&) = default;
-  explicit RandomAccessSupplierIter(Supplier *supplier)
-      : supplier(supplier), current_idx(0) {}
+  explicit RandomAccessSupplierIter(Supplier *supplier) : supplier(supplier) {}
   RandomAccessSupplierIter(Supplier *supplier, size_t idx)
       : supplier(supplier), current_idx(idx) {}
   const_value_type operator*() const {
