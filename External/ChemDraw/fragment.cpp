@@ -44,7 +44,7 @@ void applyDeferredRingBondCountAsDrawnQueryRestrictions(
   }
 
   bool hasDeferredRingBondCount = false;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->hasProp(CDXML_RING_BOND_COUNT_AS_DRAWN_PROP)) {
       hasDeferredRingBondCount = true;
       break;
@@ -55,13 +55,13 @@ void applyDeferredRingBondCountAsDrawnQueryRestrictions(
   }
 
   MolOps::fastFindRings(mol);
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!atom->hasProp(CDXML_RING_BOND_COUNT_AS_DRAWN_PROP)) {
       continue;
     }
 
     auto ringBondCount = 0;
-    for (const auto bond : mol.atomBonds(atom)) {
+    for (auto *const bond : mol.atomBonds(atom)) {
       if (bond->getOwningMol().getRingInfo()->numBondRings(bond->getIdx())) {
         ++ringBondCount;
       }
@@ -79,7 +79,7 @@ void applyDeferredFreeSitesQueryRestrictions(RWMol &mol, const PageData &pagedat
     return;
   }
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!atom->hasProp(CDXML_FREE_SITES_PROP)) {
       continue;
     }
@@ -99,7 +99,7 @@ void applyDeferredFreeSitesQueryRestrictions(RWMol &mol, const PageData &pagedat
 
 void applyDeferredLinkNodeProperties(RWMol &mol) {
   std::string linkNodes;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!atom->hasProp(CDXML_LINK_NODE_MIN_REP_PROP) ||
         !atom->hasProp(CDXML_LINK_NODE_MAX_REP_PROP)) {
       continue;
@@ -119,7 +119,7 @@ void applyDeferredLinkNodeProperties(RWMol &mol) {
 
     std::vector<unsigned int> neighborIdxs;
     neighborIdxs.reserve(atom->getDegree());
-    for (const auto neighbor : mol.atomNeighbors(atom)) {
+    for (auto *const neighbor : mol.atomNeighbors(atom)) {
       neighborIdxs.push_back(neighbor->getIdx());
     }
     if (neighborIdxs.size() != 2) {
@@ -153,14 +153,14 @@ void applyDeferredLinkNodeProperties(RWMol &mol) {
 
 void applyDeferredVariableAttachmentProperties(RWMol &mol) {
   std::map<unsigned int, unsigned int> atomIdToIdx;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     unsigned int atomId = 0;
     if (atom->getPropIfPresent(CDX_ATOM_ID, atomId)) {
       atomIdToIdx[atomId] = atom->getIdx();
     }
   }
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!atom->hasProp(CDXML_VARIABLE_ATTACHMENT_ENDPOINTS_PROP)) {
       continue;
     }
@@ -178,7 +178,7 @@ void applyDeferredVariableAttachmentProperties(RWMol &mol) {
       continue;
     }
 
-    auto bond = *mol.atomBonds(atom).begin();
+    auto *bond = *mol.atomBonds(atom).begin();
     std::string endPoints = "(" + std::to_string(attachmentIds.size());
     bool missingAttachment = false;
     for (auto attachmentId : attachmentIds) {
