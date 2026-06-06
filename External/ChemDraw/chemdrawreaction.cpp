@@ -48,7 +48,7 @@ using namespace RDKit::ChemDraw;
 // Convert reaction information to RDKIT reactions
 namespace {
 void make_query_atoms(RWMol &mol) {
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     QueryOps::replaceAtomWithQueryAtom(&mol, atom);
   }
 }

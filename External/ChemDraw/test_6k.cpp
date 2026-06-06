@@ -261,7 +261,7 @@ TEST_CASE("Round TRIP") {
         std::string smiles;
         {
           try {
-            auto smimol = SmilesToMol(smiles_in);
+            auto *smimol = SmilesToMol(smiles_in);
             if (!smimol) {
               smiles = smiles_in;
             } else {

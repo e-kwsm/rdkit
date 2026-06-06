@@ -140,7 +140,7 @@ bool parseNode(
       break;
   }
 
-  for (auto &child : node.ContainedObjects()) {
+  for (const auto &child : node.ContainedObjects()) {
     if (child.second->GetTag() == kCDXObj_Text) {
       const std::string &text = ((CDXText *)child.second)->GetText().str();
       if (text.size() > 0 && text[0] == 'R') {
