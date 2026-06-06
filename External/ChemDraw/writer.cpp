@@ -96,7 +96,7 @@ std::string MolToChemDrawBlock(const ROMol &mol, CDXFormat format) {
   // We convert the average bond length into the target bond length here
   double target_bond_length = 2 * DEFAULT_CDX_BOND_LENGTH;
   double dist = 0.0;
-  for (auto bond : trmol.bonds()) {
+  for (auto *bond : trmol.bonds()) {
     auto pos1 = conf->getAtomPos(bond->getBeginAtomIdx());
     auto pos2 = conf->getAtomPos(bond->getEndAtomIdx());
     dist += (pos1 - pos2).length();
@@ -106,7 +106,7 @@ std::string MolToChemDrawBlock(const ROMol &mol, CDXFormat format) {
 
   auto wedgeBonds = Chirality::pickBondsToWedge(trmol, nullptr, conf);
 
-  for (auto &atom : trmol.atoms()) {
+  for (const auto &atom : trmol.atoms()) {
     auto *node = new CDXNode(object_id + atom->getIdx());
     auto pos = conf->getAtomPos(atom->getIdx());
     if (is3D) {
@@ -148,9 +148,9 @@ std::string MolToChemDrawBlock(const ROMol &mol, CDXFormat format) {
     }
     // this might be a bit slow, perhaps make into a map...
     unsigned int sgnum = 0;
-    for (auto &sg : trmol.getStereoGroups()) {
+    for (const auto &sg : trmol.getStereoGroups()) {
       sgnum++;
-      for (auto &sgatom : sg.getAtoms()) {
+      for (const auto &sgatom : sg.getAtoms()) {
         if (atom->getIdx() == sgatom->getIdx()) {
           switch (sg.getGroupType()) {
             case StereoGroupType::STEREO_ABSOLUTE:
@@ -171,7 +171,7 @@ std::string MolToChemDrawBlock(const ROMol &mol, CDXFormat format) {
     fragment->AddChild(node);
   }
 
-  for (auto &bond : trmol.bonds()) {
+  for (const auto &bond : trmol.bonds()) {
     auto *cdxbond = new CDXBond(object_id + mol.getNumAtoms() + bond->getIdx());
 
     int dirCode = 0;

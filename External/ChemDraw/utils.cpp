@@ -51,7 +51,7 @@ void scaleBonds(const ROMol &mol, Conformer &conf, double targetBondLength,
   if (bondLength < 0) {
     // If we don't have a bond length for any reason, just scale the average
     // bond length
-    for (auto &bond : mol.bonds()) {
+    for (const auto &bond : mol.bonds()) {
       avg_bond_length += (conf.getAtomPos(bond->getBeginAtomIdx()) -
                           conf.getAtomPos(bond->getEndAtomIdx()))
                              .length();
@@ -118,7 +118,7 @@ struct FragmentReplacement {
     std::vector<Bond *> xbonds;  // Reuse this vector to reduce repeated allocations
 
     // Find the connecting atoms and and do the replacement
-    for (auto bond : replacement_bonds) {
+    for (auto *bond : replacement_bonds) {
       // find the position of the attachment bonds in the bond ordering
       unsigned bond_id = 0;
       if (!bond->getPropIfPresent<unsigned int>(CDX_BOND_ID, bond_id)) {
@@ -175,7 +175,7 @@ bool replaceFragments(RWMol &mol) {
   // is here
   std::map<int, FragmentReplacement> replacements;
 
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     auto label = get_fuse_label(atom);
     if (label) {
       if (atom->hasProp(CDX_BOND_ORDERING)) {
@@ -214,12 +214,12 @@ void getStereoNeighbors(const Bond *bond, std::vector<const Atom *> &beginAtoms,
   beginAtoms.clear();
   endAtoms.clear();
   const auto &mol = bond->getOwningMol();
-  for (const auto neighbor : mol.atomNeighbors(bond->getBeginAtom())) {
+  for (auto *const neighbor : mol.atomNeighbors(bond->getBeginAtom())) {
     if (neighbor != bond->getEndAtom()) {
       beginAtoms.push_back(neighbor);
     }
   }
-  for (const auto neighbor : mol.atomNeighbors(bond->getEndAtom())) {
+  for (auto *const neighbor : mol.atomNeighbors(bond->getEndAtom())) {
     if (neighbor != bond->getBeginAtom()) {
       endAtoms.push_back(neighbor);
     }
@@ -263,7 +263,7 @@ bool getStereoAtomsFromGeometry(const Bond *bond, Bond::BondStereo stereo,
   const auto bondVec = endPos - beginPos;
   double bestScore = -1.0;
 
-  for (const auto beginAtom : beginAtoms) {
+  for (const auto *const beginAtom : beginAtoms) {
     const auto beginStereoPos = conf.getAtomPos(beginAtom->getIdx());
     const auto beginVec = beginStereoPos - beginPos;
     // Use the same signed 2D area test as Depictor/EmbeddedFrag.cpp.
@@ -271,7 +271,7 @@ bool getStereoAtomsFromGeometry(const Bond *bond, Bond::BondStereo stereo,
     if (std::abs(beginSide) < 1e-6) {
       continue;
     }
-    for (const auto endAtom : endAtoms) {
+    for (const auto *const endAtom : endAtoms) {
       const auto endStereoPos = conf.getAtomPos(endAtom->getIdx());
       const auto endVec = endStereoPos - beginPos;
       const auto endSide = bondVec.x * endVec.y - bondVec.y * endVec.x;
@@ -298,7 +298,7 @@ bool getStereoAtomsFromGeometry(const Bond *bond, Bond::BondStereo stereo,
 
 bool hasAtropStereoBond(const Atom *atom) {
   PRECONDITION(atom, "bad atom");
-  for (const auto bond : atom->getOwningMol().atomBonds(atom)) {
+  for (auto *const bond : atom->getOwningMol().atomBonds(atom)) {
     const auto stereo = bond->getStereo();
     if (stereo == Bond::BondStereo::STEREOATROPCW ||
         stereo == Bond::BondStereo::STEREOATROPCCW) {
@@ -325,14 +325,14 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
         continue;
       }
 
-      for (auto bond : mol.atomBonds(center_atom)) {
+      for (auto *bond : mol.atomBonds(center_atom)) {
         int bond_id;
         if (bond->getPropIfPresent<int>(CDX_BOND_ID, bond_id)) {
         } else {
           return Atom::ChiralType::CHI_UNSPECIFIED;
         }
         if (bond_id == cdx_id) {
-          auto atom = bond->getOtherAtom(center_atom);
+          auto *atom = bond->getOtherAtom(center_atom);
           if (!atom) {
             // something went really wrong
             return Atom::ChiralType::CHI_UNSPECIFIED;
@@ -379,7 +379,7 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
 
 void checkChemDrawDoubleBondGeometries(RWMol &mol) {
   std::vector<std::pair<Bond *, Bond::BondStereo>> unsetDoubleBonds;
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     if (bond->getBondType() != Bond::BondType::DOUBLE ||
         bond->getStereo() != Bond::BondStereo::STEREONONE) {
       continue;
@@ -400,7 +400,7 @@ void checkChemDrawDoubleBondGeometries(RWMol &mol) {
   bool haveRanks = false;
   UINT_VECT ranks;
   for (const auto &entry : unsetDoubleBonds) {
-    auto bond = entry.first;
+    auto *bond = entry.first;
     bond->setStereo(entry.second);
     INT_VECT stereoAtoms;
     if (!getStereoAtomsFromGeometry(bond, entry.second, stereoAtoms)) {
@@ -426,7 +426,7 @@ void checkChemDrawTetrahedralGeometries(RWMol &mol) {
   }
   bool chiralityChanged = false;
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     // only deal with unspecified chiralities
     if (atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED) {
       atom->clearProp(CDX_CIP);
