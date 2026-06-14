@@ -36,34 +36,34 @@ void testEnumerator() {
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
   std::function<void(const std::string &, const std::vector<std::string> &)>
-      checkAns([te](const std::string &smi,
-                    const std::vector<std::string> &ans) {
-        ROMOL_SPTR m(SmilesToMol(smi));
-        TautomerEnumeratorResult res = te.enumerate(*m);
-        TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-        std::vector<std::string> tautSmiles;
-        tautSmiles.reserve(res.size());
-        for (size_t i = 0; i < res.size(); ++i) {
-          tautSmiles.push_back(MolToSmiles(*res[i]));
-        }
-        std::vector<std::string> ansSmiles = ans;
-        std::sort(tautSmiles.begin(), tautSmiles.end());
-        std::sort(ansSmiles.begin(), ansSmiles.end());
-        if (tautSmiles != ansSmiles) {
-          std::cerr << "Tautomer mismatch for input: " << smi << std::endl;
-          std::cerr << "  expected(" << ansSmiles.size() << "):";
-          for (const auto &s : ansSmiles) {
-            std::cerr << " " << s;
-          }
-          std::cerr << std::endl;
-          std::cerr << "  got(" << tautSmiles.size() << "):";
-          for (const auto &s : tautSmiles) {
-            std::cerr << " " << s;
-          }
-          std::cerr << std::endl;
-        }
-        TEST_ASSERT(tautSmiles == ansSmiles);
-      });
+      checkAns(
+          [te](const std::string &smi, const std::vector<std::string> &ans) {
+            ROMOL_SPTR m(SmilesToMol(smi));
+            TautomerEnumeratorResult res = te.enumerate(*m);
+            TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
+            std::vector<std::string> tautSmiles;
+            tautSmiles.reserve(res.size());
+            for (size_t i = 0; i < res.size(); ++i) {
+              tautSmiles.push_back(MolToSmiles(*res[i]));
+            }
+            std::vector<std::string> ansSmiles = ans;
+            std::sort(tautSmiles.begin(), tautSmiles.end());
+            std::sort(ansSmiles.begin(), ansSmiles.end());
+            if (tautSmiles != ansSmiles) {
+              std::cerr << "Tautomer mismatch for input: " << smi << std::endl;
+              std::cerr << "  expected(" << ansSmiles.size() << "):";
+              for (const auto &s : ansSmiles) {
+                std::cerr << " " << s;
+              }
+              std::cerr << std::endl;
+              std::cerr << "  got(" << tautSmiles.size() << "):";
+              for (const auto &s : tautSmiles) {
+                std::cerr << " " << s;
+              }
+              std::cerr << std::endl;
+            }
+            TEST_ASSERT(tautSmiles == ansSmiles);
+          });
 
   // Enumerate 1,3 keto/enol tautomer.
   checkAns("C1(=CCCCC1)O", {"O=C1CCCCC1", "OC1=CCCCC1"});
@@ -1007,8 +1007,8 @@ void testCanonicalizeInvariantAcrossInputTautomers() {
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
-  // The core behavior guarantee we care about for perf work: regardless of which
-  // tautomer form is provided as input, canonicalize() selects the same
+  // The core behavior guarantee we care about for perf work: regardless of
+  // which tautomer form is provided as input, canonicalize() selects the same
   // canonical tautomer.
   //
   // Keep this bounded so the unit test stays fast.
@@ -1715,10 +1715,9 @@ void testGithub3755() {
 }
 
 void testCanonicalizePreservesNonTautomericBondStereo() {
-  BOOST_LOG(rdInfoLog)
-      << "-----------------------\n "
-         "testCanonicalizePreservesNonTautomericBondStereo"
-      << std::endl;
+  BOOST_LOG(rdInfoLog) << "-----------------------\n "
+                          "testCanonicalizePreservesNonTautomericBondStereo"
+                       << std::endl;
   // Molecule with E double-bond stereo on a C=C that is NOT part of
   // any tautomeric path, plus a tautomerizable keto group.
   // The E/Z must survive canonicalize() and canonicalizeInPlace().

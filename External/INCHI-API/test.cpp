@@ -153,10 +153,12 @@ void testMultiThread2() {
 }
 #else
 void testMultiThread() {
-  {}
+  {
+  }
 }
 void testMultiThread2() {
-  {}
+  {
+  }
 }
 #endif
 
@@ -947,14 +949,18 @@ void testGithub8239() {
     TEST_ASSERT(m);
     ExtraInchiReturnValues tmp;
     auto inchi = MolToInchi(*m, tmp);
-    TEST_ASSERT(inchi == "InChI=1S/C6H14O10P2/c1-13-18(12,16-17(9,10)11)15-3-5-6(8)4(7)2-14-5/h4-8H,2-3H2,1H3,(H2,9,10,11)/t4?,5?,6?,18-/m1/s1");
+    TEST_ASSERT(
+        inchi ==
+        "InChI=1S/C6H14O10P2/c1-13-18(12,16-17(9,10)11)15-3-5-6(8)4(7)2-14-5/h4-8H,2-3H2,1H3,(H2,9,10,11)/t4?,5?,6?,18-/m1/s1");
   }
   {
     auto m = "CO[P@@](=O)(OCC1C(C(CO1)O)O)OP(=O)(O)O"_smiles;
     TEST_ASSERT(m);
     ExtraInchiReturnValues tmp;
     auto inchi = MolToInchi(*m, tmp);
-    TEST_ASSERT(inchi == "InChI=1S/C6H14O10P2/c1-13-18(12,16-17(9,10)11)15-3-5-6(8)4(7)2-14-5/h4-8H,2-3H2,1H3,(H2,9,10,11)/t4?,5?,6?,18-/m0/s1");
+    TEST_ASSERT(
+        inchi ==
+        "InChI=1S/C6H14O10P2/c1-13-18(12,16-17(9,10)11)15-3-5-6(8)4(7)2-14-5/h4-8H,2-3H2,1H3,(H2,9,10,11)/t4?,5?,6?,18-/m0/s1");
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
 }
@@ -1000,23 +1006,21 @@ void checkStereoAnyRoundtrip(const char *smiles, const char *desc) {
 
 void testStereoAnyRoundtrip() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
-  BOOST_LOG(rdInfoLog)
-      << "testing STEREOANY (wavy bond) InChI roundtrip" << std::endl;
+  BOOST_LOG(rdInfoLog) << "testing STEREOANY (wavy bond) InChI roundtrip"
+                       << std::endl;
 
   // Schiff base with wavy C=N (original bug report molecule)
   checkStereoAnyRoundtrip("CSC1=NSC(CC=NC2=CC=CC=C2)=C1C#N |w:8.8|",
-                           "Schiff base C=N");
+                          "Schiff base C=N");
 
   // Benzaldoxime: wavy C=N (common pharma motif)
   checkStereoAnyRoundtrip("O/N=C/c1ccccc1 |w:1.1|", "benzaldoxime C=N");
 
   // Cinnamic acid: wavy C=C in conjugated system
-  checkStereoAnyRoundtrip("OC(=O)/C=C/c1ccccc1 |w:3.3|",
-                           "cinnamic acid C=C");
+  checkStereoAnyRoundtrip("OC(=O)/C=C/c1ccccc1 |w:3.3|", "cinnamic acid C=C");
 
   // Chalcone: wavy C=C between two aryl groups
-  checkStereoAnyRoundtrip("O=C(/C=C/c1ccccc1)c1ccccc1 |w:2.2|",
-                           "chalcone C=C");
+  checkStereoAnyRoundtrip("O=C(/C=C/c1ccccc1)c1ccccc1 |w:2.2|", "chalcone C=C");
 
   // Crotonaldehyde: simple wavy C=C
   checkStereoAnyRoundtrip("C/C=C/C=O |w:1.1|", "crotonaldehyde C=C");
@@ -1033,11 +1037,11 @@ void testStereoAnyRoundtrip() {
 
   // Chiral center adjacent to wavy C=C
   checkStereoAnyRoundtrip("O=C(O)[C@@H](CC=Cc1ccccc1)N |w:4.4|",
-                           "chiral + wavy C=C");
+                          "chiral + wavy C=C");
 
   // Chiral center adjacent to wavy C=N oxime
   checkStereoAnyRoundtrip("C[C@H](O)/C(=N/O)c1ccccc1 |w:3.3|",
-                           "chiral + wavy oxime C=N");
+                          "chiral + wavy oxime C=N");
 
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
 }

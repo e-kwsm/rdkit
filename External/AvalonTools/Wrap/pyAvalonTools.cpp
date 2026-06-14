@@ -141,7 +141,7 @@ See the individual docstrings for more information.\n\
 
   std::string docString = "returns canonical smiles for an RDKit molecule";
   python::def("GetCanonSmiles",
-              (std::string(*)(RDKit::ROMol &, int))AvalonTools::getCanonSmiles,
+              (std::string (*)(RDKit::ROMol &, int))AvalonTools::getCanonSmiles,
               (python::arg("mol"), python::arg("flags") = -1),
               docString.c_str());
   docString =
@@ -149,8 +149,8 @@ See the individual docstrings for more information.\n\
 If the isSmiles argument is true, the data is assumed to be SMILES, otherwise\n\
 MDL mol data is assumed.";
   python::def("GetCanonSmiles",
-              (std::string(*)(const std::string &, bool,
-                              int))AvalonTools::getCanonSmiles,
+              (std::string (*)(const std::string &, bool,
+                               int))AvalonTools::getCanonSmiles,
               (python::arg("molData"), python::arg("isSmiles"),
                python::arg("flags") = -1),
               docString.c_str());
@@ -187,14 +187,14 @@ If the isSmiles argument is true, the data is assumed to be SMILES, otherwise\n\
 MDL mol data is assumed.";
   python::def(
       "Generate2DCoords",
-      (std::string(*)(const std::string &, bool))AvalonTools::set2DCoords,
+      (std::string (*)(const std::string &, bool))AvalonTools::set2DCoords,
       (python::arg("molData"), python::arg("isSmiles")), docString.c_str());
 
   docString =
       "returns the Avalon fingerprint for an RDKit molecule as a list of ints";
   python::def("GetAvalonFPAsWords",
-              (python::list(*)(const RDKit::ROMol &, unsigned int, bool, bool,
-                               unsigned int))getAvalonFPAsWords,
+              (python::list (*)(const RDKit::ROMol &, unsigned int, bool, bool,
+                                unsigned int))getAvalonFPAsWords,
               (python::arg("mol"), python::arg("nBits") = 512,
                python::arg("isQuery") = false, python::arg("resetVect") = false,
                python::arg("bitFlags") = AvalonTools::avalonSimilarityBits),
@@ -229,8 +229,8 @@ MDL mol data is assumed.";
 If the isSmiles argument is true, the data is assumed to be SMILES, otherwise\n\
 MDL mol data is assumed.";
   python::def("GetAvalonFPAsWords",
-              (python::list(*)(const std::string &, bool, unsigned int, bool,
-                               bool, unsigned int))getAvalonFPAsWords,
+              (python::list (*)(const std::string &, bool, unsigned int, bool,
+                                bool, unsigned int))getAvalonFPAsWords,
               (python::arg("molData"), python::arg("isSmiles"),
                python::arg("nBits") = 512, python::arg("isQuery") = false,
                python::arg("resetVect") = false,
@@ -257,7 +257,7 @@ The first member of the return tuple contains the bit-encoded corrections made t
 If possible, the molecule (corrected when appropriate) is returned as the second member of \n\
 the return tuple. Otherwise, None is returned.";
   python::def("CheckMolecule",
-              (python::tuple(*)(const std::string &, bool))CheckMolecule,
+              (python::tuple (*)(const std::string &, bool))CheckMolecule,
               (python::arg("molstring"), python::arg("isSmiles")),
               docString.c_str());
 
@@ -266,7 +266,7 @@ the return tuple. Otherwise, None is returned.";
 The first member of the return tuple contains the bit-encoded corrections made to the molecule.\n\
 If possible, the molecule (corrected when appropriate) is returned as the second member of \n\
 the return tuple. Otherwise, None is returned.";
-  python::def("CheckMolecule", (python::tuple(*)(RDKit::ROMol &))CheckMolecule,
+  python::def("CheckMolecule", (python::tuple (*)(RDKit::ROMol &))CheckMolecule,
               (python::arg("mol")), docString.c_str());
 
   docString =

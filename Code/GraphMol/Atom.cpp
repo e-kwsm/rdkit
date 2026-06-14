@@ -48,9 +48,9 @@ unsigned int getEffectiveAtomicNum(const Atom &atom, bool checkValue) {
     throw AtomValenceException("Effective atomic number out of range",
                                atom.getIdx());
   }
-  effectiveAtomicNum = std::clamp(
-      effectiveAtomicNum, 0,
-      static_cast<int>(periodicTable->getMaxAtomicNumber()));
+  effectiveAtomicNum =
+      std::clamp(effectiveAtomicNum, 0,
+                 static_cast<int>(periodicTable->getMaxAtomicNumber()));
   return static_cast<unsigned int>(effectiveAtomicNum);
 }
 
@@ -437,8 +437,8 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
         // raise an error
         std::ostringstream errout;
         errout << "Explicit valence for atom # " << atom.getIdx() << " "
-               << periodicTable->getElementSymbol(atom.getAtomicNum())
-               << ", " << res << ", is greater than permitted";
+               << periodicTable->getElementSymbol(atom.getAtomicNum()) << ", "
+               << res << ", is greater than permitted";
         std::string msg = errout.str();
         BOOST_LOG(rdErrorLog) << msg << std::endl;
         throw AtomValenceException(msg, atom.getIdx());
