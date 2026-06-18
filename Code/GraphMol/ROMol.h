@@ -360,22 +360,22 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   using ATOM_BOOKMARK_MAP = std::map<int, ATOM_PTR_LIST>;
   using BOND_BOOKMARK_MAP = std::map<int, BOND_PTR_LIST>;
 
-  typedef class AtomIterator_<Atom, ROMol> AtomIterator;
-  typedef class AtomIterator_<const Atom, const ROMol> ConstAtomIterator;
-  typedef class BondIterator_ BondIterator;
-  typedef class ConstBondIterator_ ConstBondIterator;
-  typedef class AromaticAtomIterator_<Atom, ROMol> AromaticAtomIterator;
-  typedef class AromaticAtomIterator_<const Atom, const ROMol>
-      ConstAromaticAtomIterator;
-  typedef class HeteroatomIterator_<Atom, ROMol> HeteroatomIterator;
-  typedef class HeteroatomIterator_<const Atom, const ROMol>
-      ConstHeteroatomIterator;
-  typedef class QueryAtomIterator_<Atom, ROMol> QueryAtomIterator;
-  typedef class QueryAtomIterator_<const Atom, const ROMol>
-      ConstQueryAtomIterator;
-  typedef class MatchingAtomIterator_<Atom, ROMol> MatchingAtomIterator;
-  typedef class MatchingAtomIterator_<const Atom, const ROMol>
-      ConstMatchingAtomIterator;
+  using AtomIterator = class AtomIterator_<Atom, ROMol>;
+  using ConstAtomIterator = class AtomIterator_<const Atom, const ROMol>;
+  using BondIterator = class BondIterator_;
+  using ConstBondIterator = class ConstBondIterator_;
+  using AromaticAtomIterator = class AromaticAtomIterator_<Atom, ROMol>;
+  using ConstAromaticAtomIterator =
+      class AromaticAtomIterator_<const Atom, const ROMol>;
+  using HeteroatomIterator = class HeteroatomIterator_<Atom, ROMol>;
+  using ConstHeteroatomIterator =
+      class HeteroatomIterator_<const Atom, const ROMol>;
+  using QueryAtomIterator = class QueryAtomIterator_<Atom, ROMol>;
+  using ConstQueryAtomIterator =
+      class QueryAtomIterator_<const Atom, const ROMol>;
+  using MatchingAtomIterator = class MatchingAtomIterator_<Atom, ROMol>;
+  using ConstMatchingAtomIterator =
+      class MatchingAtomIterator_<const Atom, const ROMol>;
 
   using ConformerIterator = CONF_SPTR_LIST_I;
   using ConstConformerIterator = CONF_SPTR_LIST_CI;
