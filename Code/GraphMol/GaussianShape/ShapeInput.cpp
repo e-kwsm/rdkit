@@ -357,9 +357,9 @@ std::vector<RDGeom::Point3D> ShapeInput::getAtomPoints(
   }
   atomPoints.reserve(numPoints);
   for (unsigned int i = 0; i < 3 * numPoints; i += 3) {
-    atomPoints.emplace_back(RDGeom::Point3D(d_coords[d_activeShape][i],
-                                            d_coords[d_activeShape][i + 1],
-                                            d_coords[d_activeShape][i + 2]));
+    atomPoints.emplace_back(d_coords[d_activeShape][i],
+                            d_coords[d_activeShape][i + 1],
+                            d_coords[d_activeShape][i + 2]);
   }
   return atomPoints;
 }
@@ -918,8 +918,7 @@ void ShapeInput::sortShapesByVolumes() {
   std::vector<std::pair<double, size_t>> vals;
   vals.reserve(d_coords.size());
   for (size_t i = 0; i < d_coords.size(); i++) {
-    vals.push_back(std::make_pair(
-        d_selfOverlapShapeVols[i] + d_selfOverlapColorVols[i], i));
+    vals.emplace_back(d_selfOverlapShapeVols[i] + d_selfOverlapColorVols[i], i);
   }
   std::ranges::sort(vals,
                     [](const std::pair<double, size_t> &a,
@@ -963,8 +962,7 @@ void findFeatures(const Conformer &conf, std::vector<CustomFeature> &features,
           continue;
         }
         auto featPos = computeFeaturePos(conf, ats);
-        features.emplace_back(
-            CustomFeature{pattIdx, featPos, radius_color, ats});
+        features.emplace_back(pattIdx, featPos, radius_color, ats);
       }
     }
     ++pattIdx;

@@ -694,11 +694,11 @@ TEST_CASE("testConstrainedEmbedding") {
     REQUIRE(cid > -1);
 
     MatchVectType alignMap;
-    alignMap.push_back(std::make_pair(0, 0));
-    alignMap.push_back(std::make_pair(1, 1));
-    alignMap.push_back(std::make_pair(2, 2));
-    alignMap.push_back(std::make_pair(3, 3));
-    alignMap.push_back(std::make_pair(4, 4));
+    alignMap.emplace_back(0, 0);
+    alignMap.emplace_back(1, 1);
+    alignMap.emplace_back(2, 2);
+    alignMap.emplace_back(3, 3);
+    alignMap.emplace_back(4, 4);
     const double ssd = MolAlign::alignMol(*test, *ref, -1, -1, &alignMap);
     BOOST_LOG(rdInfoLog) << "ssd: " << ssd << std::endl;
     CHECK(ssd < 0.1);
@@ -717,11 +717,11 @@ TEST_CASE("testConstrainedEmbedding") {
     REQUIRE(cid > -1);
 
     MatchVectType alignMap;
-    alignMap.push_back(std::make_pair(4, 0));
-    alignMap.push_back(std::make_pair(5, 1));
-    alignMap.push_back(std::make_pair(6, 2));
-    alignMap.push_back(std::make_pair(7, 3));
-    alignMap.push_back(std::make_pair(8, 4));
+    alignMap.emplace_back(4, 0);
+    alignMap.emplace_back(5, 1);
+    alignMap.emplace_back(6, 2);
+    alignMap.emplace_back(7, 3);
+    alignMap.emplace_back(8, 4);
     const double ssd = MolAlign::alignMol(*test, *ref, -1, -1, &alignMap);
     BOOST_LOG(rdInfoLog) << "ssd: " << ssd << std::endl;
     CHECK(ssd < 0.1);
