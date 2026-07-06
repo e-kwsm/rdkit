@@ -321,14 +321,7 @@ class TestCase(unittest.TestCase):
       cids = rdDistGeom.EmbedMultipleConfs(mol, 50, params)
       nconfs.append(len(cids))
     d = [abs(x - y) for x, y in zip(expected, nconfs)]
-    self.assertTrue(max(d) <= 1)
-||||||| parent of f945a3854 (fixup! assertLess)
-    # print(nconfs)
-    self.assertTrue(max(d) <= 1)
-=======
-    # print(nconfs)
     self.assertLessEqual(max(d), 1)
->>>>>>> f945a3854 (fixup! assertLess)
 
   def test6Chirality(self):
     # turn on chirality and we should get chiral volume that is pretty consistent and
