@@ -34,7 +34,7 @@ class GaOperation {
         nChildren(nChildren_),
         weight(weight_),
         opfunction(opfunction_) {}
-  virtual ~GaOperation() {}
+  virtual ~GaOperation() = default;
 
   size_t getnChildren() const { return nChildren; }
 
