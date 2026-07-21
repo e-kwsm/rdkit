@@ -17,7 +17,7 @@
 using namespace RDKit;
 
 TEST_CASE("ranges") {
-  std::unique_ptr<RWMol> m{new RWMol()};
+  std::unique_ptr<RWMol> m = std::make_unique<RWMol>();
   REQUIRE(m);
   //  = "CC(=C)C=O"_smiles;
   m->addAtom(new Atom(6), true, true);
@@ -83,7 +83,7 @@ TEST_CASE("ranges") {
 }
 
 TEST_CASE("algorithms") {
-  std::unique_ptr<RWMol> m{new RWMol()};
+  std::unique_ptr<RWMol> m = std::make_unique<RWMol>();
   REQUIRE(m);
   //  = "COC(F)C=C"_smiles;
   m->addAtom(new Atom(6), true, true);
