@@ -912,9 +912,8 @@ class MolFromSCSRMolConverter {
           minCoord.z = std::min(minCoord.z, atomCoord.z);
         }
         templateCentroids.push_back(sumOfCoords / templateMol->getNumAtoms());
-        maxSize = std::max(maxSize, maxCoord.x - minCoord.x);
-        maxSize = std::max(maxSize, maxCoord.y - minCoord.y);
-        maxSize = std::max(maxSize, maxCoord.z - minCoord.z);
+        maxSize = std::max({maxSize, maxCoord.x - minCoord.x,
+                            maxCoord.y - minCoord.y, maxCoord.z - minCoord.z});
       }
     }
 
