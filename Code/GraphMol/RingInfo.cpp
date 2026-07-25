@@ -326,7 +326,7 @@ std::vector<std::vector<int>> RingInfo::atomRelevantCycles() const {
 
     RDL_cycleIterator *it = RDL_getRCyclesIterator(dp_urfData.get());
     while (!RDL_cycleIteratorAtEnd(it)) {
-      auto cycle = RDL_cycleIteratorGetCycle(it);
+      auto *cycle = RDL_cycleIteratorGetCycle(it);
       res.push_back(RingUtils::rdlCycleToAtomRing(cycle));
       RDL_deleteCycle(cycle);
       RDL_cycleIteratorNext(it);
@@ -376,7 +376,7 @@ std::vector<int> rdlCycleToAtomRing(RDL_cycle *cycle) {
     for (auto edgeIdx = unseen_edges.find_first();
          edgeIdx != boost::dynamic_bitset<>::npos;
          edgeIdx = unseen_edges.find_next(edgeIdx)) {
-      auto edge = cycle->edges[edgeIdx];
+      auto *edge = cycle->edges[edgeIdx];
       for (auto j = 0; j < 2; ++j) {
         if (static_cast<unsigned int>(ring.back()) == edge[j]) {
           ring.push_back(edge[1 - j]);

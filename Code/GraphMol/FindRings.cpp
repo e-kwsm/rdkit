@@ -42,7 +42,7 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
   atomColors[atom->getIdx()] = 1;
   traversalOrder.push_back(atom);
 
-  for (const auto nbr : mol.atomNeighbors(atom)) {
+  for (auto *const nbr : mol.atomNeighbors(atom)) {
     unsigned int nbrIdx = nbr->getIdx();
     if (atomColors[nbrIdx] == 0) {
       if (nbr->getDegree() < 2) {
@@ -133,7 +133,7 @@ using namespace RDKit;
  ******************************************************************************/
 void trimBonds(unsigned int cand, const ROMol &tMol, std::queue<int> &changed,
                INT_VECT &atomDegrees, boost::dynamic_bitset<> &activeBonds) {
-  for (auto bond : tMol.atomBonds(tMol.getAtomWithIdx(cand))) {
+  for (auto *bond : tMol.atomBonds(tMol.getAtomWithIdx(cand))) {
     if (!activeBonds[bond->getIdx()]) {
       continue;
     }
@@ -214,7 +214,7 @@ int smallestRingsBfs(const ROMol &mol, int root, VECT_INT_VECT &rings,
       break;
     }
 
-    for (auto bond : mol.atomBonds(mol.getAtomWithIdx(curr))) {
+    for (auto *bond : mol.atomBonds(mol.getAtomWithIdx(curr))) {
       if (!activeBonds[bond->getIdx()]) {
         continue;
       }
@@ -289,7 +289,7 @@ void markUselessD2s(unsigned int root, const ROMol &tMol,
                     const boost::dynamic_bitset<> &activeBonds) {
   // recursive function to mark any degree 2 nodes that are already represented
   // by root for the purpose of finding smallest rings.
-  for (auto bond : tMol.atomBonds(tMol.getAtomWithIdx(root))) {
+  for (auto *bond : tMol.atomBonds(tMol.getAtomWithIdx(root))) {
     if (!activeBonds[bond->getIdx()]) {
       continue;
     }
@@ -396,7 +396,7 @@ void findRingsD2nodes(const ROMol &tMol, VECT_INT_VECT &res,
   //  - the bonds to these nodes will be broken and we attempt to find a new
   //  ring, for e.g. by breaking bonds to 7 and 13, we will find a 7 membered
   //  ring with 6 (this is done in findSSSRforDupCands)
-  for (auto &cand : d2nodes) {
+  for (const auto &cand : d2nodes) {
     VECT_INT_VECT srings;
     // we have to find all non duplicate possible smallest rings for each node
     smallestRingsBfs(tMol, cand, srings, activeBonds);
@@ -500,7 +500,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
   if (nsmall < 3) {
     int n1 = -1, n2 = -1, n3 = -1;
 
-    for (auto bond : tMol.atomBonds(tMol.getAtomWithIdx(cand))) {
+    for (auto *bond : tMol.atomBonds(tMol.getAtomWithIdx(cand))) {
       if (!activeBonds[bond->getIdx()]) {
         continue;
       }
@@ -648,7 +648,7 @@ bool _atomSearchBFS(const ROMol &tMol, unsigned int startAtomIdx,
     bfsq.pop_front();
 
     unsigned int currAtomIdx = tv.back();
-    for (auto nbr : tMol.atomNeighbors(tMol.getAtomWithIdx(currAtomIdx))) {
+    for (auto *nbr : tMol.atomNeighbors(tMol.getAtomWithIdx(currAtomIdx))) {
       auto nbrIdx = nbr->getIdx();
       if (nbrIdx == endAtomIdx) {
         if (currAtomIdx != startAtomIdx) {
@@ -738,7 +738,7 @@ void findRingsFigueras(const ROMol &mol, VECT_INT_VECT &res,
   const int nbnds = mol.getNumBonds();
   boost::dynamic_bitset<> activeBonds(nbnds);
   activeBonds.set();
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     if (auto bt = bond->getBondType();
         bt == Bond::ZERO || (!includeDativeBonds && isDative(bt)) ||
         (!includeHydrogenBonds && bt == Bond::HYDROGEN)) {
@@ -754,7 +754,7 @@ void findRingsFigueras(const ROMol &mol, VECT_INT_VECT &res,
     int deg = atom->getDegree();
     atomDegrees[i] = deg;
     atomDegreesWithZeroOrderBonds[i] = deg;
-    for (const auto bond : mol.atomBonds(atom)) {
+    for (auto *const bond : mol.atomBonds(atom)) {
       auto bt = bond->getBondType();
       if (bt == Bond::ZERO || (!includeHydrogenBonds && bt == Bond::HYDROGEN) ||
           (!includeDativeBonds && isDative(bt))) {
@@ -958,7 +958,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT *res, bool includeDativeBonds,
 int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
              bool includeHydrogenBonds) {
   res.clear();
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   if (ringInfo->isInitialized()) {
     ringInfo->reset();
   }
@@ -966,7 +966,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
 
   ringInfo->preallocate(mol.getNumAtoms(), mol.getNumBonds());
   findRingFamilies(mol, includeDativeBonds, includeHydrogenBonds);
-  auto urfdata = mol.getRingInfo()->dp_urfData.get();
+  auto *urfdata = mol.getRingInfo()->dp_urfData.get();
 
   RDL_cycle **sssr = nullptr;
   auto sssrSize = RDL_getSSSR(urfdata, &sssr);
@@ -1019,7 +1019,7 @@ void legacySymmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res,
 
   // get the bond rings: we should have these from the SSSR calculation,
   // so no need to make the conversion, just make a copy.
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   auto bondsssrs = ringInfo->bondRings();
 
   //
@@ -1085,7 +1085,7 @@ void legacySymmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res,
 int symmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res,
                    SymmetrizeSSSRAlgorithm algorithm, bool includeDativeBonds,
                    bool includeHydrogenBonds) {
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   if (ringInfo->isInitialized()) {
     ringInfo->reset();
   }
@@ -1142,7 +1142,7 @@ void findRingFamilies(const ROMol &mol, bool includeDativeBonds,
   }
 
   RDL_graph *graph = RDL_initNewGraph(numAtoms);
-  for (auto cbi : mol.bonds()) {
+  for (auto *cbi : mol.bonds()) {
     if (auto bt = cbi->getBondType();
         bt == Bond::ZERO || (!includeDativeBonds && isDative(bt)) ||
         (!includeHydrogenBonds && bt == Bond::HYDROGEN)) {
