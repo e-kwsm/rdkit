@@ -214,12 +214,12 @@ void getStereoNeighbors(const Bond *bond, std::vector<const Atom *> &beginAtoms,
   beginAtoms.clear();
   endAtoms.clear();
   const auto &mol = bond->getOwningMol();
-  for (const auto neighbor : mol.atomNeighbors(bond->getBeginAtom())) {
+  for (auto *const neighbor : mol.atomNeighbors(bond->getBeginAtom())) {
     if (neighbor != bond->getEndAtom()) {
       beginAtoms.push_back(neighbor);
     }
   }
-  for (const auto neighbor : mol.atomNeighbors(bond->getEndAtom())) {
+  for (auto *const neighbor : mol.atomNeighbors(bond->getEndAtom())) {
     if (neighbor != bond->getBeginAtom()) {
       endAtoms.push_back(neighbor);
     }
@@ -263,7 +263,7 @@ bool getStereoAtomsFromGeometry(const Bond *bond, Bond::BondStereo stereo,
   const auto bondVec = endPos - beginPos;
   double bestScore = -1.0;
 
-  for (const auto beginAtom : beginAtoms) {
+  for (const auto *const beginAtom : beginAtoms) {
     const auto beginStereoPos = conf.getAtomPos(beginAtom->getIdx());
     const auto beginVec = beginStereoPos - beginPos;
     // Use the same signed 2D area test as Depictor/EmbeddedFrag.cpp.
@@ -271,7 +271,7 @@ bool getStereoAtomsFromGeometry(const Bond *bond, Bond::BondStereo stereo,
     if (std::abs(beginSide) < 1e-6) {
       continue;
     }
-    for (const auto endAtom : endAtoms) {
+    for (const auto *const endAtom : endAtoms) {
       const auto endStereoPos = conf.getAtomPos(endAtom->getIdx());
       const auto endVec = endStereoPos - beginPos;
       const auto endSide = bondVec.x * endVec.y - bondVec.y * endVec.x;
@@ -379,7 +379,7 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
 
 void checkChemDrawDoubleBondGeometries(RWMol &mol) {
   std::vector<std::pair<Bond *, Bond::BondStereo>> unsetDoubleBonds;
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     if (bond->getBondType() != Bond::BondType::DOUBLE ||
         bond->getStereo() != Bond::BondStereo::STEREONONE) {
       continue;
@@ -400,7 +400,7 @@ void checkChemDrawDoubleBondGeometries(RWMol &mol) {
   bool haveRanks = false;
   UINT_VECT ranks;
   for (const auto &entry : unsetDoubleBonds) {
-    auto bond = entry.first;
+    auto *bond = entry.first;
     bond->setStereo(entry.second);
     INT_VECT stereoAtoms;
     if (!getStereoAtomsFromGeometry(bond, entry.second, stereoAtoms)) {

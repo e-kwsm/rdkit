@@ -1466,7 +1466,7 @@ TEST_CASE("Bond stereo") {
     CHECK(MolToSmiles(mol, false) == "CC1C2CCC1CC(=NO)C2");
 
     Bond *bond = nullptr;
-    for (auto candidate : mol.bonds()) {
+    for (auto *candidate : mol.bonds()) {
       if (candidate->getBondType() == Bond::BondType::DOUBLE) {
         bond = candidate;
         break;
@@ -1476,10 +1476,10 @@ TEST_CASE("Bond stereo") {
     CHECK(bond->getStereo() == expectedStereo);
     CHECK(bond->getStereoAtoms() == INT_VECT({0, 10}));
 
-    auto roundtrip = MolBlockToMol(MolToV3KMolBlock(mol));
+    auto *roundtrip = MolBlockToMol(MolToV3KMolBlock(mol));
     REQUIRE(roundtrip);
     Bond *roundtripBond = nullptr;
-    for (auto candidate : roundtrip->bonds()) {
+    for (auto *candidate : roundtrip->bonds()) {
       if (candidate->getBondType() == Bond::BondType::DOUBLE) {
         roundtripBond = candidate;
         break;
@@ -1494,7 +1494,7 @@ TEST_CASE("Bond stereo") {
     auto rawMols = MolsFromChemDrawFile(fname, params);
     REQUIRE(rawMols.size() == 1);
     Bond *rawBond = nullptr;
-    for (auto candidate : rawMols[0]->bonds()) {
+    for (auto *candidate : rawMols[0]->bonds()) {
       if (candidate->getBondType() == Bond::BondType::DOUBLE) {
         rawBond = candidate;
         break;
