@@ -1874,11 +1874,11 @@ TEST_CASE("Github #9404: competing 1-4s in six membered rings") {
 
     REQUIRE(mol);
 
-    auto bnd = mol->getBondBetweenAtoms(1, 2);
+    auto *bnd = mol->getBondBetweenAtoms(1, 2);
     bnd->setStereoAtoms(0, 3);
     bnd->setStereo(Bond::BondStereo::STEREOTRANS);
 
-    auto bnd2 = mol->getBondBetweenAtoms(5, 4);
+    auto *bnd2 = mol->getBondBetweenAtoms(5, 4);
     bnd2->setStereoAtoms(3, 0);
     bnd2->setStereo(Bond::BondStereo::STEREOCIS);
 
