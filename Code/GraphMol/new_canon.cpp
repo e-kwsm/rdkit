@@ -565,8 +565,7 @@ void getChiralBonds(const ROMol &mol, const Atom *at, BondholderVector &nbrs) {
 }
 
 void basicInitCanonAtom(const ROMol &mol, Canon::canon_atom &atom,
-                        const int &idx,
-                        const std::span<int> neighborIds) {
+                        const int &idx, const std::span<int> neighborIds) {
   atom.atom = mol.getAtomWithIdx(idx);
   atom.index = idx;
   atom.p_symbol = nullptr;
@@ -619,8 +618,7 @@ void initFragmentCanonAtoms(const ROMol &mol,
                             const std::vector<std::string> *bondSymbols,
                             const boost::dynamic_bitset<> &atomsInPlay,
                             const boost::dynamic_bitset<> &bondsInPlay,
-                            std::span<int> neighborIds,
-                            bool needsInit) {
+                            std::span<int> neighborIds, bool needsInit) {
   needsInit = true;
   PRECONDITION(!atomSymbols || atomSymbols->size() == mol.getNumAtoms(),
                "bad atom symbols");

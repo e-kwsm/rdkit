@@ -916,8 +916,7 @@ void initFragmentCanonAtoms(const ROMol &mol,
                             const std::vector<std::string> *bondSymbols,
                             const boost::dynamic_bitset<> &atomsInPlay,
                             const boost::dynamic_bitset<> &bondsInPlay,
-                            std::span<int> neighborIds,
-                            bool needsInit);
+                            std::span<int> neighborIds, bool needsInit);
 template <typename T>
 void rankWithFunctor(T &ftor, bool breakTies, std::vector<int> &order,
                      bool useSpecial = false, bool useChirality = false,
