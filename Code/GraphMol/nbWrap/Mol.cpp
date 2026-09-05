@@ -426,45 +426,41 @@ struct mol_wrapper {
 #else
     nb::class_<ROMol>(m, "Mol", nb::dynamic_attr())
 #endif
-        .def(nb::new_([]() {
-      return new ROMol(); }),
+        .def(nb::new_([]() { return new ROMol(); }),
              "Constructor, takes no arguments")
         .def(nb::new_([](nb::bytes b) {
-      return new ROMol(std::string(static_cast<const char *>(b.data()),
-                                   static_cast<size_t>(b.size())));
+               return new ROMol(std::string(static_cast<const char *>(b.data()),
+                                            static_cast<size_t>(b.size())));
              }),
              "Constructor from a binary string", "pklString"_a)
         .def(nb::new_([](nb::bytes b, unsigned int propertyFlags) {
-      return new ROMol(std::string(static_cast<const char *>(b.data()),
-                                   static_cast<size_t>(b.size())),
-                       propertyFlags);
+               return new ROMol(std::string(static_cast<const char *>(b.data()),
+                                            static_cast<size_t>(b.size())),
+                                propertyFlags);
              }),
              "Constructor from a binary string with property flags",
              "pklString"_a, "propertyFlags"_a)
-        .def(nb::new_([](std::string pkl) {
-      return new ROMol(pkl);
+        .def(nb::new_([](std::string pkl) { return new ROMol(pkl);
              }),
              "Constructor from a binary string", "pklString"_a)
         .def(nb::new_([](std::string pkl, unsigned int propertyFlags) {
-      return new ROMol(pkl, propertyFlags);
+               return new ROMol(pkl, propertyFlags);
              }),
              "Constructor from a binary string with property flags",
              "pklString"_a, "propertyFlags"_a)
         .def(nb::new_([](const ROMol &m, bool quickCopy, int confId) {
-      return new ROMol(m, quickCopy, confId);
+               return new ROMol(m, quickCopy, confId);
              }),
              "Constructor from another molecule", "mol"_a,
              "quickCopy"_a = false, "confId"_a = -1)
         .def("__copy__", &generic__copy__<ROMol>)
         .def("__deepcopy__", &generic__deepcopy__<ROMol>, "memo"_a)
         .def(
-            "GetAtoms", [](ROMol &mol) {
-      return AtomSeqHolder<>(mol); },
+            "GetAtoms", [](ROMol &mol) { return AtomSeqHolder<>(mol); },
             nb::keep_alive<0, 1>(),
             "Returns a sequence-like object of the molecule's atoms.")
         .def(
-            "GetBonds", [](ROMol &mol) {
-      return BondSeqHolder<>(mol); },
+            "GetBonds", [](ROMol &mol) { return BondSeqHolder<>(mol); },
             nb::keep_alive<0, 1>(),
             "Returns a sequence-like object of the molecule's bonds.")
         .def("GetNumAtoms",
@@ -512,10 +508,10 @@ struct mol_wrapper {
         .def(
             "AddConformer",
             [](ROMol &mol, Conformer &conf, bool assignId) {
-      // C++ takes ownership of the new Conformer.
-      // There's no way for python to relinquish ownership,
-      // so we need to copy.
-      return mol.addConformer(new Conformer(conf), assignId);
+              // C++ takes ownership of the new Conformer.
+              // There's no way for python to relinquish ownership,
+              // so we need to copy.
+              return mol.addConformer(new Conformer(conf), assignId);
             },
             "conf"_a, "assignId"_a = false,
             "Add a conformer to the molecule and return the conformer ID")
@@ -527,7 +523,7 @@ struct mol_wrapper {
 
         .def(
             "GetConformers",
-            [](ROMol &self) {return ConformerIterSeq(self);},
+            [](ROMol &self) { return ConformerIterSeq(self);},
             nb::keep_alive<0, 1>(),
             R"DOC(Returns a read-only sequence containing all of the molecule's Conformers.)DOC")
 
@@ -957,17 +953,17 @@ struct mol_wrapper {
             R"DOC(Returns a list of StereoGroups defining the relative stereochemistry of the atoms.))DOC")
 
            .def("GetAromaticAtoms", [](const ROMol &self) {
-      auto *qa = new QueryAtom();
-      qa->setQuery(makeAtomAromaticQuery());
-      bool ownsQa = true;
-      return QueryAtomIterSeq(self, qa, ownsQa);
+              auto *qa = new QueryAtom();
+              qa->setQuery(makeAtomAromaticQuery());
+              bool ownsQa = true;
+              return QueryAtomIterSeq(self, qa, ownsQa);
             }, nb::keep_alive<0,1>(),
                 "Returns a read-only sequence containing all of the molecule's aromatic Atoms.\n")
         .def(
             "GetAtomsMatchingQuery",
             [](const ROMol &self, const QueryAtom *qa) {
-      bool ownsQa = false;
-      return QueryAtomIterSeq(self, qa, ownsQa);
+              bool ownsQa = false;
+              return QueryAtomIterSeq(self, qa, ownsQa);
             },
             "qa"_a, nb::keep_alive<0, 1>(),
             R"DOC(Returns a read-only sequence containing all of the atoms in a molecule that match the query atom.
