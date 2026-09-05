@@ -746,9 +746,11 @@ class TestCase(unittest.TestCase):
 
       conf1 = m1.GetConformer()
       conf2 = m2.GetConformer()
-      self.assertTrue(
+      self.assertLessEqual(
         abs((conf2.GetAtomPosition(4) - conf2.GetAtomPosition(0)).Length() -
-            target) <= abs((conf1.GetAtomPosition(4) - conf1.GetAtomPosition(0)).Length() - target)) # both end up in same position
+            target),
+        abs((conf1.GetAtomPosition(4) - conf1.GetAtomPosition(0)).Length() -
+            target)) # both end up in same position
 
   def testETKDGv3amide(self):
     """
