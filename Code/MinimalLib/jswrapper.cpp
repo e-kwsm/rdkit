@@ -579,19 +579,25 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
                 select_overload<std::string() const>(&JSMolBase::get_inchi))
 #endif
       .function("get_json", &JSMolBase::get_json)
-      .function("get_svg", select_overload<std::string() const>(&JSMolBase::get_svg))
-      .function("get_svg(width, height)", select_overload<std::string(int, int) const>(
-                               &JSMolBase::get_svg))
+      .function("get_svg",
+                select_overload<std::string() const>(&JSMolBase::get_svg))
+      .function(
+          "get_svg(width, height)",
+          select_overload<std::string(int, int) const>(&JSMolBase::get_svg))
 
-      .function("get_svg_with_highlights(details)", &JSMolBase::get_svg_with_highlights)
-      .function("combine_with(other)", select_overload<std::string(const JSMolBase &)>(
-                                    &JSMolBase::combine_with))
+      .function("get_svg_with_highlights(details)",
+                &JSMolBase::get_svg_with_highlights)
+      .function("combine_with(other)",
+                select_overload<std::string(const JSMolBase &)>(
+                    &JSMolBase::combine_with))
       .function(
           "combine_with(other, details)",
           select_overload<std::string(const JSMolBase &, const std::string &)>(
               &JSMolBase::combine_with))
 #ifdef __EMSCRIPTEN__
-      .function("draw_to_canvas_with_offset(canvas, offsetx, offsety, width, height)", &draw_to_canvas_with_offset)
+      .function(
+          "draw_to_canvas_with_offset(canvas, offsetx, offsety, width, height)",
+          &draw_to_canvas_with_offset)
       .function("draw_to_canvas(canvas, width, height)", &draw_to_canvas)
       .function("draw_to_canvas_with_highlights(canvas, details)",
                 &draw_to_canvas_with_highlights)
@@ -645,9 +651,10 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
           select_overload<emscripten::val(
               const JSMolBase &, const std::string &, const std::string &)>(
               add_to_png_blob_helper))
-      .function("add_to_png_blob(pngString)", select_overload<emscripten::val(
-                                       const JSMolBase &, const std::string &)>(
-                                       add_to_png_blob_helper))
+      .function(
+          "add_to_png_blob(pngString)",
+          select_overload<emscripten::val(
+              const JSMolBase &, const std::string &)>(add_to_png_blob_helper))
       .function("get_coords", get_coords_helper)
 #ifdef RDK_BUILD_AVALON_SUPPORT
       .function(
@@ -718,8 +725,9 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
                                       &JSMolBase::get_new_coords))
       .function("set_new_coords(useCoordGen)",
                 select_overload<bool(bool)>(&JSMolBase::set_new_coords))
-      .function("get_new_coords(useCoordGen)", select_overload<std::string(bool) const>(
-                                      &JSMolBase::get_new_coords))
+      .function(
+          "get_new_coords(useCoordGen)",
+          select_overload<std::string(bool) const>(&JSMolBase::get_new_coords))
       .function("has_prop(key)", &JSMolBase::has_prop)
       .function("get_prop_list(includePrivate, includeComputed)",
                 select_overload<std::vector<std::string>(
@@ -763,14 +771,16 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
                 select_overload<double()>(&JSMolBase::normalize_depiction))
       .function("normalize_depiction(canonicalize)",
                 select_overload<double(int)>(&JSMolBase::normalize_depiction))
-      .function("normalize_depiction(canonicalize, scaleFactor)", select_overload<double(int, double)>(
-                                           &JSMolBase::normalize_depiction))
+      .function(
+          "normalize_depiction(canonicalize, scaleFactor)",
+          select_overload<double(int, double)>(&JSMolBase::normalize_depiction))
       .function("straighten_depiction",
                 select_overload<void()>(&JSMolBase::straighten_depiction))
       .function("straighten_depiction(minimizeRotation)",
                 select_overload<void(bool)>(&JSMolBase::straighten_depiction))
-      .function("get_num_atoms(heavyOnly)", select_overload<unsigned int(bool) const>(
-                                     &JSMolBase::get_num_atoms))
+      .function(
+          "get_num_atoms(heavyOnly)",
+          select_overload<unsigned int(bool) const>(&JSMolBase::get_num_atoms))
       .function("get_num_atoms", select_overload<unsigned int() const>(
                                      &JSMolBase::get_num_atoms))
       .function("get_num_bonds", &JSMolBase::get_num_bonds)
@@ -799,18 +809,22 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
 #ifdef RDK_BUILD_MINIMAL_LIB_RXN
   class_<JSReaction>("Reaction")
 #ifdef __EMSCRIPTEN__
-      .function("run_reactants(reactants, maxProducts)", select_overload<std::vector<JSMolList *>(
-                                     const JSMolList &, unsigned int) const>(
-                                     &JSReaction::run_reactants))
-      .function("draw_to_canvas_with_offset(canvas, offsetx, offsety, width, height)", &draw_rxn_to_canvas_with_offset)
+      .function("run_reactants(reactants, maxProducts)",
+                select_overload<std::vector<JSMolList *>(const JSMolList &,
+                                                         unsigned int) const>(
+                    &JSReaction::run_reactants))
+      .function(
+          "draw_to_canvas_with_offset(canvas, offsetx, offsety, width, height)",
+          &draw_rxn_to_canvas_with_offset)
       .function("draw_to_canvas(canvas, width, height)", &draw_rxn_to_canvas)
       .function("draw_to_canvas_with_highlights(canvas, details)",
                 &draw_rxn_to_canvas_with_highlights)
 #endif
       .function("get_svg",
                 select_overload<std::string() const>(&JSReaction::get_svg))
-      .function("get_svg(width, height)", select_overload<std::string(int, int) const>(
-                               &JSReaction::get_svg))
+      .function(
+          "get_svg(width, height)",
+          select_overload<std::string(int, int) const>(&JSReaction::get_svg))
 
       .function("get_svg_with_highlights(details)",
                 &JSReaction::get_svg_with_highlights);
@@ -822,8 +836,10 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
       .constructor<unsigned int>()
       .function("add_mol(m)", &JSSubstructLibrary::add_mol)
       .function("add_smiles(smi)", &JSSubstructLibrary::add_smiles)
-      .function("add_trusted_smiles(smi)", &JSSubstructLibrary::add_trusted_smiles)
-      .function("get_trusted_smiles(i)", &JSSubstructLibrary::get_trusted_smiles)
+      .function("add_trusted_smiles(smi)",
+                &JSSubstructLibrary::add_trusted_smiles)
+      .function("get_trusted_smiles(i)",
+                &JSSubstructLibrary::get_trusted_smiles)
 #ifdef __EMSCRIPTEN__
       .function("add_trusted_smiles_and_pattern_fp(smi, patternFpAsUInt8Array)",
                 select_overload<int(JSSubstructLibrary &, const std::string &,
@@ -845,7 +861,8 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
           select_overload<val(const JSSubstructLibrary &, const JSMolBase &)>(
               get_matches_as_uint32array))
 #endif
-      .function("get_mol(i)", &JSSubstructLibrary::get_mol, allow_raw_pointers())
+      .function("get_mol(i)", &JSSubstructLibrary::get_mol,
+                allow_raw_pointers())
       .function(
           "get_matches(q, useChirality, numThreads, maxResults)",
           select_overload<std::string(const JSMolBase &, bool, int, int) const>(
@@ -876,8 +893,10 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
 
   function("version", &version);
   function("prefer_coordgen(prefer)", &prefer_coordgen);
-  function("use_legacy_stereo_perception(value)", &use_legacy_stereo_perception);
-  function("allow_non_tetrahedral_chirality(value)", &allow_non_tetrahedral_chirality);
+  function("use_legacy_stereo_perception(value)",
+           &use_legacy_stereo_perception);
+  function("allow_non_tetrahedral_chirality(value)",
+           &allow_non_tetrahedral_chirality);
 #ifdef RDK_BUILD_INCHI_SUPPORT
   function("get_inchikey_for_inchi(input)", &get_inchikey_for_inchi);
 #endif
@@ -900,8 +919,10 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
 #ifdef RDK_BUILD_MINIMAL_LIB_MCS
   function("get_mcs_as_json(mols, details_json)", &get_mcs_as_json);
   function("get_mcs_as_json(mols)", &get_mcs_as_json_no_details);
-  function("get_mcs_as_mol(mols, details_json)", &get_mcs_as_mol, allow_raw_pointers());
-  function("get_mcs_as_mol(mols)", &get_mcs_as_mol_no_details, allow_raw_pointers());
+  function("get_mcs_as_mol(mols, details_json)", &get_mcs_as_mol,
+           allow_raw_pointers());
+  function("get_mcs_as_mol(mols)", &get_mcs_as_mol_no_details,
+           allow_raw_pointers());
   function("get_mcs_as_smarts(mols, details_json)", &get_mcs_as_smarts);
   function("get_mcs_as_smarts(mols)", &get_mcs_as_smarts_no_details);
 #endif
@@ -917,26 +938,30 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
                     get_rgroups_as_rows_helper));
   // We use a factory function rather than a class constructor; see
   // https://github.com/emscripten-core/emscripten/issues/11274
-  function("get_rgd(singleOrMultipleCores, details_json)", &get_rgd_helper, allow_raw_pointers());
-  function("get_rgd(singleOrMultipleCores)", &get_rgd_no_details_helper, allow_raw_pointers());
+  function("get_rgd(singleOrMultipleCores, details_json)", &get_rgd_helper,
+           allow_raw_pointers());
+  function("get_rgd(singleOrMultipleCores)", &get_rgd_no_details_helper,
+           allow_raw_pointers());
 #endif
 #if defined(RDK_BUILD_MINIMAL_LIB_MOLZIP) && defined(__EMSCRIPTEN__)
   function("molzip(a, b, details_json)", &::molzip, allow_raw_pointers());
 #ifdef RDK_BUILD_MINIMAL_LIB_RGROUPDECOMP
-  function("molzip(param1, param2)", &molzip_2params_helper, allow_raw_pointers());
-  function("molzip(rgdRow)", &molzip_no_details_rgd_row_helper, allow_raw_pointers());
+  function("molzip(param1, param2)", &molzip_2params_helper,
+           allow_raw_pointers());
+  function("molzip(rgdRow)", &molzip_no_details_rgd_row_helper,
+           allow_raw_pointers());
 #else
   function("molzip(a, b)", &molzip_no_details_helper, allow_raw_pointers());
 #endif
 #endif
 #ifdef __EMSCRIPTEN__
-  function("get_mol_from_png_blob(pngAsUInt8Array, details)", &get_mol_from_png_blob_helper,
-           allow_raw_pointers());
-  function("get_mol_from_png_blob(pngAsUInt8Array)", &get_mol_from_png_blob_no_details_helper,
-           allow_raw_pointers());
-  function("get_mols_from_png_blob(pngAsUInt8Array, details)", &get_mols_from_png_blob_helper,
-           allow_raw_pointers());
-  function("get_mols_from_png_blob(pngAsUInt8Array)", &get_mols_from_png_blob_no_details_helper,
-           allow_raw_pointers());
+  function("get_mol_from_png_blob(pngAsUInt8Array, details)",
+           &get_mol_from_png_blob_helper, allow_raw_pointers());
+  function("get_mol_from_png_blob(pngAsUInt8Array)",
+           &get_mol_from_png_blob_no_details_helper, allow_raw_pointers());
+  function("get_mols_from_png_blob(pngAsUInt8Array, details)",
+           &get_mols_from_png_blob_helper, allow_raw_pointers());
+  function("get_mols_from_png_blob(pngAsUInt8Array)",
+           &get_mols_from_png_blob_no_details_helper, allow_raw_pointers());
 #endif
 }

@@ -31,7 +31,6 @@
 #include <GraphMol/StereoGroup.h>
 #include <GraphMol/SubstanceGroup.h>
 
-
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>

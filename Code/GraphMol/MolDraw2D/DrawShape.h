@@ -142,9 +142,9 @@ class DrawShapePolyLine : public DrawShape {
 
 class DrawShapeSolidWedge : public DrawShape {
  public:
-  DrawShapeSolidWedge(const std::vector<Point2D> &points, const DrawColour &col1,
-                      const DrawColour &col2, bool splitBonds,
-                      std::vector<Point2D> &otherBondVecs,
+  DrawShapeSolidWedge(const std::vector<Point2D> &points,
+                      const DrawColour &col1, const DrawColour &col2,
+                      bool splitBonds, std::vector<Point2D> &otherBondVecs,
                       double lineWidth = 1.0, int atom1 = -1, int atom2 = -1,
                       int bond = -1);
   DrawShapeSolidWedge(const DrawShapeSolidWedge &) = delete;
