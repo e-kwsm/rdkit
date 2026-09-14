@@ -150,7 +150,7 @@ $([N;H0&+0]([C;!$(C(=O))])([C;!$(C(=O))])[C;!$(C(=O))])]"},  // Basic
 std::vector<std::vector<const ROMol *>> *getPh4Patterns() {
   static std::unique_ptr<std::vector<std::vector<const ROMol *>>> patterns;
   if (!patterns) {
-    patterns.reset(new std::vector<std::vector<const ROMol *>>());
+    patterns = std::make_unique<std::vector<std::vector<const ROMol *>>>();
     for (const auto &smartsV : smartsPatterns) {
       std::vector<const ROMol *> v;
       for (const auto &smarts : smartsV) {
