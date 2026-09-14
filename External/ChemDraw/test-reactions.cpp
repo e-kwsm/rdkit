@@ -148,7 +148,7 @@ M  END
 )RXN";
     std::unique_ptr<ChemicalReaction> rxn_mb{RxnBlockToChemicalReaction(rxnb)};
     // CDXMLToReaction is sanitized by default, this might be a mistake...
-    unsigned int failed;
+    unsigned int failed = 0;
     RxnOps::sanitizeRxn(
         *rxn_mb, failed,
         RxnOps::SANITIZE_ADJUST_REACTANTS | RxnOps::SANITIZE_ADJUST_PRODUCTS,
