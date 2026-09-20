@@ -178,8 +178,8 @@ TEST_CASE("test1") {
   fname += "initCoords.sdf";
   v2::FileParsers::SDMolSupplier sdsup(fname);
   // SDWriter writer("foo.sdf");
-  for (std::size_t i = 0; i < smiString.size(); ++i) {
-    auto m = v2::SmilesParse::MolFromSmiles(smiString[i]);
+  for (const auto &i : smiString) {
+    auto m = v2::SmilesParse::MolFromSmiles(i);
     DGeomHelpers::EmbedParameters params{
         .maxIterations = 10,
         .randomSeed = 1,

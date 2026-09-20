@@ -123,9 +123,9 @@ void writeBitSet(std::ostream &os, const boost::dynamic_bitset<> &bitset) {
 void writeSearchOrderSet(std::ostream &os,
                          const std::vector<std::vector<size_t>> &orderSet) {
   streamWrite(os, static_cast<std::uint64_t>(orderSet.size()));
-  for (unsigned int i = 0; i < orderSet.size(); ++i) {
-    streamWrite(os, static_cast<std::uint64_t>(orderSet[i].size()));
-    for (const auto v : orderSet[i]) {
+  for (const auto &i : orderSet) {
+    streamWrite(os, static_cast<std::uint64_t>(i.size()));
+    for (const auto v : i) {
       streamWrite(os, static_cast<std::uint64_t>(v));
     }
   }
