@@ -109,7 +109,7 @@ bool hasRecursiveQuery(const QueryAtom::QUERYATOM_QUERY *q,
   }
   if (q->getDescription() == "RecursiveStructure" &&
       (!checkInitialized ||
-       !static_cast<RecursiveStructureQuery const *>(q)->getInitialized())) {
+       !dynamic_cast<RecursiveStructureQuery const *>(q)->getInitialized())) {
     return true;
   }
   for (auto iter = q->beginChildren(); iter != q->endChildren(); ++iter) {
