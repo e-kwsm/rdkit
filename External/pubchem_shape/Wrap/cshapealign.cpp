@@ -97,7 +97,8 @@ python::tuple scoreShape(const ShapeInput &shape1, ShapeInput &shape2,
 }
 void transformConformer(const python::list &pyFinalTrans,
                         const python::list &pyFinalRot,
-                        const python::list &pyMatrix, ShapeInput probeShape,
+                        const python::list &pyMatrix,
+                        const ShapeInput &probeShape,
                         RDKit::Conformer &probeConf) {
   std::vector<float> matrix;
   pythonObjectToVect<float>(pyMatrix, matrix);
