@@ -468,8 +468,7 @@ TEST_CASE("CDXML") {
       auto smarts = MolToSmarts(*mols[0]);
       CHECK(smarts.find("!H0") != std::string::npos);
       auto monoSubstituted = std::unique_ptr<ROMol>(SmilesToMol("Cc1ccccc1"));
-      auto diSubstituted =
-          std::unique_ptr<ROMol>(SmilesToMol("Cc1ccc(C)cc1"));
+      auto diSubstituted = std::unique_ptr<ROMol>(SmilesToMol("Cc1ccc(C)cc1"));
       REQUIRE(monoSubstituted);
       REQUIRE(diSubstituted);
       MatchVectType match;
@@ -518,18 +517,12 @@ TEST_CASE("CDXML") {
       const std::vector<std::pair<std::string, std::string>> cases = {
           {queryBase + "qrestrict_ringbond_asdrawn.cdxml",
            "[#6]-[#6]-[!#1&x0]"},
-          {queryBase + "qrestrict_freesites_1.cdxml",
-           "[#6]-[#6]-[!#1&D{1-2}]"},
-          {queryBase + "qrestrict_implicit_hs.cdxml",
-           "[#6]-[#6]-[!#1&h0]"},
-          {queryBase + "qrestrict_ringbond_simple.cdxml",
-           "[#6]-[#6]-[!#1&x2]"},
-          {queryBase + "qatom_notlist.cdxml",
-            "[#6]-[#6]-[!#6&!#7&!#8]"},
-          {queryBase + "qrestrict_sub_exact_2.cdxml",
-           "[#6]-[#6]-[!#1&D2]"},
-          {queryBase + "qrestrict_sub_upto_2.cdxml",
-           "[#6]-[#6]-[!#1&D{0-2}]"},
+          {queryBase + "qrestrict_freesites_1.cdxml", "[#6]-[#6]-[!#1&D{1-2}]"},
+          {queryBase + "qrestrict_implicit_hs.cdxml", "[#6]-[#6]-[!#1&h0]"},
+          {queryBase + "qrestrict_ringbond_simple.cdxml", "[#6]-[#6]-[!#1&x2]"},
+          {queryBase + "qatom_notlist.cdxml", "[#6]-[#6]-[!#6&!#7&!#8]"},
+          {queryBase + "qrestrict_sub_exact_2.cdxml", "[#6]-[#6]-[!#1&D2]"},
+          {queryBase + "qrestrict_sub_upto_2.cdxml", "[#6]-[#6]-[!#1&D{0-2}]"},
           {queryBase + "qrestrict_unsat_present.cdxml",
            "[#6]-[#6]-[!#1&$(*=,:,#*)]"},
       };
@@ -542,13 +535,13 @@ TEST_CASE("CDXML") {
         CHECK(MolToSmarts(*mols[0]) == expectedSmarts);
       }
 
-        const std::vector<std::tuple<std::string, std::string, int>> propCases = {
+      const std::vector<std::tuple<std::string, std::string, int>> propCases = {
           {queryBase + "qrestrict_rxnstereo_inversion.cdxml",
            std::string(common_properties::molInversionFlag), 1},
-        };
+      };
 
       for (const auto &[fname, propName, expectedValue] : propCases) {
-          auto mols = MolsFromCDXMLFile(fname, params);
+        auto mols = MolsFromCDXMLFile(fname, params);
         REQUIRE(mols.size() == 1);
         auto atom = mols[0]->getAtomWithIdx(2);
         CHECK(atom->hasProp(propName));
@@ -570,7 +563,7 @@ TEST_CASE("CDXML") {
       REQUIRE(bond);
       CHECK(bond->hasProp(common_properties::_MolFileBondAttach));
       CHECK(bond->getProp<std::string>(common_properties::_MolFileBondAttach) ==
-        "ANY");
+            "ANY");
       CHECK(bond->hasProp(common_properties::_MolFileBondEndPts));
       CHECK(bond->getProp<std::string>(common_properties::_MolFileBondEndPts) ==
             "(2 1 3)");
@@ -1126,8 +1119,7 @@ TEST_CASE("CDXML hydrogen bond queries") {
   auto hydrogenBond = hydrogenBondMols[0]->getBondWithIdx(0);
   REQUIRE(hydrogenBond);
   CHECK(hydrogenBond->getBondType() == Bond::BondType::HYDROGEN);
-  CHECK(MolToCXSmarts(*hydrogenBondMols[0]).find("H:0.0") !=
-        std::string::npos);
+  CHECK(MolToCXSmarts(*hydrogenBondMols[0]).find("H:0.0") != std::string::npos);
 }
 
 TEST_CASE("CDXML multiattachment queries") {
