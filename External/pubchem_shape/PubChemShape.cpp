@@ -502,7 +502,7 @@ ShapeInput PrepareConformer(const ROMol &mol, int confId,
   DEBUG_MSG("sov: " << res.sov);
 
   // feature self overlap
-  if (feature_idx_type.size() > 0) {
+  if (!feature_idx_type.empty()) {
     Align3D::getColorAtomType2IndexVectorMap(res.atom_type_vector.data(),
                                              res.atom_type_vector.size(),
                                              res.colorAtomType2IndexVectorMap);
