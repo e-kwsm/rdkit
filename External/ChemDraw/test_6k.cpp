@@ -279,14 +279,14 @@ TEST_CASE("Round TRIP") {
         bool santizationFailure = false;
         try {
           mols = MolsFromChemDrawFile(entry.path().string());
-          if (mols.size() == 0) {
+          if (mols.empty()) {
             ChemDrawParserParams params;
             params.sanitize = false;
             mols = MolsFromChemDrawFile(entry.path().string(), params);
             santizationFailure = true;
           }
-          if (!mols.size()) {
-            if (smiles.size() == 0) {
+          if (mols.empty()) {
+            if (smiles.empty()) {
               // At least we match the chemscript non-mol
               success++;
             } else if (hasNonSupportedFeatures(entry.path().string())) {

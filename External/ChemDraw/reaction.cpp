@@ -140,7 +140,7 @@ ReactionInfo::ReactionInfo(CDXReactionScheme &scheme)
 void ReactionInfo::set_reaction_steps(
     std::map<unsigned int, std::vector<int>> &grouped_fragments,
     const std::vector<std::unique_ptr<RWMol>> &mols) const {
-  if (steps.size()) {
+  if (!steps.empty()) {
     std::map<unsigned int, size_t> fragments;
     std::map<unsigned int, size_t> agents;
     std::map<unsigned int, size_t> products;
