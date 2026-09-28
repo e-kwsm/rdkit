@@ -91,7 +91,7 @@ struct RDKIT_DEPICTOR_EXPORT Compute2DCoordParameters {
   bool useRingTemplates = false;  //!< whether to use ring system templates for
                                   //!< generating initial coordinates
   bool usePathAngleExpansion = true;  //!< use path angle expansion for
-                                       //!< collision resolution
+                                      //!< collision resolution
 };
 
 //! \brief Generate 2D coordinates (a depiction) for a molecule

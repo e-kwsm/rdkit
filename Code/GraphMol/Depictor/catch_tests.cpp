@@ -2674,16 +2674,16 @@ TEST_CASE("complex spiro structure from MOL file - reasonable bond lengths") {
 }
 
 TEST_CASE("collision resolution catches crossings far from bond midpoints") {
-  auto smiles = GENERATE(
-      "COCC(Cn1ccnc1[N+](=O)[O-])OP(=O)(N1CC1(C)C)N1CC1(C)C",
-      "CCC(=O)O[C@H]1C[C@H](OC(C)=O)[C@@]2(C)[C@H]([C@H]1C)"
-      "[C@@H](OC(C)=O)[C@]13O[C@]1(C)C(=O)O[C@H]3/C=C(/C)C[C@H]"
-      "(OC(C)=O)[C@H]2OC(C)=O",
-      "Cc1c(C2=NC(=O)C(C)(C)N2Cc2ccccc2)nn(-c2ccc(Cl)cc2Cl)c1-"
-      "c1ccc(Cl)cc1",
-      "CCC12C=CC3=C4CCC(=O)C=C4CCC3C1CC[C@]2(C)O",
-      "CC(C)OC(=O)[C@H](C)N[P@](=O)(OC[C@H]1O[C@@](C#N)(n2ccc(N)nc2=O)"
-      "[C@](C)(O)[C@@H]1OC(=O)C(C)C)Oc1ccccc1");
+  auto smiles =
+      GENERATE("COCC(Cn1ccnc1[N+](=O)[O-])OP(=O)(N1CC1(C)C)N1CC1(C)C",
+               "CCC(=O)O[C@H]1C[C@H](OC(C)=O)[C@@]2(C)[C@H]([C@H]1C)"
+               "[C@@H](OC(C)=O)[C@]13O[C@]1(C)C(=O)O[C@H]3/C=C(/C)C[C@H]"
+               "(OC(C)=O)[C@H]2OC(C)=O",
+               "Cc1c(C2=NC(=O)C(C)(C)N2Cc2ccccc2)nn(-c2ccc(Cl)cc2Cl)c1-"
+               "c1ccc(Cl)cc1",
+               "CCC12C=CC3=C4CCC(=O)C=C4CCC3C1CC[C@]2(C)O",
+               "CC(C)OC(=O)[C@H](C)N[P@](=O)(OC[C@H]1O[C@@](C#N)(n2ccc(N)nc2=O)"
+               "[C@](C)(O)[C@@H]1OC(=O)C(C)C)Oc1ccccc1");
   CAPTURE(smiles);
 
   std::unique_ptr<RWMol> mol(SmilesToMol(smiles));
@@ -2699,8 +2699,7 @@ TEST_CASE("collision resolution catches crossings far from bond midpoints") {
 
   constexpr double epsilon = 1e-9;
   const auto orientation = [](const auto &a, const auto &b, const auto &c) {
-    return (b.x - a.x) * (c.y - a.y) -
-           (b.y - a.y) * (c.x - a.x);
+    return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
   };
   const auto onSegment = [](const auto &a, const auto &b, const auto &point) {
     return point.x >= std::min(a.x, b.x) - epsilon &&
@@ -2714,10 +2713,8 @@ TEST_CASE("collision resolution catches crossings far from bond midpoints") {
     const auto o2 = orientation(a, b, d);
     const auto o3 = orientation(c, d, a);
     const auto o4 = orientation(c, d, b);
-    if (((o1 > epsilon && o2 < -epsilon) ||
-         (o1 < -epsilon && o2 > epsilon)) &&
-        ((o3 > epsilon && o4 < -epsilon) ||
-         (o3 < -epsilon && o4 > epsilon))) {
+    if (((o1 > epsilon && o2 < -epsilon) || (o1 < -epsilon && o2 > epsilon)) &&
+        ((o3 > epsilon && o4 < -epsilon) || (o3 < -epsilon && o4 > epsilon))) {
       return true;
     }
     return (std::abs(o1) <= epsilon && onSegment(a, b, c)) ||
@@ -2740,10 +2737,9 @@ TEST_CASE("collision resolution catches crossings far from bond midpoints") {
       if (beg1 == beg2 || beg1 == end2 || end1 == beg2 || end1 == end2) {
         continue;
       }
-      CHECK_FALSE(segmentsIntersect(conf.getAtomPos(beg1),
-                                    conf.getAtomPos(end1),
-                                    conf.getAtomPos(beg2),
-                                    conf.getAtomPos(end2)));
+      CHECK_FALSE(
+          segmentsIntersect(conf.getAtomPos(beg1), conf.getAtomPos(end1),
+                            conf.getAtomPos(beg2), conf.getAtomPos(end2)));
     }
   }
 }
@@ -2753,8 +2749,10 @@ TEST_CASE("findCollisions detects crossings far from bond midpoints") {
   REQUIRE(mol);
 
   RDGeom::INT_POINT2D_MAP coordinates{
-      {0, {-10.0, 0.0}}, {1, {1.0, 0.0}},
-      {2, {0.0, -1.0}},  {3, {0.0, 1.0}},
+      {0, {-10.0, 0.0}},
+      {1, {1.0, 0.0}},
+      {2, {0.0, -1.0}},
+      {3, {0.0, 1.0}},
   };
   RDDepict::EmbeddedFrag fragment(mol.get(), coordinates);
   const auto *dmat = MolOps::getDistanceMat(*mol);
@@ -2806,8 +2804,7 @@ TEST_CASE("path angle expansion ignores bonded atom collision candidates") {
 }
 
 TEST_CASE("path angle expansion preserves fixed coordinates") {
-  auto mol =
-      "COCC(Cn1ccnc1[N+](=O)[O-])OP(=O)(N1CC1(C)C)N1CC1(C)C"_smiles;
+  auto mol = "COCC(Cn1ccnc1[N+](=O)[O-])OP(=O)(N1CC1(C)C)N1CC1(C)C"_smiles;
   REQUIRE(mol);
 
   RDDepict::Compute2DCoordParameters params;
@@ -2866,7 +2863,8 @@ TEST_CASE("path angle expansion preserves bonds in bridged ring systems") {
     const auto controlLength =
         (controlConf.getAtomPos(begin) - controlConf.getAtomPos(end)).length();
     const auto expandedLength =
-        (expandedConf.getAtomPos(begin) - expandedConf.getAtomPos(end)).length();
+        (expandedConf.getAtomPos(begin) - expandedConf.getAtomPos(end))
+            .length();
     CAPTURE(begin, end);
     CHECK(expandedLength == Catch::Approx(controlLength).margin(1e-8));
   }

@@ -368,10 +368,10 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   /// atoms
   void removeCollisionsShortenBonds();
 
-  //! Remove collisions by expanding angles along the path between colliding atoms
-  //! Runs after bond flipping, angle opening, and bond shortening.
-  //! Only expands angles where the three atoms (prev-center-next) are NOT all
-  //! in the same ring, preserving ring geometry while allowing ring-chain expansion.
+  //! Remove collisions by expanding angles along the path between colliding
+  //! atoms Runs after bond flipping, angle opening, and bond shortening. Only
+  //! expands angles where the three atoms (prev-center-next) are NOT all in the
+  //! same ring, preserving ring geometry while allowing ring-chain expansion.
   void removeCollisionsPathAngleExpansion();
 
   //! helpers functions to
@@ -416,8 +416,8 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   //! \param exclude - atom on the opposite side (don't cross to this side)
   //! \return vector of atom indices on the sideStart side
   std::vector<unsigned int> getAtomsOnSide(unsigned int center,
-                                            unsigned int sideStart,
-                                            unsigned int exclude);
+                                           unsigned int sideStart,
+                                           unsigned int exclude);
 
   //! Open an angle by rotating one side around the center atom
   //! Makes the angle LARGER (closer to 180°) to expand the chain
@@ -428,10 +428,8 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   //! \param dmat - distance matrix (for reference)
   //! \return true if a side could be rotated without moving fixed atoms or
   //! distorting a cycle
-  bool openAngleByIncrement(unsigned int prevAtom,
-                            unsigned int centerAtom,
-                            unsigned int nextAtom,
-                            double angleIncrement,
+  bool openAngleByIncrement(unsigned int prevAtom, unsigned int centerAtom,
+                            unsigned int nextAtom, double angleIncrement,
                             const double *dmat);
 
   // returns true if fused rings found a template
