@@ -135,15 +135,15 @@ void compareConfs(const RWMol *m, const RWMol *expected, int molConfId = -1,
     REQUIRE(m->getAtomWithIdx(i)->getAtomicNum() ==
             expected->getAtomWithIdx(i)->getAtomicNum());
 
-    RDGeom::Point3D pt1i = conf1.getAtomPos(i);
-    RDGeom::Point3D pt2i = conf2.getAtomPos(i);
+    const RDGeom::Point3D &pt1i = conf1.getAtomPos(i);
+    const RDGeom::Point3D &pt2i = conf2.getAtomPos(i);
     // instead of directly comparing positions, we look at distances in order to
     // try and minimize differences from different compilers
     for (unsigned int j = 0; j < i; j++) {
       REQUIRE(m->getAtomWithIdx(j)->getAtomicNum() ==
               expected->getAtomWithIdx(j)->getAtomicNum());
-      RDGeom::Point3D pt1j = conf1.getAtomPos(j);
-      RDGeom::Point3D pt2j = conf2.getAtomPos(j);
+      const RDGeom::Point3D &pt1j = conf1.getAtomPos(j);
+      const RDGeom::Point3D &pt2j = conf2.getAtomPos(j);
       auto tol = 0.15;
       if (m->getBondBetweenAtoms(i, j)) {
         tol = 0.05;

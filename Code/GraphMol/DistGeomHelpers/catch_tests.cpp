@@ -144,15 +144,15 @@ void compareConfs(const ROMol *m, const ROMol *expected, int molConfId = -1,
     TEST_ASSERT(m->getAtomWithIdx(i)->getAtomicNum() ==
                 expected->getAtomWithIdx(i)->getAtomicNum());
 
-    RDGeom::Point3D pt1i = conf1.getAtomPos(i);
-    RDGeom::Point3D pt2i = conf2.getAtomPos(i);
+    const RDGeom::Point3D &pt1i = conf1.getAtomPos(i);
+    const RDGeom::Point3D &pt2i = conf2.getAtomPos(i);
     // instead of directly comparing positions, we look at distances in order to
     // try and minimize differences from different compilers
     for (unsigned int j = 0; j < i; j++) {
       REQUIRE(m->getAtomWithIdx(j)->getAtomicNum() ==
               expected->getAtomWithIdx(j)->getAtomicNum());
-      RDGeom::Point3D pt1j = conf1.getAtomPos(j);
-      RDGeom::Point3D pt2j = conf2.getAtomPos(j);
+      const RDGeom::Point3D &pt1j = conf1.getAtomPos(j);
+      const RDGeom::Point3D &pt2j = conf2.getAtomPos(j);
       auto tol = 0.15;
       if (m->getBondBetweenAtoms(i, j)) {
         tol = 0.05;
@@ -1010,8 +1010,8 @@ TEST_CASE("Macrocycle bounds matrix") {
     auto cid = DGeomHelpers::EmbedMolecule(*mol, ps);
     CHECK(cid >= 0);
     const auto conf = mol->getConformer(cid);
-    RDGeom::Point3D pos_1 = conf.getAtomPos(1);
-    RDGeom::Point3D pos_4 = conf.getAtomPos(4);
+    const RDGeom::Point3D &pos_1 = conf.getAtomPos(1);
+    const RDGeom::Point3D &pos_4 = conf.getAtomPos(4);
     CHECK((pos_1 - pos_4).length() < bm->getUpperBound(1, 4));
     CHECK((pos_1 - pos_4).length() > bm->getLowerBound(1, 4));
   }
@@ -1039,10 +1039,10 @@ TEST_CASE("atropisomers and embedding") {
       Atropisomers::AtropAtomAndBondVec abvs[2];
       REQUIRE(Atropisomers::getAtropisomerAtomsAndBonds(mol->getBondWithIdx(7),
                                                         abvs, *mol));
-      auto pos_1 = conf.getAtomPos(7);
-      auto pos_2 = conf.getAtomPos(8);
-      auto pos_3 = conf.getAtomPos(1);
-      auto pos_4 = conf.getAtomPos(9);
+      const auto &pos_1 = conf.getAtomPos(7);
+      const auto &pos_2 = conf.getAtomPos(8);
+      const auto &pos_3 = conf.getAtomPos(1);
+      const auto &pos_4 = conf.getAtomPos(9);
       auto v2 = pos_2 - pos_1;
       auto v3 = pos_3 - pos_1;
       auto v4 = pos_4 - pos_1;
@@ -1060,10 +1060,10 @@ TEST_CASE("atropisomers and embedding") {
       Atropisomers::AtropAtomAndBondVec abvs[2];
       REQUIRE(Atropisomers::getAtropisomerAtomsAndBonds(mol2.getBondWithIdx(7),
                                                         abvs, mol2));
-      auto pos_1 = conf.getAtomPos(7);
-      auto pos_2 = conf.getAtomPos(8);
-      auto pos_3 = conf.getAtomPos(1);
-      auto pos_4 = conf.getAtomPos(9);
+      const auto &pos_1 = conf.getAtomPos(7);
+      const auto &pos_2 = conf.getAtomPos(8);
+      const auto &pos_3 = conf.getAtomPos(1);
+      const auto &pos_4 = conf.getAtomPos(9);
       auto v2 = pos_2 - pos_1;
       auto v3 = pos_3 - pos_1;
       auto v4 = pos_4 - pos_1;
@@ -2407,8 +2407,8 @@ TEST_CASE("Angle tolerances") {
 
     // we should be able to generate a conformations without major violations
     const auto conf = mol->getConformer();
-    RDGeom::Point3D pos_2 = conf.getAtomPos(2);
-    RDGeom::Point3D pos_4 = conf.getAtomPos(4);
+    const RDGeom::Point3D &pos_2 = conf.getAtomPos(2);
+    const RDGeom::Point3D &pos_4 = conf.getAtomPos(4);
     auto dist = (pos_2 - pos_4).length();
     CHECK(bm->getLowerBound(4, 2) - 0.08 <= dist);
     CHECK(bm->getUpperBound(4, 2) + 0.08 >= dist);
@@ -2436,7 +2436,7 @@ TEST_CASE("TransAmideKTerm") {
     auto cids = DGeomHelpers::EmbedMultipleConfs(mol, 10, ps);
 
     for (const auto cid : cids) {
-      auto conf = mol.getConformer(cid);
+      const auto &conf = mol.getConformer(cid);
       auto tors = MolTransforms::getDihedralDeg(conf, i, j, k, l);
       if (std::fabs(tors) < 90.0) {
         return false;
