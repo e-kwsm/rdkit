@@ -74,7 +74,7 @@ TEST_CASE("MacroMolTemplate owns a logically read-only molecule and metadata") {
   CHECK(templ->getLeavingGroups().empty());
 
   // Copying must repair the SGroup's owning-molecule back-reference.
-  MacroMolTemplate copied(*templ);
+  const MacroMolTemplate &copied(*templ);
   CHECK(copied.getMol().getNumAtoms() == 1);
   CHECK(&copied.getMainSgroup().getOwningMol() == &copied.getMol());
 }
@@ -89,7 +89,7 @@ TEST_CASE("MacroMolTemplate preserves its SCSR subclass") {
   auto templ = builder.build();
 
   CHECK(templ->getSubclass() == "AA");
-  MacroMolTemplate copied(*templ);
+  const MacroMolTemplate &copied(*templ);
   CHECK(copied.getSubclass() == "AA");
 }
 
