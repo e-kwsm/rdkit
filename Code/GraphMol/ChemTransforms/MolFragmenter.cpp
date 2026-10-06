@@ -335,12 +335,13 @@ void fragmentOnSomeBonds(
   std::unique_ptr<std::vector<std::pair<unsigned int, unsigned int>>>
       dummyLabelsHere;
   if (dummyLabels) {
-    dummyLabelsHere.reset(
-        new std::vector<std::pair<unsigned int, unsigned int>>(maxToCut));
+    dummyLabelsHere =
+        std::make_unique<std::vector<std::pair<unsigned int, unsigned int>>>(
+            maxToCut);
   }
   std::unique_ptr<std::vector<Bond::BondType>> bondTypesHere;
   if (bondTypes) {
-    bondTypesHere.reset(new std::vector<Bond::BondType>(maxToCut));
+    bondTypesHere = std::make_unique<std::vector<Bond::BondType>>(maxToCut);
   }
   while (state < stop) {
     unsigned int nSeen = 0;
@@ -449,7 +450,7 @@ ROMol *fragmentOnBonds(
       nCuts = 0;
     }
   }
-  std::unique_ptr<RWMol> res(new RWMol(mol));
+  auto res = std::make_unique<RWMol>(mol);
   if (!mol.getNumAtoms() || bondIndices.empty()) {
     return res.release();
   }
@@ -481,8 +482,8 @@ ROMol *fragmentOnBonds(
       (*nCutsPerAtom)[eidx] += 1;
     }
     if (addDummies) {
-      std::unique_ptr<Atom> at1(new Atom(0));
-      std::unique_ptr<Atom> at2(new Atom(0));
+      auto at1 = std::make_unique<Atom>(0);
+      auto at2 = std::make_unique<Atom>(0);
       if (dummyLabels) {
         at1->setIsotope((*dummyLabels)[i].first);
         at2->setIsotope((*dummyLabels)[i].second);
