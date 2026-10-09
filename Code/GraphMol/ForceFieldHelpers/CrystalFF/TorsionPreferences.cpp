@@ -350,9 +350,9 @@ void getExperimentalTorsionsImpl(
         if (isCis) {
           signs[0] = -1;
         }
-        details.expTorsionAngles.push_back(CosineExp_T{signs, V});
+        details.expTorsionAngles.emplace_back(CosineExp_T{signs, V});
       } else {
-        details.expTorsionAngles.push_back(GaussianExp_T{
+        details.expTorsionAngles.emplace_back(GaussianExp_T{
             AROMATIC_HEIGHTS, isCis ? CIS_POSITION : TRANS_POSITION,
             AROMATIC_WIDTHS, isAIO ? 0.05 : 1.0});
       }
@@ -408,7 +408,7 @@ void getExperimentalTorsionsImpl(
           for (auto &val : vals) {
             val *= details.forceConsts.etTermScaling;
           }
-          details.expTorsionAngles.push_back(CosineExp_T{param.signs, vals});
+          details.expTorsionAngles.emplace_back(CosineExp_T{param.signs, vals});
           if (verbose) {
             // using the stringstream seems redundant, but we don't want the
             // extra formatting provided by the logger after every entry;
@@ -422,7 +422,7 @@ void getExperimentalTorsionsImpl(
             BOOST_LOG(rdInfoLog) << sstr.str() << std::endl;
           }
         } else {
-          details.expTorsionAngles.push_back(
+          details.expTorsionAngles.emplace_back(
               GaussianExp_T{param.heights, param.positions, param.widths,
                             details.forceConsts.etTermScaling});
           if (verbose) {
@@ -523,9 +523,9 @@ void getExperimentalTorsionsImpl(
             fconsts[1] = details.forceConsts
                              .kTermTorsion;  // 7.0 is MMFF force constants
                                              // for aromatic rings
-            details.expTorsionAngles.push_back(CosineExp_T{signs, fconsts});
+            details.expTorsionAngles.emplace_back(CosineExp_T{signs, fconsts});
           } else {
-            details.expTorsionAngles.push_back(GaussianExp_T{
+            details.expTorsionAngles.emplace_back(GaussianExp_T{
                 AROMATIC_HEIGHTS, AROMATIC_POSITIONS, AROMATIC_WIDTHS,
                 details.forceConsts.kTermTorsion});
           }
