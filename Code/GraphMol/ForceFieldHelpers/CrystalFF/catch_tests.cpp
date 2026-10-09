@@ -213,7 +213,7 @@ TEST_CASE("GaussianTorsionContribsLookupTable") {
     // arbitrary index, should afterwards be mapped to 0
     details.torsionIdx = {123};
     details.expTorsionAngles.reserve(1);
-    details.expTorsionAngles.push_back(
+    details.expTorsionAngles.emplace_back(
         ForceFields::CrystalFF::GaussianExp_T{heights, positions, widths, 1.0});
 
     ForceFields::CrystalFF::populateRefTable(details);

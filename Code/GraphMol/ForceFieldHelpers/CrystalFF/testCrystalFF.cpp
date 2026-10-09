@@ -253,7 +253,7 @@ M  END
   auto c =
       std::make_unique<ForceFields::CrystalFF::PlanarityContribs>(ff.get());
   c->addContrib(1, 0, 2, 3, 1.0);
-  ff->contribs().push_back(std::move(c));
+  ff->contribs().emplace_back(std::move(c));
 
   TEST_ASSERT(ff->calcEnergy() > 1.0);
   const double delta = ForceFields::calcFiniteDifference(*ff);
