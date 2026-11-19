@@ -621,7 +621,7 @@ TEST_CASE("findFusedRingSystems matches makeRingNeighborMap + pickFusedRings") {
   }
 
   SECTION("molecules") {
-    for (const auto smiles :
+    for (const auto *const smiles :
          {"C1CC12CC2.c1ccccc1", "C12C3C4C1C5C2C3C45",
           "S1C2=C(C3=CC=CC4=C3C2=CC=C4)C5=C1C6=C7C(=CC=C6)C=CC=C57",
           "c1(cc2)ccc2-c(cc2)ccc2-c(cc2)ccc2-c(cc2)ccc2-c(cc2)ccc2-1"}) {
